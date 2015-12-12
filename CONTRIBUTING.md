@@ -8,15 +8,13 @@ Contribution guidelines:
 6. If denied, a comment will be left explaining why it was denied.
 
 Here are a list of masters who can merge into the master branch:
-
-
+<br>
 Alex Taber
 
 Username: alex
 
 E-mail: aft.pokemon@gmail.com
-
-
+<br>
 Andrew Wollack
 
 username: awollack
