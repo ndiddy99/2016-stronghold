@@ -7,11 +7,13 @@ Contribution guidelines:
 5. Depending on the content of your merge request, your request may be accepted or denied.
 6. If denied, a comment will be left explaining why it was denied.
 
-Here are a list of masters who can merge into the master branch:      
-    
+Here are a list of masters who can merge into the master branch:
+```
 Alex Taber    
 Username: alex               
 E-mail: aft.pokemon@gmail.com               
-    
+```
+```
 Andrew Wollack    
 username: awollack
+```
