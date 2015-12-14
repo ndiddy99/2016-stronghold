@@ -10,10 +10,10 @@ Contribution guidelines:
 Here are a list of masters who can merge into the master branch:
 ```
 Alex Taber    
-Username: @alex               
+Username: alex               
 E-mail: aft.pokemon@gmail.com               
 ```
 ```
 Andrew Wollack    
-username: @awollack
+username: awollack
 ```
