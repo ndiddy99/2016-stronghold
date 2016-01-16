@@ -44,5 +44,4 @@ public class Drivetrain extends Subsystem implements HumanInputListener {
 	@Override
 	protected void initDefaultCommand() {
 	}
-
 }
