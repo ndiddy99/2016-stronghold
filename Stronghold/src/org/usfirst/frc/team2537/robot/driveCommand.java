@@ -1,9 +1,9 @@
 package org.usfirst.frc.team2537.robot;
 
 import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.Timer;
+//import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Subsystem;
+//import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class driveCommand extends Command {
 	private CANTalon talonFrontLeft;
@@ -27,6 +27,8 @@ public class driveCommand extends Command {
 	protected void execute() {
 		talonFrontLeft.set(Robot.drivetrain.joystickOneXValue);
 		talonFrontRight.set(Robot.drivetrain.joystickTwoXValue);
+		talonBackLeft.set(Robot.drivetrain.joystickOneYValue);
+		talonBackRight.set(Robot.drivetrain.joystickTwoYValue);
 		finished = true;
 	}
 
