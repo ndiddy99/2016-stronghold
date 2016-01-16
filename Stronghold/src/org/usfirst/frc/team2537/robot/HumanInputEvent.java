@@ -10,7 +10,7 @@ public class HumanInputEvent {
 	private Double joyOneYValue = null;
 	private Double joyTwoYValue = null;
 
-	public HumanInputEvent(Double inputValue) {
+	public HumanInputEvent() {
 		joyOneXValue = joyOne.getX();
 		joyTwoXValue = joyTwo.getX();
 		joyOneYValue = joyOne.getY();

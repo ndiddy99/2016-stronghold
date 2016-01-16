@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2537.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -19,7 +20,7 @@ public class Robot extends IterativeRobot {
 	String autoSelected;
 	SendableChooser chooser;
 	// My stuff
-	static Drivetrain drivetrain = new Drivetrain();
+	static final Drivetrain drivetrain = new Drivetrain();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -70,7 +71,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		// Scheduler.getInstance().add(new driveCommand());
-		drivetrain.initDefaultCommand();
+		drivetrain.inputRecieved(new HumanInputEvent());
 		// System.out.println("hi");
 
 	}
