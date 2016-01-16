@@ -3,6 +3,8 @@ package org.usfirst.frc.team2537.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.Joystick;
+b
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //testing
@@ -63,6 +65,10 @@ public class Robot extends IterativeRobot {
     /**
      * This function is called periodically during operator control
      */
+    public void teleopInit() {
+    	MotorTest m=new MotorTest();
+    	m.dontuseinproduction();
+    }
     public void teleopPeriodic() {
         
     }
