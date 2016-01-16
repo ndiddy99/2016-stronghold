@@ -33,12 +33,14 @@ public class Drivetrain extends Subsystem implements HumanInputListener {
 		}
 
 	}
-
+/**
+ * Moves horray!
+ */
 	public void move() {
 		talonFrontLeft.set(joystickOneYValue);
 		talonBackLeft.set(joystickOneYValue);
 		talonFrontRight.set(joystickTwoYValue);
-		talonFrontRight.set(joystickTwoYValue);
+		talonBackRight.set(joystickTwoYValue);
 	}
 	@Override
 	protected void initDefaultCommand() {
