@@ -3,9 +3,12 @@ package org.usfirst.frc.team2537.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.*;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.command.Command;
 //testing
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -19,16 +22,17 @@ public class Robot extends IterativeRobot {
     final String customAuto = "My Auto";
     String autoSelected;
     SendableChooser chooser;
-	
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
+    Command motorTest;
     public void robotInit() {
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", defaultAuto);
         chooser.addObject("My Auto", customAuto);
         SmartDashboard.putData("Auto choices", chooser);
+        motorTest=new Motor();
     }
     
 	/**
@@ -65,8 +69,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopInit() {
-    	MotorTest m=new MotorTest(); //floop
-    	m.dontuseinproduction();
+    	motorTest.start();
     }
     public void teleopPeriodic() {
         
