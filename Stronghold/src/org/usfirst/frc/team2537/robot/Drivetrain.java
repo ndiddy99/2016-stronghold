@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
+
 public class Drivetrain extends Subsystem implements HumanInputListener {
 	private Double joystickOneXValue = 0.0;
 	private Double joystickTwoXValue = 0.0;
@@ -14,6 +15,7 @@ public class Drivetrain extends Subsystem implements HumanInputListener {
 	private CANTalon talonFrontRight;
 	private CANTalon talonBackRight;
 	private CANTalon talonBackLeft;
+
 
 	public Drivetrain() {
 		talonFrontLeft = new CANTalon(Ports.FRONT_LEFT_MOTOR_PORT);
@@ -38,7 +40,6 @@ public class Drivetrain extends Subsystem implements HumanInputListener {
 		talonFrontRight.set(joystickTwoYValue);
 		talonFrontRight.set(joystickTwoYValue);
 	}
-
 	@Override
 	protected void initDefaultCommand() {
 	}
