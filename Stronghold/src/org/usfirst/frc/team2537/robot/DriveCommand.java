@@ -5,14 +5,14 @@ import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Command;
 //import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class driveCommand extends Command {
+public class DriveCommand extends Command {
 	private CANTalon talonFrontLeft;
 	private CANTalon talonFrontRight;
 	private CANTalon talonBackRight;
 	private CANTalon talonBackLeft;
 	private boolean finished = false;
 
-	public void DriveCommand() {
+	public DriveCommand() {
 		talonFrontLeft = new CANTalon(Ports.FRONT_LEFT_MOTOR_PORT);
 		talonFrontRight = new CANTalon(Ports.FRONT_RIGHT_MOTOR_PORT);
 		talonBackLeft = new CANTalon(Ports.BACK_LEFT_MOTOR_PORT);

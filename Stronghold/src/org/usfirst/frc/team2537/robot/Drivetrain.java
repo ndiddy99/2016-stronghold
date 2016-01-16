@@ -8,7 +8,7 @@ public class Drivetrain extends Subsystem implements HumanInputListener {
 	Double joystickTwoXValue = null;
 	Double joystickOneYValue = null;
 	Double joystickTwoYValue = null;
-	driveCommand command = new driveCommand();
+	DriveCommand command = new DriveCommand();
 
 	public void DriveTrain() {
 
