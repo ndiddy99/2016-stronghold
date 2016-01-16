@@ -24,8 +24,8 @@ public class Drivetrain extends Subsystem implements HumanInputListener {
 
 	@Override
 	public void inputRecieved(HumanInputEvent event) {
-		if (event.getJoyOneXValue() != null) joystickOneXValue = event.getJoyOneYValue();
-		if (event.getJoyTwoXValue() != null) joystickTwoXValue = event.getJoyOneYValue();
+		if (event.getJoyOneXValue() != null) joystickOneXValue = event.getJoyOneXValue();
+		if (event.getJoyTwoXValue() != null) joystickTwoXValue = event.getJoyOneXValue();
 		if (event.getJoyOneYValue() != null) joystickOneYValue = event.getJoyOneYValue();
 		if (event.getJoyTwoYValue() != null) joystickTwoYValue = event.getJoyTwoYValue();
 	}
