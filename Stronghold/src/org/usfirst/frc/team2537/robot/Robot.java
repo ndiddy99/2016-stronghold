@@ -66,7 +66,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopInit() {
-    	MotorTest m=new MotorTest();
+    	MotorTest m=new MotorTest(); //floop
     	m.dontuseinproduction();
     }
     public void teleopPeriodic() {
