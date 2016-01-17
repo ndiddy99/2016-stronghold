@@ -1,5 +1,8 @@
 package org.usfirst.frc.team2537.robot;
 
+import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
+import org.usfirst.frc.team2537.robot.input.SerialSubsystem;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -16,6 +19,8 @@ public class Robot extends IterativeRobot {
 	final String customAuto = "My Auto";
 	String autoSelected;
 	SendableChooser chooser;
+	public static SerialSubsystem sensorSys;
+	public static ArmSubsystem armSys;
 	// My stuff
 
 	/**
@@ -28,6 +33,11 @@ public class Robot extends IterativeRobot {
 		chooser.addDefault("Default Auto", defaultAuto);
 		chooser.addObject("My Auto", customAuto);
 		SmartDashboard.putData("Auto choices", chooser);
+		sensorSys = new SerialSubsystem();
+		sensorSys.initDefaultCommand();
+		armSys = new ArmSubsystem();
+		armSys.initDefaultCommand();
+		armSys.registerButtons();
 	}
 
 	/**
