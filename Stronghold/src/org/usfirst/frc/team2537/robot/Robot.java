@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team2537.robot;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -18,7 +19,9 @@ public class Robot extends IterativeRobot {
     final String customAuto = "My Auto";
     String autoSelected;
     SendableChooser chooser;
-    public static MotorSubsystem motorTest;
+    public static MotorSubsystem driveSys;
+    DigitalInput limitSwitch;
+    
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -28,9 +31,9 @@ public class Robot extends IterativeRobot {
         chooser.addDefault("Default Auto", defaultAuto);
         chooser.addObject("My Auto", customAuto);
         SmartDashboard.putData("Auto choices", chooser);
-        motorTest = new MotorSubsystem();
-        motorTest.initDefaultCommand();
-        System.out.println("WEW LAD");
+        driveSys = new MotorSubsystem();
+        driveSys.initDefaultCommand();
+        System.out.println("WEW LAD"); 
         
     }
     
