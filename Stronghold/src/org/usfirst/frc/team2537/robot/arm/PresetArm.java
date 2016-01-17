@@ -28,7 +28,7 @@ public class PresetArm extends Command {
 	protected void execute() {
 		currentPosition = Robot.armSys.getAngle();
 		if (move = true) {
-			Double speed = (currentPosition - posToMoveTo)/180;
+			Double speed = (currentPosition - posToMoveTo) / 180;
 			Robot.armSys.set(speed);
 		}
 

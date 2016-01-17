@@ -12,12 +12,11 @@ public class ArmSubsystem extends Subsystem {
 
 	private CANTalon armMotor;
 	private NineDegreesOfFreedom armNDOF = NineDegreesOfFreedom.getInstance();
-	
+
 	public ArmSubsystem() {
 		armMotor = new CANTalon(Ports.ARM_TALON);
 	}
 
-	@Override
 	public void initDefaultCommand() {
 		// TODO Auto-generated method stub
 		ArmCommand manual = new ArmCommand();
@@ -29,12 +28,16 @@ public class ArmSubsystem extends Subsystem {
 		HumanInput.registerPressedCommand(HumanInput.neutralArm, new PresetArm(ArmPositions.neutralPos));
 		HumanInput.registerPressedCommand(HumanInput.raiseArm, new PresetArm(ArmPositions.upPos));
 	}
-	
+
 	public double getAngle() {
 		return armNDOF.getAngle(SensorEnum.ARM_NINE_DEGREES_OF_FREEDOM);
 	}
-	
+
 	public void set(double s) {
 		armMotor.set(s);
+	}
+
+	public double getRightJoystick() {
+		return HumanInput.getXboxAxis(HumanInput.xboxController, HumanInput.XBOX_RIGHT_STICK_Y_AXIS);
 	}
 }

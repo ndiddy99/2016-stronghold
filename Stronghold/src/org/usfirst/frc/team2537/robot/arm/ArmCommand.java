@@ -1,37 +1,29 @@
 package org.usfirst.frc.team2537.robot.arm;
 
+import org.usfirst.frc.team2537.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ArmCommand extends Command {
 
-	@Override
 	protected void initialize() {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Moving Arm!");
 	}
 
-	@Override
 	protected void execute() {
-		// TODO Auto-generated method stub
-		
+		Robot.armSys.set(Robot.armSys.getRightJoystick() * -1);
 	}
 
-	@Override
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
 	protected void end() {
-		// TODO Auto-generated method stub
-		
+		Robot.armSys.set(0);
 	}
 
-	@Override
 	protected void interrupted() {
-		// TODO Auto-generated method stub
-		
+		Robot.armSys.set(0);
 	}
 
 }
