@@ -2,13 +2,9 @@
 package org.usfirst.frc.team2537.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.*;
-import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.command.Command;
 //testing
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -34,6 +30,8 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData("Auto choices", chooser);
         motorTest = new MotorSubsystem();
         motorTest.initDefaultCommand();
+        System.out.println("WEW LAD");
+        
     }
     
 	/**
