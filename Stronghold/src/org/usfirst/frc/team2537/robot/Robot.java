@@ -22,17 +22,18 @@ public class Robot extends IterativeRobot {
     final String customAuto = "My Auto";
     String autoSelected;
     SendableChooser chooser;
+    public static MotorSubsystem motorTest;
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
-    Command motorTest;
     public void robotInit() {
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", defaultAuto);
         chooser.addObject("My Auto", customAuto);
         SmartDashboard.putData("Auto choices", chooser);
-        motorTest=new Motor();
+        motorTest = new MotorSubsystem();
+        motorTest.initDefaultCommand();
     }
     
 	/**
@@ -69,10 +70,11 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopInit() {
-    	motorTest.start();
+    	System.out.println("Starting teleop");
+    	
     }
     public void teleopPeriodic() {
-        
+    	Scheduler.getInstance().run();
     }
     
     /**
