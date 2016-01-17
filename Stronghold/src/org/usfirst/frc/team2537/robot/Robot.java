@@ -17,7 +17,6 @@ public class Robot extends IterativeRobot {
 	String autoSelected;
 	SendableChooser chooser;
 	// My stuff
-	static final Drivetrain drivetrain = new Drivetrain();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -69,7 +68,6 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		// Scheduler.getInstance().add(new driveCommand());
-		drivetrain.inputRecieved(new HumanInputEvent());
 		// System.out.println("hi");
 
 	}
