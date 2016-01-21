@@ -24,9 +24,9 @@ public class ArmSubsystem extends Subsystem {
 	}
 
 	public void registerButtons() {
-		HumanInput.registerPressedCommand(HumanInput.lowerArm, new PresetArm(ArmPositions.downPos));
-		HumanInput.registerPressedCommand(HumanInput.neutralArm, new PresetArm(ArmPositions.neutralPos));
-		HumanInput.registerPressedCommand(HumanInput.raiseArm, new PresetArm(ArmPositions.upPos));
+		HumanInput.registerPressedCommand(HumanInput.lowerArm, new PresetArmCommand(ArmPositions.downPos));
+		HumanInput.registerPressedCommand(HumanInput.neutralArm, new PresetArmCommand(ArmPositions.neutralPos));
+		HumanInput.registerPressedCommand(HumanInput.raiseArm, new PresetArmCommand(ArmPositions.upPos));
 	}
 
 	public double getAngle() {
