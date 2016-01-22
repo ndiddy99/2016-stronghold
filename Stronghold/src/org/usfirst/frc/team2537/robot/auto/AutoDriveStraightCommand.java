@@ -6,23 +6,25 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class AutoDriveStraightCommand extends Command{
 	private double speed;
+	private double distance;
 	
-	public AutoDriveStraightCommand(double speed){
+	public AutoDriveStraightCommand(double distance, double speed){
 		requires(Robot.driveSys);
+		this.distance = distance;
 		this.speed = speed;
 	}
 	
 	@Override
 	protected void initialize() {
-		
+		Robot.driveSys.set(-speed, Robot.driveSys.talonFrontLeft);
+		Robot.driveSys.set(-speed, Robot.driveSys.talonBackLeft);
+		Robot.driveSys.set(speed, Robot.driveSys.talonFrontRight);
+		Robot.driveSys.set(speed, Robot.driveSys.talonBackRight);		
 	}
 
 	@Override
 	protected void execute() {
-		Robot.driveSys.set(-speed, Robot.driveSys.talonFrontLeft);
-		Robot.driveSys.set(-speed, Robot.driveSys.talonBackLeft);
-		Robot.driveSys.set(speed, Robot.driveSys.talonFrontRight);
-		Robot.driveSys.set(speed, Robot.driveSys.talonBackRight);			
+		
 	}
 
 	@Override
