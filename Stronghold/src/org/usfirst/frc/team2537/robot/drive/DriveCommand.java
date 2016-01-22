@@ -26,29 +26,29 @@ public class DriveCommand extends Command {
 		
 		switch(Robot.driveSys.driveType){
 		case doubleJoystick:
-			left = -HumanInput.getJoystickAxis(HumanInput.leftJoystick,
+			left = HumanInput.getJoystickAxis(HumanInput.leftJoystick,
 					AxisType.kY);
 			right = HumanInput.getJoystickAxis(HumanInput.rightJoystick,
 					AxisType.kY);
 			break;
 		case singleJoystick:
-			left = -HumanInput.getJoystickAxis(HumanInput.leftJoystick,
+			left = HumanInput.getJoystickAxis(HumanInput.leftJoystick,
 					AxisType.kY);
-			right = -left;
+			right = left;
 			
 			left += HumanInput.getJoystickAxis(HumanInput.leftJoystick, AxisType.kX);
-			right += HumanInput.getJoystickAxis(HumanInput.leftJoystick, AxisType.kX);
+			right -= HumanInput.getJoystickAxis(HumanInput.leftJoystick, AxisType.kX);
 			break;
 		case doubleJoystickXbox:
-			left = -HumanInput.getXboxAxis(HumanInput.xboxController, HumanInput.XBOX_LEFT_STICK_Y_AXIS);
+			left = HumanInput.getXboxAxis(HumanInput.xboxController, HumanInput.XBOX_LEFT_STICK_Y_AXIS);
 			right = HumanInput.getXboxAxis(HumanInput.xboxController, HumanInput.XBOX_RIGHT_STICK_Y_AXIS);
 			break;
 		case singleJoystickXbox:
-			left = -HumanInput.getXboxAxis(HumanInput.xboxController, HumanInput.XBOX_LEFT_STICK_Y_AXIS);
-			right = -left;
+			left = HumanInput.getXboxAxis(HumanInput.xboxController, HumanInput.XBOX_LEFT_STICK_Y_AXIS);
+			right = left;
 			
 			left += HumanInput.getJoystickAxis(HumanInput.leftJoystick, AxisType.kX);
-			right += HumanInput.getJoystickAxis(HumanInput.leftJoystick, AxisType.kX);			
+			right -= HumanInput.getJoystickAxis(HumanInput.leftJoystick, AxisType.kX);			
 			break;
 		}
 		
@@ -56,11 +56,8 @@ public class DriveCommand extends Command {
 			System.err.println("[DriveSys] Something's not right here...");
 			return;
 		}
-		Robot.driveSys.set(left, Robot.driveSys.talonFrontLeft);
-		Robot.driveSys.set(left, Robot.driveSys.talonBackLeft);
-		Robot.driveSys.set(right, Robot.driveSys.talonFrontRight);
-		Robot.driveSys.set(right, Robot.driveSys.talonBackRight);			
-
+		
+		Robot.driveSys.setDriveMotors(left, right);
 	}
 
 	@Override
@@ -70,18 +67,12 @@ public class DriveCommand extends Command {
 
 	@Override
 	protected void end(){
-		Robot.driveSys.set(0, Robot.driveSys.talonFrontLeft);
-		Robot.driveSys.set(0, Robot.driveSys.talonBackLeft);
-		Robot.driveSys.set(0, Robot.driveSys.talonFrontRight);
-		Robot.driveSys.set(0, Robot.driveSys.talonBackRight);			
+		Robot.driveSys.setDriveMotors(0);
 	}
 
 	@Override
 	protected void interrupted() {
 		System.out.println("[DriveSys] Interruptions aren't fun.");
-		Robot.driveSys.set(0, Robot.driveSys.talonFrontLeft);
-		Robot.driveSys.set(0, Robot.driveSys.talonBackLeft);
-		Robot.driveSys.set(0, Robot.driveSys.talonFrontRight);
-		Robot.driveSys.set(0, Robot.driveSys.talonBackRight);			
+		Robot.driveSys.setDriveMotors(0);
 	}
 }

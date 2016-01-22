@@ -14,15 +14,11 @@ public class AutoRotateCommand extends Command{
 	
 	@Override
 	protected void initialize() {
-		
+		Robot.driveSys.setDriveMotors(-speed, speed);
 	}
 
 	@Override
 	protected void execute() {
-		Robot.driveSys.set(speed, Robot.driveSys.talonFrontLeft);
-		Robot.driveSys.set(speed, Robot.driveSys.talonBackLeft);
-		Robot.driveSys.set(speed, Robot.driveSys.talonFrontRight);
-		Robot.driveSys.set(speed, Robot.driveSys.talonBackRight);			
 	}
 
 	@Override
@@ -32,19 +28,13 @@ public class AutoRotateCommand extends Command{
 
 	@Override
 	protected void end() {
-		Robot.driveSys.set(0, Robot.driveSys.talonFrontLeft);
-		Robot.driveSys.set(0, Robot.driveSys.talonBackLeft);
-		Robot.driveSys.set(0, Robot.driveSys.talonFrontRight);
-		Robot.driveSys.set(0, Robot.driveSys.talonBackRight);
+		Robot.driveSys.setDriveMotors(0);
 	}
 
 	@Override
 	protected void interrupted() {
-		System.out.println("[AutoDriveStraight] bad end");
-		Robot.driveSys.set(0, Robot.driveSys.talonFrontLeft);
-		Robot.driveSys.set(0, Robot.driveSys.talonBackLeft);
-		Robot.driveSys.set(0, Robot.driveSys.talonFrontRight);
-		Robot.driveSys.set(0, Robot.driveSys.talonBackRight);
+		System.out.println("[AutoRotateCommand] bad end");
+		Robot.driveSys.setDriveMotors(0);
 	}
 
 }
