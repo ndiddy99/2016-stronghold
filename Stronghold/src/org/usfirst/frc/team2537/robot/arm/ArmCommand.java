@@ -5,6 +5,10 @@ import org.usfirst.frc.team2537.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ArmCommand extends Command {
+	
+	public ArmCommand() {
+		this.requires(Robot.armSys);
+	}
 
 	protected void initialize() {
 		System.out.println("Moving Arm!");
