@@ -26,8 +26,7 @@ public class Robot extends IterativeRobot {
 	public static DriveSubsystem driveSys;
 	// My stuff
 
-	/**
-	 * This function is run when the robot is first started up and should be
+	/**	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
