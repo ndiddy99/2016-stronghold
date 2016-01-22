@@ -33,8 +33,43 @@ public class DriveSubsystem extends Subsystem{
 		talon.set(speed);
 	}
 
-	public void setDriveType(DriveType t){
-		driveType = t;
+	/**
+	 * sets the left drive motors to a certain speed.
+	 * corrects for inverted motor speeds.
+	 * @param speed
+	 */
+	public void setLeftDriveMotors(double speed){
+		set(-speed, talonFrontLeft);
+		set(-speed, talonBackLeft);		
+	}
+	
+	/**
+	 * sets the right motors to a certain speed
+	 * @param speed
+	 */
+	public void setRightDriveMotors(double speed){
+		set(speed, talonFrontRight);
+		set(speed, talonBackRight);		
+	}
+	
+	/**
+	 * sets all drive motors to the same speed
+	 * corrects for inverted left motor
+	 * @param speed
+	 */
+	public void setDriveMotors(double speed){
+		setDriveMotors(speed, speed);
+	}
+	
+	/**
+	 * sets the drive motors.
+	 * Corrects for inverted left motor
+	 * @param left
+	 * @param right
+	 */
+	public void setDriveMotors(double left, double right){
+		setLeftDriveMotors(left);
+		setRightDriveMotors(left);
 	}
 	
 	public double get(CANTalon talon){
