@@ -9,14 +9,19 @@ import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveCommand extends Command {
-
+	private static final boolean debug = false;
+	
+	/**
+	 * Takes joystick input depending on Robot.driveSys.driveType
+	 * 
+	 */
 	public DriveCommand() {
 		requires(Robot.driveSys);
 	}
 
 	@Override
 	protected void initialize() {
-		
+		if(debug) System.out.println(Robot.driveSys.driveType);
 	}
 
 	@Override
@@ -53,10 +58,11 @@ public class DriveCommand extends Command {
 		}
 		
 		if (left == null || right == null) {
-			System.err.println("[DriveSys] Something's not right here...");
+			if(debug) System.out.println("[DriveCommand] left/right is null");
 			return;
 		}
 		
+		if(debug) System.out.println("[DriveCommand] left: " + left + "\tright: " + right);
 		Robot.driveSys.setDriveMotors(left, right);
 	}
 
@@ -67,12 +73,13 @@ public class DriveCommand extends Command {
 
 	@Override
 	protected void end(){
+		if(debug) System.out.println("[DriveCommand] It's over");
 		Robot.driveSys.setDriveMotors(0);
 	}
 
 	@Override
 	protected void interrupted() {
-		System.out.println("[DriveSys] Interruptions aren't fun.");
+		if(debug) System.out.println("[DriveCommand] Interruptions aren't fun.");
 		Robot.driveSys.setDriveMotors(0);
 	}
 }
