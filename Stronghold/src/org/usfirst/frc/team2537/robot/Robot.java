@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2537.robot;
 
 import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
+import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team2537.robot.input.SerialSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -21,6 +22,7 @@ public class Robot extends IterativeRobot {
 	SendableChooser chooser;
 	public static SerialSubsystem sensorSys;
 	public static ArmSubsystem armSys;
+	public static DriveSubsystem driveSys;
 	// My stuff
 
 	/**
