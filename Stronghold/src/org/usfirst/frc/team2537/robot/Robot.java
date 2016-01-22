@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-//testing
+//walcome
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -20,6 +20,7 @@ public class Robot extends IterativeRobot {
     String autoSelected;
     SendableChooser chooser;
     public static MotorSubsystem driveSys;
+    public static Climber Climb;
     DigitalInput limitSwitch;
     
     /**
@@ -33,6 +34,7 @@ public class Robot extends IterativeRobot {
         chooser.addObject("My Auto", customAuto);
         SmartDashboard.putData("Auto choices", chooser);
         driveSys = new MotorSubsystem();
+        Climb = new Climber();
         driveSys.initDefaultCommand();
         System.out.println("robotInit complted"); 
         
