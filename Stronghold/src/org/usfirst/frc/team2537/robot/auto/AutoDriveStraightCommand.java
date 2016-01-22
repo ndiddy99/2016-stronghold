@@ -7,7 +7,13 @@ import edu.wpi.first.wpilibj.command.Command;
 public class AutoDriveStraightCommand extends Command{
 	private double speed;
 	private double distance;
+	private static final boolean debug = false;
 	
+	/**
+	 * Drives [distance] at [speed]
+	 * @param distance
+	 * @param speed
+	 */
 	public AutoDriveStraightCommand(double distance, double speed){
 		requires(Robot.driveSys);
 		this.distance = distance;
@@ -16,6 +22,7 @@ public class AutoDriveStraightCommand extends Command{
 	
 	@Override
 	protected void initialize() {
+		if(debug) System.out.println("[AutoDriveStraightCommand] Driving " + distance + " at " + speed);
 		Robot.driveSys.setDriveMotors(speed);
 	}
 
@@ -31,12 +38,13 @@ public class AutoDriveStraightCommand extends Command{
 
 	@Override
 	protected void end() {
+		if(debug) System.out.println("[AutoDriveStraightCommand] good end");
 		Robot.driveSys.setDriveMotors(0);
 	}
 
 	@Override
 	protected void interrupted() {
-		System.out.println("[AutoDriveStraight] bad end");
+		if (debug) System.out.println("[AutoDriveStraightCommand] bad end");
 		Robot.driveSys.setDriveMotors(0);
 	}
 

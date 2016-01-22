@@ -6,7 +6,13 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class AutoRotateCommand extends Command{
 	private double speed;
+	private static final boolean debug = false;
 	
+	/**
+	 * spins forever at [speed]
+	 * counterclockwise (untested)
+	 * @param speed
+	 */
 	public AutoRotateCommand(double speed){
 		requires(Robot.driveSys);
 		this.speed = speed;
@@ -14,6 +20,7 @@ public class AutoRotateCommand extends Command{
 	
 	@Override
 	protected void initialize() {
+		if(debug) System.out.println("[AutoRotateCommand] Initializing. speed: " + speed);
 		Robot.driveSys.setDriveMotors(-speed, speed);
 	}
 
@@ -28,12 +35,13 @@ public class AutoRotateCommand extends Command{
 
 	@Override
 	protected void end() {
+		if(debug) System.out.println("[AutoRotateCommand] good end");
 		Robot.driveSys.setDriveMotors(0);
 	}
 
 	@Override
 	protected void interrupted() {
-		System.out.println("[AutoRotateCommand] bad end");
+		if(debug) System.out.println("[AutoRotateCommand] bad end");
 		Robot.driveSys.setDriveMotors(0);
 	}
 
