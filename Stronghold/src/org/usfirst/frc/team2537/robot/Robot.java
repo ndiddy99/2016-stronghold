@@ -1,15 +1,13 @@
 package org.usfirst.frc.team2537.robot;
 
 import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
-import org.usfirst.frc.team2537.robot.auto.DefaultAutoCommand;
+import org.usfirst.frc.team2537.robot.auto.AutoChooser;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team2537.robot.input.SerialSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -19,7 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	SendableChooser autoChooser;
+	AutoChooser autoChooser;
 	Command autoCommand;
 	public static SerialSubsystem sensorSys;
 	public static ArmSubsystem armSys;
@@ -31,10 +29,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void robotInit() {
 		SaberMessage.printMessage();
-		autoChooser = new SendableChooser();
-		autoChooser.addDefault("Default Auto", new DefaultAutoCommand());
-		autoChooser.addObject("SuperAuto", new DefaultAutoCommand());
-		SmartDashboard.putData("Auto choices", autoChooser);
+		autoChooser = new AutoChooser();
 		
 		sensorSys = new SerialSubsystem();
 		sensorSys.initDefaultCommand();
@@ -59,8 +54,8 @@ public class Robot extends IterativeRobot {
 	 * SendableChooser make sure to add them to the chooser code above as well.
 	 */
 	public void autonomousInit() {
-		autoCommand = (Command) autoChooser.getSelected();
-		autoCommand.start();
+		autoCommand = autoChooser.getAutoChoice();
+		Scheduler.getInstance().add(autoCommand);
 	}
 
 	/**
