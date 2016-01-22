@@ -6,7 +6,7 @@ public class DefaultAutoCommand extends Command{
 
 	@Override
 	protected void initialize() {
-		
+		System.out.println("[DefaultAuto] Initializing...");
 	}
 
 	@Override
@@ -21,12 +21,12 @@ public class DefaultAutoCommand extends Command{
 
 	@Override
 	protected void end() {
-		
+		System.out.println("[DefaultAuto] Happy ending.");
 	}
 
 	@Override
 	protected void interrupted() {
-		
+		System.out.println("[DefaultAuto] Bad end.");
 	}
 
 }
