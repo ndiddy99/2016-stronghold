@@ -79,6 +79,9 @@ public class Robot extends IterativeRobot {
     }
     public void teleopPeriodic() {
     	Scheduler.getInstance().run();
+    	if (HumanInput.button1.get()==true) {
+    		Climber.extend();
+    	}
     }
     
     /**
