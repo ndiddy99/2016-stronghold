@@ -1,7 +1,6 @@
 package org.usfirst.frc.team2537.robot.arm;
 
 import org.usfirst.frc.team2537.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ArmCommand extends Command {
@@ -15,7 +14,7 @@ public class ArmCommand extends Command {
 	}
 
 	protected void execute() {
-		Robot.armSys.set(Robot.armSys.getRightJoystick() * -1);
+		Robot.armSys.set(-Robot.armSys.getRightJoystick());
 	}
 
 	protected boolean isFinished() {
