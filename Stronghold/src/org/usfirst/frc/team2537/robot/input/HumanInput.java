@@ -20,9 +20,14 @@ public class HumanInput {
 	public static Button lowerArm = new JoystickButton(xboxController, 0);
 	public static Button raiseArm = new JoystickButton(xboxController, 0);
 	public static Button neutralArm = new JoystickButton(xboxController, 0);
+	public static Button driveStraight = new JoystickButton(rightJoystick, 0);
 
 	public static void registerPressedCommand(Button b, Command c) {
 		b.whenPressed(c);
+	}
+	
+	public static void registerReleasedCommand(Button b, Command c) {
+		b.whenReleased(c);
 	}
 
 	public static double getXboxAxis(Joystick j, int i) {

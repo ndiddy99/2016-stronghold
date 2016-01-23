@@ -62,6 +62,14 @@ public class DriveCommand extends Command {
 			return;
 		}
 		
+		if(Robot.driveSys.drivingStraight){
+			if(Math.abs(left) > Math.abs(right)){
+				right = left;
+			}else{
+				left = right;
+			}
+		}
+		
 		if(debug) System.out.println("[DriveCommand] left: " + left + "\tright: " + right);
 		Robot.driveSys.setDriveMotors(left, right);
 	}
