@@ -15,6 +15,7 @@ public class DriveSubsystem extends Subsystem{
 	public CANTalon talonBackLeft;
 	protected DriveType driveType;
 	protected boolean drivingStraight;
+	protected boolean driveLowerSpeed;
 
 	public DriveSubsystem() {
 		talonFrontLeft = new CANTalon(Ports.FRONT_LEFT_MOTOR_PORT);
@@ -23,6 +24,7 @@ public class DriveSubsystem extends Subsystem{
 		talonBackRight = new CANTalon(Ports.BACK_RIGHT_MOTOR_PORT);
 		driveType = DriveType.doubleJoystick;
 		drivingStraight = false;
+		driveLowerSpeed = false;
 	}
 
 	/**
@@ -129,6 +131,28 @@ public class DriveSubsystem extends Subsystem{
 			
 			@Override
 			protected void interrupted() {}
+		});
+		
+		HumanInput.registerPressedCommand(HumanInput.driveSensetivityToggle, new Command(){
+
+			@Override
+			protected void initialize() {
+				driveLowerSpeed = !driveLowerSpeed;
+			}
+
+			@Override
+			protected void execute() {}
+
+			@Override
+			protected boolean isFinished() {
+				return true;
+			}
+
+			@Override
+			protected void end() {}
+			@Override
+			protected void interrupted() {}
+			
 		});
 	}
 	
