@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveCommand extends Command {
 	private static final boolean debug = false;
+	private static final double DEADZONE = 0.05;
 	
 	/**
 	 * Takes joystick input depending on Robot.driveSys.driveType
@@ -69,6 +70,9 @@ public class DriveCommand extends Command {
 				left = right;
 			}
 		}
+		
+		if(Math.abs(left) < DEADZONE) left = 0.0;
+		if(Math.abs(right) < DEADZONE) right = 0.0;
 		
 		if(Robot.driveSys.driveLowerSpeed){
 			right /= 2;
