@@ -7,6 +7,15 @@ import edu.wpi.first.wpilibj.command.Command;
 public class AutoRotateCommand extends Command{
 	private double speed;
 	private static final boolean debug = false;
+	private static final double DEFAULT_SPEED = 0.5;
+	
+	/**
+	 * spins forever at default speed
+	 * counterclockwise (untested)
+	 */
+	public AutoRotateCommand(){
+		this(DEFAULT_SPEED);
+	}
 	
 	/**
 	 * spins forever at [speed]

@@ -9,9 +9,8 @@ public class AutoChooser {
 	public AutoChooser(){
 		autoChoice= new SendableChooser();
         autoChoice.addDefault("Default Autonomous", new DefaultAutoCommand());
-//		last year's code
-//		autoChoice.addObject("[name]", new [command]);
-//		ex. autoChoice.addObject("Point to point", new AutoMoveTo(50, 50));
+        autoChoice.addObject("Drive Straight Forever", new AutoDriveStraightCommand());
+        autoChoice.addObject("Spin forever", new AutoRotateCommand());
         SmartDashboard.putData("Andrew's code (copied and pasted)", autoChoice);
 	}
 	public Command getAutoChoice(){

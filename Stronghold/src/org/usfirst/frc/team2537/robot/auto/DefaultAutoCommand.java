@@ -4,6 +4,13 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class DefaultAutoCommand extends Command{
 
+	/**
+	 * Prints stuff during init and end/interrupt
+	 */
+	public DefaultAutoCommand(){
+		
+	}
+	
 	@Override
 	protected void initialize() {
 		System.out.println("[DefaultAuto] Initializing...");
