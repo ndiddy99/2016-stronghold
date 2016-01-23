@@ -4,13 +4,13 @@ import org.usfirst.frc.team2537.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class PresetArm extends Command {
+public class PresetArmCommand extends Command {
 
 	double posToMoveTo;
 	double currentPosition;
 	boolean move;
 
-	public PresetArm(double position) {
+	public PresetArmCommand(double position) {
 		posToMoveTo = position;
 	}
 

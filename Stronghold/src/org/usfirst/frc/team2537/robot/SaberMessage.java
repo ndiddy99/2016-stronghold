@@ -25,6 +25,5 @@ public final class SaberMessage {
 		}
 		System.out.println(s + "\n Welcome to Saber bot!");
 		fileScan.close();
-
 	}
 }
