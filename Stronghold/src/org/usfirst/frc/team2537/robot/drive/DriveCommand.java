@@ -70,6 +70,11 @@ public class DriveCommand extends Command {
 			}
 		}
 		
+		if(Robot.driveSys.driveLowerSpeed){
+			right /= 2;
+			left /= 2;
+		}
+		
 		if(debug) System.out.println("[DriveCommand] left: " + left + "\tright: " + right);
 		Robot.driveSys.setDriveMotors(left, right);
 	}
