@@ -9,7 +9,6 @@ public class HumanInput {
 	public static Button button1 = new JoystickButton(xboxController, 1);
 	public static double getJoystickInput(Joystick j, int i) {
 		return j.getRawAxis(i);
-		button1.
 	}
 
 }
