@@ -23,6 +23,7 @@ public class ArmCommand extends Command {
 
 	protected void end() {
 		Robot.armSys.set(0);
+		System.out.println("Arm movement completed!");
 	}
 
 	protected void interrupted() {
