@@ -22,7 +22,7 @@ public class DriveSubsystem extends Subsystem{
 		talonFrontRight = new CANTalon(Ports.FRONT_RIGHT_MOTOR_PORT);
 		talonBackLeft = new CANTalon(Ports.BACK_LEFT_MOTOR_PORT);
 		talonBackRight = new CANTalon(Ports.BACK_RIGHT_MOTOR_PORT);
-		driveType = DriveType.doubleJoystick;
+		driveType = DriveType.doubleJoystick; //TODO: set this
 		drivingStraight = false;
 		driveLowerSpeed = false;
 	}
