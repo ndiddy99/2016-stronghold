@@ -22,7 +22,7 @@ public class DriveSubsystem extends Subsystem{
 		talonFrontRight = new CANTalon(Ports.FRONT_RIGHT_MOTOR_PORT);
 		talonBackLeft = new CANTalon(Ports.BACK_LEFT_MOTOR_PORT);
 		talonBackRight = new CANTalon(Ports.BACK_RIGHT_MOTOR_PORT);
-		driveType = DriveType.doubleJoystick;
+		driveType = DriveType.doubleJoystick; //TODO: set this
 		drivingStraight = false;
 		driveLowerSpeed = false;
 	}
@@ -92,67 +92,27 @@ public class DriveSubsystem extends Subsystem{
 	
 	public void registerButtons() {
 		HumanInput.registerPressedCommand(HumanInput.driveStraight, new Command(){
-			@Override
-			protected void initialize() {
-				drivingStraight = true;
-			}
-			
-			@Override
-			protected void execute() {}
-
-			@Override
-			protected boolean isFinished() {
-				return true;
-			}
-			
-			@Override
-			protected void end() {}
-			
-			@Override
-			protected void interrupted() {}
+			@Override protected void initialize() {drivingStraight = true;}
+			@Override protected void execute() {}
+			@Override protected boolean isFinished() {return true;}			
+			@Override protected void end() {}
+			@Override protected void interrupted() {}
 		});
 		
 		HumanInput.registerReleasedCommand(HumanInput.driveStraight, new Command(){
-			@Override
-			protected void initialize() {
-				drivingStraight = false;
-			}
-			
-			@Override
-			protected void execute() {}
-
-			@Override
-			protected boolean isFinished() {
-				return true;
-			}
-			
-			@Override
-			protected void end() {}
-			
-			@Override
-			protected void interrupted() {}
+			@Override protected void initialize() {drivingStraight = false;}
+			@Override protected void execute() {}
+			@Override protected boolean isFinished() {return true;}
+			@Override protected void end() {}
+			@Override protected void interrupted() {}
 		});
 		
 		HumanInput.registerPressedCommand(HumanInput.driveSensetivityToggle, new Command(){
-
-			@Override
-			protected void initialize() {
-				driveLowerSpeed = !driveLowerSpeed;
-			}
-
-			@Override
-			protected void execute() {}
-
-			@Override
-			protected boolean isFinished() {
-				return true;
-			}
-
-			@Override
-			protected void end() {}
-			@Override
-			protected void interrupted() {}
-			
+			@Override protected void initialize() {driveLowerSpeed = !driveLowerSpeed;}
+			@Override protected void execute() {}
+			@Override protected boolean isFinished() {return true;}
+			@Override protected void end() {}
+			@Override protected void interrupted() {}
 		});
 	}
 	

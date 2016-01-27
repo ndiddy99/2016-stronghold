@@ -14,6 +14,7 @@ public class DefaultAutoCommand extends Command{
 	@Override
 	protected void initialize() {
 		System.out.println("[DefaultAuto] Initializing...");
+		System.out.println(":D");
 	}
 
 	@Override
