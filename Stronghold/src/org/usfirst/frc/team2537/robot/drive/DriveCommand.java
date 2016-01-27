@@ -14,6 +14,8 @@ public class DriveCommand extends Command {
 	
 	/**
 	 * Takes joystick input depending on Robot.driveSys.driveType
+	 * Omnipotenet drive command. Does EVERYTHING
+	 * Why have multiple drive commands when you can have one?
 	 * 
 	 */
 	public DriveCommand() {
