@@ -24,7 +24,7 @@ public class DriveCommand extends Command {
 
 	@Override
 	protected void initialize() {
-		if(debug) System.out.println(Robot.driveSys.driveType);
+		if(debug) System.out.println("[DriveCommand] Initializing... drivetype: " + Robot.driveSys.driveType);
 	}
 
 	@Override
