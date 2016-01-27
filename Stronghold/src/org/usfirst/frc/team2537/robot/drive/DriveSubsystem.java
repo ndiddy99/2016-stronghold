@@ -92,67 +92,27 @@ public class DriveSubsystem extends Subsystem{
 	
 	public void registerButtons() {
 		HumanInput.registerPressedCommand(HumanInput.driveStraight, new Command(){
-			@Override
-			protected void initialize() {
-				drivingStraight = true;
-			}
-			
-			@Override
-			protected void execute() {}
-
-			@Override
-			protected boolean isFinished() {
-				return true;
-			}
-			
-			@Override
-			protected void end() {}
-			
-			@Override
-			protected void interrupted() {}
+			@Override protected void initialize() {drivingStraight = true;}
+			@Override protected void execute() {}
+			@Override protected boolean isFinished() {return true;}			
+			@Override protected void end() {}
+			@Override protected void interrupted() {}
 		});
 		
 		HumanInput.registerReleasedCommand(HumanInput.driveStraight, new Command(){
-			@Override
-			protected void initialize() {
-				drivingStraight = false;
-			}
-			
-			@Override
-			protected void execute() {}
-
-			@Override
-			protected boolean isFinished() {
-				return true;
-			}
-			
-			@Override
-			protected void end() {}
-			
-			@Override
-			protected void interrupted() {}
+			@Override protected void initialize() {drivingStraight = false;}
+			@Override protected void execute() {}
+			@Override protected boolean isFinished() {return true;}
+			@Override protected void end() {}
+			@Override protected void interrupted() {}
 		});
 		
 		HumanInput.registerPressedCommand(HumanInput.driveSensetivityToggle, new Command(){
-
-			@Override
-			protected void initialize() {
-				driveLowerSpeed = !driveLowerSpeed;
-			}
-
-			@Override
-			protected void execute() {}
-
-			@Override
-			protected boolean isFinished() {
-				return true;
-			}
-
-			@Override
-			protected void end() {}
-			@Override
-			protected void interrupted() {}
-			
+			@Override protected void initialize() {driveLowerSpeed = !driveLowerSpeed;}
+			@Override protected void execute() {}
+			@Override protected boolean isFinished() {return true;}
+			@Override protected void end() {}
+			@Override protected void interrupted() {}
 		});
 	}
 	
