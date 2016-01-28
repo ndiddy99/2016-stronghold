@@ -12,7 +12,7 @@ public final class SaberMessage {
 		try {
 			in = new BufferedReader(new FileReader("SaberPic"));
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			System.err.println("Saber died :(");
 			e.printStackTrace();
 		}
 		Scanner fileScan = new Scanner(in);

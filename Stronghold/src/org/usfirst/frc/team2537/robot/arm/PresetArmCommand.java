@@ -6,48 +6,50 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class PresetArmCommand extends Command {
 
-	double posToMoveTo;
-	double currentPosition;
+	double angleToMoveTo;
+	double currentAngle;
 	boolean move;
+	final double tolerance = 5;
 
-	public PresetArmCommand(double position) {
-		posToMoveTo = position;
+	public PresetArmCommand(double angle) {
+		this.requires(Robot.armSys); 
+		angleToMoveTo = angle;
 	}
 
 	protected void initialize() {
-		currentPosition = Robot.armSys.getAngle();
-		System.out.println("Moving arm!");
-		if (currentPosition <= posToMoveTo + 5 && currentPosition >= posToMoveTo - 5) {
-			System.out.println("ARM ALREADY IN POSITION");
+		currentAngle = Robot.armSys.getAngle();
+		if (ArmSubsystem.debug) System.out.println("Moving arm!");
+		if (currentAngle <= angleToMoveTo + tolerance && currentAngle >= angleToMoveTo - tolerance) {
+			if (ArmSubsystem.debug) System.out.println("ARM ALREADY IN POSITION");
 			move = false;
 		} else {
 			move = true;
 		}
 	}
 
-	protected void execute() {
-		currentPosition = Robot.armSys.getAngle();
-		if (move = true) {
-			Double speed = (currentPosition - posToMoveTo) / 180;
-			Robot.armSys.set(speed);
+	protected void execute() { 
+		currentAngle = Robot.armSys.getAngle();
+		if (move) {
+			Double speed = (currentAngle - angleToMoveTo) / 180;
+			Robot.armSys.setArmTalonSpeed(speed);
 		}
 
 	}
 
 	protected boolean isFinished() {
-		if (currentPosition >= posToMoveTo - 5 && posToMoveTo + 5 >= currentPosition) {
+		if ((currentAngle >= angleToMoveTo - tolerance && angleToMoveTo + tolerance >= currentAngle) || (!move)) {
 			return true;
 		}
 		return false;
 	}
 
 	protected void end() {
-		Robot.armSys.set(0);
+		Robot.armSys.setArmTalonSpeed(0);
 	}
 
 	protected void interrupted() {
-		System.out.println("[armSys] I've been interrupted!");
-		Robot.armSys.set(0);
+		if (ArmSubsystem.debug) System.out.println("[armSys] I've been interrupted!");
+		Robot.armSys.setArmTalonSpeed(0);
 	}
 
 }
