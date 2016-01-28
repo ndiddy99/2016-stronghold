@@ -49,5 +49,25 @@ public class Climber extends Subsystem {
 			return false;
 		}
 	}
+	public void extendServo() {
+		Swervo.setServo(1.0, 0);
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Swervo.setServo(0, 0);
+	}
+	public void retractServo() {
+		Swervo.setServo(1.0, 180); //i think this should make it go backwards probably
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Swervo.setServo(0, 0);
+	}
 	
 }
