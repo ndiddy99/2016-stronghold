@@ -4,12 +4,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.SerialPort.Port;
+
 public class Sensors {
 	private List<SensorListener> listeners = new ArrayList<SensorListener>();
-	private HashMap<Sensor, Double> sensorVals =  new HashMap<Sensor, Double>();
+	private HashMap<String, Double> sensorVals =  new HashMap<String, Double>();
+	private SerialPort serial = new SerialPort(57600, Port.kMXP);
+	
 	
 	public void registerListener(SensorListener listener) {
 		listeners.add(listener);
+	}
+	
+	public void init() {
+		serial.flush();
 	}
 	
 	/**
@@ -34,7 +43,7 @@ public class Sensors {
 						} else if (iterate = true) {
 							try {
 								val = Integer.parseInt(s);
-								e.addPair(tag, val);
+								sensorVals.put(tag, val);
 								iterate = false;
 							} catch (Exception serialTrouble) {
 								System.out.println("Trouble reading serial");
@@ -70,9 +79,9 @@ public class Sensors {
 
 	private String getLastSentence() {
 		try {
-			int numBytes = SerialSubsystem.serial.getBytesReceived();
+			int numBytes = serial.getBytesReceived();
 			if (numBytes >= 5) {
-				byte readBytes[] = SerialSubsystem.serial.read(numBytes);
+				byte readBytes[] = serial.read(numBytes);
 				String sentence = new String(readBytes);
 				int end = sentence.lastIndexOf('\n');
 				if (end >= 4) {

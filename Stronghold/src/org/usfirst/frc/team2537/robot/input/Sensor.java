@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2537.robot.input;
 
-public enum Sensor {
-	ARM_NINE_DEGREES_OF_FREEDOM;
+public class Sensor {
+	//Put actual tags in later
+	public static final String ARM_ANGLE = "aa";
 }

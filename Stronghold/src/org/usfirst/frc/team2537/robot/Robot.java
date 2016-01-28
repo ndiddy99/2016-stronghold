@@ -1,8 +1,7 @@
 package org.usfirst.frc.team2537.robot;
 
 import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
-import org.usfirst.frc.team2537.robot.input.SerialSubsystem;
-
+import org.usfirst.frc.team2537.robot.input.Sensors;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -19,7 +18,7 @@ public class Robot extends IterativeRobot {
 	final String customAuto = "My Auto";
 	String autoSelected;
 	SendableChooser chooser;
-	public static SerialSubsystem sensorSys;
+	public static Sensors sensorSys;
 	public static ArmSubsystem armSys;
 	// My stuff
 
@@ -33,11 +32,12 @@ public class Robot extends IterativeRobot {
 		chooser.addDefault("Default Auto", defaultAuto);
 		chooser.addObject("My Auto", customAuto);
 		SmartDashboard.putData("Auto choices", chooser);
-		sensorSys = new SerialSubsystem();
-		sensorSys.initDefaultCommand();
+		sensorSys = new Sensors();
+		sensorSys.init();
 		armSys = new ArmSubsystem();
 		armSys.initDefaultCommand();
 		armSys.registerButtons();
+		sensorSys.registerListener(armSys);
 	}
 
 	/**
@@ -61,7 +61,9 @@ public class Robot extends IterativeRobot {
 	/**
 	 * This function is called periodically during autonomous
 	 */
+	
 	public void autonomousPeriodic() {
+		sensorSys.handleEvents();
 		switch (autoSelected) {
 		case customAuto:
 			// Put custom auto code here
@@ -77,6 +79,7 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
+		sensorSys.handleEvents();
 		// Scheduler.getInstance().add(new driveCommand());
 		// System.out.println("hi");
 
@@ -86,6 +89,7 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during test mode
 	 */
 	public void testPeriodic() {
+		sensorSys.handleEvents();
 
 	}
 
