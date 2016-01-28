@@ -1,18 +1,20 @@
 package org.usfirst.frc.team2537.robot.arm;
 
+import java.util.HashMap;
+
 import org.usfirst.frc.team2537.robot.input.HumanInput;
-import org.usfirst.frc.team2537.robot.input.NineDegreesOfFreedom;
 import org.usfirst.frc.team2537.robot.input.Ports;
 import org.usfirst.frc.team2537.robot.input.Sensor;
+import org.usfirst.frc.team2537.robot.input.SensorListener;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class ArmSubsystem extends Subsystem {
+public class ArmSubsystem extends Subsystem implements SensorListener {
 
 	private CANTalon armMotor;
-	private NineDegreesOfFreedom armNDOF = NineDegreesOfFreedom.getInstance();
 	static final boolean debug = true;
+	double currentAngle;
 
 	public ArmSubsystem() {
 		armMotor = new CANTalon(Ports.ARM_TALON);
@@ -30,7 +32,7 @@ public class ArmSubsystem extends Subsystem {
 	}
 
 	public double getAngle() {
-		return armNDOF.getAngle(Sensor.ARM_NINE_DEGREES_OF_FREEDOM);
+		return currentAngle;
 	}
 
 	public void setArmTalonSpeed(double s) {
@@ -39,5 +41,9 @@ public class ArmSubsystem extends Subsystem {
 
 	public double getRightJoystick() {
 		return HumanInput.getXboxAxis(HumanInput.xboxController, HumanInput.XBOX_RIGHT_STICK_Y_AXIS);
+	}
+
+	public void receivedValue(HashMap<String, Double> e) {
+		currentAngle = e.get(Sensor.ARM_ANGLE);
 	}
 }
