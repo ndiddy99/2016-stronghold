@@ -3,11 +3,13 @@ package org.usfirst.frc.team2537.robot;
 import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
 import org.usfirst.frc.team2537.robot.auto.AutoChooser;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
-import org.usfirst.frc.team2537.robot.input.SerialSubsystem;
+import org.usfirst.frc.team2537.robot.input.Sensors;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -19,7 +21,11 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 public class Robot extends IterativeRobot {
 	AutoChooser autoChooser;
 	Command autoCommand;
-	public static SerialSubsystem sensorSys;
+	final String defaultAuto = "Default";
+	final String customAuto = "My Auto";
+	String autoSelected;
+	SendableChooser chooser;
+	public static Sensors sensorSys;
 	public static ArmSubsystem armSys;
 	public static DriveSubsystem driveSys;
 	// My stuff
@@ -29,18 +35,21 @@ public class Robot extends IterativeRobot {
 	 */
 	public void robotInit() {
 		SaberMessage.printMessage();
-		autoChooser = new AutoChooser();
-		
-		sensorSys = new SerialSubsystem();
-		sensorSys.initDefaultCommand();
-		
+		autoChooser = new AutoChooser();		
+		chooser = new SendableChooser();
+		chooser.addDefault("Default Auto", defaultAuto);
+		chooser.addObject("My Auto", customAuto);
+		SmartDashboard.putData("Auto choices", chooser);
+		sensorSys = new Sensors();
+		sensorSys.init();
 		armSys = new ArmSubsystem();
 		armSys.initDefaultCommand();
 		armSys.registerButtons();
-		
+
 		driveSys = new DriveSubsystem();
 		driveSys.initDefaultCommand();
 		driveSys.registerButtons();
+		sensorSys.registerListener(armSys);
 	}
 
 	/**
@@ -62,8 +71,19 @@ public class Robot extends IterativeRobot {
 	/**
 	 * This function is called periodically during autonomous
 	 */
+	
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		sensorSys.handleEvents();
+		switch (autoSelected) {
+		case customAuto:
+			// Put custom auto code here
+			break;
+		case defaultAuto:
+		default:
+			// Put default auto code here
+			break;
+		}
 	}
 
 	/**
@@ -80,12 +100,17 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		sensorSys.handleEvents();
+		// Scheduler.getInstance().add(new driveCommand());
+		// System.out.println("hi");
+
 	}
 
 	/**
 	 * This function is called periodically during test mode
 	 */
 	public void testPeriodic() {
+		sensorSys.handleEvents();
 
 	}
 

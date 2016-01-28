@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team2537.robot.input.xBoxButtons;
 
 public class HumanInput {
 	public static final int XBOX_LEFT_STICK_X_AXIS = 0,
@@ -16,12 +17,12 @@ public class HumanInput {
 	public static Joystick leftJoystick = new Joystick(Ports.JOYSTICK_ONE_PORT);
 	public static Joystick rightJoystick = new Joystick(Ports.JOYSTICK_TWO_PORT);
 	
-	// replace the following 0s with actual numbers once you test them
-	public static Button lowerArm = new JoystickButton(xboxController, 0);
-	public static Button raiseArm = new JoystickButton(xboxController, 0);
-	public static Button neutralArm = new JoystickButton(xboxController, 0);
+
 	public static Button driveStraight = new JoystickButton(rightJoystick, 0);
 	public static Button driveSensetivityToggle = new JoystickButton(xboxController, 0);
+	public static Button lowerArm = new JoystickButton(xboxController, xBoxButtons.XBOX_A);
+	public static Button raiseArm = new JoystickButton(xboxController, xBoxButtons.XBOX_Y);
+	public static Button neutralArm = new JoystickButton(xboxController, xBoxButtons.XBOX_B);
 
 	public static void registerPressedCommand(Button b, Command c) {
 		b.whenPressed(c);
