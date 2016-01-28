@@ -11,6 +11,7 @@ public class AutoChooser {
         autoChoice.addDefault("Default Autonomous", new DefaultAutoCommand());
         autoChoice.addObject("Drive Straight Forever", new AutoDriveStraightCommand());
         autoChoice.addObject("Spin forever", new AutoRotateCommand());
+        autoChoice.addObject("DriveTo (5, 5)", new AutoDriveToCommandGroup(5, 5));
         SmartDashboard.putData("Andrew's code (copied and pasted)", autoChoice);
 	}
 	public Command getAutoChoice(){
