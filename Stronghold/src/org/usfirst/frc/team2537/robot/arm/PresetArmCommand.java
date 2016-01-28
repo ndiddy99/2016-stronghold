@@ -11,6 +11,7 @@ public class PresetArmCommand extends Command {
 	boolean move;
 
 	public PresetArmCommand(double position) {
+		this.requires(Robot.armSys);
 		posToMoveTo = position;
 	}
 
@@ -35,7 +36,7 @@ public class PresetArmCommand extends Command {
 	}
 
 	protected boolean isFinished() {
-		if (currentPosition >= posToMoveTo - 5 && posToMoveTo + 5 >= currentPosition) {
+		if ((currentPosition >= posToMoveTo - 5 && posToMoveTo + 5 >= currentPosition) || (!move)) {
 			return true;
 		}
 		return false;
