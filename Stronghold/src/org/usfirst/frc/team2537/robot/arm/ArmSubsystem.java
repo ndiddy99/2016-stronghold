@@ -3,7 +3,7 @@ package org.usfirst.frc.team2537.robot.arm;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 import org.usfirst.frc.team2537.robot.input.NineDegreesOfFreedom;
 import org.usfirst.frc.team2537.robot.input.Ports;
-import org.usfirst.frc.team2537.robot.input.SensorEnum;
+import org.usfirst.frc.team2537.robot.input.Sensor;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -12,14 +12,14 @@ public class ArmSubsystem extends Subsystem {
 
 	private CANTalon armMotor;
 	private NineDegreesOfFreedom armNDOF = NineDegreesOfFreedom.getInstance();
+	static final boolean debug = true;
 
 	public ArmSubsystem() {
 		armMotor = new CANTalon(Ports.ARM_TALON);
 	}
 
 	public void initDefaultCommand() {
-		// TODO Auto-generated method stub
-		ArmCommand manual = new ArmCommand();
+		ArmManualMovementCommand manual = new ArmManualMovementCommand();
 		this.setDefaultCommand(manual);
 	}
 
@@ -30,10 +30,10 @@ public class ArmSubsystem extends Subsystem {
 	}
 
 	public double getAngle() {
-		return armNDOF.getAngle(SensorEnum.ARM_NINE_DEGREES_OF_FREEDOM);
+		return armNDOF.getAngle(Sensor.ARM_NINE_DEGREES_OF_FREEDOM);
 	}
 
-	public void set(double s) {
+	public void setArmTalonSpeed(double s) {
 		armMotor.set(s);
 	}
 
