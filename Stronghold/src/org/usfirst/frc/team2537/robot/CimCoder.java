@@ -19,10 +19,6 @@ public class CimCoder extends Subsystem {
 	public int getCount(){
 		return enc.get();
 	}
-	
-		
-	
-
 	@Override
 	protected void initDefaultCommand() { // srry but Im a noob here - whats this for ( does it replace the constructor)? -  Karan
 	

@@ -1,7 +1,10 @@
 package org.usfirst.frc.team2537.robot;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
-public class Climber extends Subsystem {	//i've been informed that there's 2 motors instead of one, so i made the
+import edu.wpi.first.wpilibj.DigitalInput;
+public class Climber extends Subsystem {
+	DigitalInput switcho; //it wouldnt let me name the switch switch
+											//i've been informed that there's 2 motors instead of one, so i made the
 	public void initDefaultCommand() {		//changes to fix this -nathan
 		System.out.println("enabling climber (remove before competition)");
     }
@@ -36,6 +39,15 @@ public class Climber extends Subsystem {	//i've been informed that there's 2 mot
 		}
 		climber1.set(0);
 		climber2.set(0);
+	}
+	public boolean isMechanismExtended() {
+		switcho=new DigitalInput(1);
+		if (switcho.get()) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 }
