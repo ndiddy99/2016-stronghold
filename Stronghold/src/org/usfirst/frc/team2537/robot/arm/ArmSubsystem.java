@@ -2,7 +2,6 @@ package org.usfirst.frc.team2537.robot.arm;
 
 import java.util.HashMap;
 
-import org.usfirst.frc.team2537.robot.Robot;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 import org.usfirst.frc.team2537.robot.input.Ports;
 import org.usfirst.frc.team2537.robot.input.Sensor;
