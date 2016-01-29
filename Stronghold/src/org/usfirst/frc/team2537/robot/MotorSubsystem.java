@@ -8,18 +8,27 @@ public class MotorSubsystem extends Subsystem {
 	public CANTalon rightFront;
 	public CANTalon leftBack;
 	public CANTalon leftFront;
-	public static CANTalon climber;
+	public static CANTalon climberF;
+	public static CANTalon climberB;
+	
 
 	public MotorSubsystem() {
 		rightFront = new CANTalon(3);
 		rightBack = new CANTalon(4);
 		leftFront = new CANTalon(2);
 		leftBack = new CANTalon(1);
-		climber = new CANTalon(5);
+		climberF = new CANTalon(5);
+		climberB = new CANTalon(6);
+		climberF.configEncoderCodesPerRev(20);
+		climberB.configEncoderCodesPerRev(20);
 	}
 	
 	public static void set(CANTalon t, double speed) {
 		t.set(speed);
+	}
+	public static void getEncValue(CANTalon t){
+		t.getEncPosition();
+		
 	}
 
 	@Override
