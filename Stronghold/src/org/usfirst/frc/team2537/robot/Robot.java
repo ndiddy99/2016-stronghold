@@ -1,10 +1,14 @@
 package org.usfirst.frc.team2537.robot;
 
-import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
-import org.usfirst.frc.team2537.robot.input.Sensors;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
+import org.usfirst.frc.team2537.robot.input.Sensors;
+import org.usfirst.frc.team2537.robot.shooter.angle.AngleSubsystem;
+import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -18,9 +22,12 @@ public class Robot extends IterativeRobot {
 	final String customAuto = "My Auto";
 	String autoSelected;
 	SendableChooser chooser;
-	public static Sensors sensorSys;
-	public static ArmSubsystem armSys;
 	// My stuff
+	public static final Drivetrain drivetrain = new Drivetrain();
+	public static Sensors sensorSys;//TO be done.
+	public static ArmSubsystem armSys;
+	public static final FlywheelSubsystem shooterFlywheelSubsystem = new FlywheelSubsystem();
+	public static final AngleSubsystem shooterAngleSys = new AngleSubsystem();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -35,9 +42,10 @@ public class Robot extends IterativeRobot {
 		sensorSys = new Sensors();
 		sensorSys.init();
 		armSys = new ArmSubsystem();
-		armSys.initDefaultCommand();
 		armSys.registerButtons();
+		armSys.initDefaultCommand();
 		sensorSys.registerListener(armSys);
+		sensorSys.registerListener(shooterAngleSys);
 	}
 
 	/**
@@ -61,9 +69,7 @@ public class Robot extends IterativeRobot {
 	/**
 	 * This function is called periodically during autonomous
 	 */
-	
 	public void autonomousPeriodic() {
-		sensorSys.handleEvents();
 		switch (autoSelected) {
 		case customAuto:
 			// Put custom auto code here
@@ -79,8 +85,8 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-		sensorSys.handleEvents();
 		// Scheduler.getInstance().add(new driveCommand());
+		drivetrain.inputRecieved(new HumanInputEvent());
 		// System.out.println("hi");
 
 	}
@@ -89,7 +95,6 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during test mode
 	 */
 	public void testPeriodic() {
-		sensorSys.handleEvents();
 
 	}
 
