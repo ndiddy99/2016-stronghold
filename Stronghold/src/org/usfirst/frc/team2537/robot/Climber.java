@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.DigitalInput;
 public class Climber extends Subsystem {
 	DigitalInput switcho; //it wouldnt let me name the switch switch
-											//i've been informed that there's 2 motors instead of one, so i made the
+	DigitalInput tapeswitcho;				//i've been informed that there's 2 motors instead of one, so i made the
 	public void initDefaultCommand() {		//changes to fix this -nathan
 		System.out.println("enabling climber (remove before competition)");
     }
@@ -68,6 +68,15 @@ public class Climber extends Subsystem {
 			e.printStackTrace();
 		}
 		Swervo.setServo(0, 0);
+	}
+	public boolean istapeExtended() {
+		tapeswitcho=new DigitalInput(1);
+		if (tapeswitcho.get()) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 }
