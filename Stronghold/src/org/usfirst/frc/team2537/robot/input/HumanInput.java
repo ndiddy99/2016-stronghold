@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team2537.robot.input.xBoxButtons;
+import org.usfirst.frc.team2537.robot.input.XBoxButtons;
 
 public class HumanInput {
 	public static final int
@@ -19,9 +19,9 @@ public class HumanInput {
 	public static Joystick xboxController = new Joystick(Ports.XBOX);
 	
 	//replace the following 0s with actual numbers once you test them
-	public static Button lowerArm = new JoystickButton(xboxController, xBoxButtons.XBOX_A);
-	public static Button raiseArm = new JoystickButton(xboxController, xBoxButtons.XBOX_Y);
-	public static Button neutralArm = new JoystickButton(xboxController, xBoxButtons.XBOX_B);
+	public static Button lowerArm = new JoystickButton(xboxController, XBoxButtons.XBOX_A);
+	public static Button raiseArm = new JoystickButton(xboxController, XBoxButtons.XBOX_Y);
+	public static Button neutralArm = new JoystickButton(xboxController, XBoxButtons.XBOX_B);
 	
 	public static void registerPressedCommand(Button b, Command c) {
 		 b.whenPressed(c);
@@ -32,7 +32,7 @@ public class HumanInput {
 	}
 	
 	public static boolean getLeftTriggerState() {
-		if (getXboxAxis(xboxController, xBoxButtons.XBOX_TRIGGERS) > 0.5) {
+		if (getXboxAxis(xboxController, XBoxButtons.XBOX_TRIGGERS) > 0.5) {
 			return true;
 		} else {
 			return false;
@@ -40,7 +40,7 @@ public class HumanInput {
 	}
 	
 	public static boolean getRightTriggerState() {
-		if (getXboxAxis(xboxController, xBoxButtons.XBOX_TRIGGERS) < -0.5) {
+		if (getXboxAxis(xboxController, XBoxButtons.XBOX_TRIGGERS) < -0.5) {
 			return true;
 		} else {
 			return false;
