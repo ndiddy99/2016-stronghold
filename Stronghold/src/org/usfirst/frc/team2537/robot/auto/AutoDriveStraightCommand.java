@@ -22,7 +22,12 @@ public class AutoDriveStraightCommand extends Command{
 	 * @param distance in inches
 	 */
 	public AutoDriveStraightCommand(double distance){
-		this(distance, DEFAULT_SPEED);
+		requires(Robot.driveSys);
+		this.distance = distance;
+		if(distance < 0)
+			speed = -DEFAULT_SPEED;
+		else
+			speed = DEFAULT_SPEED;
 	}
 	
 	/**
@@ -50,6 +55,8 @@ public class AutoDriveStraightCommand extends Command{
 
 	@Override
 	protected boolean isFinished() {
+		if(distance < 0)
+			return (Robot.driveSys.getEncoders() <= distance);
 		return (Robot.driveSys.getEncoders() >= distance);
 	}
 
