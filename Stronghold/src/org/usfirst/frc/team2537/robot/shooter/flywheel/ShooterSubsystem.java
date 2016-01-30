@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 import org.usfirst.frc.team2537.robot.input.Ports;
 import org.usfirst.frc.team2537.robot.shooter.HarvestCommand;
+import org.usfirst.frc.team2537.robot.shooter.ShooterCommandGroup;
 import org.usfirst.frc.team2537.robot.shooter.SpinUpWheelsCommand;
 
 public class ShooterSubsystem extends Subsystem {	
@@ -44,7 +45,7 @@ public class ShooterSubsystem extends Subsystem {
     }
 	
 	public void registerButtons() {
-		HumanInput.registerPressedCommand(HumanInput.ballShootTrigger, new SpinUpWheelsCommand());
+		HumanInput.registerPressedCommand(HumanInput.ballShootTrigger, new ShooterCommandGroup());
 		HumanInput.registerPressedCommand(HumanInput.harvestBallTrigger, new HarvestCommand());
 		
 	}
