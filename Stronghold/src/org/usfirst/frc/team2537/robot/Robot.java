@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
 import org.usfirst.frc.team2537.robot.input.Sensors;
 import edu.wpi.first.wpilibj.IterativeRobot;
->>>>>>> refs/heads/manipulatorArm
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //walcome
@@ -20,6 +19,8 @@ public class Robot extends IterativeRobot {
     final String customAuto = "My Auto";
     String autoSelected;
     SendableChooser chooser;
+    public static Sensors sensorSys;
+    public static ArmSubsystem armSys;
     public static MotorSubsystem driveSys;
     public static Climber Climb;
     DigitalInput limitSwitch;
@@ -60,7 +61,6 @@ public class Robot extends IterativeRobot {
 		System.out.println("Auto selected: " + autoSelected);
 		System.out.println("autonomousInit completed");
     }
-	}
 
 	/**
 	 * This function is called periodically during autonomous
