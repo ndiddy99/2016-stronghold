@@ -35,7 +35,7 @@ public class HarvestCommand extends Command {
 	@Override
 	protected void execute() {
 		
-		Math.abs(AngleSubsystem.getCurrentAngle()) - Math.abs(DESIRED_HARVEST_ANGLE);
+		
 		
 	
 	}

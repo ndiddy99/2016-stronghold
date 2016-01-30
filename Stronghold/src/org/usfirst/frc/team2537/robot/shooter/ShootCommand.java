@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2537.robot.shooter;
 
+import org.usfirst.frc.team2537.robot.Robot;
 import org.usfirst.frc.team2537.robot.shooter.flywheel.ShooterSubsystem;
 import org.usfirst.frc.team2537.robot.shooter.flywheel.SyncFlywheelCommand;
 
@@ -7,10 +8,13 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class ShootCommand extends Command {
 	//Speed
-	private static final double SHOOT_SPEED = .5;
+	private static final double SHOOT_SPEED = 5;
 	private static final double OFF_SPEED = 0;
-	private static boolean isFinished = false;
-
+	private boolean isFinished = false;
+	private static final double SPEED_INCREMENT = .05;
+	private static final double SPEED_PROXIMITY = .5;
+	private double currentLeftFlywheelSpeed = 0.0;
+	private double currentRightFlywheelSpeed = 0.0;
     public ShootCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -20,26 +24,34 @@ public class ShootCommand extends Command {
     
     @Override
     public boolean isFinished(){
-    	//As of right now, this is never finished.
-    	return isFinished;
+   
+    	return (isInRange(ShooterSubsystem.getLeftFlywheelSpeed()) && isInRange(ShooterSubsystem.getRightFlywheelSpeed()));
+
     }
 
 	@Override
 	protected void end() {
+		
 		ShooterSubsystem.setLeftFlywheelSpeed(OFF_SPEED);
 		ShooterSubsystem.setRightFlywheelSpeed(OFF_SPEED);
-		
+		ShooterSubsystem.retractSolenoid();
 	}
 
 	@Override
 	protected void execute() {
-		for(double i = 0; i < SHOOT_SPEED; i+=.05) {
-			ShooterSubsystem.setLeftFlywheelSpeed(SHOOT_SPEED);
-			ShooterSubsystem.setRightFlywheelSpeed(SHOOT_SPEED);
+		currentLeftFlywheelSpeed = ShooterSubsystem.getLeftFlywheelSpeed();
+		currentLeftFlywheelSpeed = incrementTowardsRange(currentLeftFlywheelSpeed);
+		ShooterSubsystem.setLeftFlywheelSpeed(currentLeftFlywheelSpeed);
+		currentRightFlywheelSpeed = ShooterSubsystem.getRightFlywheelSpeed();
+		currentRightFlywheelSpeed = incrementTowardsRange(currentRightFlywheelSpeed);
+		ShooterSubsystem.setRightFlywheelSpeed(currentRightFlywheelSpeed);
+			
+		if((isInRange(ShooterSubsystem.getLeftFlywheelSpeed()) && isInRange(ShooterSubsystem.getRightFlywheelSpeed()))) {
+			ShooterSubsystem.actuateSolenoid();
 		}
+		
 
-	ShooterSubsystem.actuateSolenoid();
-	isFinished = true;
+	
 	}
 
 	@Override
@@ -52,6 +64,24 @@ public class ShootCommand extends Command {
 	protected void interrupted() {
 		ShooterSubsystem.setLeftFlywheelSpeed(OFF_SPEED);
 		ShooterSubsystem.setRightFlywheelSpeed(OFF_SPEED);
+		
+	}
+	private double incrementTowardsRange(double speed) {
+		if(speed < SHOOT_SPEED - SPEED_PROXIMITY) {
+			 return speed + SPEED_INCREMENT;
+			 
+		} else if(speed > SHOOT_SPEED + SPEED_PROXIMITY) {
+			 return speed - SPEED_INCREMENT;
+		}
+		return speed;
+	}
+	private boolean isInRange(double speed) {
+		if(speed < SHOOT_SPEED - SPEED_PROXIMITY) {
+			 return false;
+		} else if(speed > SHOOT_SPEED + SPEED_PROXIMITY) {
+			 return false;
+		}
+		return true;
 		
 	}
 }

@@ -32,7 +32,9 @@ public class ShooterSubsystem extends Subsystem {
 	public static void actuateSolenoid() {
 		ballPistonPusher.set(true);
 	}
-
+	public static void retractSolenoid() {
+		ballPistonPusher.set(false);
+	}
 	@Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
