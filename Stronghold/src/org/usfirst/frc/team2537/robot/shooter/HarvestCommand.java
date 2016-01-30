@@ -2,7 +2,6 @@ package org.usfirst.frc.team2537.robot.shooter;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-import org.usfirst.frc.team2537.robot.shooter.flywheel.OldFlywheelCommand;
 import org.usfirst.frc.team2537.robot.shooter.angle.AngleSubsystem;
 import org.usfirst.frc.team2537.robot.shooter.angle.PresetAngleCommand;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
