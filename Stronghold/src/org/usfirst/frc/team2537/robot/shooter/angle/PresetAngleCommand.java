@@ -73,7 +73,7 @@ public class PresetAngleCommand extends Command {
 	//A few little tasks.
 	private void updateAngle(){
 		//Get the angle.
-		this.currentPosition = Robot.shooterAngleSys.getAngle();
+		currentPosition = Robot.shooterAngleSys.getCurrentAngle();
 	}
 	
 	protected boolean shouldMove(){

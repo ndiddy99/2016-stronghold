@@ -43,7 +43,7 @@ public class ShooterSubsystem extends Subsystem {
 	
 	public void registerButtons() {
 		HumanInput.registerPressedCommand(HumanInput.ballShootTrigger, new ShootCommand());
-		HumanInput.registerPressedCommand(HumanInput.harvestBallTrigger, new ShootCommand());
+		HumanInput.registerPressedCommand(HumanInput.harvestBallTrigger, new HarvestCommand());
 		
 	}
 	//Shooter Left Flywheel controls.

@@ -33,8 +33,11 @@ public class ShootCommand extends Command {
 
 	@Override
 	protected void execute() {
-	ShooterSubsystem.setLeftFlywheelSpeed(SHOOT_SPEED);
-	ShooterSubsystem.setRightFlywheelSpeed(SHOOT_SPEED);
+		for(double i = 0; i < SHOOT_SPEED; i+=.05) {
+			ShooterSubsystem.setLeftFlywheelSpeed(SHOOT_SPEED);
+			ShooterSubsystem.setRightFlywheelSpeed(SHOOT_SPEED);
+		}
+
 	ShooterSubsystem.actuateSolenoid();
 	isFinished = true;
 	}

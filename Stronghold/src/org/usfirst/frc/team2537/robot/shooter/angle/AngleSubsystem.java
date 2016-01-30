@@ -26,7 +26,7 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	//The angle limits.
 	public static final double MAX_ANGLE = 80;//degrees (ball park, not right)
 	public static final double MIN_ANGLE = -40;//degrees(ball park, not right)
-	double currentAngle = 0;
+	private static double currentAngle = 0;
 	
 	public AngleSubsystem() {
 		//Start things.
@@ -95,11 +95,10 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 		return HumanInput.getXboxAxis(HumanInput.xboxController, HumanInput.XBOX_LEFT_STICK_Y_AXIS);
 	}
 
-	public void receivedValue(HashMap<String, Double> e) {
-		currentAngle = e.get(Sensor.SHOOTER_ANGLE);
+	public void receivedValue(HashMap<String, Double> sensorMap) {
+		currentAngle = sensorMap.get(Sensor.SHOOTER_ANGLE);
 	}
-
-	public double getAngle() {
+	public static double getCurrentAngle() {
 		return currentAngle;
 	}
 }
