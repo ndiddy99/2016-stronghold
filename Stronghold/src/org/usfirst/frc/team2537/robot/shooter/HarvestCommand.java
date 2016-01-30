@@ -15,7 +15,6 @@ import org.usfirst.frc.team2537.robot.input.HumanInput;
  *
  */
 public class HarvestCommand extends Command {
-	public static final int HARVEST_TRIGGER = HumanInput.XBOX_LEFT_TRIGGER_AXIS;
 	//Harvest Speed
 	private static final double HARVEST_SPEED = -.1;
 	private static final double DESIRED_HARVEST_ANGLE = -20;
