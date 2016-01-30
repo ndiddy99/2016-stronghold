@@ -10,7 +10,7 @@ import org.usfirst.frc.team2537.robot.input.Ports;
 import org.usfirst.frc.team2537.robot.shooter.HarvestCommand;
 import org.usfirst.frc.team2537.robot.shooter.HarvestCommandGroup;
 import org.usfirst.frc.team2537.robot.shooter.ShooterCommandGroup;
-import org.usfirst.frc.team2537.robot.shooter.SpinUpWheelsCommand;
+import org.usfirst.frc.team2537.robot.shooter.FlywheelCommand;
 
 public class ShooterSubsystem extends Subsystem {	
 	//Motors
@@ -51,7 +51,7 @@ public class ShooterSubsystem extends Subsystem {
 		
 	}
 	//Shooter Left Flywheel controls.
-	public static double getLeftFlywheelSpeed() {
+	public double getLeftFlywheelSpeed() {
 		return leftFlywheelMotor.getEncVelocity();
 	}
 	
@@ -61,12 +61,12 @@ public class ShooterSubsystem extends Subsystem {
 	 * @param speed The voltage amount the wheel will be set to. 
 	 * 				This should be [-1, 1].
 	 */
-	public static void setLeftFlywheelSpeed(double speed) {
+	public void setLeftFlywheelSpeed(double speed) {
 		leftFlywheelMotor.set(speed);
 	}
 	
 	//Shooter Right Flywheel controls.
-	public static double getRightFlywheelSpeed() {
+	public double getRightFlywheelSpeed() {
 		return rightFlywheelMotor.getEncVelocity();
 	}
 	
@@ -76,7 +76,7 @@ public class ShooterSubsystem extends Subsystem {
 	 * @param speed The voltage amount the wheel will be set to. 
 	 * 				This should be [-1, 1].
 	 */
-	public static void setRightFlywheelSpeed(double speed) {
+	public  void setRightFlywheelSpeed(double speed) {
 		rightFlywheelMotor.set(speed);
 	}
 	

@@ -2,7 +2,7 @@ package org.usfirst.frc.team2537.robot.shooter;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc.team2537.robot.shooter.angle.PresetAngleCommand;
-import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelCommand;
+import org.usfirst.frc.team2537.robot.shooter.flywheel.OldFlywheelCommand;
 
 /**
  *
@@ -29,6 +29,6 @@ public class HarvestCommandGroup extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	addParallel(new PresetAngleCommand(HARVEST_ANGLE));
-    	addSequential(new FlywheelCommand(HARVEST_SPEED));
+    	addSequential(new OldFlywheelCommand(HARVEST_SPEED));
     }
 }

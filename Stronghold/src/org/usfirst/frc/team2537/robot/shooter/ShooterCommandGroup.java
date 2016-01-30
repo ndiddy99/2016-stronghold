@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class ShooterCommandGroup extends CommandGroup {
     
     public  ShooterCommandGroup() {
-    	addSequential(new SpinUpWheelsCommand());
+    	addSequential(new FlywheelCommand());
     	addSequential(new EjectBallCommand());
     	
         // Add Commands here:
