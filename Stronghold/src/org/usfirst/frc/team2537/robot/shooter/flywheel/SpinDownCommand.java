@@ -6,6 +6,7 @@ import org.usfirst.frc.team2537.robot.Robot;
  *
  */
 public class SpinDownCommand extends Command {
+	private static final boolean WAIT_TO_FINISH = false;
 
     public SpinDownCommand() {
         // Use requires() here to declare subsystem dependencies
@@ -27,9 +28,12 @@ public class SpinDownCommand extends Command {
     @Override
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.shooterFlywheelSys.getLeftFlywheelVelocity() == 0 
+    	if (!WAIT_TO_FINISH){
+    		return true;
+    	}
+        return (Robot.shooterFlywheelSys.getLeftFlywheelVelocity() == 0 
         		&&
-        		Robot.shooterFlywheelSys.getRightFlywheelVelocity() == 0;
+        		Robot.shooterFlywheelSys.getRightFlywheelVelocity() == 0);
     }
     
     @Override
