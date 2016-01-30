@@ -2,15 +2,16 @@ package org.usfirst.frc.team2537.robot.shooter;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc.team2537.robot.shooter.angle.MoveToAngleCommand;
+import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelCommand;
 
 /**
  *
  */
-public class HarvestCommand extends CommandGroup {
+public class HarvestCommandGroup extends CommandGroup {
 	private static final double HARVEST_ANGLE = -10;
 	private static final double HARVEST_SPEED = -.1;
     
-    public HarvestCommand() {
+    public HarvestCommandGroup() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -29,5 +30,8 @@ public class HarvestCommand extends CommandGroup {
         // arm.
     	addParallel(new MoveToAngleCommand(HARVEST_ANGLE));
     	addSequential(new FlywheelCommand(HARVEST_SPEED));
+    	
+    	
+    	
     }
 }

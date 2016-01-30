@@ -1,82 +1,74 @@
 package org.usfirst.frc.team2537.robot.shooter.flywheel;
 
-import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team2537.robot.Robot;
-import java.lang.Math;
+import edu.wpi.first.wpilibj.command.Command;
 
 public class FlywheelCommand extends Command {
-	//The varibles.
-	protected final double speed;
-	protected double leftSpeed = 0;
-	protected double rightSpeed = 0;
-	protected static final double CHANGE_SPEED = 5;//MAX_SPEED change.
-	protected static final double ACCURACY = 5;
+	//Speed
+	private static final double SPEED_INCREMENT = .05;
+	private static final double SPEED_PROXIMITY = .5;
+	private double currentLeftFlywheelSpeed = 0.0;
+	private double currentRightFlywheelSpeed = 0.0;
+	private double targetSpeed;
 	
     public FlywheelCommand(double speed) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	super();
-    	this.requires(Robot.shooterFlywheelSys);
-    	this.speed = speed;
+    	//super(FlywheelShootSpeed);
+    	//if (flywheelSpeed < 0) System.out.println("Negative speed of " + speed + "given to flywheel spin up.");
+    	targetSpeed = speed;
+    }
+    
+	@Override
+	protected void initialize() {
+		//Get the motor values to start with.
+		currentLeftFlywheelSpeed = Robot.shooterFlywheelSys.getLeftFlywheelVelocity();
+		currentRightFlywheelSpeed = Robot.shooterFlywheelSys.getRightFlywheelVelocity();
+		
+	}
+   
+    @Override
+    public boolean isFinished(){
+   
+    	return (isInRange(Robot.shooterFlywheelSys.getLeftFlywheelVelocity()) && 
+    			isInRange(Robot.shooterFlywheelSys.getRightFlywheelVelocity()));
+
     }
 
-    @Override
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    	//Starting the flywheels.
-    	System.out.println("Spinning wheels up to " + speed);
-    }
-    
-    @Override
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	//Before anything else happens. Check temperature and make sure we are not on fire.
-    	if (Robot.shooterFlywheelSys.isTemperatureFault()) {
-    		//THIS IS BAD.
-    		//A MOTOR IS ON FIRE!!
-    		System.out.println("A FLYWHEEL MOTOR IS ON FIRE!!!");
-    		System.err.println("A FLYWHEEL MOTOR IS ON FIRE!!!");
-    	}
-    	//Left Flywheel
-    	//Should Speed up.
-    	double diffLeftSpeed = Robot.shooterFlywheelSys.getLeftFlywheelVelocity() - this.speed;
-    	if (ACCURACY < Math.abs(diffLeftSpeed)){
-    		//Speed is too slow OR to fast.
-    		this.leftSpeed += diffLeftSpeed / CHANGE_SPEED;
-    		Robot.shooterFlywheelSys.setLeftFlywheelVelocity(leftSpeed);
-    	}
-    	//Right Flywheel
-    	double diffRightSpeed = Robot.shooterFlywheelSys.getRightFlywheelVelocity() - this.speed;
-    	if (ACCURACY < Math.abs(diffRightSpeed)){
-    		//Speed is too slow OR to fast.
-    		this.rightSpeed += diffRightSpeed / CHANGE_SPEED;
-    	}
-    }
-    
-    @Override
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return ACCURACY >= Math.abs(Robot.shooterFlywheelSys.getLeftFlywheelVelocity() - this.speed)
-        		//Left in range.
-        		&& 
-        		//Right in range.
-        		ACCURACY >= Math.abs(Robot.shooterFlywheelSys.getRightFlywheelVelocity() - this.speed);
-    }
-    
-    @Override
-    // Called once after isFinished returns true
-    protected void end() {
-    	//Let the wheels keep spinning!!!
-    	//Set the wheels to the exact speed
-    }
-    
-    @Override
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    	//What should I do here!!!
-    	System.out.println("Flywheels interupted for " + this.getClass().toString() + ". Going to emergancy shutdown.");
-    	Robot.shooterFlywheelSys.setLeftFlywheelVelocity(0);
-    	Robot.shooterFlywheelSys.setRightFlywheelVelocity(0);
-    }
+	@Override
+	protected void end() {
+	}
+
+	@Override
+	protected void execute() {
+		currentLeftFlywheelSpeed = Robot.shooterFlywheelSys.getLeftFlywheelVelocity();
+		currentLeftFlywheelSpeed = incrementTowardsRange(currentLeftFlywheelSpeed);
+		Robot.shooterFlywheelSys.setLeftFlywheelVelocity(currentLeftFlywheelSpeed);
+		currentRightFlywheelSpeed = Robot.shooterFlywheelSys.getRightFlywheelVelocity();
+		currentRightFlywheelSpeed = incrementTowardsRange(currentRightFlywheelSpeed);
+		Robot.shooterFlywheelSys.setRightFlywheelVelocity(currentRightFlywheelSpeed);
+			
+		
+
+	
+	}
+
+	@Override
+	protected void interrupted() {
+		Robot.shooterFlywheelSys.setLeftFlywheelVelocity(0);
+		Robot.shooterFlywheelSys.setRightFlywheelVelocity(0);
+		
+	}
+	private double incrementTowardsRange(double speed) {
+		if(speed < targetSpeed - SPEED_PROXIMITY) {
+			 return speed + SPEED_INCREMENT;
+			 
+		} else if(speed > targetSpeed + SPEED_PROXIMITY) {
+			 return speed - SPEED_INCREMENT;
+		}
+		return speed;
+	}
+	private boolean isInRange(double speed) {
+		return Math.abs(speed - targetSpeed) <= SPEED_PROXIMITY;
+	}
 }
