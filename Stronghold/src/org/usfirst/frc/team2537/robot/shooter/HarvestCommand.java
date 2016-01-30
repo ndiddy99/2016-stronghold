@@ -10,7 +10,7 @@ public class HarvestCommand extends CommandGroup {
 	private static final double HARVEST_ANGLE = -10;
 	private static final double HARVEST_SPEED = -.1;
     
-    public  HarvestCommand() {
+    public HarvestCommand() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
