@@ -45,12 +45,12 @@ public class AutoDriveStraightCommand extends Command{
 
 	@Override
 	protected void execute() {
-		if(debug) System.out.println("[AutoDriveStraightCommand] Current distance: " + (Robot.driveSys.getLeftEncoders() + Robot.driveSys.getRightEncoders())/2);
+		if(debug) System.out.println("[AutoDriveStraightCommand] Current distance: " + Robot.driveSys.getEncoders());
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return ((Robot.driveSys.getLeftEncoders() + Robot.driveSys.getRightEncoders())/2 >= distance);
+		return (Robot.driveSys.getEncoders() >= distance);
 	}
 
 	@Override

@@ -9,6 +9,7 @@ public class AutoRotateCommand extends Command{
 	private double angle; //are we using angle sensors (magnetometer, etc) or distance sensors (encoders)?
 	private static final boolean debug = false;
 	private static final double DEFAULT_SPEED = 0.5;
+	private static final double ROBOT_DIAMETER = 10; //Inches  TODO: Magic numbers are fun
 	
 	/**
 	 * spins 10000000 degrees at default speed
@@ -47,13 +48,12 @@ public class AutoRotateCommand extends Command{
 
 	@Override
 	protected void execute() {
-		//TODO: if(debug) print current angle + target angle
+		if(debug) System.out.println("[AutoRotateCommand] Current angle: " + getCurrentAngle());
 	}
 
 	@Override
 	protected boolean isFinished() {
-		//TODO: If angle spun >= angle return true
-		return false;
+		return getCurrentAngle() >= angle;
 	}
 
 	@Override
@@ -68,4 +68,7 @@ public class AutoRotateCommand extends Command{
 		Robot.driveSys.setDriveMotors(0);
 	}
 
+	private double getCurrentAngle(){
+		return 360 * Robot.driveSys.getEncoders()/2/ROBOT_DIAMETER * Math.PI;
+	}
 }

@@ -88,11 +88,19 @@ public class DriveSubsystem extends Subsystem{
 	}
 	
 	/**
+	 * returns the average between all the encoders
+	 */
+	public double getEncoders(){
+		return (getLeftEncoders() + getRightEncoders())/2;
+	}
+	
+	/**
 	 * Gets the average value of the left drive encoders
+	 * compensates for negative left values
 	 * @return the average of the front left and back left encoders in inches
 	 */
 	public double getLeftEncoders(){
-		return (talonBackLeft.getEncPosition() + talonFrontLeft.getEncPosition())/2/PulsesPerRevolution * WHEEL_DIAMETER * Math.PI - initialLeftEncoders;
+		return -(talonBackLeft.getEncPosition() + talonFrontLeft.getEncPosition())/2/PulsesPerRevolution * WHEEL_DIAMETER * Math.PI - initialLeftEncoders;
 	}
 	
 	/**
