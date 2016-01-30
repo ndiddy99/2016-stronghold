@@ -16,6 +16,9 @@ public final class Ports {
 	BACK_LEFT_TALON_PORT = 4,
 	
 	//Other Talon
-	ARM_TALON = 5; //Change when confirmed
+	ARM_TALON = 5, //Change when confirmed
+	TALON_SHOOTER_ANGLE_PORT = 0,
+	TALON_LEFT_FLYWHEEL_PORT = 1,
+	TALON_RIGHT_FLYWHEEL_PORT = 2;
 
 }

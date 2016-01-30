@@ -26,7 +26,7 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	//The angle limits.
 	public static final double MAX_ANGLE = 80;//degrees (ball park, not right)
 	public static final double MIN_ANGLE = -40;//degrees(ball park, not right)
-	double currentAngle;
+	double currentAngle = 0;
 	
 	public AngleSubsystem() {
 		//Start things.
