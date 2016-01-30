@@ -19,8 +19,8 @@ public class ShooterSpinDownCommand extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	//Ending Double check that the speed is 0.
-    	Robot.shooterFlywheelSys.setLeftFlywheelSpeed(0);
-    	Robot.shooterFlywheelSys.setRightFlywheelSpeed(0);
+    	Robot.shooterFlywheelSys.setLeftFlywheelVelocity(0);
+    	Robot.shooterFlywheelSys.setRightFlywheelVelocity(0);
     }
 
 	@Override

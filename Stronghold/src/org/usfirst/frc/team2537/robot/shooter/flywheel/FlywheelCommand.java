@@ -39,14 +39,14 @@ public class FlywheelCommand extends Command {
     	}
     	//Left Flywheel
     	//Should Speed up.
-    	double diffLeftSpeed = Robot.shooterFlywheelSys.getLeftFlywheelSpeed() - this.speed;
+    	double diffLeftSpeed = Robot.shooterFlywheelSys.getLeftFlywheelVelocity() - this.speed;
     	if (ACCURACY < Math.abs(diffLeftSpeed)){
     		//Speed is too slow OR to fast.
     		this.leftSpeed += diffLeftSpeed / CHANGE_SPEED;
-    		Robot.shooterFlywheelSys.setLeftFlywheelSpeed(leftSpeed);
+    		Robot.shooterFlywheelSys.setLeftFlywheelVelocity(leftSpeed);
     	}
     	//Right Flywheel
-    	double diffRightSpeed = Robot.shooterFlywheelSys.getRightFlywheelSpeed() - this.speed;
+    	double diffRightSpeed = Robot.shooterFlywheelSys.getRightFlywheelVelocity() - this.speed;
     	if (ACCURACY < Math.abs(diffRightSpeed)){
     		//Speed is too slow OR to fast.
     		this.rightSpeed += diffRightSpeed / CHANGE_SPEED;
@@ -56,11 +56,11 @@ public class FlywheelCommand extends Command {
     @Override
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return ACCURACY >= Math.abs(Robot.shooterFlywheelSys.getLeftFlywheelSpeed() - this.speed)
+        return ACCURACY >= Math.abs(Robot.shooterFlywheelSys.getLeftFlywheelVelocity() - this.speed)
         		//Left in range.
         		&& 
         		//Right in range.
-        		ACCURACY >= Math.abs(Robot.shooterFlywheelSys.getRightFlywheelSpeed() - this.speed);
+        		ACCURACY >= Math.abs(Robot.shooterFlywheelSys.getRightFlywheelVelocity() - this.speed);
     }
     
     @Override
@@ -76,7 +76,7 @@ public class FlywheelCommand extends Command {
     protected void interrupted() {
     	//What should I do here!!!
     	System.out.println("Flywheels interupted for " + this.getClass().toString() + ". Going to emergancy shutdown.");
-    	Robot.shooterFlywheelSys.setLeftFlywheelSpeed(0);
-    	Robot.shooterFlywheelSys.setRightFlywheelSpeed(0);
+    	Robot.shooterFlywheelSys.setLeftFlywheelVelocity(0);
+    	Robot.shooterFlywheelSys.setRightFlywheelVelocity(0);
     }
 }
