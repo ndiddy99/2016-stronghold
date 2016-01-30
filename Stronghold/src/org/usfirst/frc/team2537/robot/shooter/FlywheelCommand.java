@@ -1,8 +1,6 @@
 package org.usfirst.frc.team2537.robot.shooter;
 
 import org.usfirst.frc.team2537.robot.Robot;
-import org.usfirst.frc.team2537.robot.shooter.flywheel.ShooterSubsystem;
-import org.usfirst.frc.team2537.robot.shooter.flywheel.OldFlywheelCommand;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class FlywheelCommand extends Command {
@@ -32,7 +30,8 @@ public class FlywheelCommand extends Command {
     @Override
     public boolean isFinished(){
    
-    	return (isInRange(ShooterSubsystem.getLeftFlywheelVelocity()) && isInRange(ShooterSubsystem.getRightFlywheelVelocity()));
+    	return (isInRange(Robot.shooterFlywheelSys.getLeftFlywheelVelocity()) && 
+    			isInRange(Robot.shooterFlywheelSys.getRightFlywheelVelocity()));
 
     }
 
@@ -42,12 +41,12 @@ public class FlywheelCommand extends Command {
 
 	@Override
 	protected void execute() {
-		currentLeftFlywheelSpeed = ShooterSubsystem.getLeftFlywheelVelocity();
+		currentLeftFlywheelSpeed = Robot.shooterFlywheelSys.getLeftFlywheelVelocity();
 		currentLeftFlywheelSpeed = incrementTowardsRange(currentLeftFlywheelSpeed);
-		ShooterSubsystem.setLeftFlywheelSpeed(currentLeftFlywheelSpeed);
-		currentRightFlywheelSpeed = ShooterSubsystem.getRightFlywheelVelocity();
+		Robot.shooterFlywheelSys.setLeftFlywheelVelocity(currentLeftFlywheelSpeed);
+		currentRightFlywheelSpeed = Robot.shooterFlywheelSys.getRightFlywheelVelocity();
 		currentRightFlywheelSpeed = incrementTowardsRange(currentRightFlywheelSpeed);
-		ShooterSubsystem.setRightFlywheelSpeed(currentRightFlywheelSpeed);
+		Robot.shooterFlywheelSys.setRightFlywheelVelocity(currentRightFlywheelSpeed);
 			
 		
 
@@ -56,27 +55,20 @@ public class FlywheelCommand extends Command {
 
 	@Override
 	protected void interrupted() {
-		ShooterSubsystem.setLeftFlywheelSpeed(OFF_SPEED);
-		ShooterSubsystem.setRightFlywheelSpeed(OFF_SPEED);
+		Robot.shooterFlywheelSys.setLeftFlywheelVelocity(0);
+		Robot.shooterFlywheelSys.setRightFlywheelVelocity(0);
 		
 	}
 	private double incrementTowardsRange(double speed) {
-		if(speed < SHOOT_SPEED - SPEED_PROXIMITY) {
+		if(speed < targetSpeed - SPEED_PROXIMITY) {
 			 return speed + SPEED_INCREMENT;
 			 
-		} else if(speed > SHOOT_SPEED + SPEED_PROXIMITY) {
+		} else if(speed > targetSpeed + SPEED_PROXIMITY) {
 			 return speed - SPEED_INCREMENT;
 		}
 		return speed;
 	}
 	private boolean isInRange(double speed) {
-		if(speed < SHOOT_SPEED - SPEED_PROXIMITY) {
-			 return false;
-		} else if(speed > SHOOT_SPEED + SPEED_PROXIMITY) {
-			 return false;
-		}
-		return true;
-		return Math.abs(speed - targetSpeed) 
-		
+		return Math.abs(speed - targetSpeed) <= SPEED_PROXIMITY;
 	}
 }
