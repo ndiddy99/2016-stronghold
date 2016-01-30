@@ -16,7 +16,8 @@ public class DriveSubsystem extends Subsystem{
 	protected DriveType driveType;
 	protected boolean drivingStraight;
 	protected boolean driveLowerSpeed;
-	public static final double WHEEL_DIAMETER = 6; //Inches
+	public static final double WHEEL_DIAMETER = 6; //Inches TODO: Magic numbers are fun
+	public static final double PulsesPerRevolution = 20; //for encoders
 
 	public DriveSubsystem() {
 		talonFrontLeft = new CANTalon(Ports.FRONT_LEFT_MOTOR_PORT);
@@ -83,8 +84,20 @@ public class DriveSubsystem extends Subsystem{
 		return talon.get();
 	}
 	
+	/**
+	 * Gets the average value of the left drive encoders
+	 * @return the average of the front left and back left encoders in inches
+	 */
 	public double getLeftEncoders(){
-		return (talonBackLeft.getEncPosition() + talonBackRight.getEncPosition())/2;
+		return (talonBackLeft.getEncPosition() + talonFrontLeft.getEncPosition())/2/PulsesPerRevolution * WHEEL_DIAMETER * Math.PI;
+	}
+	
+	/**
+	 * Gets the average value of the right drive encoders
+	 * @return the average of the front right and back right encoders in inches
+	 */
+	public double getRightEncoders(){
+		return (talonBackRight.getEncPosition() + talonFrontRight.getEncPosition())/2/PulsesPerRevolution * WHEEL_DIAMETER * Math.PI;
 	}
 	
 
