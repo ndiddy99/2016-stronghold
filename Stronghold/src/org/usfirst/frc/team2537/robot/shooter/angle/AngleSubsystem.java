@@ -104,4 +104,8 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 			//Nothing...
 		}
 	}
+	
+	public double getCurrentAngle(){
+		return currentAngle;
+	}
 }
