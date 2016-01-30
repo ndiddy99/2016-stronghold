@@ -3,8 +3,8 @@ package org.usfirst.frc.team2537.robot;
 public final class Ports {
 	public static final int 
 	//Joystick
-	JOYSTICK_ONE_PORT = 1, 
-	JOYSTICK_TWO_PORT = 2,
+	JOYSTICK_LEFT_PORT = 1, 
+	JOYSTICK_RIGHT_PORT = 2,
 	
 	//Talons
 	FRONT_RIGHT_TALON_PORT = 1, 

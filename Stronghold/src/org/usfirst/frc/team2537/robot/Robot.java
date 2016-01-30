@@ -1,8 +1,14 @@
 package org.usfirst.frc.team2537.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
+import org.usfirst.frc.team2537.robot.input.Sensors;
+import org.usfirst.frc.team2537.robot.shooter.angle.AngleSubsystem;
+import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -17,7 +23,11 @@ public class Robot extends IterativeRobot {
 	String autoSelected;
 	SendableChooser chooser;
 	// My stuff
-	static final Drivetrain drivetrain = new Drivetrain();
+	public static final Drivetrain drivetrain = new Drivetrain();
+	public static Sensors sensorSys;//TO be done.
+	public static ArmSubsystem armSys;
+	public static final FlywheelSubsystem shooterFlywheelSubsystem = new FlywheelSubsystem();
+	public static final AngleSubsystem shooterAngleSys = new AngleSubsystem();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -29,6 +39,13 @@ public class Robot extends IterativeRobot {
 		chooser.addDefault("Default Auto", defaultAuto);
 		chooser.addObject("My Auto", customAuto);
 		SmartDashboard.putData("Auto choices", chooser);
+		sensorSys = new Sensors();
+		sensorSys.init();
+		armSys = new ArmSubsystem();
+		armSys.registerButtons();
+		armSys.initDefaultCommand();
+		sensorSys.registerListener(armSys);
+		sensorSys.registerListener(shooterAngleSys);
 	}
 
 	/**
