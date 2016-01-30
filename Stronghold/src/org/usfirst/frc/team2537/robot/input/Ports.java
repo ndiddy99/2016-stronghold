@@ -10,10 +10,10 @@ public final class Ports {
 	XBOX = 2,
 	
 	//Motor Talons
-	FRONT_RIGHT_TALON_PORT = 1, 
-	FRONT_LEFT_TALON_PORT = 2,
-	BACK_RIGHT_TALON_PORT = 3, 
-	BACK_LEFT_TALON_PORT = 4,
+	FRONT_RIGHT_MOTOR_PORT = 1, 
+	FRONT_LEFT_MOTOR_PORT = 2,
+	BACK_RIGHT_MOTOR_PORT = 3, 
+	BACK_LEFT_MOTOR_PORT = 4,
 	
 	//Other Talon
 	ARM_TALON = 5; //Change when confirmed
