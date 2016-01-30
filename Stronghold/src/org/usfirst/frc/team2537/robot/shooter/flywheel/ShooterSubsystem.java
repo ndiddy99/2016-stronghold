@@ -24,10 +24,10 @@ public class ShooterSubsystem extends Subsystem {
 	
 	public ShooterSubsystem() {
 		//Starting motors.
-		//Make sure the the mode to speed so we can modify it.
+		//Make sure the the mode to velocity so we can modify it.
 		//Everything will be in "position change / 10ms"
-		leftFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Voltage);//Values will be 0-1
-		rightFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Voltage);
+		leftFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
+		rightFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
 		registerButtons();
 	}
 	
@@ -51,33 +51,34 @@ public class ShooterSubsystem extends Subsystem {
 		
 	}
 	//Shooter Left Flywheel controls.
-	public double getLeftFlywheelSpeed() {
+	public static double getLeftFlywheelVelocity() {
 		return leftFlywheelMotor.getEncVelocity();
 	}
 	
 	/**
-	 * Set the speed of the left flywheel.
+	 * Set the velocity of the left flywheel.
 	 * 
-	 * @param speed The voltage amount the wheel will be set to. 
+	 * @param velocity The voltage amount the wheel will be set to. 
 	 * 				This should be [-1, 1].
 	 */
-	public void setLeftFlywheelSpeed(double speed) {
-		leftFlywheelMotor.set(speed);
+
+	public static void setLeftFlywheelVelocity(double velocity) {
+		leftFlywheelMotor.set(velocity);
 	}
 	
 	//Shooter Right Flywheel controls.
-	public double getRightFlywheelSpeed() {
+	public static double getRightFlywheelVelocity() {
 		return rightFlywheelMotor.getEncVelocity();
 	}
 	
 	/**
-	 * Set the speed of the right flywheel.
+	 * Set the velocity of the right flywheel.
 	 * 
-	 * @param speed The voltage amount the wheel will be set to. 
+	 * @param velocity The voltage amount the wheel will be set to. 
 	 * 				This should be [-1, 1].
 	 */
-	public  void setRightFlywheelSpeed(double speed) {
-		rightFlywheelMotor.set(speed);
+	public static void setRightFlywheelVelocity(double velocity) {
+		rightFlywheelMotor.set(velocity);
 	}
 	
 	//Let the commands have assess to temperature readings.
