@@ -23,9 +23,9 @@ public class HumanInput {
 	public static Button raiseArm = new JoystickButton(xboxController, XBoxButtons.XBOX_Y);
 	public static Button neutralArm = new JoystickButton(xboxController, XBoxButtons.XBOX_B);
 	//Shooter things
-	public static final Button ballShootShooter = new JoystickButton(xboxController, XBoxButtons.XBOX_TRIGGERS);
+	public static final JoystickButton ballShootShooter = new XboxTriggerRight(xboxController, XBoxButtons.XBOX_TRIGGERS);
 
-	public static final String harvestBallShooter = new JoystickButton(xbox);
+	public static final JoystickButton harvestBallShooter = new XboxTriggerLeft(xboxController, XBoxButtons.XBOX_TRIGGERS);
 	
 	public static void registerPressedCommand(Button b, Command c) {
 		 b.whenPressed(c);
@@ -33,21 +33,5 @@ public class HumanInput {
 	
 	public static double getXboxAxis(Joystick j, int i) {
 		return j.getRawAxis(i);
-	}
-	
-	public static boolean getLeftTriggerState() {
-		if (getXboxAxis(xboxController, XBoxButtons.XBOX_TRIGGERS) > 0.5) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	public static boolean getRightTriggerState() {
-		if (getXboxAxis(xboxController, XBoxButtons.XBOX_TRIGGERS) < -0.5) {
-			return true;
-		} else {
-			return false;
-		}
 	}
 }

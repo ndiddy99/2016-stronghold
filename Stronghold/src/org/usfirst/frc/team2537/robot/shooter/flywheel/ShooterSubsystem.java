@@ -7,7 +7,7 @@ import org.usfirst.frc.team2537.robot.input.Ports;
 import org.usfirst.frc.team2537.robot.shooter.HarvestCommand;
 import org.usfirst.frc.team2537.robot.shooter.ShootCommand;
 
-public class FlywheelSubsystem extends Subsystem {	
+public class ShooterSubsystem extends Subsystem {	
 	//Motors
 	private final CANTalon leftFlywheelMotor;
 	private final CANTalon rightFlywheelMotor;
@@ -16,7 +16,7 @@ public class FlywheelSubsystem extends Subsystem {
 	private static final boolean CHECK_TEMP = true;
 	private static final double MAX_TEMP = 100;
 	
-	public FlywheelSubsystem() {
+	public ShooterSubsystem() {
 		//Starting motors.
 		leftFlywheelMotor = new CANTalon(Ports.TALON_LEFT_FLYWHEEL_PORT);
 		rightFlywheelMotor = new CANTalon(Ports.TALON_RIGHT_FLYWHEEL_PORT);
@@ -35,12 +35,9 @@ public class FlywheelSubsystem extends Subsystem {
     }
 	
 	public void registerButtons() {
-		HumanInput.registerPressedCommand(HumanInput.ballShootShooter, new ShootCommand());
+		HumanInput.registerPressedCommand(HumanInput.shooterTriggers, new ShootCommand());
 		
-		HumanInput.registerWhileHeldCommand(HumanInput.harvestBallShooter, new HarvestCommand());//Only While held.
-		HumanInput.registerWhenReleasedCommand(HumanInput.harvestBallShooter, new ShooterSpinDownCommand());
 	}
-	
 	//Shooter Left Flywheel controls.
 	public double getLeftFlywheelSpeed() {
 		return this.leftFlywheelMotor.getEncVelocity();
