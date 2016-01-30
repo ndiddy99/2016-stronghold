@@ -12,7 +12,7 @@ import org.usfirst.frc.team2537.robot.input.Ports;
 import org.usfirst.frc.team2537.robot.input.Sensor;
 import org.usfirst.frc.team2537.robot.input.SensorListener;
 import org.usfirst.frc.team2537.robot.shooter.HarvestCommandGroup;
-import org.usfirst.frc.team2537.robot.shooter.ShooterCommandGroup;
+import org.usfirst.frc.team2537.robot.shooter.ShootCommandGroup;
 
 public class FlywheelSubsystem extends Subsystem implements SensorListener {	
 	//Motors
@@ -49,7 +49,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
     }
 	
 	public void registerButtons() {
-		HumanInput.registerPressedCommand(HumanInput.ballShootTrigger, new ShooterCommandGroup());
+		HumanInput.registerPressedCommand(HumanInput.ballShootTrigger, new ShootCommandGroup());
 		HumanInput.registerPressedCommand(HumanInput.harvestBallTrigger, new HarvestCommandGroup());
 		
 	}

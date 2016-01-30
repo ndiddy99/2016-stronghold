@@ -8,10 +8,16 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class ShooterCommandGroup extends CommandGroup {
+public class ShootCommandGroup extends CommandGroup {
     public static final double SHOOT_VELOCITY = .5;
-    public ShooterCommandGroup() {
+    
+    public ShootCommandGroup() {
     	addSequential(new FlywheelCommand(SHOOT_VELOCITY));
+    	addSequential(new EjectBallCommand());
+    }
+    
+    public ShootCommandGroup(double shootVelocity){
+    	addSequential(new FlywheelCommand(shootVelocity));
     	addSequential(new EjectBallCommand());
     }
 }
