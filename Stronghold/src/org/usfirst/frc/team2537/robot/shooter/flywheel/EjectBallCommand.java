@@ -3,7 +3,7 @@ package org.usfirst.frc.team2537.robot.shooter.flywheel;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class EjectBallCommand extends Command {
-	private static final float WAIT_TIME = 100;
+	private static final float WAIT_TIME = 50;
 	private final float START_TIME =System.currentTimeMillis();
 	private boolean finished = false;
 	public EjectBallCommand() {
