@@ -29,8 +29,8 @@ public class Climber extends Subsystem {
 		CANTalon climber2;
 		climber1=new CANTalon(5);
 		climber2=new CANTalon(6);
-		climber1.set(1);
-		climber2.set(-1);
+		climber1.set(-1);
+		climber2.set(1);
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
