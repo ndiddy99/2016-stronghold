@@ -11,7 +11,7 @@ public class AutoDriveStraightCommand extends Command{
 	private static final double DEFAULT_SPEED = 0.5;
 	
 	/**
-	 * drives forward 10000000 units (basically forever)
+	 * drives forward 10000000 inches (basically forever)
 	 */
 	public AutoDriveStraightCommand(){
 		this(10000000);
@@ -19,7 +19,7 @@ public class AutoDriveStraightCommand extends Command{
 	
 	/**
 	 * Drives [distance] at the default speed
-	 * @param distance
+	 * @param distance in inches
 	 */
 	public AutoDriveStraightCommand(double distance){
 		this(distance, DEFAULT_SPEED);
@@ -27,8 +27,8 @@ public class AutoDriveStraightCommand extends Command{
 	
 	/**
 	 * Drives [distance] at [speed]
-	 * @param distance
-	 * @param speed
+	 * @param distance distance in inches
+	 * @param speed speed from -1.0 to 1.0
 	 */
 	public AutoDriveStraightCommand(double distance, double speed){
 		requires(Robot.driveSys);
@@ -40,17 +40,17 @@ public class AutoDriveStraightCommand extends Command{
 	protected void initialize() {
 		if(debug) System.out.println("[AutoDriveStraightCommand] Driving " + distance + " at " + speed);
 		Robot.driveSys.setDriveMotors(speed);
-		//TODO: reset encoders
+		Robot.driveSys.resetEncoders();
 	}
 
 	@Override
 	protected void execute() {
+		if(debug) System.out.println("[AutoDriveStraightCommand] Current distance: " + (Robot.driveSys.getLeftEncoders() + Robot.driveSys.getRightEncoders())/2);
 	}
 
 	@Override
 	protected boolean isFinished() {
-		//TODO: if (encoders read [distance]) return true;
-		return false;
+		return ((Robot.driveSys.getLeftEncoders() + Robot.driveSys.getRightEncoders())/2 >= distance);
 	}
 
 	@Override
