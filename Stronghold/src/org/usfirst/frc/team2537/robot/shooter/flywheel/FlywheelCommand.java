@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team2537.robot.Robot;
 import java.lang.Math;
 
-public class SyncFlywheelCommand extends Command {
+public class FlywheelCommand extends Command {
 	//The varibles.
 	protected final double speed;
 	protected double leftSpeed = 0;
@@ -12,7 +12,7 @@ public class SyncFlywheelCommand extends Command {
 	protected static final double CHANGE_SPEED = 5;//MAX_SPEED change.
 	protected static final double ACCURACY = 5;
 	
-    public SyncFlywheelCommand(double speed) {
+    public FlywheelCommand(double speed) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	super();
