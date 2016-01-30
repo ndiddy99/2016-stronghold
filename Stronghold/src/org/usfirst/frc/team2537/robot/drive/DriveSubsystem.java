@@ -1,14 +1,18 @@
 package org.usfirst.frc.team2537.robot.drive;
 
+import java.util.HashMap;
+
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 import org.usfirst.frc.team2537.robot.input.Ports;
+import org.usfirst.frc.team2537.robot.input.Sensor;
+import org.usfirst.frc.team2537.robot.input.SensorListener;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 
-public class DriveSubsystem extends Subsystem{
+public class DriveSubsystem extends Subsystem implements SensorListener{
 	public CANTalon talonFrontLeft;
 	public CANTalon talonFrontRight;
 	public CANTalon talonBackRight;
@@ -16,6 +20,8 @@ public class DriveSubsystem extends Subsystem{
 	protected DriveType driveType;
 	protected boolean drivingStraight;
 	protected boolean driveLowerSpeed;
+	protected double leftEncoders;
+	protected double rightEncoders;
 
 	public DriveSubsystem() {
 		talonFrontLeft = new CANTalon(Ports.FRONT_LEFT_MOTOR_PORT);
@@ -114,6 +120,12 @@ public class DriveSubsystem extends Subsystem{
 			@Override protected void end() {}
 			@Override protected void interrupted() {}
 		});
+	}
+
+	@Override
+	public void receivedValue(HashMap<String, Double> e) {
+		leftEncoders = e.get(Sensor.DRIVE_LEFT_ENCODERS);
+		rightEncoders = e.get(Sensor.DRIVE_RIGHT_ENCODERS);
 	}
 	
 }
