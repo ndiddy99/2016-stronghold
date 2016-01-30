@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ShootCommand extends Command {
 	//Speed
 	private static final double SHOOT_SPEED = .5;
+	private static final double OFF_SPEED = 0;
+	private static boolean isFinished = false;
 
     public ShootCommand() {
         // Use requires() here to declare subsystem dependencies
@@ -19,12 +21,13 @@ public class ShootCommand extends Command {
     @Override
     public boolean isFinished(){
     	//As of right now, this is never finished.
-    	return false;
+    	return isFinished;
     }
 
 	@Override
 	protected void end() {
-		// TODO Auto-generated method stub
+		ShooterSubsystem.setLeftFlywheelSpeed(OFF_SPEED);
+		ShooterSubsystem.setRightFlywheelSpeed(OFF_SPEED);
 		
 	}
 
@@ -32,6 +35,7 @@ public class ShootCommand extends Command {
 	protected void execute() {
 	ShooterSubsystem.setLeftFlywheelSpeed(SHOOT_SPEED);
 	ShooterSubsystem.setRightFlywheelSpeed(SHOOT_SPEED);
+	isFinished = true;
 	}
 
 	@Override
@@ -42,7 +46,8 @@ public class ShootCommand extends Command {
 
 	@Override
 	protected void interrupted() {
-		// TODO Auto-generated method stub
+		ShooterSubsystem.setLeftFlywheelSpeed(OFF_SPEED);
+		ShooterSubsystem.setRightFlywheelSpeed(OFF_SPEED);
 		
 	}
 }

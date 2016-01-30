@@ -26,8 +26,13 @@ public class ShooterSubsystem extends Subsystem {
 		//Everything will be in "position change / 10ms"
 		leftFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Voltage);//Values will be 0-1
 		rightFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Voltage);
+		registerButtons();
 	}
 	
+	public static void actuateSolenoid() {
+		ballPistonPusher.set(true);
+	}
+
 	@Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
