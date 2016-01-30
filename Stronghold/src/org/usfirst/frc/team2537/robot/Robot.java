@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2537.robot;
 
-
+import edu.wpi.first.wpilibj.DigitalInput;
 import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
 import org.usfirst.frc.team2537.robot.auto.AutoChooser;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
@@ -33,10 +33,20 @@ public class Robot extends IterativeRobot {
 	public static final Drivetrain drivetrain = new Drivetrain();
 	public static final FlywheelSubsystem shooterFlywheelSubsystem = new FlywheelSubsystem();
 	public static final AngleSubsystem shooterAngleSys = new AngleSubsystem();
-
-	/**	 * This function is run when the robot is first started up and should be
-	 * used for any initialization code.
-	 */
+    final String defaultAuto = "Default";
+    final String customAuto = "My Auto";
+    String autoSelected;
+    SendableChooser chooser;
+    public static Sensors sensorSys;
+    public static ArmSubsystem armSys;
+    public static MotorSubsystem driveSys;
+    public static Climber Climb;
+    DigitalInput limitSwitch;
+    
+    /**
+     * This function is run when the robot is first started up and should be
+     * used for any initialization code.
+     */
 	public void robotInit() {
 		SaberMessage.printMessage();
 		autoChooser = new AutoChooser();		
@@ -70,8 +80,12 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		autoCommand = autoChooser.getAutoChoice();
 		Scheduler.getInstance().add(autoCommand);
-	}
-
+		autoSelected = (String) chooser.getSelected();
+		// autoSelected = SmartDashboard.getString("Auto Selector",
+		// defaultAuto);
+		System.out.println("Auto selected: " + autoSelected);
+		System.out.println("autonomousInit completed");
+    }
 	/**
 	 * This function is called periodically during autonomous
 	 */
@@ -88,6 +102,10 @@ public class Robot extends IterativeRobot {
 			break;
 		}
 	}
+
+    /**
+     * This function is called periodically during operator control
+     */
 
 	/**
 	 * 
