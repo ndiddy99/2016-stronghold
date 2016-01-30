@@ -23,9 +23,9 @@ public class HumanInput {
 	public static Button raiseArm = new JoystickButton(xboxController, XBoxButtons.XBOX_Y);
 	public static Button neutralArm = new JoystickButton(xboxController, XBoxButtons.XBOX_B);
 	//Shooter things
-	public static final JoystickButton ballShootShooter = new XboxTriggerRight(xboxController, XBoxButtons.XBOX_TRIGGERS);
+	public static final JoystickButton ballShootTrigger = new XboxTriggerRight(xboxController, XBoxButtons.XBOX_TRIGGERS);
 
-	public static final JoystickButton harvestBallShooter = new XboxTriggerLeft(xboxController, XBoxButtons.XBOX_TRIGGERS);
+	public static final JoystickButton harvestBallTrigger = new XboxTriggerLeft(xboxController, XBoxButtons.XBOX_TRIGGERS);
 	
 	public static void registerPressedCommand(Button b, Command c) {
 		 b.whenPressed(c);
