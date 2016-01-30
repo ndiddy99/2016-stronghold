@@ -32,6 +32,7 @@ public class DriveCommand extends Command {
 		Double left = null;
 		Double right = null;
 		
+		//double/single joystick/xbox driving
 		switch(Robot.driveSys.driveType){
 		case doubleJoystick:
 			left = HumanInput.getJoystickAxis(HumanInput.leftJoystick,
@@ -44,8 +45,8 @@ public class DriveCommand extends Command {
 					AxisType.kY);
 			right = left;
 			
-			left += HumanInput.getJoystickAxis(HumanInput.leftJoystick, AxisType.kX);
-			right -= HumanInput.getJoystickAxis(HumanInput.leftJoystick, AxisType.kX);
+			left -= HumanInput.getJoystickAxis(HumanInput.leftJoystick, AxisType.kX);
+			right += HumanInput.getJoystickAxis(HumanInput.leftJoystick, AxisType.kX);
 			break;
 		case doubleJoystickXbox:
 			left = HumanInput.getXboxAxis(HumanInput.xboxController, HumanInput.XBOX_LEFT_STICK_Y_AXIS);
@@ -55,8 +56,8 @@ public class DriveCommand extends Command {
 			left = HumanInput.getXboxAxis(HumanInput.xboxController, HumanInput.XBOX_LEFT_STICK_Y_AXIS);
 			right = left;
 			
-			left += HumanInput.getJoystickAxis(HumanInput.leftJoystick, AxisType.kX);
-			right -= HumanInput.getJoystickAxis(HumanInput.leftJoystick, AxisType.kX);			
+			left -= HumanInput.getJoystickAxis(HumanInput.leftJoystick, AxisType.kX);
+			right += HumanInput.getJoystickAxis(HumanInput.leftJoystick, AxisType.kX);			
 			break;
 		}
 		
@@ -65,6 +66,7 @@ public class DriveCommand extends Command {
 			return;
 		}
 		
+		//Imperfect straight driving
 		if(Robot.driveSys.drivingStraight){
 			if(Math.abs(left) > Math.abs(right)){
 				right = left;
@@ -73,9 +75,11 @@ public class DriveCommand extends Command {
 			}
 		}
 		
+		//Deadzones
 		if(Math.abs(left) < DEADZONE) left = 0.0;
 		if(Math.abs(right) < DEADZONE) right = 0.0;
 		
+		//Lower speed
 		if(Robot.driveSys.driveLowerSpeed){
 			right /= 2;
 			left /= 2;
