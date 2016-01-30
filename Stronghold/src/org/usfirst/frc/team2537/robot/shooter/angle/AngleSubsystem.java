@@ -17,7 +17,7 @@ import org.usfirst.frc.team2537.robot.input.SensorListener;
  */
 public class AngleSubsystem extends Subsystem implements SensorListener {
 	//All of the motors.
-	private final CANTalon angleTalon;
+	private static final CANTalon angleTalon = new CANTalon(Ports.TALON_SHOOTER_ANGLE_PORT);
 	//Limit Switches
 	// TODO determine default states of limit switches
 	private static final boolean FWD_LIMIT_SWITCH_NORMALLY_OPEN = true;
@@ -30,7 +30,6 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	
 	public AngleSubsystem() {
 		//Start things.
-		angleTalon = new CANTalon(Ports.TALON_SHOOTER_ANGLE_PORT);
 		angleTalon.changeControlMode(CANTalon.TalonControlMode.Voltage);
 		//Add limits.
 		angleTalon.ConfigFwdLimitSwitchNormallyOpen(FWD_LIMIT_SWITCH_NORMALLY_OPEN);
