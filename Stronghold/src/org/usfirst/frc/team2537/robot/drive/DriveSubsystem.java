@@ -16,6 +16,7 @@ public class DriveSubsystem extends Subsystem{
 	protected DriveType driveType;
 	protected boolean drivingStraight;
 	protected boolean driveLowerSpeed;
+	public static final double WHEEL_DIAMETER = 6; //Inches
 
 	public DriveSubsystem() {
 		talonFrontLeft = new CANTalon(Ports.FRONT_LEFT_MOTOR_PORT);
@@ -82,6 +83,11 @@ public class DriveSubsystem extends Subsystem{
 		return talon.get();
 	}
 	
+	public double getLeftEncoders(){
+		return (talonBackLeft.getEncPosition() + talonBackRight.getEncPosition())/2;
+	}
+	
+
 	/**
 	 * sets the default command to JoystickControlCommand
 	 */
