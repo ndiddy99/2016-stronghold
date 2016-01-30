@@ -49,7 +49,6 @@ public class Robot extends IterativeRobot {
 		driveSys = new DriveSubsystem();
 		driveSys.initDefaultCommand();
 		driveSys.registerButtons();
-		sensorSys.registerListener(driveSys);
 		sensorSys.registerListener(armSys);
 	}
 
