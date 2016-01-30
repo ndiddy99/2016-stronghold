@@ -16,20 +16,22 @@ public class FlywheelCommand extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	super();
-    	this.requires(Robot.shooterFlywheelSubsystem);
+    	this.requires(Robot.shooterFlywheelSys);
     	this.speed = speed;
     }
 
+    @Override
     // Called just before this Command runs the first time
     protected void initialize() {
     	//Starting the flywheels.
     	System.out.println("Spinning wheels up to " + speed);
     }
-
+    
+    @Override
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//Before anything else happens. Check temperature and make sure we are not on fire.
-    	if (Robot.shooterFlywheelSubsystem.isTemperatureFault()) {
+    	if (Robot.shooterFlywheelSys.isTemperatureFault()) {
     		//THIS IS BAD.
     		//A MOTOR IS ON FIRE!!
     		System.out.println("A FLYWHEEL MOTOR IS ON FIRE!!!");
@@ -37,41 +39,44 @@ public class FlywheelCommand extends Command {
     	}
     	//Left Flywheel
     	//Should Speed up.
-    	double diffLeftSpeed = Robot.shooterFlywheelSubsystem.getLeftFlywheelSpeed() - this.speed;
+    	double diffLeftSpeed = Robot.shooterFlywheelSys.getLeftFlywheelSpeed() - this.speed;
     	if (ACCURACY < Math.abs(diffLeftSpeed)){
     		//Speed is too slow OR to fast.
     		this.leftSpeed += diffLeftSpeed / CHANGE_SPEED;
-    		Robot.shooterFlywheelSubsystem.setLeftFlywheelSpeed(leftSpeed);
+    		Robot.shooterFlywheelSys.setLeftFlywheelSpeed(leftSpeed);
     	}
     	//Right Flywheel
-    	double diffRightSpeed = Robot.shooterFlywheelSubsystem.getRightFlywheelSpeed() - this.speed;
+    	double diffRightSpeed = Robot.shooterFlywheelSys.getRightFlywheelSpeed() - this.speed;
     	if (ACCURACY < Math.abs(diffRightSpeed)){
     		//Speed is too slow OR to fast.
     		this.rightSpeed += diffRightSpeed / CHANGE_SPEED;
     	}
     }
-
+    
+    @Override
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return ACCURACY >= Math.abs(Robot.shooterFlywheelSubsystem.getLeftFlywheelSpeed() - this.speed)
+        return ACCURACY >= Math.abs(Robot.shooterFlywheelSys.getLeftFlywheelSpeed() - this.speed)
         		//Left in range.
         		&& 
         		//Right in range.
-        		ACCURACY >= Math.abs(Robot.shooterFlywheelSubsystem.getRightFlywheelSpeed() - this.speed);
+        		ACCURACY >= Math.abs(Robot.shooterFlywheelSys.getRightFlywheelSpeed() - this.speed);
     }
-
+    
+    @Override
     // Called once after isFinished returns true
     protected void end() {
     	//Let the wheels keep spinning!!!
     	//Set the wheels to the exact speed
     }
-
+    
+    @Override
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
     	//What should I do here!!!
     	System.out.println("Flywheels interupted for " + this.getClass().toString() + ". Going to emergancy shutdown.");
-    	Robot.shooterFlywheelSubsystem.setLeftFlywheelSpeed(0);
-    	Robot.shooterFlywheelSubsystem.setRightFlywheelSpeed(0);
+    	Robot.shooterFlywheelSys.setLeftFlywheelSpeed(0);
+    	Robot.shooterFlywheelSys.setRightFlywheelSpeed(0);
     }
 }
