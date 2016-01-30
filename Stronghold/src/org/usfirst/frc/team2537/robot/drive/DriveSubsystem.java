@@ -16,9 +16,12 @@ public class DriveSubsystem extends Subsystem{
 	protected DriveType driveType;
 	protected boolean drivingStraight;
 	protected boolean driveLowerSpeed;
-	public static final double WHEEL_DIAMETER = 6; //Inches TODO: Magic numbers are fun
+	
+	public static final double WHEEL_DIAMETER = 9; //Inches TODO: Magic numbers are fun
 	public static final double PulsesPerRevolution = 20; //for encoders
-
+	private double initialLeftEncoders = 0; //Inches to subtract (for resetEncoders) 
+	private double initialRightEncoders = 0; //Inches to subtract (for resetEncoders)
+	
 	public DriveSubsystem() {
 		talonFrontLeft = new CANTalon(Ports.FRONT_LEFT_MOTOR_PORT);
 		talonFrontRight = new CANTalon(Ports.FRONT_RIGHT_MOTOR_PORT);
@@ -85,11 +88,19 @@ public class DriveSubsystem extends Subsystem{
 	}
 	
 	/**
+	 * returns the average between all the encoders
+	 */
+	public double getEncoders(){
+		return (getLeftEncoders() + getRightEncoders())/2;
+	}
+	
+	/**
 	 * Gets the average value of the left drive encoders
+	 * compensates for negative left values
 	 * @return the average of the front left and back left encoders in inches
 	 */
 	public double getLeftEncoders(){
-		return (talonBackLeft.getEncPosition() + talonFrontLeft.getEncPosition())/2/PulsesPerRevolution * WHEEL_DIAMETER * Math.PI;
+		return -(talonBackLeft.getEncPosition() + talonFrontLeft.getEncPosition())/2/PulsesPerRevolution * WHEEL_DIAMETER * Math.PI - initialLeftEncoders;
 	}
 	
 	/**
@@ -97,7 +108,15 @@ public class DriveSubsystem extends Subsystem{
 	 * @return the average of the front right and back right encoders in inches
 	 */
 	public double getRightEncoders(){
-		return (talonBackRight.getEncPosition() + talonFrontRight.getEncPosition())/2/PulsesPerRevolution * WHEEL_DIAMETER * Math.PI;
+		return (talonBackRight.getEncPosition() + talonFrontRight.getEncPosition())/2/PulsesPerRevolution * WHEEL_DIAMETER * Math.PI - initialRightEncoders;
+	}
+	
+	/**
+	 * Sets the encoders to 0 (basically).
+	 */
+	public void resetEncoders(){
+		initialLeftEncoders += getLeftEncoders();
+		initialRightEncoders += getRightEncoders();
 	}
 	
 
