@@ -46,6 +46,7 @@ public class Robot extends IterativeRobot {
 		armSys.initDefaultCommand();
 		sensorSys.registerListener(armSys);
 		sensorSys.registerListener(shooterAngleSys);
+		sensorSys.registerListener(shooterFlywheelSys);
 	}
 
 	/**

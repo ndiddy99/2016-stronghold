@@ -30,7 +30,8 @@ public class HarvestCommandGroup extends CommandGroup {
         // arm.
     	addParallel(new MoveToAngleCommand(HARVEST_ANGLE));
     	addSequential(new FlywheelCommand(HARVEST_SPEED));
-    	
+    	//Wait until we get a ball.
+    	addSequential(new UntilBallCommand());
     	
     	
     }

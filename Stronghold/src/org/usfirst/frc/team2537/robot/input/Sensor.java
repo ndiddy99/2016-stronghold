@@ -4,4 +4,5 @@ public class Sensor {
 	//Put actual tags in later
 	public static final String ARM_ANGLE = "aa";
 	public static final String SHOOTER_ANGLE = "sa";
+	public static final String SHOOTER_BALL = "sb";
 }

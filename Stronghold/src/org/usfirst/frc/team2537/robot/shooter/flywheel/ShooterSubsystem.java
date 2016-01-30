@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2537.robot.shooter.flywheel;
 
+import java.util.HashMap;
+
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 
 import edu.wpi.first.wpilibj.CANTalon;
@@ -7,10 +9,12 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import org.usfirst.frc.team2537.robot.input.Ports;
+import org.usfirst.frc.team2537.robot.input.Sensor;
+import org.usfirst.frc.team2537.robot.input.SensorListener;
 import org.usfirst.frc.team2537.robot.shooter.HarvestCommandGroup;
 import org.usfirst.frc.team2537.robot.shooter.ShooterCommandGroup;
 
-public class ShooterSubsystem extends Subsystem {	
+public class ShooterSubsystem extends Subsystem implements SensorListener {	
 	//Motors
 	private static final CANTalon leftFlywheelMotor = new CANTalon(Ports.TALON_LEFT_FLYWHEEL_PORT);
 	private static final CANTalon rightFlywheelMotor = new CANTalon(Ports.TALON_RIGHT_FLYWHEEL_PORT);
@@ -19,6 +23,7 @@ public class ShooterSubsystem extends Subsystem {
 	private static final boolean CHECK_TEMP = true;
 	private static final double MAX_TEMP = 100;
 	private static final Solenoid ballPistonPusher = new Solenoid(Ports.SOLENOID_PORT);;
+	private boolean proximityValue = false;
 	
 	public ShooterSubsystem() {
 		//Starting motors.
@@ -83,5 +88,15 @@ public class ShooterSubsystem extends Subsystem {
 	public boolean isTemperatureFault(){
 		//Check to make sure I'm not on fire!!
 		return CHECK_TEMP && (leftFlywheelMotor.getTemperature() >= MAX_TEMP || rightFlywheelMotor.getTemperature() >= MAX_TEMP);
+	}
+	
+	//Proximity
+	@Override
+	public void receivedValue(HashMap<String, Double> sensorMap) {
+		proximityValue = sensorMap.get(Sensor.SHOOTER_BALL) == 1;
+	}
+	
+	public boolean proximityValue(){
+		return proximityValue;
 	}
 }
