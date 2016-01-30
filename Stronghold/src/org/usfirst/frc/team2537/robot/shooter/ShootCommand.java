@@ -21,7 +21,7 @@ public class ShootCommand extends Command {
     	//super(FlywheelShootSpeed);
     	//if (flywheelSpeed < 0) System.out.println("Negative speed of " + speed + "given to flywheel spin up.");
     }
-    
+   
     @Override
     public boolean isFinished(){
    
@@ -34,7 +34,7 @@ public class ShootCommand extends Command {
 		
 		ShooterSubsystem.setLeftFlywheelSpeed(OFF_SPEED);
 		ShooterSubsystem.setRightFlywheelSpeed(OFF_SPEED);
-		ShooterSubsystem.retractSolenoid();
+		
 	}
 
 	@Override
@@ -46,9 +46,6 @@ public class ShootCommand extends Command {
 		currentRightFlywheelSpeed = incrementTowardsRange(currentRightFlywheelSpeed);
 		ShooterSubsystem.setRightFlywheelSpeed(currentRightFlywheelSpeed);
 			
-		if((isInRange(ShooterSubsystem.getLeftFlywheelSpeed()) && isInRange(ShooterSubsystem.getRightFlywheelSpeed()))) {
-			ShooterSubsystem.actuateSolenoid();
-		}
 		
 
 	
