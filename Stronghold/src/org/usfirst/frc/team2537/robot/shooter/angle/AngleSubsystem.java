@@ -36,6 +36,7 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 		angleTalon.ConfigFwdLimitSwitchNormallyOpen(FWD_LIMIT_SWITCH_NORMALLY_OPEN);
 		angleTalon.ConfigRevLimitSwitchNormallyOpen(REV_LIMIT_SWITCH_NORMALLY_OPEN);
 		angleTalon.enableLimitSwitch(true, true);//Now the limit switches are active.
+		//Because we can never trust limit switches, lets set some solf tops as well.
 	}
 	
 	@Override
