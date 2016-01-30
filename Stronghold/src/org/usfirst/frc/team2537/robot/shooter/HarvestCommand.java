@@ -1,67 +1,33 @@
 package org.usfirst.frc.team2537.robot.shooter;
 
-import edu.wpi.first.wpilibj.command.Command;
-
-import org.usfirst.frc.team2537.robot.shooter.angle.AngleSubsystem;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc.team2537.robot.shooter.angle.PresetAngleCommand;
-import org.usfirst.frc.team2537.robot.input.HumanInput;
 
 /**
- * Harvest a ball from the shooter.
- * This lowers the shooting mechanism and spins the flywheels to speed.
- * 
- * @author Matthew Schweiss
  *
  */
-public class HarvestCommand extends Command {
-	//Harvest Speed
+public class HarvestCommand extends CommandGroup {
+	private static final double HARVEST_ANGLE = -10;
 	private static final double HARVEST_SPEED = -.1;
-	private static final double DESIRED_HARVEST_ANGLE = -20;
-	//We need a command to place the angle down to 0.
+    
+    public  HarvestCommand() {
+        // Add Commands here:
+        // e.g. addSequential(new Command1());
+        //      addSequential(new Command2());
+        // these will run in order.
 
-	public HarvestCommand() {
-		//Also requires the Angle commands.
-		
-	}
-	
-	@Override
-	protected void initialize(){
-		//Put the angleCommand on the stack.
+        // To run multiple commands at the same time,
+        // use addParallel()
+        // e.g. addParallel(new Command1());
+        //      addSequential(new Command2());
+        // Command1 and Command2 will run in parallel.
 
-	}
-
-	@Override
-	protected void execute() {
-		
-		
-		
-	
-	}
-
-	@Override
-	protected boolean isFinished() {
-		//Check if this can keep running.
-		//Check if anything was canceled.
-	
-		return false;
-	}
-
-	@Override
-	protected void end() {
-		//End the program.
-		//Stop all of the programs.
-		stop();
-	
-		
-	}
-
-	@Override
-	protected void interrupted() {
-		//I was interruped
-	}
-	
-	private void stop(){
-		//Stop the program from executing.
-		
-	}
+        // A command group will require all of the subsystems that each member
+        // would require.
+        // e.g. if Command1 requires chassis, and Command2 requires arm,
+        // a CommandGroup containing them would require both the chassis and the
+        // arm.
+    	addParallel(new PresetAngleCommand(HARVEST_ANGLE));
+    	addSequential(new FlywheelCommand(HARVEST_SPEED));
+    }
 }

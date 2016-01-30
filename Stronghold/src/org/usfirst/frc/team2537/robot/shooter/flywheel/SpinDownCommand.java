@@ -1,15 +1,12 @@
 package org.usfirst.frc.team2537.robot.shooter.flywheel;
 
 import org.usfirst.frc.team2537.robot.Robot;
-
-import edu.wpi.first.wpilibj.command.Command;
-
 /**
  *
  */
-public class ShooterSpinDownCommand extends Command {
+public class SpinDownCommand extends FlywheelCommand {
 	
-    public ShooterSpinDownCommand() {
+    public SpinDownCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	super(0);
@@ -22,28 +19,12 @@ public class ShooterSpinDownCommand extends Command {
     	Robot.shooterFlywheelSys.setLeftFlywheelVelocity(0);
     	Robot.shooterFlywheelSys.setRightFlywheelVelocity(0);
     }
-
-	@Override
-	protected void execute() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected void initialize() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected void interrupted() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected boolean isFinished() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    
+    @Override
+    protected void interrupted() {
+    	//If interrupted
+    	Robot.shooterFlywheelSys.setLeftFlywheelVelocity(0);
+    	Robot.shooterFlywheelSys.setRightFlywheelVelocity(0);
+    	
+    }
 }
