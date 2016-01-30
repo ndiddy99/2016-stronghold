@@ -23,7 +23,7 @@ public final class SaberMessage {
 			build.append("\n");
 		}
 		System.out.println(build);
-		 System.out.println(s + "\nWelcome to Team 2537's Robot!");
-		 fileScan.close();
+		System.out.println(s + "\nWelcome to Team 2537's Robot!");
+		fileScan.close();
 	}
 }

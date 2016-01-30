@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
 import org.usfirst.frc.team2537.robot.input.Sensors;
 import org.usfirst.frc.team2537.robot.shooter.angle.AngleSubsystem;
-import org.usfirst.frc.team2537.robot.shooter.flywheel.ShooterSubsystem;
+import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -26,7 +26,7 @@ public class Robot extends IterativeRobot {
 	public static final Drivetrain drivetrain = new Drivetrain();
 	public static Sensors sensorSys;//TO be done.
 	public static ArmSubsystem armSys;
-	public static final ShooterSubsystem shooterFlywheelSys = new ShooterSubsystem();
+	public static final FlywheelSubsystem shooterFlywheelSys = new FlywheelSubsystem();
 	public static final AngleSubsystem shooterAngleSys = new AngleSubsystem();
 
 	/**

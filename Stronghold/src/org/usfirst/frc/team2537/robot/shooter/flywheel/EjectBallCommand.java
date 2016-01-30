@@ -12,7 +12,7 @@ public class EjectBallCommand extends Command {
 
 	@Override
 	protected void end() {
-		ShooterSubsystem.retractSolenoid();
+		FlywheelSubsystem.retractSolenoid();
 	}
 
 	@Override
@@ -23,13 +23,13 @@ public class EjectBallCommand extends Command {
 
 	@Override
 	protected void initialize() {
-		ShooterSubsystem.actuateSolenoid();
+		FlywheelSubsystem.actuateSolenoid();
 
 	}
 
 	@Override
 	protected void interrupted() {
-		ShooterSubsystem.retractSolenoid();
+		FlywheelSubsystem.retractSolenoid();
 
 	}
 

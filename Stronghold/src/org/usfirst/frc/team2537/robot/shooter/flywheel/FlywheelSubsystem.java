@@ -14,7 +14,7 @@ import org.usfirst.frc.team2537.robot.input.SensorListener;
 import org.usfirst.frc.team2537.robot.shooter.HarvestCommandGroup;
 import org.usfirst.frc.team2537.robot.shooter.ShooterCommandGroup;
 
-public class ShooterSubsystem extends Subsystem implements SensorListener {	
+public class FlywheelSubsystem extends Subsystem implements SensorListener {	
 	//Motors
 	private static final CANTalon leftFlywheelMotor = new CANTalon(Ports.TALON_LEFT_FLYWHEEL_PORT);
 	private static final CANTalon rightFlywheelMotor = new CANTalon(Ports.TALON_RIGHT_FLYWHEEL_PORT);
@@ -25,7 +25,7 @@ public class ShooterSubsystem extends Subsystem implements SensorListener {
 	private static final Solenoid ballPistonPusher = new Solenoid(Ports.SOLENOID_PORT);;
 	private boolean proximityValue = false;
 	
-	public ShooterSubsystem() {
+	public FlywheelSubsystem() {
 		//Starting motors.
 		//Make sure the the mode to velocity so we can modify it.
 		//Everything will be in "position change / 10ms"
