@@ -9,8 +9,8 @@ import org.usfirst.frc.team2537.robot.shooter.ShootCommand;
 
 public class ShooterSubsystem extends Subsystem {	
 	//Motors
-	private final CANTalon leftFlywheelMotor;
-	private final CANTalon rightFlywheelMotor;
+	private static final CANTalon leftFlywheelMotor = new CANTalon(Ports.TALON_LEFT_FLYWHEEL_PORT);
+	private static final CANTalon rightFlywheelMotor = new CANTalon(Ports.TALON_RIGHT_FLYWHEEL_PORT);
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	private static final boolean CHECK_TEMP = true;
@@ -18,8 +18,6 @@ public class ShooterSubsystem extends Subsystem {
 	
 	public ShooterSubsystem() {
 		//Starting motors.
-		leftFlywheelMotor = new CANTalon(Ports.TALON_LEFT_FLYWHEEL_PORT);
-		rightFlywheelMotor = new CANTalon(Ports.TALON_RIGHT_FLYWHEEL_PORT);
 		//Make sure the the mode to speed so we can modify it.
 		//Everything will be in "position change / 10ms"
 		leftFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Voltage);//Values will be 0-1
@@ -35,12 +33,13 @@ public class ShooterSubsystem extends Subsystem {
     }
 	
 	public void registerButtons() {
-		HumanInput.registerPressedCommand(HumanInput.shooterTriggers, new ShootCommand());
+		HumanInput.registerPressedCommand(HumanInput.ballShootTrigger, new ShootCommand());
+		HumanInput.registerPressedCommand(HumanInput.harvestBallTrigger, new ShootCommand());
 		
 	}
 	//Shooter Left Flywheel controls.
-	public double getLeftFlywheelSpeed() {
-		return this.leftFlywheelMotor.getEncVelocity();
+	public static double getLeftFlywheelSpeed() {
+		return leftFlywheelMotor.getEncVelocity();
 	}
 	
 	/**
@@ -49,13 +48,13 @@ public class ShooterSubsystem extends Subsystem {
 	 * @param speed The voltage amount the wheel will be set to. 
 	 * 				This should be [-1, 1].
 	 */
-	public void setLeftFlywheelSpeed(double speed) {
-		this.leftFlywheelMotor.set(speed);
+	public static void setLeftFlywheelSpeed(double speed) {
+		leftFlywheelMotor.set(speed);
 	}
 	
 	//Shooter Right Flywheel controls.
-	public double getRightFlywheelSpeed() {
-		return this.rightFlywheelMotor.getEncVelocity();
+	public static double getRightFlywheelSpeed() {
+		return rightFlywheelMotor.getEncVelocity();
 	}
 	
 	/**
@@ -64,8 +63,8 @@ public class ShooterSubsystem extends Subsystem {
 	 * @param speed The voltage amount the wheel will be set to. 
 	 * 				This should be [-1, 1].
 	 */
-	public void setRightFlywheelSpeed(double speed) {
-		this.rightFlywheelMotor.set(speed);
+	public static void setRightFlywheelSpeed(double speed) {
+		rightFlywheelMotor.set(speed);
 	}
 	
 	//Let the commands have assess to temperature readings.
