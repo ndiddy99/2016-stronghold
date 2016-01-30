@@ -28,8 +28,6 @@ public class Sensors {
 		try {
 			String sentence = getLastSentence();
 			if (sentence != null) {
-				//TODO: Store into hashmap rather than event
-				@SuppressWarnings("unused")
 				boolean iterate = false;
 				String tag = "";
 				double val = 0;
@@ -37,10 +35,10 @@ public class Sensors {
 				ArrayList<String> parseArray = parse(sentence);
 				if (parseArray.size() >= 2) {
 					for (String s : parseArray) {
-						if (iterate = false) {
+						if (!iterate) {
 							tag = s;
 							iterate = true;
-						} else if (iterate = true) {
+						} else if (iterate) {
 							try {
 								val = Integer.parseInt(s);
 								sensorVals.put(tag, val);
