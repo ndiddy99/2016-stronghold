@@ -22,6 +22,6 @@ public final class Ports {
 	TALON_RIGHT_FLYWHEEL_PORT = 2,
 	
 	//Actuator
-	ACTUATOR_PORT = 5;
+	SOLENOID_PORT = 5;
 
 }

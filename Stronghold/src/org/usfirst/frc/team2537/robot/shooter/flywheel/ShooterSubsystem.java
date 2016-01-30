@@ -1,8 +1,11 @@
 package org.usfirst.frc.team2537.robot.shooter.flywheel;
 
 import org.usfirst.frc.team2537.robot.input.HumanInput;
+
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+
 import org.usfirst.frc.team2537.robot.input.Ports;
 import org.usfirst.frc.team2537.robot.shooter.HarvestCommand;
 import org.usfirst.frc.team2537.robot.shooter.ShootCommand;
@@ -15,6 +18,7 @@ public class ShooterSubsystem extends Subsystem {
     // here. Call these from Commands.
 	private static final boolean CHECK_TEMP = true;
 	private static final double MAX_TEMP = 100;
+	private static final Solenoid ballPistonPusher = new Solenoid(Ports.SOLENOID_PORT);;
 	
 	public ShooterSubsystem() {
 		//Starting motors.
