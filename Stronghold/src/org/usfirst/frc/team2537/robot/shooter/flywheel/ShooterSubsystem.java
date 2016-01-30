@@ -8,9 +8,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 import org.usfirst.frc.team2537.robot.input.Ports;
 import org.usfirst.frc.team2537.robot.shooter.HarvestCommand;
-import org.usfirst.frc.team2537.robot.shooter.HarvestCommand;
 import org.usfirst.frc.team2537.robot.shooter.ShooterCommandGroup;
-import org.usfirst.frc.team2537.robot.shooter.FlywheelCommand;
 
 public class ShooterSubsystem extends Subsystem {	
 	//Motors
@@ -84,6 +82,6 @@ public class ShooterSubsystem extends Subsystem {
 	//Let the commands have assess to temperature readings.
 	public boolean isTemperatureFault(){
 		//Check to make sure I'm not on fire!!
-		return CHECK_TEMP && (leftFlywheelMotor.getTemperature() >= MAX_TEMP ||rightFlywheelMotor.getTemperature() >= MAX_TEMP);
+		return CHECK_TEMP && (leftFlywheelMotor.getTemperature() >= MAX_TEMP || rightFlywheelMotor.getTemperature() >= MAX_TEMP);
 	}
 }
