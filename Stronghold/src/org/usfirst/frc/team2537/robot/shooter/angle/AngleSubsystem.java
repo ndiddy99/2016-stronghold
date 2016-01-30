@@ -95,11 +95,13 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 		//The angle Joystick is the left joystick on the XBOX
 		return HumanInput.getXboxAxis(HumanInput.xboxController, HumanInput.XBOX_LEFT_STICK_Y_AXIS);
 	}
-
+	
+	//Angle managment.
 	public void receivedValue(HashMap<String, Double> sensorMap) {
-		currentAngle = sensorMap.get(Sensor.SHOOTER_ANGLE);
-	}
-	public static double getCurrentAngle() {
-		return currentAngle;
+		try{
+			currentAngle = sensorMap.get(Sensor.SHOOTER_ANGLE);
+		} catch (NullPointerException e){
+			//Nothing...
+		}
 	}
 }
