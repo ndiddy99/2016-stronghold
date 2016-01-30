@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team2537.robot.Robot;
 import java.lang.Math;
 
-public class PresetAngleCommand extends Command {
+public class MoveToAngleCommand extends Command {
 	
 	public double posToMoveTo;
 	private double currentPosition;
@@ -17,7 +17,7 @@ public class PresetAngleCommand extends Command {
 	 * This is used by passing the desired angle and the system will
 	 * then adjust.
 	 */
-	public PresetAngleCommand(double angle) {
+	public MoveToAngleCommand(double angle) {
 		//The main constructor.
 		super();
 		this.requires(Robot.shooterAngleSys);//ALEX USE "REQUIRES"!!!!
