@@ -49,7 +49,7 @@ public class ShooterSubsystem extends Subsystem {
 		
 	}
 	//Shooter Left Flywheel controls.
-	public static double getLeftFlywheelVelocity() {
+	public double getLeftFlywheelVelocity() {
 		return leftFlywheelMotor.getEncVelocity();
 	}
 	
@@ -60,12 +60,12 @@ public class ShooterSubsystem extends Subsystem {
 	 * 				This should be [-1, 1].
 	 */
 
-	public static void setLeftFlywheelVelocity(double velocity) {
+	public void setLeftFlywheelVelocity(double velocity) {
 		leftFlywheelMotor.set(velocity);
 	}
 	
 	//Shooter Right Flywheel controls.
-	public static double getRightFlywheelVelocity() {
+	public double getRightFlywheelVelocity() {
 		return rightFlywheelMotor.getEncVelocity();
 	}
 	
@@ -75,7 +75,7 @@ public class ShooterSubsystem extends Subsystem {
 	 * @param velocity The voltage amount the wheel will be set to. 
 	 * 				This should be [-1, 1].
 	 */
-	public static void setRightFlywheelVelocity(double velocity) {
+	public void setRightFlywheelVelocity(double velocity) {
 		rightFlywheelMotor.set(velocity);
 	}
 	
