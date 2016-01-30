@@ -79,6 +79,6 @@ public class ShooterSubsystem extends Subsystem {
 	//Let the commands have assess to temperature readings.
 	public boolean isTemperatureFault(){
 		//Check to make sure I'm not on fire!!
-		return CHECK_TEMP && (this.leftFlywheelMotor.getTemperature() >= MAX_TEMP ||this.rightFlywheelMotor.getTemperature() >= MAX_TEMP);
+		return CHECK_TEMP && (leftFlywheelMotor.getTemperature() >= MAX_TEMP ||rightFlywheelMotor.getTemperature() >= MAX_TEMP);
 	}
 }
