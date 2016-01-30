@@ -6,7 +6,7 @@ import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelCommand;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ShootCommand extends Command {
+public class SpinUpWheelsCommand extends Command {
 	//Speed
 	private static final double SHOOT_SPEED = 5;
 	private static final double OFF_SPEED = 0;
@@ -15,7 +15,7 @@ public class ShootCommand extends Command {
 	private static final double SPEED_PROXIMITY = .5;
 	private double currentLeftFlywheelSpeed = 0.0;
 	private double currentRightFlywheelSpeed = 0.0;
-    public ShootCommand() {
+    public SpinUpWheelsCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	//super(FlywheelShootSpeed);
