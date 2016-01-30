@@ -23,12 +23,6 @@ import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelSubsystem;
 public class Robot extends IterativeRobot {
 	AutoChooser autoChooser;
 	Command autoCommand;
-	final String defaultAuto = "Default";
-	final String customAuto = "My Auto";
-	String autoSelected;
-	SendableChooser chooser;
-	public static Sensors sensorSys;
-	public static ArmSubsystem armSys;
 	public static DriveSubsystem driveSys;	// My stuff
 	public static final Drivetrain drivetrain = new Drivetrain();
 	public static final FlywheelSubsystem shooterFlywheelSubsystem = new FlywheelSubsystem();
@@ -39,7 +33,7 @@ public class Robot extends IterativeRobot {
     SendableChooser chooser;
     public static Sensors sensorSys;
     public static ArmSubsystem armSys;
-    public static MotorSubsystem driveSys;
+    public static MotorSubsystem motorSys;
     public static Climber Climb;
     DigitalInput limitSwitch;
     
@@ -62,6 +56,8 @@ public class Robot extends IterativeRobot {
 		driveSys = new DriveSubsystem();
 		driveSys.initDefaultCommand();
 		driveSys.registerButtons();
+		motorSys = new MotorSubsystem();
+		motorSys.initDefaultCommand();
 		sensorSys.registerListener(armSys);
 		sensorSys.registerListener(shooterAngleSys);
 	}

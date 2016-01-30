@@ -9,20 +9,20 @@ public class TalonCommand extends Command {
 
 	@Override
 	protected void end() {
-		Robot.driveSys.set(Robot.driveSys.rightBack, 0);
-		Robot.driveSys.set(Robot.driveSys.rightFront, 0);
-		Robot.driveSys.set(Robot.driveSys.leftBack, 0);
-		Robot.driveSys.set(Robot.driveSys.leftFront, 0);
+		Robot.motorSys.set(Robot.motorSys.rightBack, 0);
+		Robot.motorSys.set(Robot.motorSys.rightFront, 0);
+		Robot.motorSys.set(Robot.motorSys.leftBack, 0);
+		Robot.motorSys.set(Robot.motorSys.leftFront, 0);
 	}
 
 	@Override
 	protected void execute() {
 		double yAxisValLeft = HumanInput.getJoystickInput(HumanInput.xboxController, HumanInput.XBOX_LEFT_STICK_Y_AXIS) * -1;
 		double yAxisValRight = HumanInput.getJoystickInput(HumanInput.xboxController, HumanInput.XBOX_RIGHT_STICK_Y_AXIS);
-		Robot.driveSys.set(Robot.driveSys.leftFront, yAxisValLeft);
-		Robot.driveSys.set(Robot.driveSys.leftBack, yAxisValLeft);
-		Robot.driveSys.set(Robot.driveSys.rightFront, yAxisValRight);
-		Robot.driveSys.set(Robot.driveSys.rightBack, yAxisValRight);
+		Robot.motorSys.set(Robot.motorSys.leftFront, yAxisValLeft);
+		Robot.motorSys.set(Robot.motorSys.leftBack, yAxisValLeft);
+		Robot.motorSys.set(Robot.motorSys.rightFront, yAxisValRight);
+		Robot.motorSys.set(Robot.motorSys.rightBack, yAxisValRight);
 	}
 
 	@Override
@@ -31,10 +31,10 @@ public class TalonCommand extends Command {
 
 	@Override
 	protected void interrupted() {
-		Robot.driveSys.set(Robot.driveSys.rightBack, 0);
-		Robot.driveSys.set(Robot.driveSys.rightFront, 0);
-		Robot.driveSys.set(Robot.driveSys.leftBack, 0);
-		Robot.driveSys.set(Robot.driveSys.leftFront, 0);
+		Robot.motorSys.set(Robot.motorSys.rightBack, 0);
+		Robot.motorSys.set(Robot.motorSys.rightFront, 0);
+		Robot.motorSys.set(Robot.motorSys.leftBack, 0);
+		Robot.motorSys.set(Robot.motorSys.leftFront, 0);
 	}
 
 	@Override

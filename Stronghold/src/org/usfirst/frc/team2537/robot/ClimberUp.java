@@ -24,20 +24,20 @@ public class ClimberUp extends Command {
 	protected void initialize() {
 		// TODO Auto-generated method stub
 		Robot.Climb.extend();
-		Robot.driveSys.set(Robot.driveSys.leftFront, 1);
-		Robot.driveSys.set(Robot.driveSys.leftBack, 1);
-		Robot.driveSys.set(Robot.driveSys.rightFront, 1);
-		Robot.driveSys.set(Robot.driveSys.rightBack, 1);
+		Robot.motorSys.set(Robot.motorSys.leftFront, 1);
+		Robot.motorSys.set(Robot.motorSys.leftBack, 1);
+		Robot.motorSys.set(Robot.motorSys.rightFront, 1);
+		Robot.motorSys.set(Robot.motorSys.rightBack, 1);
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Robot.driveSys.set(Robot.driveSys.leftFront, 0);
-		Robot.driveSys.set(Robot.driveSys.leftBack, 0);
-		Robot.driveSys.set(Robot.driveSys.rightFront,0);
-		Robot.driveSys.set(Robot.driveSys.rightBack, 0);
+		Robot.motorSys.set(Robot.motorSys.leftFront, 0);
+		Robot.motorSys.set(Robot.motorSys.leftBack, 0);
+		Robot.motorSys.set(Robot.motorSys.rightFront,0);
+		Robot.motorSys.set(Robot.motorSys.rightBack, 0);
 		Robot.Climb.retract();
 	}
 
