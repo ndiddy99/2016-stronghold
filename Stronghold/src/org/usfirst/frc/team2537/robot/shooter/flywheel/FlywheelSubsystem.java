@@ -93,7 +93,13 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	//Proximity
 	@Override
 	public void receivedValue(HashMap<String, Double> sensorMap) {
-		proximityValue = sensorMap.get(Sensor.SHOOTER_BALL) == 1;
+		//BEWARE OF NullPointer
+		try {
+			proximityValue = sensorMap.get(Sensor.SHOOTER_BALL) == 1;
+		} catch (NullPointerException e){
+			//We have an error.
+			e.printStackTrace();
+		}
 	}
 	
 	public boolean proximityValue(){
