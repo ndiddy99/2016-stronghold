@@ -1,7 +1,6 @@
 package org.usfirst.frc.team2537.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -24,31 +23,42 @@ public class Robot extends IterativeRobot {
 	SendableChooser chooser;
 	// My stuff
 	public static final Drivetrain drivetrain = new Drivetrain();
-	public static Sensors sensorSys;//TO be done.
-	public static ArmSubsystem armSys;
+	public static final Sensors sensorSys = new Sensors();//TO be done.
+	public static final ArmSubsystem armSys = new ArmSubsystem();
 	public static final FlywheelSubsystem shooterFlywheelSys = new FlywheelSubsystem();
 	public static final AngleSubsystem shooterAngleSys = new AngleSubsystem();
-
+	
+	@Override
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
 		SaberMessage.printMessage();
+		//Dashboard
 		chooser = new SendableChooser();
 		chooser.addDefault("Default Auto", defaultAuto);
 		chooser.addObject("My Auto", customAuto);
 		SmartDashboard.putData("Auto choices", chooser);
-		sensorSys = new Sensors();
-		sensorSys.init();
-		armSys = new ArmSubsystem();
+		
 		armSys.registerButtons();
 		armSys.initDefaultCommand();
-		sensorSys.registerListener(armSys);
+		//START Shooter
+		shooterFlywheelSys.registerButtons();
+		shooterFlywheelSys.initDefaultCommand();
+		
+		shooterAngleSys.registerButtons();
+		shooterAngleSys.initDefaultCommand();
+		
+		
+		sensorSys.init();
+		//sensorSys.registerListener(armSys);
 		sensorSys.registerListener(shooterAngleSys);
 		sensorSys.registerListener(shooterFlywheelSys);
+		
 	}
-
+	
+	@Override
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
 	 * between different autonomous modes using the dashboard. The sendable
@@ -67,6 +77,7 @@ public class Robot extends IterativeRobot {
 		System.out.println("Auto selected: " + autoSelected);
 	}
 
+	@Override
 	/**
 	 * This function is called periodically during autonomous
 	 */
@@ -82,16 +93,18 @@ public class Robot extends IterativeRobot {
 		}
 	}
 
+	@Override
 	/**
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
 		// Scheduler.getInstance().add(new driveCommand());
-		drivetrain.inputRecieved(new HumanInputEvent());
+		//drivetrain.inputRecieved(new HumanInputEvent());
 		// System.out.println("hi");
 
 	}
-
+	
+	@Override
 	/**
 	 * This function is called periodically during test mode
 	 */

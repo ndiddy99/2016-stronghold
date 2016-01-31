@@ -42,7 +42,7 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	}
 	
 	@Override
-	protected void initDefaultCommand() {
+	public void initDefaultCommand() {
 		//Create the Default command.
 		this.setDefaultCommand(new ManualAngleCommand());
 	}
@@ -117,5 +117,10 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	 */
 	public double getCurrentAngle(){
 		return currentAngle;
+	}
+
+	public void registerButtons() {
+		//Needed but not used.
+		
 	}
 }
