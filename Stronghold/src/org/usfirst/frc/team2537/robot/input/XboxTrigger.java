@@ -23,7 +23,7 @@ public class XboxTrigger extends JoystickButton {
 	public boolean get() {
 		
 		double triggerVal = HumanInput.getXboxAxis(HumanInput.xboxController, triggerTypeValue);
-		if (triggerVal == 1) {
+		if (triggerVal >= 0.85) {
 			return true;
 		}
 		return false;
