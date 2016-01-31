@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2537.robot.shooter.flywheel;
 
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team2537.robot.Robot;
 
 /**
  * 
@@ -19,7 +20,7 @@ public class EjectBallCommand extends Command {
 
 	@Override
 	protected void end() {
-		FlywheelSubsystem.retractSolenoid();
+		Robot.shooterFlywheelSys.retractSolenoid();
 	}
 
 	@Override
@@ -30,13 +31,13 @@ public class EjectBallCommand extends Command {
 
 	@Override
 	protected void initialize() {
-		FlywheelSubsystem.actuateSolenoid();
+		Robot.shooterFlywheelSys.actuateSolenoid();
 
 	}
 
 	@Override
 	protected void interrupted() {
-		FlywheelSubsystem.retractSolenoid();
+		Robot.shooterFlywheelSys.retractSolenoid();
 
 	}
 

@@ -3,8 +3,8 @@ package org.usfirst.frc.team2537.robot.input;
 public final class Ports {
 	public static final int 
 	//Joystick
-	JOYSTICK_ONE_PORT = 0, 
-	JOYSTICK_TWO_PORT = 1,
+	JOYSTICK_LEFT_PORT = 0, 
+	JOYSTICK_RIGHT_PORT = 1,
 	
 	//XBOX Controller
 	XBOX = 2,
