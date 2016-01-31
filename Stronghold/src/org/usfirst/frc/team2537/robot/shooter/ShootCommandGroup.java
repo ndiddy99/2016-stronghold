@@ -23,8 +23,7 @@ public class ShootCommandGroup extends CommandGroup {
     
     //Using default velocity.
     public ShootCommandGroup() {
-    	addSequential(new FlywheelCommand(SHOOT_VELOCITY));
-    	addSequential(new EjectBallCommand());
+    	this(SHOOT_VELOCITY);
     }
     
     //Using a specified speed.
