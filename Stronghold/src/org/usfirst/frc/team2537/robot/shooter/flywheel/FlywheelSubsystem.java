@@ -1,31 +1,45 @@
 package org.usfirst.frc.team2537.robot.shooter.flywheel;
 
-import org.usfirst.frc.team2537.robot.input.HumanInput;
-import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.command.Subsystem;
-import org.usfirst.frc.team2537.robot.input.Ports;
-import org.usfirst.frc.team2537.robot.shooter.HarvestCommand;
-import org.usfirst.frc.team2537.robot.shooter.ShootCommand;
+import java.util.HashMap;
 
-public class FlywheelSubsystem extends Subsystem {	
+import org.usfirst.frc.team2537.robot.input.HumanInput;
+
+import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.command.Subsystem;
+
+import org.usfirst.frc.team2537.robot.input.Ports;
+import org.usfirst.frc.team2537.robot.input.Sensor;
+import org.usfirst.frc.team2537.robot.input.SensorListener;
+import org.usfirst.frc.team2537.robot.shooter.HarvestCommandGroup;
+import org.usfirst.frc.team2537.robot.shooter.ShootCommandGroup;
+
+public class FlywheelSubsystem extends Subsystem implements SensorListener {	
 	//Motors
-	private final CANTalon leftFlywheelMotor;
-	private final CANTalon rightFlywheelMotor;
+	private static final CANTalon leftFlywheelMotor = new CANTalon(Ports.TALON_LEFT_FLYWHEEL_PORT);
+	private static final CANTalon rightFlywheelMotor = new CANTalon(Ports.TALON_RIGHT_FLYWHEEL_PORT);
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	private static final boolean CHECK_TEMP = true;
 	private static final double MAX_TEMP = 100;
+	private static final Solenoid ballPistonPusher = new Solenoid(Ports.SOLENOID_PORT);;
+	private boolean proximityValue = false;
 	
 	public FlywheelSubsystem() {
 		//Starting motors.
-		leftFlywheelMotor = new CANTalon(Ports.TALON_LEFT_FLYWHEEL_PORT);
-		rightFlywheelMotor = new CANTalon(Ports.TALON_RIGHT_FLYWHEEL_PORT);
-		//Make sure the the mode to speed so we can modify it.
+		//Make sure the the mode to velocity so we can modify it.
 		//Everything will be in "position change / 10ms"
-		leftFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Voltage);//Values will be 0-1
-		rightFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Voltage);
+		leftFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
+		rightFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
+		registerButtons();
 	}
 	
+	public static void actuateSolenoid() {
+		ballPistonPusher.set(true);
+	}
+	public static void retractSolenoid() {
+		ballPistonPusher.set(false);
+	}
 	@Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
@@ -35,45 +49,54 @@ public class FlywheelSubsystem extends Subsystem {
     }
 	
 	public void registerButtons() {
-		HumanInput.registerPressedCommand(HumanInput.ballShootShooter, new ShootCommand());
+		HumanInput.registerPressedCommand(HumanInput.ballShootTrigger, new ShootCommandGroup());
+		HumanInput.registerPressedCommand(HumanInput.harvestBallTrigger, new HarvestCommandGroup());
 		
-		HumanInput.registerWhileHeldCommand(HumanInput.harvestBallShooter, new HarvestCommand());//Only While held.
-		HumanInput.registerWhenReleasedCommand(HumanInput.harvestBallShooter, new ShooterSpinDownCommand());
 	}
-	
 	//Shooter Left Flywheel controls.
-	public double getLeftFlywheelSpeed() {
-		return this.leftFlywheelMotor.getEncVelocity();
+	public double getLeftFlywheelVelocity() {
+		return leftFlywheelMotor.getEncVelocity();
 	}
 	
 	/**
-	 * Set the speed of the left flywheel.
+	 * Set the velocity of the left flywheel.
 	 * 
-	 * @param speed The voltage amount the wheel will be set to. 
+	 * @param velocity The voltage amount the wheel will be set to. 
 	 * 				This should be [-1, 1].
 	 */
-	public void setLeftFlywheelSpeed(double speed) {
-		this.leftFlywheelMotor.set(speed);
+
+	public void setLeftFlywheelVelocity(double velocity) {
+		leftFlywheelMotor.set(velocity);
 	}
 	
 	//Shooter Right Flywheel controls.
-	public double getRightFlywheelSpeed() {
-		return this.rightFlywheelMotor.getEncVelocity();
+	public double getRightFlywheelVelocity() {
+		return rightFlywheelMotor.getEncVelocity();
 	}
 	
 	/**
-	 * Set the speed of the right flywheel.
+	 * Set the velocity of the right flywheel.
 	 * 
-	 * @param speed The voltage amount the wheel will be set to. 
+	 * @param velocity The voltage amount the wheel will be set to. 
 	 * 				This should be [-1, 1].
 	 */
-	public void setRightFlywheelSpeed(double speed) {
-		this.rightFlywheelMotor.set(speed);
+	public void setRightFlywheelVelocity(double velocity) {
+		rightFlywheelMotor.set(velocity);
 	}
 	
 	//Let the commands have assess to temperature readings.
 	public boolean isTemperatureFault(){
 		//Check to make sure I'm not on fire!!
-		return CHECK_TEMP && (this.leftFlywheelMotor.getTemperature() >= MAX_TEMP ||this.rightFlywheelMotor.getTemperature() >= MAX_TEMP);
+		return CHECK_TEMP && (leftFlywheelMotor.getTemperature() >= MAX_TEMP || rightFlywheelMotor.getTemperature() >= MAX_TEMP);
+	}
+	
+	//Proximity
+	@Override
+	public void receivedValue(HashMap<String, Double> sensorMap) {
+		proximityValue = sensorMap.get(Sensor.SHOOTER_BALL) == 1;
+	}
+	
+	public boolean proximityValue(){
+		return proximityValue;
 	}
 }

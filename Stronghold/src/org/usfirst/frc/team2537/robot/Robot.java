@@ -26,7 +26,7 @@ public class Robot extends IterativeRobot {
 	public static final Drivetrain drivetrain = new Drivetrain();
 	public static Sensors sensorSys;//TO be done.
 	public static ArmSubsystem armSys;
-	public static final FlywheelSubsystem shooterFlywheelSubsystem = new FlywheelSubsystem();
+	public static final FlywheelSubsystem shooterFlywheelSys = new FlywheelSubsystem();
 	public static final AngleSubsystem shooterAngleSys = new AngleSubsystem();
 
 	/**
@@ -46,6 +46,7 @@ public class Robot extends IterativeRobot {
 		armSys.initDefaultCommand();
 		sensorSys.registerListener(armSys);
 		sensorSys.registerListener(shooterAngleSys);
+		sensorSys.registerListener(shooterFlywheelSys);
 	}
 
 	/**

@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2537.robot.input;
 
-public class XBoxButtons {
+public class XboxButtons {
 	public final static int
 		//Buttons
 		XBOX_A = 1,

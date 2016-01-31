@@ -17,9 +17,11 @@ public final class Ports {
 	
 	//Other Talon
 	ARM_TALON = 5, //Change when confirmed
-	TALON_LEFT_FLYWHEEL_PORT = 6,
-	TALON_RIGHT_FLYWHEEL_PORT = 7,
-	TALON_SHOOTER_ANGLE_PORT = 8;
-	
 
+	TALON_SHOOTER_ANGLE_PORT = 0,
+	TALON_LEFT_FLYWHEEL_PORT = 1,
+	TALON_RIGHT_FLYWHEEL_PORT = 2,
+	
+	//Actuator
+	SOLENOID_PORT = 5;
 }

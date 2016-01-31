@@ -8,23 +8,22 @@ import java.util.Scanner;
 
 public final class SaberMessage {
 	public static void printMessage() {
-		 BufferedReader in = null;
-		 String s = "";
-		 try {
-		 in = new BufferedReader(new FileReader("SaberPic"));
-		 } catch (FileNotFoundException e) {
-		 // TODO Auto-generated catch block
-		 e.printStackTrace();
-		 }
-		 Scanner fileScan = new Scanner(in);
-		 try {
-		 while(true) {
-		 s += fileScan.nextLine() + "\n";
-		 }
-		 } catch(Exception e) {
-		
-		 }
-		 System.out.println(s + "\nWelcome to Team 2537's Robot!");
-		 fileScan.close();
+		BufferedReader in = null;
+		StringBuilder build = new StringBuilder();
+		String s = "";
+		try {
+			in = new BufferedReader(new FileReader("TeamLogo"));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Scanner fileScan = new Scanner(in);
+		while (fileScan.hasNextLine()) {
+			build.append(fileScan.nextLine());
+			build.append("\n");
+		}
+		System.out.println(build);
+		System.out.println(s + "\nWelcome to Team 2537's Robot!");
+		fileScan.close();
 	}
 }
