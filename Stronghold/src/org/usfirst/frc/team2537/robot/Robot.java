@@ -22,7 +22,6 @@ public class Robot extends IterativeRobot {
 	String autoSelected;
 	SendableChooser chooser;
 	// My stuff
-	public static final Drivetrain drivetrain = new Drivetrain();
 	public static final Sensors sensorSys = new Sensors();//TO be done.
 	public static final ArmSubsystem armSys = new ArmSubsystem();
 	public static final FlywheelSubsystem shooterFlywheelSys = new FlywheelSubsystem();
@@ -99,7 +98,6 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		// Scheduler.getInstance().add(new driveCommand());
-		//drivetrain.inputRecieved(new HumanInputEvent());
 		// System.out.println("hi");
 
 	}
