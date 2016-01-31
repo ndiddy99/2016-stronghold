@@ -11,6 +11,7 @@ public class Sensors {
 	private List<SensorListener> listeners = new ArrayList<SensorListener>();
 	private HashMap<String, Double> sensorVals =  new HashMap<String, Double>();
 	private SerialPort serial = new SerialPort(57600, Port.kMXP);
+	boolean done;
 	
 	
 	public void registerListener(SensorListener listener) {
@@ -37,10 +38,13 @@ public class Sensors {
 				ArrayList<String> parseArray = parse(sentence);
 				if (parseArray.size() >= 2) {
 					for (String s : parseArray) {
-						if (iterate = false) {
+						if (s.equals(">")) {
+							done = true;
+						}
+						else if (iterate == false) {
 							tag = s;
 							iterate = true;
-						} else if (iterate = true) {
+						} else if (iterate == true) {
 							try {
 								val = Integer.parseInt(s);
 								sensorVals.put(tag, val);
@@ -56,9 +60,10 @@ public class Sensors {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		for (SensorListener b : listeners) {
-			b.receivedValue(sensorVals);
+		if (done) {
+			for (SensorListener b : listeners) {
+				b.receivedValue(sensorVals);
+			}
 		}
 	}
 	
