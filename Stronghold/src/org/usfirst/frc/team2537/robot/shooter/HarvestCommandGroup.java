@@ -5,7 +5,10 @@ import org.usfirst.frc.team2537.robot.shooter.angle.MoveToAngleCommand;
 import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelCommand;
 
 /**
- *
+ * This is the command that will be used to harvest the ball from in front of the robot.
+ * By holding the left trigger on the XBOX, this command will be launched.
+ * 
+ * @author Matthew Schweiss
  */
 public class HarvestCommandGroup extends CommandGroup {
 	private static final double HARVEST_ANGLE = -10;
