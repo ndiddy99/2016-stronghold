@@ -15,6 +15,7 @@ public class MoveToAngleCommand extends Command {
 	//Constants
 	private static final double ACCURACY = 5;
 	private static final double SPEED = 180;//Max change speed.
+	private static final double TIMEOUT = 10;
 	
 	//Variables
 	public double posToMoveTo;
@@ -29,6 +30,7 @@ public class MoveToAngleCommand extends Command {
 	 */
 	public MoveToAngleCommand(double angle) {
 		//The main constructor.
+		super(TIMEOUT);
 		requires(Robot.shooterAngleSys);
 		posToMoveTo = angle;
 	}
