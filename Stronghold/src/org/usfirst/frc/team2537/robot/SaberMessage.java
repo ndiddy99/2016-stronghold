@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public final class SaberMessage {
 	public static void printMessage() {
-		BufferedReader in = null;
+		/*BufferedReader in = null;
 		StringBuilder build = new StringBuilder();
 		String s = "";
 		try {
@@ -24,6 +24,6 @@ public final class SaberMessage {
 		}
 		System.out.println(build);
 		System.out.println(s + "\nWelcome to Team 2537's Robot!");
-		fileScan.close();
+		fileScan.close();*/
 	}
 }
