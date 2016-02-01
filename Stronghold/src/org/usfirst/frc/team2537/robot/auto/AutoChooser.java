@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2537.robot.auto;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -11,7 +12,14 @@ public class AutoChooser {
         autoChoice.addDefault("Default Autonomous", new DefaultAutoCommand());
         autoChoice.addObject("Drive Straight Forever", new AutoDriveStraightCommand());
         autoChoice.addObject("Spin forever", new AutoRotateCommand());
-        autoChoice.addObject("DriveTo (5, 5)", new AutoDriveToCommandGroup(5, 5));
+        autoChoice.addObject("DriveToFun", new CommandGroup(){
+        	{
+        		addSequential(new AutoDriveToCommandGroup(5, 5));
+        		addSequential(new AutoDriveToCommandGroup(8, 5));
+        		addSequential(new AutoDriveToCommandGroup(2, 10));
+        		addSequential(new AutoDriveToCommandGroup(20, 8));
+        	}
+        });
         SmartDashboard.putData("Andrew's code (copied and pasted)", autoChoice);
 	}
 	public Command getAutoChoice(){
