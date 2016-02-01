@@ -25,7 +25,12 @@ public class AutoRotateCommand extends Command{
 	 * @param angle
 	 */
 	public AutoRotateCommand(double angle){
-		this(angle, DEFAULT_SPEED);
+		requires(Robot.driveSys);
+		this.angle = angle;
+		if(angle < 0)
+			speed = -DEFAULT_SPEED;
+		else
+			speed = DEFAULT_SPEED;
 	}
 	
 	/**
@@ -42,6 +47,7 @@ public class AutoRotateCommand extends Command{
 	
 	@Override
 	protected void initialize() {
+		Robot.driveSys.resetEncoders();
 		if(debug) System.out.println("[AutoRotateCommand] Initializing. speed: " + speed + " angle: " + angle);
 		Robot.driveSys.setDriveMotors(-speed, speed);
 	}
