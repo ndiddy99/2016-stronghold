@@ -18,11 +18,12 @@ public class HumanInput {
 	public static Joystick rightJoystick = new Joystick(Ports.JOYSTICK_TWO_PORT);
 	
 
-	public static Button driveStraight = new JoystickButton(rightJoystick, 0);
+	public static Button driveStraight = new JoystickButton(leftJoystick, 0);
 	public static Button driveSensetivityToggle = new JoystickButton(xboxController, 0);
 	public static Button lowerArm = new JoystickButton(xboxController, xBoxButtons.XBOX_A);
 	public static Button raiseArm = new JoystickButton(xboxController, xBoxButtons.XBOX_Y);
 	public static Button neutralArm = new JoystickButton(xboxController, xBoxButtons.XBOX_B);
+	public static Button driveTypeToggle = new JoystickButton(rightJoystick, 0);
 
 	public static void registerPressedCommand(Button b, Command c) {
 		b.whenPressed(c);

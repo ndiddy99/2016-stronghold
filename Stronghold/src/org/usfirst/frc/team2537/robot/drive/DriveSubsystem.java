@@ -127,6 +127,7 @@ public class DriveSubsystem extends Subsystem{
 		DriveCommand drive = new DriveCommand();
 		this.setDefaultCommand(drive);
 	}
+
 	
 	public void registerButtons() {
 		HumanInput.registerPressedCommand(HumanInput.driveStraight, new Command(){
@@ -152,7 +153,14 @@ public class DriveSubsystem extends Subsystem{
 			@Override protected void end() {}
 			@Override protected void interrupted() {}
 		});
+		
+		HumanInput.registerPressedCommand(HumanInput.driveTypeToggle, new Command(){
+			@Override protected void initialize() {driveType = driveType.getNext();}
+			@Override protected void execute() {}
+			@Override protected boolean isFinished() {return true;}
+			@Override protected void end() {}
+			@Override protected void interrupted() {}			
+		});
 	}
 
-	
 }
