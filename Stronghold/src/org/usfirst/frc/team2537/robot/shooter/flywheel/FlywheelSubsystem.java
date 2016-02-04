@@ -2,7 +2,6 @@ package org.usfirst.frc.team2537.robot.shooter.flywheel;
 
 import java.util.HashMap;
 import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team2537.robot.input.Ports;
 import org.usfirst.frc.team2537.robot.input.Sensor;
@@ -13,35 +12,25 @@ import org.usfirst.frc.team2537.robot.shooter.HarvestCommandGroup;
 
 public class FlywheelSubsystem extends Subsystem implements SensorListener {	
 	//Constants
-	private static final CANTalon leftFlywheelMotor 	= new CANTalon(Ports.TALON_LEFT_FLYWHEEL_PORT);
-	private static final CANTalon rightFlywheelMotor 	= new CANTalon(Ports.TALON_RIGHT_FLYWHEEL_PORT);
-	//Make the talon's go to the right control mode.
-	static {
-		leftFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
-		rightFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Speed);	
-	}
-	private static final Solenoid ballPistonPusher 		= new Solenoid(Ports.SOLENOID_PORT);
-	private static final boolean  CHECK_TEMPERATURE 	= true;
-	private static final double   MAX_TEMPERATURE 		= 100;//celsuis
+	private static CANTalon leftFlywheelMotor;
+	private static CANTalon rightFlywheelMotor;
+	private static final boolean CHECK_TEMPERATURE	= true;
+	private static final double  MAX_TEMPERATURE	= 100;//celsuis
 	//Vars
 	private boolean proximityValue = false;
 	
 	public FlywheelSubsystem() {
 		//Starting motors.
 		//Make sure the the mode to velocity so we can modify it.
-		//Everything will be in "position change / 10ms"
+		leftFlywheelMotor 	= new CANTalon(Ports.TALON_LEFT_FLYWHEEL_PORT);
+		rightFlywheelMotor 	= new CANTalon(Ports.TALON_RIGHT_FLYWHEEL_PORT);
+		
+		//Make the talon's go to the right control mode.
+		//Should be default, not sure if this should be here.
+		leftFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Voltage);
+		rightFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Voltage);
 	}
 	
-	public void actuateSolenoid() {
-		ballPistonPusher.set(true);
-	}
-	public void retractSolenoid() {
-		ballPistonPusher.set(false);
-	}
-	
-	public void setSolenoid(boolean extended){
-		ballPistonPusher.set(extended);
-	}
 	@Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
@@ -79,7 +68,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	/**
 	 * Set the velocity of the right flywheel.
 	 * 
-	 * @param velocity TODO find speed unit.
+	 * @param velocity
 	 */
 	public void setRightFlywheelVelocity(double velocity) {
 		rightFlywheelMotor.set(velocity);
@@ -101,6 +90,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 		} catch (NullPointerException e){
 			//We have an error.
 			//We don't actually care.
+			System.err.println("FlywheelSys recieved null proximity value.");
 		}
 	}
 	

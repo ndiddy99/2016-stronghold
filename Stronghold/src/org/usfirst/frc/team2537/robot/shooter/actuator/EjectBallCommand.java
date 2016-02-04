@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2537.robot.shooter.flywheel;
+package org.usfirst.frc.team2537.robot.shooter.actuator;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team2537.robot.Robot;
@@ -20,7 +20,7 @@ public class EjectBallCommand extends Command {
 
 	@Override
 	protected void end() {
-		Robot.shooterFlywheelSys.retractSolenoid();
+		Robot.shooterActuatorSys.retractSolenoid();
 	}
 
 	@Override
@@ -31,13 +31,13 @@ public class EjectBallCommand extends Command {
 
 	@Override
 	protected void initialize() {
-		Robot.shooterFlywheelSys.actuateSolenoid();
+		Robot.shooterActuatorSys.actuateSolenoid();
 
 	}
 
 	@Override
 	protected void interrupted() {
-		Robot.shooterFlywheelSys.retractSolenoid();
+		Robot.shooterActuatorSys.retractSolenoid();
 
 	}
 

@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2537.robot.shooter.flywheel;
+package org.usfirst.frc.team2537.robot.shooter.actuator;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team2537.robot.Robot;
@@ -23,7 +23,7 @@ public class SolenoidCommand extends Command {
     public SolenoidCommand(boolean extended, boolean waitToComplete) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.shooterFlywheelSys);
+    	requires(Robot.shooterActuatorSys);
     	this.extended = extended;
     	this.waitToComplete = waitToComplete;
     }
@@ -32,7 +32,7 @@ public class SolenoidCommand extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	//Fire the solenoid
-    	Robot.shooterFlywheelSys.setSolenoid(extended);
+    	Robot.shooterActuatorSys.setSolenoid(extended);
     	if (waitToComplete){
     		endTime = Instant.now().plusMillis((long) (WAIT_TIME * 1000));
     	} else {

@@ -2,12 +2,14 @@ package org.usfirst.frc.team2537.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.command.Scheduler;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
 import org.usfirst.frc.team2537.robot.input.Sensors;
 import org.usfirst.frc.team2537.robot.shooter.angle.AngleSubsystem;
 import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelSubsystem;
+import org.usfirst.frc.team2537.robot.shooter.actuator.ActuatorSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -22,10 +24,11 @@ public class Robot extends IterativeRobot {
 	String autoSelected;
 	SendableChooser chooser;
 	// My stuff
-	public static final Sensors sensorSys = new Sensors();//TO be done.
-	public static final ArmSubsystem armSys = new ArmSubsystem();
-	public static final FlywheelSubsystem shooterFlywheelSys = new FlywheelSubsystem();
-	public static final AngleSubsystem shooterAngleSys = new AngleSubsystem();
+	public static Sensors sensorSys;//TO be done.
+	public static FlywheelSubsystem shooterFlywheelSys;
+	public static AngleSubsystem shooterAngleSys;
+	public static ActuatorSubsystem shooterActuatorSys;
+	public static ArmSubsystem armSys;
 	
 	@Override
 	/**
@@ -40,20 +43,29 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("My Auto", customAuto);
 		SmartDashboard.putData("Auto choices", chooser);*/
 		
-		armSys.registerButtons();
-		armSys.initDefaultCommand();
-		//START Shooter
-		shooterFlywheelSys.registerButtons();
-		shooterFlywheelSys.initDefaultCommand();
-		
-		shooterAngleSys.registerButtons();
-		shooterAngleSys.initDefaultCommand();
-		
-		
+		//Initalize Everything
+		sensorSys			= new Sensors();
+		shooterFlywheelSys	= new FlywheelSubsystem();
+		shooterAngleSys		= new AngleSubsystem();
+		shooterActuatorSys	= new ActuatorSubsystem();
+		armSys				= new ArmSubsystem();
+		//Sensors
 		sensorSys.init();
-		//sensorSys.registerListener(armSys);
+		sensorSys.registerListener(armSys);
 		sensorSys.registerListener(shooterAngleSys);
 		sensorSys.registerListener(shooterFlywheelSys);
+		//Shooter Flywheel
+		shooterFlywheelSys.initDefaultCommand();
+		shooterFlywheelSys.registerButtons();
+		//Shooter Angle
+		shooterAngleSys.initDefaultCommand();
+		shooterAngleSys.registerButtons();
+		//Shooter Actuator
+		shooterActuatorSys.initDefaultCommand();
+		shooterActuatorSys.registerButtons();
+		//Arm
+		armSys.initDefaultCommand();
+		armSys.registerButtons();
 		
 	}
 	
@@ -96,8 +108,8 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-		// Scheduler.getInstance().add(new driveCommand());
-		// System.out.println("hi");
+		// System.out.println("Tele Hi!");
+		Scheduler.getInstance().run();
 
 	}
 	
