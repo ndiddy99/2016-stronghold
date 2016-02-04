@@ -1,8 +1,13 @@
 package org.usfirst.frc.team2537.robot;
 
 import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
+import org.usfirst.frc.team2537.robot.auto.AutoChooser;
+import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team2537.robot.input.Sensors;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -14,30 +19,34 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
+	AutoChooser autoChooser;
+	Command autoCommand;
 	final String defaultAuto = "Default";
 	final String customAuto = "My Auto";
 	String autoSelected;
 	SendableChooser chooser;
 	public static Sensors sensorSys;
 	public static ArmSubsystem armSys;
+	public static DriveSubsystem driveSys;
 	// My stuff
 
-	/**
-	 * This function is run when the robot is first started up and should be
+	/**	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	
 	public void robotInit() {
 		System.out.println("Sabre bot online!");
-		chooser = new SendableChooser();
-		chooser.addDefault("Default Auto", defaultAuto);
-		chooser.addObject("My Auto", customAuto);
+		autoChooser = new AutoChooser();		
 		SmartDashboard.putData("Auto choices", chooser);
 		sensorSys = new Sensors();
 		sensorSys.init();
 		armSys = new ArmSubsystem();
 		armSys.initDefaultCommand();
 		armSys.registerButtons();
+
+		driveSys = new DriveSubsystem();
+		driveSys.initDefaultCommand();
+		driveSys.registerButtons();
 		sensorSys.registerListener(armSys);
 	}
 
@@ -53,10 +62,8 @@ public class Robot extends IterativeRobot {
 	 * SendableChooser make sure to add them to the chooser code above as well.
 	 */
 	public void autonomousInit() {
-		autoSelected = (String) chooser.getSelected();
-		// autoSelected = SmartDashboard.getString("Auto Selector",
-		// defaultAuto);
-		System.out.println("Auto selected: " + autoSelected);
+		autoCommand = autoChooser.getAutoChoice();
+		Scheduler.getInstance().add(autoCommand);
 	}
 
 	/**
@@ -64,6 +71,7 @@ public class Robot extends IterativeRobot {
 	 */
 	
 	public void autonomousPeriodic() {
+		Scheduler.getInstance().run();
 		sensorSys.handleEvents();
 		switch (autoSelected) {
 		case customAuto:
@@ -77,9 +85,19 @@ public class Robot extends IterativeRobot {
 	}
 
 	/**
+	 * 
+	 */
+	public void teleopInit(){
+		System.out.println("Teleop init");
+		Scheduler.getInstance().add(new RobotInit());
+		if(autoCommand != null)
+			autoCommand.cancel();
+	}
+	/**
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
+		Scheduler.getInstance().run();
 		sensorSys.handleEvents();
 		// Scheduler.getInstance().add(new driveCommand());
 		// System.out.println("hi");
