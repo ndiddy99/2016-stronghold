@@ -11,7 +11,7 @@ public class AutoStayStillCommand extends Command{
 	private long time;
 	private static final double TOLERANCE = 0.5; //inches
 	private static final boolean debug = false;
-	
+
 	/**
 	 * sits still for a period of time
 	 * @param time Time to stay still in milliseconds

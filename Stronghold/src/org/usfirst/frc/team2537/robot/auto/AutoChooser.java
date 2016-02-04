@@ -20,7 +20,7 @@ public class AutoChooser {
         		addSequential(new AutoDriveToCommandGroup(20, 8));
         	}
         });
-        SmartDashboard.putData("Andrew's code (copied and pasted)", autoChoice);
+        SmartDashboard.putData("point to point stuff", autoChoice);
 	}
 	public Command getAutoChoice(){
 		return (Command) autoChoice.getSelected();
