@@ -47,7 +47,7 @@ public class Robot extends IterativeRobot {
 		sensorSys			= new Sensors();
 		shooterFlywheelSys	= new FlywheelSubsystem();
 		shooterAngleSys		= new AngleSubsystem();
-		shooterActuatorSys	= new ActuatorSubsystem();
+		//shooterActuatorSys	= new ActuatorSubsystem();
 		armSys				= new ArmSubsystem();
 		//Sensors
 		sensorSys.init();
