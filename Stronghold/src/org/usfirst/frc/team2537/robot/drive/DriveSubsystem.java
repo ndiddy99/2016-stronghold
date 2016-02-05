@@ -4,6 +4,7 @@ import org.usfirst.frc.team2537.robot.input.HumanInput;
 import org.usfirst.frc.team2537.robot.input.Ports;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -27,49 +28,58 @@ public class DriveSubsystem extends Subsystem{
 		talonFrontRight = new CANTalon(Ports.FRONT_RIGHT_MOTOR_PORT);
 		talonBackLeft = new CANTalon(Ports.BACK_LEFT_MOTOR_PORT);
 		talonBackRight = new CANTalon(Ports.BACK_RIGHT_MOTOR_PORT);
+		setDriveControlMode(TalonControlMode.Speed);
+		
 		driveType = DriveType.doubleJoystick; //TODO: set this
 		drivingStraight = false;
 		driveLowerSpeed = false;
 	}
 
 	/**
-	 * Sets the speed of a CANTalon
+	 * Sets the output of a CANTalon
 	 * 
-	 * @param speed Speed to set the CANTalon
-	 * 
+	 * @param outputValue 
+	 * 		in speed mode, speed of talon in inches/second
+	 * 		in other modes, consult the javadocs
 	 * @param talon The CANTalon to set the speed on
 	 * 
 	 */
-	public void set(double speed, CANTalon talon) {
-		talon.set(speed);
+	public void set(double outputValue, CANTalon talon) {
+		// inches/second to pulses/tenMS
+		// (x pulses)/ (radius*pi tenMS)
+
+		switch(talon.getControlMode()){
+		case Speed: talon.set(outputValue / (WHEEL_DIAMETER/2 * Math.PI));
+		default: talon.set(outputValue);
+		}
 	}
 
 	/**
-	 * sets the left drive motors to a certain speed.
+	 * sets the left drive motors to a value
 	 * corrects for inverted motor speeds.
-	 * @param speed
+	 * @param value
 	 */
-	public void setLeftDriveMotors(double speed){
-		set(-speed, talonFrontLeft);
-		set(-speed, talonBackLeft);
+	public void setLeftDriveMotors(double value){
+		set(-value, talonFrontLeft);
+		set(-value, talonBackLeft);
 	}
 	
 	/**
-	 * sets the right motors to a certain speed
-	 * @param speed
+	 * sets the right motors to a certain value
+	 * @param value
 	 */
-	public void setRightDriveMotors(double speed){
-		set(speed, talonFrontRight);
-		set(speed, talonBackRight);		
+	public void setRightDriveMotors(double value){
+		set(value, talonFrontRight);
+		set(value, talonBackRight);	
 	}
 	
 	/**
-	 * sets all drive motors to the same speed
+	 * sets all drive motors to the same value
 	 * corrects for inverted left motor
-	 * @param speed
+	 * @param value
 	 */
-	public void setDriveMotors(double speed){
-		setDriveMotors(speed, speed);
+	public void setDriveMotors(double value){
+		setDriveMotors(value, value);
 	}
 	
 	/**
@@ -119,6 +129,12 @@ public class DriveSubsystem extends Subsystem{
 		initialRightEncoders += getRightEncoders();
 	}
 	
+	public void setDriveControlMode(TalonControlMode mode){
+		talonFrontLeft.changeControlMode(mode);
+		talonBackLeft.changeControlMode(mode);
+		talonFrontRight.changeControlMode(mode);
+		talonBackRight.changeControlMode(mode);
+	}
 
 	/**
 	 * sets the default command to JoystickControlCommand
@@ -159,7 +175,7 @@ public class DriveSubsystem extends Subsystem{
 			@Override protected void execute() {}
 			@Override protected boolean isFinished() {return true;}
 			@Override protected void end() {}
-			@Override protected void interrupted() {}			
+			@Override protected void interrupted() {}
 		});
 	}
 
