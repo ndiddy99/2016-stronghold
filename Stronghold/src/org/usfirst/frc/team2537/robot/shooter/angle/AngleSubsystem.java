@@ -22,6 +22,9 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	// TODO determine default states of limit switches
 	private static final boolean FWD_LIMIT_SWITCH_NORMALLY_OPEN = true;
 	private static final boolean REV_LIMIT_SWITCH_NORMALLY_OPEN = true;
+	private static final boolean ENABLE_SOFT_LIMIT = true;
+	
+	private static final double ENCODER_TICKS_PER_REV = 1000;
 	
 	//The angle limits.
 	public static final double MAX_ANGLE = 80;//degrees (ball park, not right)
@@ -39,6 +42,11 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 		angleTalon.ConfigFwdLimitSwitchNormallyOpen(FWD_LIMIT_SWITCH_NORMALLY_OPEN);
 		angleTalon.ConfigRevLimitSwitchNormallyOpen(REV_LIMIT_SWITCH_NORMALLY_OPEN);
 		angleTalon.enableLimitSwitch(true, true);//Now the limit switches are active.
+		//Soft limits for a backup.
+		angleTalon.setForwardSoftLimit(MAX_ANGLE/360 * ENCODER_TICKS_PER_REV);
+		angleTalon.enableForwardSoftLimit(ENABLE_SOFT_LIMIT);
+		angleTalon.setReverseSoftLimit(MIN_ANGLE/360 * ENCODER_TICKS_PER_REV);
+		angleTalon.enableReverseSoftLimit(ENABLE_SOFT_LIMIT);
 	}
 	
 	@Override
