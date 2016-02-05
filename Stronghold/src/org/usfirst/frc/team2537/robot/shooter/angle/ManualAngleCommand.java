@@ -9,7 +9,7 @@ import org.usfirst.frc.team2537.robot.Robot;
  *
  */
 public class ManualAngleCommand extends Command {
-	//How sensative should the speed be?
+	//How sensitive should the speed be?
 	/**
 	 * Adjust the sensitivity of the joystickAngle.
 	 * Values less than 1 decrease the maximum speed.

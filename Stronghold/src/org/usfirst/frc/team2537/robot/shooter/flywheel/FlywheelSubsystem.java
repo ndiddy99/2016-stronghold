@@ -42,7 +42,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	
 	public void registerButtons() {
 		HumanInput.registerPressedCommand(HumanInput.ballShootTrigger, new ShootCommandGroup());
-		HumanInput.registerPressedCommand(HumanInput.harvestBallTrigger, new HarvestCommandGroup());
+		HumanInput.registerWhileHeldCommand(HumanInput.harvestBallTrigger, new HarvestCommandGroup());
 		
 	}
 	//Shooter Left Flywheel controls.
