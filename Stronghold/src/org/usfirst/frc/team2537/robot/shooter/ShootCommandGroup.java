@@ -3,6 +3,7 @@ package org.usfirst.frc.team2537.robot.shooter;
 import org.usfirst.frc.team2537.robot.shooter.actuator.EjectBallCommand;
 import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelCommand;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 /**
  * This is the class to launch the ball.
@@ -28,6 +29,8 @@ public class ShootCommandGroup extends CommandGroup {
     //Using a specified speed.
     public ShootCommandGroup(double shootVelocity){
     	addSequential(new FlywheelCommand(shootVelocity));
+    	addSequential(new WaitCommand(2.0));
+    	addSequential(new FlywheelCommand(0.0));
 //    	addSequential(new EjectBallCommand());
     }
 }
