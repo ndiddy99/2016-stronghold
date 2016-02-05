@@ -33,6 +33,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	
 	@Override
     public void initDefaultCommand() {
+		
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     	//setDefaultCommand(new ShotBallCommand());
@@ -96,5 +97,9 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	
 	public boolean proximityValue(){
 		return proximityValue;
+	}
+	public void setFlywheelsRampRate(double voltageValue) {
+		rightFlywheelMotor.setVoltageRampRate(voltageValue);
+		leftFlywheelMotor.setVoltageRampRate(voltageValue);
 	}
 }
