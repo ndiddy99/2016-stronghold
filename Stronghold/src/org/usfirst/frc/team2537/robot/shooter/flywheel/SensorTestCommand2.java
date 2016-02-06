@@ -16,7 +16,7 @@ public class SensorTestCommand2 extends Command {
 	
 	private CANTalon testMotor;
 	private Joystick testJoystick;
-	private StringBuffer _sb;
+	private StringBuffer sb = new StringBuffer();
 	private byte loops = 0;
 	
 
@@ -25,7 +25,8 @@ public class SensorTestCommand2 extends Command {
         // eg. requires(chassis);
     	requires(Robot.shooterFlywheelSys);
     	testMotor = new CANTalon(motorPort);
-    	testMotor.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+    	testMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+    	testMotor.configEncoderCodesPerRev(20);
     	testJoystick = new Joystick(joystickPort);
     }
 
@@ -38,8 +39,8 @@ public class SensorTestCommand2 extends Command {
     	/* set closed loop gains in slot0 */
     	testMotor.setProfile(0);
     	testMotor.setF(0);
-    	testMotor.setP(0);
-    	testMotor.setI(0);
+    	testMotor.setP(.5);
+    	testMotor.setI(.01);
     	testMotor.setD(0);
     }
 
@@ -49,10 +50,10 @@ public class SensorTestCommand2 extends Command {
     	double leftYstick = testJoystick.getAxis(AxisType.kY);
     	double motorOutput = testMotor.getOutputVoltage() / testMotor.getBusVoltage();
     	/* prepare to print it*/
-    	_sb.append("\tout:");
-    	_sb.append(motorOutput);
-    	_sb.append("\tspd:");
-    	_sb.append(testMotor.getSpeed());
+    	sb.append("\tout:");
+    	sb.append(motorOutput);
+    	sb.append("\tspd:");
+    	sb.append(testMotor.getSpeed());
     	
     	if (testJoystick.getRawButton(1)){
     		/* Speed Mode */
@@ -61,10 +62,10 @@ public class SensorTestCommand2 extends Command {
     		testMotor.set(targetSpeed);
     		
     		/* append more signals to print when in speed mode. */
-    		_sb.append("/terr:");
-    		_sb.append(testMotor.getClosedLoopError());
-    		_sb.append("\ttrg:");
-    		_sb.append(targetSpeed);
+    		sb.append("\terr:");
+    		sb.append(testMotor.getClosedLoopError());
+    		sb.append("\ttrg:");
+    		sb.append(targetSpeed);
     	} else {
     		/* Percent Voltage Mode */
     		testMotor.changeControlMode(TalonControlMode.PercentVbus);
@@ -73,10 +74,10 @@ public class SensorTestCommand2 extends Command {
     	
     	if (++loops >= 10) {
     		loops = 0;
-    		System.out.println(_sb.toString());
+    		System.out.println(sb.toString());
     	}
     	
-    	_sb.setLength(0);
+    	sb.setLength(0);
     	
     	
     }
