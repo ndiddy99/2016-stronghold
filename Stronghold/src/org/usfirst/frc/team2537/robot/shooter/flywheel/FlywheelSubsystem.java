@@ -12,12 +12,13 @@ import org.usfirst.frc.team2537.robot.shooter.HarvestCommandGroup;
 
 public class FlywheelSubsystem extends Subsystem implements SensorListener {	
 	//Constants
-	private static CANTalon leftFlywheelMotor;
-	private static CANTalon rightFlywheelMotor;
 	private static final boolean CHECK_TEMPERATURE	= true;
 	private static final double  MAX_TEMPERATURE	= 100;//celsuis
+	private static final CANTalon.FeedbackDevice ENCODER = CANTalon.FeedbackDevice.QuadEncoder;
 	//Vars
 	private boolean proximityValue = false;
+	private static CANTalon leftFlywheelMotor;
+	private static CANTalon rightFlywheelMotor;
 	
 	public FlywheelSubsystem() {
 		//Starting motors.
@@ -46,6 +47,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	}
 	//Shooter Left Flywheel controls.
 	public double getLeftFlywheelVelocity() {
+		if (leftFlywheelMotor.isSensorPresent(SENSOR_TYPE))
 		return -leftFlywheelMotor.getOutputVoltage()/12.0;
 	}
 	
@@ -62,7 +64,19 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	
 	//Shooter Right Flywheel controls.
 	public double getRightFlywheelVelocity() {
-		return rightFlywheelMotor.getOutputVoltage()/12.0;
+		switch (rightFlywheelMotor.isSensorPresent(ENCODER)){
+		case FeedbackStatusPresent://Why are they in the main frame like this?
+			//It's there! this is easy.
+			return rightFlywheelMotor.getEncVelocity();
+			
+		case FeedbackStatusUnknown:
+			//WE don't know if the sensor is there.
+			System.err.println("FlywheelSubsystem does not know if there is a right Encoder.");
+			
+		default:// FeedbackStatusNotPresent
+			//We know it is not there, so we can make up a value!
+			return rightFlywheelMotor.getOutputVoltage()/12.0;
+		}
 	}
 	
 	/**
@@ -100,5 +114,17 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	public void setFlywheelsRampRate(double voltageValue) {
 		rightFlywheelMotor.setVoltageRampRate(voltageValue);
 		leftFlywheelMotor.setVoltageRampRate(voltageValue);
+	}
+	
+	/**
+	 * Check to see if an encoder is present on the talon.
+	 * @return
+	 */
+	private boolean isLeftEncoder(){
+		switch (leftFlywheelMotor.isSensorPresent(ENCODER)){
+			case CANTalon.FeedbackDeviceStatus.FeedbackStatusUnknown:
+				//WE don't know if the sensor is there.
+				System.err.println("FlywheelSubsystem does not know if there are encoders.);
+		}
 	}
 }

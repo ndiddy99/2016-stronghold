@@ -1,10 +1,6 @@
 package org.usfirst.frc.team2537.robot.shooter;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.command.WaitCommand;
-
-import org.usfirst.frc.team2537.robot.shooter.angle.ManualAngleCommand;
 import org.usfirst.frc.team2537.robot.shooter.angle.MoveToAngleCommand;
 import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelCommand;
 
@@ -19,9 +15,7 @@ public class HarvestCommandGroup extends CommandGroup {
 	private static final double HARVEST_SPEED = -.5;
     
     public HarvestCommandGroup() {
-    	
-    	//TODO DISABLE HARVEST WHEN BALLL DETECTED USING PROXIMITY SENSOR
-        // Add Commands here:
+    	// Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
         // these will run in order.
@@ -37,17 +31,20 @@ public class HarvestCommandGroup extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	//addParallel(new MoveToAngleCommand(HARVEST_ANGLE));
+    	addParallel(new MoveToAngleCommand(HARVEST_ANGLE));
     	System.out.println("Harvest command is running");
-    	addParallel(new ManualAngleCommand());
     	addSequential(new FlywheelCommand(HARVEST_SPEED));
     	//Wait until we get a ball.
-    	//addSequential(new UntilBallCommand());
-    	
-    	
+    	addSequential(new UntilBallCommand());
+    	addSequential(new FlywheelCommand(0));
     }
     @Override
     protected void interrupted() {
-    	new FlywheelCommand(0.0).start();
+    	new FlywheelCommand(0).start();
+    }
+    
+    @Override
+    protected void end() {
+    	new FlywheelCommand(0).start();
     }
 }

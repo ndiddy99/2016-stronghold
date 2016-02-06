@@ -77,6 +77,8 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	//Did we hit a limit.
 	/**
 	 * Checks to see of the top limit switch is activated, showing the angle is at it max.
+	 * If the switch is not present, the result will be false.
+	 * 
 	 * @return boolean if the forward limit switch is activated.
 	 */
 	public boolean isHighestPosition(){
@@ -85,6 +87,8 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	
 	/**
 	 * Checks to see of the lower limit switch is activated, showing the angle is at it minimum.
+	 * If the switch is not present, the result will be false.
+	 * 
 	 * @return boolean if the forward limit switch is activated.
 	 */
 	public boolean isLowestPosition(){
@@ -104,6 +108,7 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	@Override
 	/**
 	 * This sets the currentAngle based on current readings from sensor hub.
+	 * If the sensor is not present, this will take guess at correct values.
 	 * 
 	 * @param sensorMap A map of the sensors containing the sensor values to look at by look up by the 
 	 * 					two character key associated with each sensor.
@@ -113,6 +118,7 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 			currentAngle = sensorMap.get(Sensor.SHOOTER_ANGLE);
 		} catch (NullPointerException e){
 			//Nothing...
+			//No way to know the angle.
 		}
 	}
 	

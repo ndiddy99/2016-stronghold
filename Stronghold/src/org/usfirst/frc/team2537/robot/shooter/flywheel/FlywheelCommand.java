@@ -7,11 +7,10 @@ public class FlywheelCommand extends Command {
 	// Speed
 	private static final double SPEED_INCREMENT = .05;
 	private static final double SPEED_PROXIMITY = 0.05;
+	private static final long TIMEOUT_TIME_MS = 10000;
 	private double currentLeftFlywheelSpeed = 0.0;
 	private double currentRightFlywheelSpeed = 0.0;
 	private double targetSpeed;
-	private final long START_TIME;
-	private static final long TIMEOUT_TIME_MS = 10000;
 
 
 	public FlywheelCommand(double speed) {
@@ -21,9 +20,8 @@ public class FlywheelCommand extends Command {
 	
 		// if (flywheelSpeed < 0) System.out.println("Negative speed of " +
 		// speed + "given to flywheel spin up.");
-		super(TIMEOUT_TIME_MS);
+		super(TIMEOUT_TIME_MS);//Max time for this to run.
 		targetSpeed = speed;
-		START_TIME = System.currentTimeMillis();
 		
 	}
 

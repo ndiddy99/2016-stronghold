@@ -1,6 +1,5 @@
 package org.usfirst.frc.team2537.robot.shooter;
 
-import org.usfirst.frc.team2537.robot.Robot;
 import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelCommand;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -32,14 +31,17 @@ public class ShootCommandGroup extends CommandGroup {
     public ShootCommandGroup(double shootVelocity){
     	addSequential(new FlywheelCommand(shootVelocity));
     	addSequential(new WaitCommand(2.0));
-    	//Robot.shooterFlywheelSys.setRightFlywheelVelocity(0);
-    	//Robot.shooterFlywheelSys.setLeftFlywheelVelocity(0);
     	addSequential(new FlywheelCommand(0.0));
     	System.out.println("Shoot Command Group is Running");
 //    	addSequential(new EjectBallCommand());
     }
     @Override
     protected void interrupted() {
+    	Scheduler.getInstance().add(new FlywheelCommand(0.0));
+    }
+    
+    @Override
+    protected void end() {
     	Scheduler.getInstance().add(new FlywheelCommand(0.0));
     }
     

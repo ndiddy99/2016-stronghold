@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
 /**
  *
  */
+@SuppressWarnings("unused")
 public class PIDAngleSystem extends PIDSubsystem {
 	private static final int DEFAULT_P = 0;
 	private static final int DEFAULT_I = 0;
