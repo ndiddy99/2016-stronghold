@@ -47,7 +47,6 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	}
 	//Shooter Left Flywheel controls.
 	public double getLeftFlywheelVelocity() {
-		if (leftFlywheelMotor.isSensorPresent(SENSOR_TYPE))
 		return -leftFlywheelMotor.getOutputVoltage()/12.0;
 	}
 	
