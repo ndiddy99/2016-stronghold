@@ -47,9 +47,11 @@ public class FlywheelCommand extends Command {
 
 	@Override
 	protected void execute() {
+		//Left
 		currentLeftFlywheelSpeed = Robot.shooterFlywheelSys.getLeftFlywheelVelocity();
 		currentLeftFlywheelSpeed = incrementTowardsRange(currentLeftFlywheelSpeed);
 		Robot.shooterFlywheelSys.setLeftFlywheelVelocity(currentLeftFlywheelSpeed);
+		//Rights
 		currentRightFlywheelSpeed = Robot.shooterFlywheelSys.getRightFlywheelVelocity();
 		currentRightFlywheelSpeed = incrementTowardsRange(currentRightFlywheelSpeed);
 		Robot.shooterFlywheelSys.setRightFlywheelVelocity(currentRightFlywheelSpeed);

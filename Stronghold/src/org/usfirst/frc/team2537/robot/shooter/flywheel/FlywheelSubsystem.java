@@ -7,8 +7,8 @@ import org.usfirst.frc.team2537.robot.input.Ports;
 import org.usfirst.frc.team2537.robot.input.Sensor;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 import org.usfirst.frc.team2537.robot.input.SensorListener;
-import org.usfirst.frc.team2537.robot.shooter.ShootCommandGroup;
-import org.usfirst.frc.team2537.robot.shooter.HarvestCommandGroup;
+import org.usfirst.frc.team2537.robot.shooter.ShootCommand;
+import org.usfirst.frc.team2537.robot.shooter.HarvestCommand;
 
 public class FlywheelSubsystem extends Subsystem implements SensorListener {	
 	//Constants
@@ -41,8 +41,8 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
     }
 	
 	public void registerButtons() {
-		HumanInput.registerPressedCommand(HumanInput.ballShootTrigger, new ShootCommandGroup());
-		HumanInput.registerWhileHeldCommand(HumanInput.harvestBallTrigger, new HarvestCommandGroup());
+		HumanInput.registerPressedCommand(HumanInput.ballShootTrigger, new ShootCommand());
+		HumanInput.registerWhileHeldCommand(HumanInput.harvestBallTrigger, new HarvestCommand());
 		
 	}
 	//Shooter Left Flywheel controls.
@@ -50,15 +50,15 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 		switch (leftFlywheelMotor.isSensorPresent(ENCODER)){
 		case FeedbackStatusPresent://Why are they in the main frame like this?
 			//It's there! this is easy.
-			return leftFlywheelMotor.getEncVelocity();
+			return -leftFlywheelMotor.getEncVelocity();
 			
 		case FeedbackStatusUnknown:
 			//WE don't know if the sensor is there.
-			//System.err.println("FlywheelSubsystem does not know if there is a left Encoder.");
+			System.err.println("FlywheelSubsystem does not know if there is a left Encoder.");
 			
 		default:// FeedbackStatusNotPresent
 			//We know it is not there, so we can make up a value!
-			return leftFlywheelMotor.getOutputVoltage()/12.0;
+			return -leftFlywheelMotor.getOutputVoltage()/12.0;
 		}
 	}
 	
@@ -83,7 +83,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 			
 		case FeedbackStatusUnknown:
 			//WE don't know if the sensor is there.
-			//System.err.println("FlywheelSubsystem does not know if there is a right Encoder.");
+			System.err.println("FlywheelSubsystem does not know if there is a right Encoder.");
 			
 		default:// FeedbackStatusNotPresent
 			//We know it is not there, so we can make up a value!

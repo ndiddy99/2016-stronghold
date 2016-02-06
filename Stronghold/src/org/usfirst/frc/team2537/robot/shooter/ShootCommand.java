@@ -17,18 +17,18 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
  * documentation done by Matthew Schweiss
  * TODO Figure out the unit of the SHOOT_VELOCITY.
  */
-public class ShootCommandGroup extends CommandGroup {
+public class ShootCommand extends CommandGroup {
 	//The default velocity.
     public static final double SHOOT_VELOCITY = 1.0;
     
     //Using default velocity.
-    public ShootCommandGroup() {
+    public ShootCommand() {
     	this(SHOOT_VELOCITY);
     	addSequential(new FlywheelCommand(0.0));
     }
     
     //Using a specified speed.
-    public ShootCommandGroup(double shootVelocity){
+    public ShootCommand(double shootVelocity){
     	addSequential(new FlywheelCommand(shootVelocity));
     	addSequential(new WaitCommand(2.0));
     	addSequential(new FlywheelCommand(0.0));

@@ -10,11 +10,11 @@ import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelCommand;
  * 
  * @author Matthew Schweiss
  */
-public class HarvestCommandGroup extends CommandGroup {
+public class HarvestCommand extends CommandGroup {
 	private static final double HARVEST_ANGLE = -10;
 	private static final double HARVEST_SPEED = -.5;
     
-    public HarvestCommandGroup() {
+    public HarvestCommand() {
     	// Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
