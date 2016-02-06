@@ -67,8 +67,6 @@ public class Robot extends IterativeRobot {
 		//Arm
 		//armSys.initDefaultCommand();
 		//armSys.registerButtons();
-		shooterFlywheelSys.setLeftFlywheelVelocity(1);
-		shooterFlywheelSys.setRightFlywheelVelocity(1);
 	}
 	
 	@Override

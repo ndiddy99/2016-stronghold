@@ -41,7 +41,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
     }
 	
 	public void registerButtons() {
-		HumanInput.registerPressedCommand(HumanInput.ballShootTrigger, new ShootCommand());
+		HumanInput.toggleWhenPressed(HumanInput.ballShootTrigger, new ShootCommand());
 		HumanInput.registerWhileHeldCommand(HumanInput.harvestBallTrigger, new HarvestCommand());
 		
 	}

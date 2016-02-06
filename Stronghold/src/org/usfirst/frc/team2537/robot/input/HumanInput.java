@@ -63,18 +63,18 @@ public class HumanInput {
 		 b.whenPressed(cmd);
 	}
 	
-//	/**
-//	 * register a command for when the button is released
-//	 * 
-//	 * @param b
-//	 *            the button to be registered found as a static Button in the
-//	 *            HumanInput class.
-//	 * @param cmd
-//	 *            the user provided Command to be registered
-//	 */
-//	public static void registerWhenReleasedCommand(Button b, Command cmd) {
-//		b.whenReleased(cmd);
-//	}
+	/**
+	 * register a command for when the button is released
+	 * 
+	 * @param b
+	 *            the button to be registered found as a static Button in the
+	 *            HumanInput class.
+	 * @param cmd
+	 *            the user provided Command to be registered
+	 */
+	public static void registerWhenReleasedCommand(Button b, Command cmd) {
+		b.whenReleased(cmd);
+	}
 
 	/**
 	 * register a command to be run as long as the button is held
@@ -87,5 +87,15 @@ public class HumanInput {
 	 */
 	public static void registerWhileHeldCommand(Button b, Command cmd) {
 		b.whileHeld(cmd);
+	}
+	
+	/**
+	 * Toggles the command whenever the button is pressed (on then off then on)
+	 *
+	 * @param b 	The button to register to.
+	 * @param cmd 	The command to be linked.
+	 */
+	public static void toggleWhenPressed(Button b, Command cmd) {
+		b.toggleWhenPressed(cmd);
 	}
 }

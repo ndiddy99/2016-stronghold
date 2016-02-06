@@ -30,7 +30,6 @@ public class FlywheelCommand extends Command {
 		// Get the motor values to start with.
 		currentLeftFlywheelSpeed = Robot.shooterFlywheelSys.getLeftFlywheelVelocity();
 		currentRightFlywheelSpeed = Robot.shooterFlywheelSys.getRightFlywheelVelocity();
-
 	}
 
 	@Override
