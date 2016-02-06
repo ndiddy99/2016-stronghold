@@ -66,7 +66,7 @@ public class Robot extends IterativeRobot {
 		//Arm
 		//armSys.initDefaultCommand();
 		//armSys.registerButtons();
-		new SensorTestCommand(1, 2).start();
+		new SensorTestCommand(2, 2).start();
 	}
 	
 	@Override
