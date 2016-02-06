@@ -27,8 +27,8 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 		rightFlywheelMotor 	= new CANTalon(Ports.TALON_RIGHT_FLYWHEEL_PORT);
 				//Make the talon's go to the right control mode.
 		//Should be default, not sure if this should be here.
-		leftFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Voltage);
-		rightFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Voltage);
+		leftFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		rightFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 	}
 	
 	@Override
@@ -54,7 +54,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 			
 		case FeedbackStatusUnknown:
 			//WE don't know if the sensor is there.
-			System.err.println("FlywheelSubsystem does not know if there is a left Encoder.");
+			//System.err.println("FlywheelSubsystem does not know if there is a left Encoder.");
 			
 		default:// FeedbackStatusNotPresent
 			//We know it is not there, so we can make up a value!
@@ -70,6 +70,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	 */
 
 	public void setLeftFlywheelVelocity(double velocity) {
+		System.out.println("L Speed = " + velocity);
 		leftFlywheelMotor.set(-velocity);
 	}
 	
@@ -82,7 +83,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 			
 		case FeedbackStatusUnknown:
 			//WE don't know if the sensor is there.
-			System.err.println("FlywheelSubsystem does not know if there is a right Encoder.");
+			//System.err.println("FlywheelSubsystem does not know if there is a right Encoder.");
 			
 		default:// FeedbackStatusNotPresent
 			//We know it is not there, so we can make up a value!
@@ -96,6 +97,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	 * @param velocity
 	 */
 	public void setRightFlywheelVelocity(double velocity) {
+		System.out.println("R Speed = " + velocity);
 		rightFlywheelMotor.set(velocity);
 	}
 	
