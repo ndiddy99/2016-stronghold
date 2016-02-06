@@ -30,6 +30,7 @@ public class DriveSubsystem extends Subsystem{
 		talonBackRight = new CANTalon(Ports.BACK_RIGHT_MOTOR_PORT);
 		setDriveControlMode(TalonControlMode.Speed);
 		
+		
 		driveType = DriveType.doubleJoystick; //TODO: set this
 		drivingStraight = false;
 		driveLowerSpeed = false;
@@ -90,7 +91,7 @@ public class DriveSubsystem extends Subsystem{
 	 */
 	public void setDriveMotors(double left, double right){
 		setLeftDriveMotors(left);
-		setRightDriveMotors(left);
+		setRightDriveMotors(right);
 	}
 	
 	public double get(CANTalon talon){
