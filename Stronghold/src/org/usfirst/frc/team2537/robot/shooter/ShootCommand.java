@@ -51,6 +51,12 @@ public class ShootCommand extends CommandGroup {
      * We want to only run the code the first time the button is pushed.
      * If the second time the button is pushed, this is running, I want to terminate the program.
      */
+    /**
+     * Start the program.
+     * 
+     * This will start the command running except if it is already running. If it is already running, the program will be 
+     * terminated.
+     */
     public void start(){
     	if (isRunning()){
     		//I am already running, no a won't go.
