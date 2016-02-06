@@ -7,6 +7,12 @@ import java.util.List;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 
+/**
+ * Lol you don't need to know about this friendo
+ * 
+ * @author Alex Taber
+ *
+ */
 public class Sensors {
 	private List<SensorListener> listeners = new ArrayList<SensorListener>();
 	private HashMap<String, Double> sensorVals =  new HashMap<String, Double>();

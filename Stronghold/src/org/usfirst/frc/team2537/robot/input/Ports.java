@@ -1,5 +1,11 @@
 package org.usfirst.frc.team2537.robot.input;
 
+/**
+ * List of ports that we will use on the robot. Change as necessary
+ * 
+ * @author Alex Taber
+ *
+ */
 public final class Ports {
 	public static final int 
 	//Joystick

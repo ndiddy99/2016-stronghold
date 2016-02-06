@@ -4,10 +4,22 @@ import org.usfirst.frc.team2537.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * Command used for the crossing of defenses
+ * 
+ * @author Alex Taber
+ *
+ */
 public class CrossCommand extends Command {
 	Defense defense;
 	Double nearRange = null;
 	Double farRange = null;
+	
+	/**
+	 * Constructor that initializes the crosscommand
+	 * 
+	 * @param	defense	Enum that determines what defense to cross
+	 */
 	public CrossCommand(Defense defense) {
 		this.defense = defense;
 	}

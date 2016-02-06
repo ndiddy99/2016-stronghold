@@ -3,6 +3,12 @@ package org.usfirst.frc.team2537.robot.arm;
 import org.usfirst.frc.team2537.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * Default command for arm subsystem. Gets values of joystick and sets talon speed accordingly.
+ * 
+ * @author Alex Taber
+ *
+ */
 public class ArmManualMovementCommand extends Command {
 	
 	public ArmManualMovementCommand() {

@@ -7,41 +7,78 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team2537.robot.input.XBoxButtons;
 
+/**
+ * Class that contains all the button and joystick declarations.
+ * 
+ * Also contains methods necessary to get joystick and button presses.
+ * 
+ * @author Alex Taber
+ *
+ */
 public class HumanInput {
-	public static final int XBOX_LEFT_STICK_X_AXIS = 0,
-			XBOX_LEFT_STICK_Y_AXIS = 1, XBOX_LEFT_TRIGGER_AXIS = 2,
-			XBOX_RIGHT_TRIGGER_AXIS = 3, XBOX_RIGHT_STICK_X_AXIS = 4,
-			XBOX_RIGHT_STICK_Y_AXIS = 5, XBOX_DIRECTIONAL_PAD = 6;
-
 	public static Joystick xboxController = new Joystick(Ports.XBOX);
 	public static Joystick leftJoystick = new Joystick(Ports.JOYSTICK_ONE_PORT);
 	public static Joystick rightJoystick = new Joystick(Ports.JOYSTICK_TWO_PORT);
-	
-	//replace the following 0s with actual numbers once you test them
+
+	// replace the following 0s with actual numbers once you test them
 	public static Button portcullisButton = new JoystickButton(xboxController, XBoxButtons.XBOX_A);
 	public static Button raiseArm = new JoystickButton(xboxController, XBoxButtons.XBOX_Y);
 	public static Button chevalButton = new JoystickButton(xboxController, XBoxButtons.XBOX_B);
-	public static final JoystickButton ballShootTrigger = new XboxTrigger(xboxController, XBoxButtons.XBOX_RIGHT_TRIGGERS);
+	public static final JoystickButton ballShootTrigger = new XboxTrigger(xboxController,
+			XBoxButtons.XBOX_RIGHT_TRIGGERS);
 
-	public static final JoystickButton harvestBallTrigger = new XboxTrigger(xboxController, XBoxButtons.XBOX_LEFT_TRIGGERS);
+	public static final JoystickButton harvestBallTrigger = new XboxTrigger(xboxController,
+			XBoxButtons.XBOX_LEFT_TRIGGERS);
 
 	public static Button driveStraight = new JoystickButton(rightJoystick, 0);
 	public static Button driveSensetivityToggle = new JoystickButton(xboxController, 0);
 
-	public static void registerPressedCommand(Button b, Command c) {
-		b.whenPressed(c);
+	/**
+	 * Method to register a pressed button command. When you use this method it
+	 * will set the button to trigger a command when pressed down
+	 * 
+	 * @param button
+	 *            Button to register command to
+	 * @param command
+	 *            Command to register to button
+	 */
+	public static void registerPressedCommand(Button button, Command command) {
+		button.whenPressed(command);
 	}
-	
+
+	/**
+	 * Method to register a released button command. When you use this method it
+	 * will set the button to trigger a command when released
+	 * 
+	 * @param button
+	 *            Button to register command to
+	 * @param command
+	 *            Command to register to button
+	 */
 	public static void registerReleasedCommand(Button b, Command c) {
 		b.whenReleased(c);
 	}
+	
+	/**
+	 * Method to get the value of an XBox joystick
+	 * 
+	 * @param	joystick	Joystick, most likely HumanInput.xboxController
+	 * @param	axis		Axis from the XBoxButtons.java class
+	 * @return
+	 */
+	public static double getXboxAxis(Joystick joystick, int axis) {
+		return joystick.getRawAxis(axis);
+	}
 
-	public static double getXboxAxis(Joystick j, int i) {
-		return j.getRawAxis(i);
+	/**
+	 * Method to get the value of a non-XBox joystick
+	 * 
+	 * @param	joystick
+	 * @param ax
+	 * @return
+	 */
+	public static double getJoystickAxis(Joystick joystick, AxisType ax) {
+		return joystick.getAxis(ax);
 	}
-	
-	public static double getJoystickAxis(Joystick j, AxisType ax) {
-		return j.getAxis(ax);
-	}
-	
+
 }

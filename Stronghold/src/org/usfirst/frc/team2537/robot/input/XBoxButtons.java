@@ -1,5 +1,11 @@
 package org.usfirst.frc.team2537.robot.input;
 
+/**
+ * List of xboxbuttons
+ * 
+ * @author Alex Taber
+ *
+ */
 public class XBoxButtons {
 	public final static int
 		//Buttons

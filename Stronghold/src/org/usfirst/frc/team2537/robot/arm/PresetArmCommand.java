@@ -4,15 +4,26 @@ import org.usfirst.frc.team2537.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * Command that moves the arm to a preset position
+ * 
+ * @author Alex Taber
+ *
+ */
 public class PresetArmCommand extends Command {
 
 	double angleToMoveTo;
 	double currentAngle;
 	boolean move;
 	final double tolerance = 5;
-
+	
+	/**
+	 * Constructor that sets what angle to move to
+	 * 
+	 * @param	angle	A double to set what angle to move the arm to
+	 */
 	public PresetArmCommand(double angle) {
-		this.requires(Robot.armSys); 
+		requires(Robot.armSys); 
 		angleToMoveTo = angle;
 	}
 
@@ -30,7 +41,7 @@ public class PresetArmCommand extends Command {
 	protected void execute() { 
 		currentAngle = Robot.armSys.getAngle();
 		if (move) {
-			Double speed = (currentAngle - angleToMoveTo) / 180;
+			Double speed = (.25);
 			Robot.armSys.setArmTalonSpeed(speed);
 		}
 
