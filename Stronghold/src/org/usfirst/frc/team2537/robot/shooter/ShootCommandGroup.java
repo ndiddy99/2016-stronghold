@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2537.robot.shooter;
 
+import org.usfirst.frc.team2537.robot.Robot;
 import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelCommand;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
@@ -18,18 +19,22 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
  */
 public class ShootCommandGroup extends CommandGroup {
 	//The default velocity.
-    public static final double SHOOT_VELOCITY = .5;
+    public static final double SHOOT_VELOCITY = 1.0;
     
     //Using default velocity.
     public ShootCommandGroup() {
     	this(SHOOT_VELOCITY);
+    	addSequential(new FlywheelCommand(0.0));
     }
     
     //Using a specified speed.
     public ShootCommandGroup(double shootVelocity){
     	addSequential(new FlywheelCommand(shootVelocity));
-    	addSequential(new WaitCommand(2.0));
+    	addSequential(new WaitCommand(5.0));
+    	//Robot.shooterFlywheelSys.setRightFlywheelVelocity(0);
+    	//Robot.shooterFlywheelSys.setLeftFlywheelVelocity(0);
     	addSequential(new FlywheelCommand(0.0));
+    	System.out.println("Shoot Command Group is Running");
 //    	addSequential(new EjectBallCommand());
     }
 }

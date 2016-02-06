@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2537.robot.shooter;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
 import org.usfirst.frc.team2537.robot.shooter.angle.ManualAngleCommand;
@@ -15,7 +16,7 @@ import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelCommand;
  */
 public class HarvestCommandGroup extends CommandGroup {
 	private static final double HARVEST_ANGLE = -10;
-	private static final double HARVEST_SPEED = -.1;
+	private static final double HARVEST_SPEED = -.5;
     
     public HarvestCommandGroup() {
         // Add Commands here:
@@ -35,11 +36,16 @@ public class HarvestCommandGroup extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	//addParallel(new MoveToAngleCommand(HARVEST_ANGLE));
+    	System.out.println("Harvest command is running");
     	addParallel(new ManualAngleCommand());
     	addSequential(new FlywheelCommand(HARVEST_SPEED));
     	//Wait until we get a ball.
     	//addSequential(new UntilBallCommand());
     	
     	
+    }
+    @Override
+    protected void interrupted() {
+    	new FlywheelCommand(0.0).start();
     }
 }

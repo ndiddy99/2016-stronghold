@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 
 import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
 import org.usfirst.frc.team2537.robot.input.Sensors;
+import org.usfirst.frc.team2537.robot.shooter.ShootCommandGroup;
 import org.usfirst.frc.team2537.robot.shooter.angle.AngleSubsystem;
 import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelSubsystem;
 //import org.usfirst.frc.team2537.robot.shooter.actuator.ActuatorSubsystem;
@@ -67,7 +68,6 @@ public class Robot extends IterativeRobot {
 		//Arm
 		armSys.initDefaultCommand();
 		armSys.registerButtons();
-		
 	}
 	
 	@Override
@@ -111,7 +111,8 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		// System.out.println("Tele Hi!");
 		Scheduler.getInstance().run();
-
+		//System.out.println("Teleop is running");
+		
 	}
 	
 	@Override
