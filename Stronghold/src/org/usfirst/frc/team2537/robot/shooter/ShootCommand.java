@@ -46,4 +46,19 @@ public class ShootCommand extends CommandGroup {
     	new SpinDownCommand().start();
     }
     
+    @Override
+    /*
+     * We want to only run the code the first time the button is pushed.
+     * If the second time the button is pushed, this is running, I want to terminate the program.
+     */
+    public void start(){
+    	if (isRunning()){
+    		//I am already running, no a won't go.
+    		cancel();
+    	} else {
+    		//I'm not running, lets start!
+    		super.start();
+    	}
+    }
+    
 }
