@@ -31,7 +31,7 @@ public class DriveSubsystem extends Subsystem{
 		setDriveControlMode(TalonControlMode.Speed);
 		
 		
-		driveType = DriveType.doubleJoystick; //TODO: set this
+		driveType = DriveType.doubleJoystickXbox; //TODO: set this
 		drivingStraight = false;
 		driveLowerSpeed = false;
 	}
@@ -50,8 +50,8 @@ public class DriveSubsystem extends Subsystem{
 		// (x pulses)/ (radius*pi tenMS)
 
 		switch(talon.getControlMode()){
-		case Speed: talon.set(outputValue / (WHEEL_DIAMETER/2 * Math.PI));
-		default: talon.set(outputValue);
+		case Speed: talon.set(1023 * outputValue / (WHEEL_DIAMETER/2 * Math.PI)); break;
+		default: if(outputValue != 0) System.out.println(outputValue); talon.set(outputValue);
 		}
 	}
 
@@ -61,8 +61,8 @@ public class DriveSubsystem extends Subsystem{
 	 * @param value
 	 */
 	public void setLeftDriveMotors(double value){
-		set(-value, talonFrontLeft);
-		set(-value, talonBackLeft);
+//		set(-value, talonFrontLeft);
+//		set(-value, talonBackLeft);
 	}
 	
 	/**
@@ -71,7 +71,7 @@ public class DriveSubsystem extends Subsystem{
 	 */
 	public void setRightDriveMotors(double value){
 		set(value, talonFrontRight);
-		set(value, talonBackRight);	
+//		set(value, talonBackRight);	
 	}
 	
 	/**
@@ -131,10 +131,10 @@ public class DriveSubsystem extends Subsystem{
 	}
 	
 	public void setDriveControlMode(TalonControlMode mode){
-		talonFrontLeft.changeControlMode(mode);
-		talonBackLeft.changeControlMode(mode);
+//		talonFrontLeft.changeControlMode(mode);
+//		talonBackLeft.changeControlMode(mode);
 		talonFrontRight.changeControlMode(mode);
-		talonBackRight.changeControlMode(mode);
+//		talonBackRight.changeControlMode(mode);
 	}
 
 	/**
