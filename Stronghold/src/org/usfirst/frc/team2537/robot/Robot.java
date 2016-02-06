@@ -8,7 +8,7 @@ import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
 import org.usfirst.frc.team2537.robot.input.Sensors;
 import org.usfirst.frc.team2537.robot.shooter.angle.AngleSubsystem;
 import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelSubsystem;
-import org.usfirst.frc.team2537.robot.shooter.flywheel.SensorTestCommand;
+import org.usfirst.frc.team2537.robot.shooter.flywheel.SensorTestCommand2;
 import org.usfirst.frc.team2537.robot.shooter.actuator.ActuatorSubsystem;
 
 /**
@@ -66,7 +66,7 @@ public class Robot extends IterativeRobot {
 		//Arm
 		//armSys.initDefaultCommand();
 		//armSys.registerButtons();
-		new SensorTestCommand(2, 2).start();
+		new SensorTestCommand2(2, 2).start();
 	}
 	
 	@Override
