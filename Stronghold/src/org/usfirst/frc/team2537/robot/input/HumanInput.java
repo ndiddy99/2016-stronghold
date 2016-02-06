@@ -18,9 +18,9 @@ public class HumanInput {
 	public static Joystick rightJoystick = new Joystick(Ports.JOYSTICK_TWO_PORT);
 	
 	//replace the following 0s with actual numbers once you test them
-	public static Button lowerArm = new JoystickButton(xboxController, XBoxButtons.XBOX_A);
+	public static Button portcullisButton = new JoystickButton(xboxController, XBoxButtons.XBOX_A);
 	public static Button raiseArm = new JoystickButton(xboxController, XBoxButtons.XBOX_Y);
-	public static Button neutralArm = new JoystickButton(xboxController, XBoxButtons.XBOX_B);
+	public static Button chevalButton = new JoystickButton(xboxController, XBoxButtons.XBOX_B);
 	public static final JoystickButton ballShootTrigger = new XboxTrigger(xboxController, XBoxButtons.XBOX_RIGHT_TRIGGERS);
 
 	public static final JoystickButton harvestBallTrigger = new XboxTrigger(xboxController, XBoxButtons.XBOX_LEFT_TRIGGERS);

@@ -4,8 +4,9 @@ public class ArmPositions {
 	public static final double
 		//Change to actual angle measurements
 		//TODO refactor because Tim is a meanie
-		downPos = 0.00,
-		neutralPos = 0.00,
-		upPos = 0.00,
-		lowbarPos = 0.00;
+		portcullisDownPos = 0.00,
+		portcullisUpPos = 0.00,
+		lowbarPos = 0.00,
+		chevalUpPos = 0.00,
+		chevalDownPos = 0.00;
 }

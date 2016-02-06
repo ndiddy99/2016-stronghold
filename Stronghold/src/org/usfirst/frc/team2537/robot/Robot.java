@@ -89,7 +89,6 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopInit(){
 		System.out.println("Teleop init");
-		Scheduler.getInstance().add(new RobotInit());
 		if(autoCommand != null)
 			autoCommand.cancel();
 	}
