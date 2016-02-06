@@ -10,14 +10,21 @@ public class FlywheelCommand extends Command {
 	private double currentLeftFlywheelSpeed = 0.0;
 	private double currentRightFlywheelSpeed = 0.0;
 	private double targetSpeed;
+	private final long START_TIME;
+	private static final long TIMEOUT_TIME_MS = 10000;
+
 
 	public FlywheelCommand(double speed) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		// super(FlywheelShootSpeed);
+		// super(FlywheelShootSpeed)
+	
 		// if (flywheelSpeed < 0) System.out.println("Negative speed of " +
 		// speed + "given to flywheel spin up.");
+		super(TIMEOUT_TIME_MS);
 		targetSpeed = speed;
+		START_TIME = System.currentTimeMillis();
+		
 	}
 
 	@Override
@@ -48,16 +55,13 @@ public class FlywheelCommand extends Command {
 		currentRightFlywheelSpeed = Robot.shooterFlywheelSys.getRightFlywheelVelocity();
 		currentRightFlywheelSpeed = incrementTowardsRange(currentRightFlywheelSpeed);
 		Robot.shooterFlywheelSys.setRightFlywheelVelocity(currentRightFlywheelSpeed);
-		if(isFinished()) {
-			//this.end();
-			this.interrupted();
-		}
+		
 	}
 
 	@Override
 	protected void interrupted() {
-		//Robot.shooterFlywheelSys.setLeftFlywheelVelocity(0);
-		//Robot.shooterFlywheelSys.setRightFlywheelVelocity(0);
+		Robot.shooterFlywheelSys.setLeftFlywheelVelocity(0);
+		Robot.shooterFlywheelSys.setRightFlywheelVelocity(0);
 
 	}
 

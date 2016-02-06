@@ -24,8 +24,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 		//Make sure the the mode to velocity so we can modify it.
 		leftFlywheelMotor 	= new CANTalon(Ports.TALON_LEFT_FLYWHEEL_PORT);
 		rightFlywheelMotor 	= new CANTalon(Ports.TALON_RIGHT_FLYWHEEL_PORT);
-		
-		//Make the talon's go to the right control mode.
+				//Make the talon's go to the right control mode.
 		//Should be default, not sure if this should be here.
 		//.changeControlMode(CANTalon.TalonControlMode.Voltage);
 		//rightFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Voltage);
@@ -47,7 +46,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	}
 	//Shooter Left Flywheel controls.
 	public double getLeftFlywheelVelocity() {
-		return leftFlywheelMotor.getOutputVoltage()/12.0;
+		return -leftFlywheelMotor.getOutputVoltage()/12.0;
 	}
 	
 	/**
@@ -58,7 +57,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	 */
 
 	public void setLeftFlywheelVelocity(double velocity) {
-		leftFlywheelMotor.set(velocity);
+		leftFlywheelMotor.set(-velocity);
 	}
 	
 	//Shooter Right Flywheel controls.

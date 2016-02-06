@@ -19,6 +19,8 @@ public class HarvestCommandGroup extends CommandGroup {
 	private static final double HARVEST_SPEED = -.5;
     
     public HarvestCommandGroup() {
+    	
+    	//TODO DISABLE HARVEST WHEN BALLL DETECTED USING PROXIMITY SENSOR
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
