@@ -49,12 +49,12 @@ public class CrossCommand extends Command {
 			break;
 		}
 		if (nearRange != null && farRange != null ) {
-			Robot.driveSys.setDriveMotors(.25);
+			Robot.driveSys.setDriveMotors(.01);
 		}
 	}
 
 	protected void execute() {
-		if (ArmSubsystem.debug) System.err.print("idk lol");
+		if (ArmSubsystem.debug) System.err.println("Cross Command running");
 	}
 
 	protected boolean isFinished() {

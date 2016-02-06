@@ -30,8 +30,8 @@ public class HumanInput {
 	public static final JoystickButton harvestBallTrigger = new XboxTrigger(xboxController,
 			XBoxButtons.XBOX_LEFT_TRIGGERS);
 
-	public static Button driveStraight = new JoystickButton(rightJoystick, 0);
-	public static Button driveSensetivityToggle = new JoystickButton(xboxController, 0);
+//	public static Button driveStraight = new JoystickButton(rightJoystick, 0);
+//	public static Button driveSensetivityToggle = new JoystickButton(xboxController, 0);
 
 	/**
 	 * Method to register a pressed button command. When you use this method it

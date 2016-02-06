@@ -36,17 +36,14 @@ public class Robot extends IterativeRobot {
 	
 	public void robotInit() {
 		System.out.println("Sabre bot online!");
-		autoChooser = new AutoChooser();		
-		SmartDashboard.putData("Auto choices", chooser);
 		sensorSys = new Sensors();
 		sensorSys.init();
-		armSys = new ArmSubsystem();
-		armSys.initDefaultCommand();
-		armSys.registerButtons();
-
 		driveSys = new DriveSubsystem();
 		driveSys.initDefaultCommand();
 		driveSys.registerButtons();
+		armSys = new ArmSubsystem();
+		armSys.initDefaultCommand();
+		armSys.registerButtons();
 		sensorSys.registerListener(armSys);
 	}
 

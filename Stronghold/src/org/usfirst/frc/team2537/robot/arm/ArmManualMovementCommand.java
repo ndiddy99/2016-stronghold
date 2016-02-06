@@ -24,11 +24,10 @@ public class ArmManualMovementCommand extends Command {
 	}
 
 	protected boolean isFinished() {
-		return false;
+		return true;
 	}
 
 	protected void end() {
-		Robot.armSys.setArmTalonSpeed(0);
 		if (ArmSubsystem.debug) System.out.println("Arm movement completed!");
 	}
 
