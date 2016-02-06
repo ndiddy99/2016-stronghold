@@ -23,12 +23,11 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	private static final boolean FWD_LIMIT_SWITCH_NORMALLY_OPEN = true;
 	private static final boolean REV_LIMIT_SWITCH_NORMALLY_OPEN = true;
 	private static final boolean ENABLE_SOFT_LIMIT = true;
-	
 	private static final double ENCODER_TICKS_PER_REV = 1000;
 	
 	//The angle limits.
-	public static final double MAX_ANGLE = 80;//degrees (ball park, not right)
-	public static final double MIN_ANGLE = -40;//degrees(ball park, not right)
+	private static final double MAX_ANGLE = 80;//degrees (ball park, not right)
+	private static final double MIN_ANGLE = -40;//degrees(ball park, not right)
 	
 	//Varibles
 	private static double currentAngle = 0;

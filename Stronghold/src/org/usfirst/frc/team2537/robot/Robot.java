@@ -1,16 +1,14 @@
 package org.usfirst.frc.team2537.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.command.Scheduler;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
 import org.usfirst.frc.team2537.robot.input.Sensors;
 import org.usfirst.frc.team2537.robot.shooter.angle.AngleSubsystem;
 import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelSubsystem;
-//import org.usfirst.frc.team2537.robot.shooter.actuator.ActuatorSubsystem;
+import org.usfirst.frc.team2537.robot.shooter.actuator.ActuatorSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -28,7 +26,7 @@ public class Robot extends IterativeRobot {
 	public static Sensors sensorSys;//TO be done.
 	public static FlywheelSubsystem shooterFlywheelSys;
 	public static AngleSubsystem shooterAngleSys;
-	//public static ActuatorSubsystem shooterActuatorSys;
+	public static ActuatorSubsystem shooterActuatorSys;
 	public static ArmSubsystem armSys;
 	
 	@Override
@@ -62,8 +60,8 @@ public class Robot extends IterativeRobot {
 		shooterAngleSys.initDefaultCommand();
 		shooterAngleSys.registerButtons();
 		//Shooter Actuator
-//		shooterActuatorSys.initDefaultCommand();
-//		shooterActuatorSys.registerButtons();
+		shooterActuatorSys.initDefaultCommand();
+		shooterActuatorSys.registerButtons();
 		//Arm
 		//armSys.initDefaultCommand();
 		//armSys.registerButtons();
