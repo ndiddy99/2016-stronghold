@@ -1,7 +1,5 @@
 package org.usfirst.frc.team2537.robot.shooter.actuator;
 
-import org.usfirst.frc.team2537.robot.input.Ports;
-
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
