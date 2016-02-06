@@ -16,7 +16,7 @@ public class PresetArmCommand extends Command {
 	double currentAngle;
 	boolean move;
 	final double tolerance = 5;
-	
+	Double speed;
 	/**
 	 * Constructor that sets what angle to move to
 	 * 
@@ -41,7 +41,11 @@ public class PresetArmCommand extends Command {
 	protected void execute() { 
 		currentAngle = Robot.armSys.getAngle();
 		if (move) {
-			Double speed = (.25);
+			if (currentAngle < angleToMoveTo) {
+				speed = (.25);
+			} else {
+				speed = (-.25);
+			}
 			Robot.armSys.setArmTalonSpeed(speed);
 		}
 

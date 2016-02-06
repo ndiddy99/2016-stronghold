@@ -2,7 +2,6 @@ package org.usfirst.frc.team2537.robot.drive;
 
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 import org.usfirst.frc.team2537.robot.input.Ports;
-
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -91,29 +90,29 @@ public class DriveSubsystem extends Subsystem{
 	}
 	
 	public void registerButtons() {
-//		HumanInput.registerPressedCommand(HumanInput.driveStraight, new Command(){
-//			@Override protected void initialize() {drivingStraight = true;}
-//			@Override protected void execute() {}
-//			@Override protected boolean isFinished() {return true;}			
-//			@Override protected void end() {}
-//			@Override protected void interrupted() {}
-//		});
-//		
-//		HumanInput.registerReleasedCommand(HumanInput.driveStraight, new Command(){
-//			@Override protected void initialize() {drivingStraight = false;}
-//			@Override protected void execute() {}
-//			@Override protected boolean isFinished() {return true;}
-//			@Override protected void end() {}
-//			@Override protected void interrupted() {}
-//		});
-//		
-//		HumanInput.registerPressedCommand(HumanInput.driveSensetivityToggle, new Command(){
-//			@Override protected void initialize() {driveLowerSpeed = !driveLowerSpeed;}
-//			@Override protected void execute() {}
-//			@Override protected boolean isFinished() {return true;}
-//			@Override protected void end() {}
-//			@Override protected void interrupted() {}
-//		});
+		HumanInput.registerPressedCommand(HumanInput.driveStraight, new Command(){
+			@Override protected void initialize() {drivingStraight = true;}
+			@Override protected void execute() {}
+			@Override protected boolean isFinished() {return true;}			
+			@Override protected void end() {}
+			@Override protected void interrupted() {}
+		});
+		
+		HumanInput.registerReleasedCommand(HumanInput.driveStraight, new Command(){
+			@Override protected void initialize() {drivingStraight = false;}
+			@Override protected void execute() {}
+			@Override protected boolean isFinished() {return true;}
+			@Override protected void end() {}
+			@Override protected void interrupted() {}
+		});
+		
+		HumanInput.registerPressedCommand(HumanInput.driveSensetivityToggle, new Command(){
+			@Override protected void initialize() {driveLowerSpeed = !driveLowerSpeed;}
+			@Override protected void execute() {}
+			@Override protected boolean isFinished() {return true;}
+			@Override protected void end() {}
+			@Override protected void interrupted() {}
+		});
 	}
 	
 }

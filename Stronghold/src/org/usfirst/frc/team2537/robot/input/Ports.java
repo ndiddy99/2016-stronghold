@@ -22,6 +22,9 @@ public final class Ports {
 	BACK_LEFT_MOTOR_PORT = 4,
 	
 	//Other Talon
-	ARM_TALON = 5; //Change when confirmed
-
+	ARM_TALON = 5, //Change when confirmed
+	
+	//Sensors
+	DRIVE_ULTRASONIC_INPUT = 0,
+	DRIVE_ULTRASONIC_ECHO = 1;
 }

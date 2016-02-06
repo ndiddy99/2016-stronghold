@@ -2,6 +2,7 @@ package org.usfirst.frc.team2537.robot.drive;
 
 import org.usfirst.frc.team2537.robot.Robot;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
+import org.usfirst.frc.team2537.robot.input.XBoxButtons;
 
 import edu.wpi.first.wpilibj.Joystick.AxisType;
 //import edu.wpi.first.wpilibj.CANTalon;
@@ -22,12 +23,10 @@ public class DriveCommand extends Command {
 		requires(Robot.driveSys);
 	}
 
-	@Override
 	protected void initialize() {
 		if(debug) System.out.println("[DriveCommand] Initializing... drivetype: " + Robot.driveSys.driveType);
 	}
 
-	@Override
 	protected void execute() {
 		Double left = null;
 		Double right = null;
@@ -48,11 +47,11 @@ public class DriveCommand extends Command {
 			right -= HumanInput.getJoystickAxis(HumanInput.leftJoystick, AxisType.kX);
 			break;
 		case doubleJoystickXbox:
-			left = HumanInput.getXboxAxis(HumanInput.xboxController, HumanInput.XBOX_LEFT_STICK_Y_AXIS);
-			right = HumanInput.getXboxAxis(HumanInput.xboxController, HumanInput.XBOX_RIGHT_STICK_Y_AXIS);
+			left = HumanInput.getXboxAxis(HumanInput.xboxController, XBoxButtons.XBOX_LEFT_Y_AXIS);
+			right = HumanInput.getXboxAxis(HumanInput.xboxController, XBoxButtons.XBOX_RIGHT_Y_AXIS);
 			break;
 		case singleJoystickXbox:
-			left = HumanInput.getXboxAxis(HumanInput.xboxController, HumanInput.XBOX_LEFT_STICK_Y_AXIS);
+			left = HumanInput.getXboxAxis(HumanInput.xboxController, XBoxButtons.XBOX_LEFT_Y_AXIS);
 			right = left;
 			
 			left += HumanInput.getJoystickAxis(HumanInput.leftJoystick, AxisType.kX);
@@ -85,18 +84,15 @@ public class DriveCommand extends Command {
 		Robot.driveSys.setDriveMotors(left, right);
 	}
 
-	@Override
 	protected boolean isFinished() {
 		return false;
 	}
 
-	@Override
 	protected void end(){
 		if(debug) System.out.println("[DriveCommand] It's over");
 		Robot.driveSys.setDriveMotors(0);
 	}
 
-	@Override
 	protected void interrupted() {
 		if(debug) System.out.println("[DriveCommand] Interruptions aren't fun.");
 		Robot.driveSys.setDriveMotors(0);
