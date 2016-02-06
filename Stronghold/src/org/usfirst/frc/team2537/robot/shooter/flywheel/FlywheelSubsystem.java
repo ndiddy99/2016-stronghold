@@ -47,7 +47,19 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	}
 	//Shooter Left Flywheel controls.
 	public double getLeftFlywheelVelocity() {
-		return -leftFlywheelMotor.getOutputVoltage()/12.0;
+		switch (leftFlywheelMotor.isSensorPresent(ENCODER)){
+		case FeedbackStatusPresent://Why are they in the main frame like this?
+			//It's there! this is easy.
+			return leftFlywheelMotor.getEncVelocity();
+			
+		case FeedbackStatusUnknown:
+			//WE don't know if the sensor is there.
+			System.err.println("FlywheelSubsystem does not know if there is a left Encoder.");
+			
+		default:// FeedbackStatusNotPresent
+			//We know it is not there, so we can make up a value!
+			return leftFlywheelMotor.getOutputVoltage()/12.0;
+		}
 	}
 	
 	/**
@@ -113,17 +125,5 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	public void setFlywheelsRampRate(double voltageValue) {
 		rightFlywheelMotor.setVoltageRampRate(voltageValue);
 		leftFlywheelMotor.setVoltageRampRate(voltageValue);
-	}
-	
-	/**
-	 * Check to see if an encoder is present on the talon.
-	 * @return
-	 */
-	private boolean isLeftEncoder(){
-		switch (leftFlywheelMotor.isSensorPresent(ENCODER)){
-			case CANTalon.FeedbackDeviceStatus.FeedbackStatusUnknown:
-				//WE don't know if the sensor is there.
-				System.err.println("FlywheelSubsystem does not know if there are encoders.);
-		}
 	}
 }
