@@ -27,8 +27,8 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 		rightFlywheelMotor 	= new CANTalon(Ports.TALON_RIGHT_FLYWHEEL_PORT);
 				//Make the talon's go to the right control mode.
 		//Should be default, not sure if this should be here.
-		//.changeControlMode(CANTalon.TalonControlMode.Voltage);
-		//rightFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Voltage);
+		leftFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Voltage);
+		rightFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Voltage);
 	}
 	
 	@Override
@@ -37,7 +37,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     	//setDefaultCommand(new ShotBallCommand());
-    	//There is not a defualt command.
+    	//There is not a default command.
     }
 	
 	public void registerButtons() {
