@@ -29,7 +29,8 @@ public class SensorTestCommand2 extends Command {
     	testMotor.configEncoderCodesPerRev(20);
     	testJoystick = new Joystick(joystickPort);
     }
-
+    
+    @Override
     // Called just before this Command runs the first time
     protected void initialize() {
     	testMotor.reverseSensor(false);
@@ -43,7 +44,8 @@ public class SensorTestCommand2 extends Command {
     	testMotor.setI(.01);
     	testMotor.setD(0);
     }
-
+    
+    @Override
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	/* get gamepad axis */
@@ -81,16 +83,19 @@ public class SensorTestCommand2 extends Command {
     	
     	
     }
-
+    
+    @Override
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return false;
     }
-
+    
+    @Override
     // Called once after isFinished returns true
     protected void end() {
     }
-
+    
+    @Override
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
