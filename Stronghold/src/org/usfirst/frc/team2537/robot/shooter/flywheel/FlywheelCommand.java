@@ -3,33 +3,41 @@ package org.usfirst.frc.team2537.robot.shooter.flywheel;
 import org.usfirst.frc.team2537.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * Change the speed of the flywheels to a particular speed.
+ * 
+ * @author Matthew Schweiss
+ *
+ */
+/*
+ * This will be overhauled because, now the PID is used in the flywheel subsystem.
+ */
 public class FlywheelCommand extends Command {
-	// Speed
-	private static final double SPEED_INCREMENT = .05;
-	private static final double SPEED_PROXIMITY = 0.05;
-	private static final long TIMEOUT_TIME_MS = 10000;
-	private double currentLeftFlywheelSpeed = 0.0;
-	private double currentRightFlywheelSpeed = 0.0;
+	// constants
+	private static final long 	TIMEOUT 		= 1000;//seconds
+	private static final double SPEED_PROXIMITY = 5;//Within 5 RPM
+	// vars
 	private double targetSpeed;
 
-
+	/**
+	 * Create the flywheel command. Move the flywheels to speed. 
+	 * If timeout is less than or equal to zero, timeout will never happen.
+	 * 
+	 * @param speed   The speed in RPM that will reached.
+	 * @param timeout The max time for this to run. (t<=0 means no timeout).
+	 */
 	public FlywheelCommand(double speed) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		// super(FlywheelShootSpeed)
-	
-		// if (flywheelSpeed < 0) System.out.println("Negative speed of " +
-		// speed + "given to flywheel spin up.");
-		super(TIMEOUT_TIME_MS);//Max time for this to run.
+		super(TIMEOUT);
 		targetSpeed = speed;
-		
 	}
 
 	@Override
 	protected void initialize() {
 		// Get the motor values to start with.
-		currentLeftFlywheelSpeed = Robot.shooterFlywheelSys.getLeftSpeed();
-		currentRightFlywheelSpeed = Robot.shooterFlywheelSys.getRightSpeed();
+		Robot.shooterFlywheelSys.setLeftSpeed(targetSpeed);
+		Robot.shooterFlywheelSys.setRightSpeed(targetSpeed);
 	}
 
 	@Override
@@ -42,36 +50,19 @@ public class FlywheelCommand extends Command {
 
 	@Override
 	protected void end() {
+		//Nothing to finish with.
+		//Keep wheels spinning.
 	}
 
 	@Override
 	protected void execute() {
-		//Left
-		currentLeftFlywheelSpeed = Robot.shooterFlywheelSys.getLeftSpeed();
-		currentLeftFlywheelSpeed = incrementTowardsRange(currentLeftFlywheelSpeed);
-		Robot.shooterFlywheelSys.setLeftSpeed(currentLeftFlywheelSpeed);
-		//Rights
-		currentRightFlywheelSpeed = Robot.shooterFlywheelSys.getRightSpeed();
-		currentRightFlywheelSpeed = incrementTowardsRange(currentRightFlywheelSpeed);
-		Robot.shooterFlywheelSys.setRightSpeed(currentRightFlywheelSpeed);
-		
+		//Nothing needs to be done because it auto ramps.
 	}
 
 	@Override
 	protected void interrupted() {
-		Robot.shooterFlywheelSys.setLeftSpeed(0);
-		Robot.shooterFlywheelSys.setRightSpeed(0);
-
-	}
-
-	private double incrementTowardsRange(double speed) {
-		if (speed < targetSpeed - SPEED_PROXIMITY) {
-			return speed + SPEED_INCREMENT;
-
-		} else if (speed > targetSpeed + SPEED_PROXIMITY) {
-			return speed - SPEED_INCREMENT;
-		}
-		return speed;
+		//Interruped, stop the wheels
+		Robot.shooterFlywheelSys.stop();
 	}
 
 	private boolean isInRange(double speed) {
