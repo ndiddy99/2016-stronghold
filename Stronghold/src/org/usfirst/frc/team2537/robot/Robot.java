@@ -8,8 +8,6 @@ import org.usfirst.frc.team2537.robot.input.Sensors;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -24,7 +22,6 @@ public class Robot extends IterativeRobot {
 	final String defaultAuto = "Default";
 	final String customAuto = "My Auto";
 	String autoSelected;
-	SendableChooser chooser;
 	public static Sensors sensorSys;
 	public static ArmSubsystem armSys;
 	public static DriveSubsystem driveSys;
@@ -46,6 +43,9 @@ public class Robot extends IterativeRobot {
 		driveSys.registerButtons();
 		sensorSys.registerListener(armSys);
 		autoChooser = new AutoChooser();
+		
+		(new CameraServerTwo()).startAutomaticCapture("cam0");
+
 	}
 
 	/**
