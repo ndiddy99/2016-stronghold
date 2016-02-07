@@ -12,11 +12,11 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveCommand extends Command {
 	private static final boolean debug = false;
 	private static final double DEADZONE = 0.05;
-	
+
 	/**
-	 * Takes joystick input depending on Robot.driveSys.driveType
-	 * Omnipotenet drive command. Does EVERYTHING
-	 * Why have multiple drive commands when you can have one?
+	 * Takes joystick input depending on Robot.driveSys.driveType Omnipotenet
+	 * drive command. Does EVERYTHING Why have multiple drive commands when you
+	 * can have one?
 	 * 
 	 */
 	public DriveCommand() {
@@ -25,27 +25,25 @@ public class DriveCommand extends Command {
 
 	@Override
 	protected void initialize() {
-		if(debug) System.out.println("[DriveCommand] Initializing... drivetype: " + Robot.driveSys.driveType);
+		if (debug)
+			System.out.println("[DriveCommand] Initializing... drivetype: " + Robot.driveSys.driveType);
 	}
 
 	@Override
 	protected void execute() {
 		Double left = null;
 		Double right = null;
-		
-		//double/single joystick/xbox driving
-		switch(Robot.driveSys.driveType){
+
+		// double/single joystick/xbox driving
+		switch (Robot.driveSys.driveType) {
 		case doubleJoystick:
-			left = HumanInput.getJoystickAxis(HumanInput.leftJoystick,
-					AxisType.kY);
-			right = HumanInput.getJoystickAxis(HumanInput.rightJoystick,
-					AxisType.kY);
+			left = HumanInput.getJoystickAxis(HumanInput.leftJoystick, AxisType.kY);
+			right = HumanInput.getJoystickAxis(HumanInput.rightJoystick, AxisType.kY);
 			break;
 		case singleJoystick:
-			left = HumanInput.getJoystickAxis(HumanInput.leftJoystick,
-					AxisType.kY);
+			left = HumanInput.getJoystickAxis(HumanInput.leftJoystick, AxisType.kY);
 			right = left;
-			
+
 			left -= HumanInput.getJoystickAxis(HumanInput.leftJoystick, AxisType.kX);
 			right += HumanInput.getJoystickAxis(HumanInput.leftJoystick, AxisType.kX);
 			break;
@@ -56,37 +54,41 @@ public class DriveCommand extends Command {
 		case singleJoystickXbox:
 			left = HumanInput.getXboxAxis(HumanInput.xboxController, xBoxButtons.XBOX_LEFT_Y_AXIS);
 			right = left;
-			
+
 			left -= HumanInput.getXboxAxis(HumanInput.xboxController, xBoxButtons.XBOX_LEFT_X_AXIS);
 			right += HumanInput.getXboxAxis(HumanInput.xboxController, xBoxButtons.XBOX_LEFT_X_AXIS);
 			break;
 		}
-		
+
 		if (left == null || right == null) {
-			if(debug) System.out.println("[DriveCommand] left/right is null");
+			if (debug)
+				System.out.println("[DriveCommand] left/right is null");
 			return;
 		}
-		
-		//Imperfect straight driving
-		if(Robot.driveSys.drivingStraight){
-			if(Math.abs(left) > Math.abs(right)){
+
+		// Imperfect straight driving
+		if (Robot.driveSys.drivingStraight) {
+			if (Math.abs(left) > Math.abs(right)) {
 				right = left;
-			}else{
+			} else {
 				left = right;
 			}
 		}
-		
-		//Deadzones
-		if(Math.abs(left) < DEADZONE) left = 0.0;
-		if(Math.abs(right) < DEADZONE) right = 0.0;
-		
-		//Lower speed
-		if(Robot.driveSys.driveLowerSpeed){
+
+		// Deadzones
+		if (Math.abs(left) < DEADZONE)
+			left = 0.0;
+		if (Math.abs(right) < DEADZONE)
+			right = 0.0;
+
+		// Lower speed
+		if (Robot.driveSys.driveLowerSpeed) {
 			right /= 2;
 			left /= 2;
 		}
-		
-		if(debug) System.out.println("[DriveCommand] left: " + left + "\tright: " + right);
+
+		if (debug)
+			System.out.println("[DriveCommand] left: " + left + "\tright: " + right);
 		Robot.driveSys.setDriveMotors(left, right);
 	}
 
@@ -96,14 +98,16 @@ public class DriveCommand extends Command {
 	}
 
 	@Override
-	protected void end(){
-		if(debug) System.out.println("[DriveCommand] It's over");
+	protected void end() {
+		if (debug)
+			System.out.println("[DriveCommand] It's over");
 		Robot.driveSys.setDriveMotors(0);
 	}
 
 	@Override
 	protected void interrupted() {
-		if(debug) System.out.println("[DriveCommand] Interruptions aren't fun.");
+		if (debug)
+			System.out.println("[DriveCommand] Interruptions aren't fun.");
 		Robot.driveSys.setDriveMotors(0);
 	}
 }
