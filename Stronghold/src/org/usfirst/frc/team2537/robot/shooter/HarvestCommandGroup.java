@@ -11,11 +11,11 @@ import org.usfirst.frc.team2537.robot.shooter.flywheel.SpinDownCommand;
  * 
  * @author Matthew Schweiss
  */
-public class HarvestCommand extends CommandGroup {
+public class HarvestCommandGroup extends CommandGroup {
 	private static final double HARVEST_ANGLE = -10;
 	private static final double HARVEST_SPEED = -.5;
     
-    public HarvestCommand() {
+    public HarvestCommandGroup() {
     	// Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -39,6 +39,7 @@ public class HarvestCommand extends CommandGroup {
     	addSequential(new UntilBallCommand());
     	addSequential(new SpinDownCommand());
     }
+    
     @Override
     protected void interrupted() {
     	new SpinDownCommand().start();
@@ -46,6 +47,5 @@ public class HarvestCommand extends CommandGroup {
     
     @Override
     protected void end() {
-    	new SpinDownCommand().start();
     }
 }
