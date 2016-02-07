@@ -4,12 +4,12 @@ import org.usfirst.frc.team2537.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class NewFlywheelCommand extends Command {
+public class OLDFlywheelCommand extends Command {
 	private double speed = .5 *1023.0;
 	private static final double ALLOWED_ERROR = 10.0; // error in percent
 														// allowed
 
-	public NewFlywheelCommand(double speed) {
+	public OLDFlywheelCommand(double speed) {
 		this.speed = speed;
 	}
 

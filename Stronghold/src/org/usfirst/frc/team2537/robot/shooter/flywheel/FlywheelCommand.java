@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class FlywheelCommand extends Command {
 	// constants
 	private static final long 	TIMEOUT 		= 1000;//seconds
-	private static final double SPEED_PROXIMITY = 5;//Within 5 RPM
+	private static final double SPEED_PROXIMITY = 5;//error in percent
 	// vars
 	private double targetSpeed;
 
