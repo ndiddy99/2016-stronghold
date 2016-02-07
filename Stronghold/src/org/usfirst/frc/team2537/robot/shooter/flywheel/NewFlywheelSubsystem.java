@@ -65,11 +65,36 @@ public class NewFlywheelSubsystem extends Subsystem implements SensorListener {
     }
 	
 	public void registerButtons() {
-		HumanInput.registerPressedCommand(HumanInput.ballShootTrigger, new ShootCommand());
-		HumanInput.registerWhileHeldCommand(HumanInput.harvestBallTrigger, new HarvestCommand());
+		HumanInput.registerPressedCommand(HumanInput.ballShootTrigger, 		new ShootCommand());
+		HumanInput.registerWhileHeldCommand(HumanInput.harvestBallTrigger, 	new HarvestCommand());
 	}
 	
-	//Let the commands have assess to temperature readings.
+	//Set and get speed
+	//LEFT
+	public void setLeftSpeed(double speed){
+	}
+	
+	public double getLeftSpeed(){
+	}
+	
+	public double getLeftError(){
+		
+	}
+	
+	//RIGHT
+	public void setRightSpeed(double speed){
+		
+	}
+	
+	public double getRightSpeed(){
+		
+	}
+	
+	public double getRightSpeed(){
+		
+	}
+	
+	
 	
 	@Override
 	//Proximity
