@@ -23,8 +23,8 @@ public class NewFlywheelSubsystem extends Subsystem implements SensorListener {
 	private static final double P = .5, I = .05, D = 0.0;
 	//Vars
 	private boolean proximityValue = false;
-	private static CANTalon leftFlywheelMotor;
-	private static CANTalon rightFlywheelMotor;
+	private CANTalon leftFlywheelMotor;
+	private CANTalon rightFlywheelMotor;
 	
 	public NewFlywheelSubsystem() {
 		//Starting motors.
@@ -71,27 +71,61 @@ public class NewFlywheelSubsystem extends Subsystem implements SensorListener {
 	
 	//Set and get speed
 	//LEFT
+	/**
+	 * Set the speed of the left motor.
+	 * 
+	 * @param speed in RPM.
+	 */
 	public void setLeftSpeed(double speed){
+		leftFlywheelMotor.set(speed);
 	}
 	
+	/**
+	 * Get the current speed of the left flywheel.
+	 * 
+	 * @return flywheel speed in RPM
+	 */
 	public double getLeftSpeed(){
+		return leftFlywheelMotor.getSpeed();
 	}
 	
+	/**
+	 * Get the error of the left flywheel.
+	 * This is the distance from the wanted speed and the current speed.
+	 * @return Difference between current speed and wanted speed.
+	 * 			TODO find unit.
+	 */
 	public double getLeftError(){
-		
+		return leftFlywheelMotor.getError();
 	}
 	
 	//RIGHT
+	/**
+	 * Set the speed of the right motor.
+	 * 
+	 * @param speed in RPM.
+	 */
 	public void setRightSpeed(double speed){
-		
+		rightFlywheelMotor.set(speed);
 	}
 	
+	/**
+	 * Get the current speed of the left flywheel.
+	 * 
+	 * @return flywheel speed in RPM
+	 */
 	public double getRightSpeed(){
-		
+		return rightFlywheelMotor.getSpeed();
 	}
 	
-	public double getRightSpeed(){
-		
+	/**
+	 * Get the error of the left flywheel.
+	 * This is the distance from the wanted speed and the current speed.
+	 * @return Difference between current speed and wanted speed.
+	 * 			TODO find unit.
+	 */
+	public double getRightError(){
+		return rightFlywheelMotor.getError();
 	}
 	
 	
