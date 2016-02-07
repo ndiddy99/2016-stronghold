@@ -48,7 +48,7 @@ public class DriveCommand extends Command {
 			right += HumanInput.getJoystickAxis(HumanInput.leftJoystick, AxisType.kX);
 			break;
 		case doubleJoystickXbox:
-			left = HumanInput.getXboxAxis(HumanInput.xboxController, xBoxButtons.XBOX_RIGHT_X_AXIS);
+			left = HumanInput.getXboxAxis(HumanInput.xboxController, xBoxButtons.XBOX_LEFT_Y_AXIS);
 			right = HumanInput.getXboxAxis(HumanInput.xboxController, xBoxButtons.XBOX_RIGHT_Y_AXIS);
 			break;
 		case singleJoystickXbox:

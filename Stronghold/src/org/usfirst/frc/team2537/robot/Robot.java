@@ -34,12 +34,7 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-		SaberMessage.printMessage();
-		autoChooser = new AutoChooser();		
-		chooser = new SendableChooser();
-		chooser.addDefault("Default Auto", defaultAuto);
-		chooser.addObject("My Auto", customAuto);
-		SmartDashboard.putData("Auto choices", chooser);
+//		SaberMessage.printMessage();
 		sensorSys = new Sensors();
 		sensorSys.init();
 		armSys = new ArmSubsystem();
@@ -50,6 +45,7 @@ public class Robot extends IterativeRobot {
 		driveSys.initDefaultCommand();
 		driveSys.registerButtons();
 		sensorSys.registerListener(armSys);
+		autoChooser = new AutoChooser();
 	}
 
 	/**

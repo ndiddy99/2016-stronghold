@@ -31,9 +31,11 @@ public class DriveSubsystem extends Subsystem{
 		setDriveControlMode(TalonControlMode.Speed);
 		
 		
-		driveType = DriveType.doubleJoystick; //TODO: set this
+		driveType = DriveType.doubleJoystickXbox; //TODO: set this
 		drivingStraight = false;
 		driveLowerSpeed = false;
+		talonFrontRight.enableForwardSoftLimit(false);
+		talonFrontRight.enableReverseSoftLimit(false);
 	}
 
 	/**
@@ -48,10 +50,10 @@ public class DriveSubsystem extends Subsystem{
 	public void set(double outputValue, CANTalon talon) {
 		// inches/second to pulses/tenMS
 		// (x pulses)/ (radius*pi tenMS)
-
+		
 		switch(talon.getControlMode()){
-		case Speed: talon.set(outputValue / (WHEEL_DIAMETER/2 * Math.PI));
-		default: talon.set(outputValue);
+		case Speed: talon.set(1500 * outputValue / (WHEEL_DIAMETER/2 * Math.PI)); break;
+		default: if(outputValue != 0) System.out.println(talonFrontRight.getEncPosition()); talon.set(outputValue);
 		}
 	}
 

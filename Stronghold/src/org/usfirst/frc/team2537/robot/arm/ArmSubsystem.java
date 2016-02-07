@@ -45,6 +45,6 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 	}
 
 	public void receivedValue(HashMap<String, Double> e) {
-		currentAngle = e.get(Sensor.ARM_ANGLE);
+//		currentAngle = e.get(Sensor.ARM_ANGLE);
 	}
 }
