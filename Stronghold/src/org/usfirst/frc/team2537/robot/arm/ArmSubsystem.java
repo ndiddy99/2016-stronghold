@@ -80,10 +80,14 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 	public void receivedValue(HashMap<String, Double> e) {
 		try {
 			currentAngle = e.get(Sensor.ARM_ANGLE);
-			currentDist = e.get(Sensor.ULTRASONIC_DISTANCE);
-		} catch (java.lang.NullPointerException exception) {
-			exception.printStackTrace();
-			System.out.println("NULL SENSOR VALUES");
+		} catch(Exception error) {
+//			System.out.println("Bad Angle Sensor");
 		}
+		try {
+			currentDist = e.get(Sensor.ULTRASONIC_DISTANCE);
+		} catch (Exception error) {
+			System.out.println("Bad Ultrasonic Sensor");
+		}
+		System.out.println(currentDist);
 	}
 }

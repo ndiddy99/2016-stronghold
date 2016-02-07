@@ -27,6 +27,7 @@ public class Sensors {
 
 	public void init() {
 		serial.flush();
+		ultrasonic.setAutomaticMode(true);
 	}
 
 	/**

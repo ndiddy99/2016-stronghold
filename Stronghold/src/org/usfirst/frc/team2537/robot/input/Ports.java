@@ -25,6 +25,6 @@ public final class Ports {
 	ARM_TALON = 5, //Change when confirmed
 	
 	//Sensors
-	DRIVE_ULTRASONIC_INPUT = 0,
-	DRIVE_ULTRASONIC_ECHO = 1;
+	DRIVE_ULTRASONIC_INPUT = 9,
+	DRIVE_ULTRASONIC_ECHO = 8;
 }

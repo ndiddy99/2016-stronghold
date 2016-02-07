@@ -16,7 +16,7 @@ public class ArmManualMovementCommand extends Command {
 	}
 
 	protected void initialize() {
-		if (ArmSubsystem.debug) System.out.println("Moving Arm!");
+//		if (ArmSubsystem.debug) System.out.println("Moving Arm!");
 	}
 
 	protected void execute() {
@@ -28,7 +28,7 @@ public class ArmManualMovementCommand extends Command {
 	}
 
 	protected void end() {
-		if (ArmSubsystem.debug) System.out.println("Arm movement completed!");
+//		if (ArmSubsystem.debug) System.out.println("Arm movement completed!");
 	}
 
 	protected void interrupted() {
