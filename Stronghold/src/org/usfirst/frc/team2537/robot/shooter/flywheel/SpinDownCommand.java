@@ -29,7 +29,7 @@ public class SpinDownCommand extends FlywheelCommand {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.shooterFlywheelSys.setLeftFlywheelVelocity(0);
-    	Robot.shooterFlywheelSys.setRightFlywheelVelocity(0);
+    	Robot.shooterFlywheelSys.setLeftSpeed(0);
+    	Robot.shooterFlywheelSys.setRightSpeed(0);
     }
 }

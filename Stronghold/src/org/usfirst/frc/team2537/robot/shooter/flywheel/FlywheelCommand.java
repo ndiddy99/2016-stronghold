@@ -28,15 +28,15 @@ public class FlywheelCommand extends Command {
 	@Override
 	protected void initialize() {
 		// Get the motor values to start with.
-		currentLeftFlywheelSpeed = Robot.shooterFlywheelSys.getLeftFlywheelVelocity();
-		currentRightFlywheelSpeed = Robot.shooterFlywheelSys.getRightFlywheelVelocity();
+		currentLeftFlywheelSpeed = Robot.shooterFlywheelSys.getLeftSpeed();
+		currentRightFlywheelSpeed = Robot.shooterFlywheelSys.getRightSpeed();
 	}
 
 	@Override
 	public boolean isFinished() {
 
-		return (isInRange(Robot.shooterFlywheelSys.getLeftFlywheelVelocity())
-				&& isInRange(Robot.shooterFlywheelSys.getRightFlywheelVelocity()));
+		return (isInRange(Robot.shooterFlywheelSys.getLeftSpeed())
+				&& isInRange(Robot.shooterFlywheelSys.getRightSpeed()));
 
 	}
 
@@ -47,20 +47,20 @@ public class FlywheelCommand extends Command {
 	@Override
 	protected void execute() {
 		//Left
-		currentLeftFlywheelSpeed = Robot.shooterFlywheelSys.getLeftFlywheelVelocity();
+		currentLeftFlywheelSpeed = Robot.shooterFlywheelSys.getLeftSpeed();
 		currentLeftFlywheelSpeed = incrementTowardsRange(currentLeftFlywheelSpeed);
-		Robot.shooterFlywheelSys.setLeftFlywheelVelocity(currentLeftFlywheelSpeed);
+		Robot.shooterFlywheelSys.setLeftSpeed(currentLeftFlywheelSpeed);
 		//Rights
-		currentRightFlywheelSpeed = Robot.shooterFlywheelSys.getRightFlywheelVelocity();
+		currentRightFlywheelSpeed = Robot.shooterFlywheelSys.getRightSpeed();
 		currentRightFlywheelSpeed = incrementTowardsRange(currentRightFlywheelSpeed);
-		Robot.shooterFlywheelSys.setRightFlywheelVelocity(currentRightFlywheelSpeed);
+		Robot.shooterFlywheelSys.setRightSpeed(currentRightFlywheelSpeed);
 		
 	}
 
 	@Override
 	protected void interrupted() {
-		Robot.shooterFlywheelSys.setLeftFlywheelVelocity(0);
-		Robot.shooterFlywheelSys.setRightFlywheelVelocity(0);
+		Robot.shooterFlywheelSys.setLeftSpeed(0);
+		Robot.shooterFlywheelSys.setRightSpeed(0);
 
 	}
 

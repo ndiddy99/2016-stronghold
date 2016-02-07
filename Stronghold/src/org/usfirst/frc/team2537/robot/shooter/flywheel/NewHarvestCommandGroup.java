@@ -15,13 +15,13 @@ public class NewHarvestCommandGroup extends CommandGroup {
 	}
 	public NewHarvestCommandGroup(double speed){
 		addSequential(new NewFlywheelCommand(speed));
-		System.out.println("Right Shoot Speed:" +Robot.newFlySys.getRightSpeed());
-		System.out.println("Left shoot Speed:" +Robot.newFlySys.getLeftSpeed());
+		System.out.println("Right Shoot Speed:" +Robot.shooterFlywheelSys.getRightSpeed());
+		System.out.println("Left shoot Speed:" +Robot.shooterFlywheelSys.getLeftSpeed());
 		
 	}
 	@Override
 	protected boolean isFinished() {
-		if(Robot.newFlySys.isBall()) {
+		if(Robot.shooterFlywheelSys.isBall()) {
 			return true;
 		}
 		return false;
@@ -32,7 +32,7 @@ public class NewHarvestCommandGroup extends CommandGroup {
 	}
 	@Override 
 	protected void interrupted() {
-		Robot.newFlySys.setLeftSpeed(0.0);
-		Robot.newFlySys.setRightSpeed(0.0);
+		Robot.shooterFlywheelSys.setLeftSpeed(0.0);
+		Robot.shooterFlywheelSys.setRightSpeed(0.0);
 	}
 }

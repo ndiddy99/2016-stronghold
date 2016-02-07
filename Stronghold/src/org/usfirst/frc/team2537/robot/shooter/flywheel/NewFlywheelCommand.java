@@ -15,8 +15,8 @@ public class NewFlywheelCommand extends Command {
 
 	@Override
 	protected void initialize() {
-		Robot.newFlySys.setLeftSpeed(speed);
-		Robot.newFlySys.setRightSpeed(speed);
+		Robot.shooterFlywheelSys.setLeftSpeed(speed);
+		Robot.shooterFlywheelSys.setRightSpeed(speed);
 
 	}
 
@@ -28,10 +28,10 @@ public class NewFlywheelCommand extends Command {
 	@Override
 	protected boolean isFinished() {
 
-		return (Robot.newFlySys.getLeftError() >= speed * Math.abs(speed * (ALLOWED_ERROR / 100.0))
-				|| Robot.newFlySys.getRightError() >= Math.abs(speed * (ALLOWED_ERROR / 100.0))
-				|| Math.abs(speed - Robot.newFlySys.getRightSpeed()) >=Math.abs(speed * (ALLOWED_ERROR / 100.0)))
-				|| Math.abs(speed - Robot.newFlySys.getLeftSpeed()) >= Math.abs(speed * (ALLOWED_ERROR / 100.0));
+		return (Robot.shooterFlywheelSys.getLeftError() >= speed * Math.abs(speed * (ALLOWED_ERROR / 100.0))
+				|| Robot.shooterFlywheelSys.getRightError() >= Math.abs(speed * (ALLOWED_ERROR / 100.0))
+				|| Math.abs(speed - Robot.shooterFlywheelSys.getRightSpeed()) >=Math.abs(speed * (ALLOWED_ERROR / 100.0)))
+				|| Math.abs(speed - Robot.shooterFlywheelSys.getLeftSpeed()) >= Math.abs(speed * (ALLOWED_ERROR / 100.0));
 	}
 
 	@Override
@@ -42,8 +42,8 @@ public class NewFlywheelCommand extends Command {
 
 	@Override
 	protected void interrupted() {
-		Robot.newFlySys.setLeftSpeed(0.0);
-		Robot.newFlySys.setRightSpeed(0.0);
+		Robot.shooterFlywheelSys.setLeftSpeed(0.0);
+		Robot.shooterFlywheelSys.setRightSpeed(0.0);
 
 	}
 

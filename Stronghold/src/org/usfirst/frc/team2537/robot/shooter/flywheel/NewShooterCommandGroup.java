@@ -16,13 +16,13 @@ public class NewShooterCommandGroup extends CommandGroup {
 		addSequential(new NewFlywheelCommand(speed));
 		addSequential(new EjectMotorCommand(-.5));
 		startWaitTime = System.currentTimeMillis();
-		System.out.println("Right Shoot Speed:" +Robot.newFlySys.getRightSpeed());
-		System.out.println("Left shoot Speed:" +Robot.newFlySys.getLeftSpeed());
+		System.out.println("Right Shoot Speed:" +Robot.shooterFlywheelSys.getRightSpeed());
+		System.out.println("Left shoot Speed:" +Robot.shooterFlywheelSys.getLeftSpeed());
 		
 	}
 	@Override
 	protected boolean isFinished() {
-		if(!Robot.newFlySys.isBall() && System.currentTimeMillis() - startWaitTime >= WAIT_AFTER_EJECT) {
+		if(!Robot.shooterFlywheelSys.isBall() && System.currentTimeMillis() - startWaitTime >= WAIT_AFTER_EJECT) {
 			return true;
 		}
 		return false;
@@ -33,7 +33,7 @@ public class NewShooterCommandGroup extends CommandGroup {
 	}
 	@Override 
 	protected void interrupted() {
-		Robot.newFlySys.setLeftSpeed(0.0);
-		Robot.newFlySys.setRightSpeed(0.0);
+		Robot.shooterFlywheelSys.setLeftSpeed(0.0);
+		Robot.shooterFlywheelSys.setRightSpeed(0.0);
 	}
 }
