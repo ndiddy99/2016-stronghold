@@ -90,9 +90,8 @@ public class NewActuatorSubsystem extends Subsystem {
 	 * @return A double power percentage as [-1, 1]
 	 */
 	public double getMotorPower(){
-		return actuatorMotor.getOutputVoltage();
-	}
-	
+		return actuatorMotor.getOutputVoltage()/12.0;
+	}	
 	/**
 	 * Get the angle from the encoder.
 	 * @return a double of the angle the encoder is at.

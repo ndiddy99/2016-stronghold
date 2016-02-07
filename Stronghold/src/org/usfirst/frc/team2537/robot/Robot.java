@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
 import org.usfirst.frc.team2537.robot.input.Sensors;
 import org.usfirst.frc.team2537.robot.shooter.angle.AngleSubsystem;
-import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelSubsystem;
-import org.usfirst.frc.team2537.robot.shooter.flywheel.SensorTestCommand2;
+import org.usfirst.frc.team2537.robot.shooter.flywheel.NewFlywheelSubsystem;
 import org.usfirst.frc.team2537.robot.shooter.actuator.ActuatorSubsystem;
+import org.usfirst.frc.team2537.robot.shooter.actuator.NewActuatorSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -25,11 +25,12 @@ public class Robot extends IterativeRobot {
 	SendableChooser chooser;
 	// My stuff
 	public static Sensors sensorSys;//TO be done.
-	public static FlywheelSubsystem shooterFlywheelSys;
+//	public static FlywheelSubsystem shooterFlywheelSys;
 	public static AngleSubsystem shooterAngleSys;
 	public static ActuatorSubsystem shooterActuatorSys;
 	public static ArmSubsystem armSys;
-	
+	public static NewFlywheelSubsystem newFlySys;
+	public static NewActuatorSubsystem newActuatorSys;
 	@Override
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -45,15 +46,18 @@ public class Robot extends IterativeRobot {
 		
 		//Initalize Everything
 		sensorSys			= new Sensors();
-		shooterFlywheelSys	= new FlywheelSubsystem();
+//		shooterFlywheelSys	= new FlywheelSubsystem();
 		shooterAngleSys		= new AngleSubsystem();
 		//shooterActuatorSys	= new ActuatorSubsystem();
 		armSys				= new ArmSubsystem();
+		newFlySys = new NewFlywheelSubsystem();
+		newActuatorSys = new NewActuatorSubsystem();
 		//Sensors
 		sensorSys.init();
 		sensorSys.registerListener(armSys);
 		sensorSys.registerListener(shooterAngleSys);
-		sensorSys.registerListener(shooterFlywheelSys);
+		sensorSys.registerListener(newFlySys);
+//		sensorSys.registerListener(shooterFlywheelSys);
 		//Shooter Flywheel
 		//shooterFlywheelSys.initDefaultCommand();
 		//shooterFlywheelSys.registerButtons();
@@ -66,7 +70,8 @@ public class Robot extends IterativeRobot {
 		//Arm
 		//armSys.initDefaultCommand();
 		//armSys.registerButtons();
-		new SensorTestCommand2(1, 2).start();
+	
+	//	new SensorTestCommand2(1, 2).start();
 	}
 	
 	@Override
