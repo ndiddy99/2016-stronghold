@@ -44,6 +44,11 @@ public class NewFlywheelSubsystem extends Subsystem implements SensorListener {
 		//Disable the limit switchs, as they do not exist.
 		leftFlywheelMotor.enableLimitSwitch(false, false);
 		rightFlywheelMotor.enableLimitSwitch(false, false);
+		//Nominal voltages, not sure if this is needed
+		leftFlywheelMotor.configNominalOutputVoltage(0.0, 0.0);
+    	leftFlywheelMotor.configPeakOutputVoltage(12.0, -12.0);
+		rightFlywheelMotor.configNominalOutputVoltage(0.0, 0.0);
+    	rightFlywheelMotor.configPeakOutputVoltage(12.0, -12.0);
 		//Set PID's
 		leftFlywheelMotor.setPID(P, I, D);
 		leftFlywheelMotor.setF(0);//No idea what this does, so disable it.
@@ -77,7 +82,28 @@ public class NewFlywheelSubsystem extends Subsystem implements SensorListener {
 	 * @param speed in RPM.
 	 */
 	public void setLeftSpeed(double speed){
-		leftFlywheelMotor.set(speed);
+		switch (leftFlywheelMotor.isSensorPresent(ENCODER)){
+		
+		case FeedbackStatusPresent:
+			//Yes sensor is present.
+			leftFlywheelMotor.set(speed);
+			
+		case FeedbackStatusUnknown:
+			//I don't know, assuming it is not there.
+			System.err.println("Left Encoder may not be present.");
+			
+		case FeedbackStatusNotPresent:
+			System.err.println("Left Encoder is not present.");
+			
+		default:
+			//Make up something!!!
+			//Ok, so speed will be [-1023, 1023]
+			//Voltage is [-1, 1]
+			//So in theory, speed/1023 = voltage.
+			leftFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+			leftFlywheelMotor.set(speed/1023);
+			leftFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
+		}
 	}
 	
 	/**
@@ -86,7 +112,23 @@ public class NewFlywheelSubsystem extends Subsystem implements SensorListener {
 	 * @return flywheel speed in RPM
 	 */
 	public double getLeftSpeed(){
-		return leftFlywheelMotor.getSpeed();
+		switch (leftFlywheelMotor.isSensorPresent(ENCODER)){
+		
+		case FeedbackStatusPresent:
+			//Yes sensor is present.
+			return leftFlywheelMotor.getSpeed();
+			
+		case FeedbackStatusUnknown:
+			//I don't know, assuming it is not there.
+			System.err.println("Right Encoder may not be present.");
+			
+		case FeedbackStatusNotPresent:
+			System.err.println("Right Encoder is not present.");
+			
+		default:
+			//Make up something!!!
+			return leftFlywheelMotor.get();//1023
+		}
 	}
 	
 	/**
@@ -106,7 +148,28 @@ public class NewFlywheelSubsystem extends Subsystem implements SensorListener {
 	 * @param speed in RPM.
 	 */
 	public void setRightSpeed(double speed){
-		rightFlywheelMotor.set(speed);
+		switch (leftFlywheelMotor.isSensorPresent(ENCODER)){
+		
+		case FeedbackStatusPresent:
+			//Yes sensor is present.
+			rightFlywheelMotor.set(speed);
+			
+		case FeedbackStatusUnknown:
+			//I don't know, assuming it is not there.
+			System.err.println("Right Encoder may not be present.");
+			
+		case FeedbackStatusNotPresent:
+			System.err.println("Right Encoder is not present.");
+			
+		default:
+			//Make up something!!!
+			//Ok, so speed will be [-1023, 1023]
+			//Voltage is [-1, 1]
+			//So in theory, speed/1023 = voltage.
+			rightFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+			rightFlywheelMotor.set(speed/1023);
+			rightFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
+		}
 	}
 	
 	/**
@@ -115,7 +178,27 @@ public class NewFlywheelSubsystem extends Subsystem implements SensorListener {
 	 * @return flywheel speed in RPM
 	 */
 	public double getRightSpeed(){
-		return rightFlywheelMotor.getSpeed();
+		switch (rightFlywheelMotor.isSensorPresent(ENCODER)){
+		
+		case FeedbackStatusPresent:
+			//Yes sensor is present.
+			return rightFlywheelMotor.getSpeed();
+			
+		case FeedbackStatusUnknown:
+			//I don't know, assuming it is not there.
+			System.err.println("Right Encoder may not be present.");
+			
+		case FeedbackStatusNotPresent:
+			System.err.println("Right Encoder is not present.");
+			
+		default:
+			//Make up something!!!
+			return rightFlywheelMotor.get();//1023
+			/*
+			 * //Alternatively
+			 * return rightFlywheelMotor.getOutputVoltage() / rightFlywheelMotor.getBusVoltage() * 1023
+			 */
+		}
 	}
 	
 	/**
@@ -128,6 +211,23 @@ public class NewFlywheelSubsystem extends Subsystem implements SensorListener {
 		return rightFlywheelMotor.getError();
 	}
 	
+	/**
+	 * Emergency stops the motors.
+	 * This directly sets voltage to 0.
+	 */
+	public void stop(){
+		//Left wheel stop.
+		leftFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		leftFlywheelMotor.set(0);//STOP
+		leftFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
+		
+		//Right wheel stop.
+		rightFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		rightFlywheelMotor.set(0);
+		rightFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
+		
+		
+	}
 	
 	
 	@Override
