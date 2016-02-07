@@ -25,11 +25,10 @@ public class Robot extends IterativeRobot {
 	SendableChooser chooser;
 	// My stuff
 	public static Sensors sensorSys;//TO be done.
-//	public static FlywheelSubsystem shooterFlywheelSys;
+	public static NewFlywheelSubsystem shooterFlywheelSys;
 	public static AngleSubsystem shooterAngleSys;
 	public static ActuatorSubsystem shooterActuatorSys;
 	public static ArmSubsystem armSys;
-	public static NewFlywheelSubsystem newFlySys;
 	public static NewActuatorSubsystem newActuatorSys;
 	@Override
 	/**
@@ -46,32 +45,28 @@ public class Robot extends IterativeRobot {
 		
 		//Initalize Everything
 		sensorSys			= new Sensors();
-//		shooterFlywheelSys	= new FlywheelSubsystem();
+		shooterFlywheelSys	= new NewFlywheelSubsystem();
 		shooterAngleSys		= new AngleSubsystem();
-		//shooterActuatorSys	= new ActuatorSubsystem();
+		shooterActuatorSys	= new ActuatorSubsystem();
 		armSys				= new ArmSubsystem();
-		newFlySys = new NewFlywheelSubsystem();
-		newActuatorSys = new NewActuatorSubsystem();
+		newActuatorSys 		= new NewActuatorSubsystem();
 		//Sensors
 		sensorSys.init();
 		sensorSys.registerListener(armSys);
 		sensorSys.registerListener(shooterAngleSys);
-		sensorSys.registerListener(newFlySys);
-//		sensorSys.registerListener(shooterFlywheelSys);
+		sensorSys.registerListener(shooterFlywheelSys);
 		//Shooter Flywheel
-		//shooterFlywheelSys.initDefaultCommand();
-		//shooterFlywheelSys.registerButtons();
+		shooterFlywheelSys.initDefaultCommand();
+		shooterFlywheelSys.registerButtons();
 		//Shooter Angle
-		//shooterAngleSys.initDefaultCommand();
-		//shooterAngleSys.registerButtons();
+		shooterAngleSys.initDefaultCommand();
+		shooterAngleSys.registerButtons();
 		//Shooter Actuator
-		//shooterActuatorSys.initDefaultCommand();
-		//shooterActuatorSys.registerButtons();
+		shooterActuatorSys.initDefaultCommand();
+		shooterActuatorSys.registerButtons();
 		//Arm
-		//armSys.initDefaultCommand();
-		//armSys.registerButtons();
-	
-	//	new SensorTestCommand2(1, 2).start();
+		armSys.initDefaultCommand();
+		armSys.registerButtons();
 	}
 	
 	@Override
