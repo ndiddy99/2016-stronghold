@@ -23,7 +23,7 @@ public class NewFlywheelSubsystem extends Subsystem implements SensorListener {
 	private boolean proximityValue = false;
 	private CANTalon leftFlywheelMotor;
 	private CANTalon rightFlywheelMotor;
-	
+	private final static boolean TESTING = true;
 	public NewFlywheelSubsystem() {
 		//Starting motors.
 		//Make sure the the mode to velocity so we can modify it.
@@ -232,12 +232,16 @@ public class NewFlywheelSubsystem extends Subsystem implements SensorListener {
 	//Proximity
 	public void receivedValue(HashMap<String, Double> sensorMap) {
 		//BEWARE OF NullPointer
+		if(!TESTING) {
 		try {
 			proximityValue = sensorMap.get(Sensor.SHOOTER_BALL) == 1;
 		} catch (NullPointerException e){
 			//We have an error.
 			//We don't actually care.
 			System.err.println("FlywheelSys recieved null proximity value.");
+		}
+		} else {
+			proximityValue = rightFlywheelMotor.isFwdLimitSwitchClosed();
 		}
 	}
 	

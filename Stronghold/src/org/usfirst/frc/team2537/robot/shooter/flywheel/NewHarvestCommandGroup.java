@@ -4,17 +4,20 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 
 import org.usfirst.frc.team2537.robot.Robot;
+import org.usfirst.frc.team2537.robot.shooter.angle.MoveToAngleCommand;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
 public class NewHarvestCommandGroup extends CommandGroup {
 	private final static double DEFAULT_HARVEST_SPEED = -.5*1023.0;
+	private final static double HARVEST_ANGLE = -10.0;
 	public NewHarvestCommandGroup(){
 		this(DEFAULT_HARVEST_SPEED);
 	}
 	public NewHarvestCommandGroup(double speed){
 		addSequential(new NewFlywheelCommand(speed));
+		addParallel(new MoveToAngleCommand(HARVEST_ANGLE));
 		System.out.println("Right Shoot Speed:" +Robot.shooterFlywheelSys.getRightSpeed());
 		System.out.println("Left shoot Speed:" +Robot.shooterFlywheelSys.getLeftSpeed());
 		

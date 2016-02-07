@@ -14,7 +14,7 @@ public class NewShooterCommandGroup extends CommandGroup {
 	}
 	public NewShooterCommandGroup(double speed){
 		addSequential(new NewFlywheelCommand(speed));
-		addSequential(new EjectMotorCommand(-.5));
+		addSequential(new EjectMotorCommand(-.5*1023));
 		startWaitTime = System.currentTimeMillis();
 		System.out.println("Right Shoot Speed:" +Robot.shooterFlywheelSys.getRightSpeed());
 		System.out.println("Left shoot Speed:" +Robot.shooterFlywheelSys.getLeftSpeed());
