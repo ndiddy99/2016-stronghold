@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2537.robot.shooter.actuator;
+package org.usfirst.frc.team2537.robot.shooter.angle;
 
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 

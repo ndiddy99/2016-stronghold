@@ -1,10 +1,13 @@
-package org.usfirst.frc.team2537.robot.input;
+package org.usfirst.frc.team2537.robot.shooter.angle;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
+
+import org.usfirst.frc.team2537.robot.input.Ports;
 import org.usfirst.frc.team2537.robot.input.XboxButtons;
+import org.usfirst.frc.team2537.robot.input.XboxTrigger;
 
 public class HumanInput {
 	public static final int
