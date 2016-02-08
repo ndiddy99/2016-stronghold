@@ -192,31 +192,48 @@ public class DriveSubsystem extends Subsystem{
 		});
 		
 	}
+			public void Veloop() {
+				 talonFrontLeft.setFeedbackDevice(FeedbackDevice.EncFalling);
+		         talonFrontLeft.reverseSensor(false);
+		        // talonFrontLeft.configEncoderCodesPerRev(XXX), // if using FeedbackDevice.QuadEncoder
+		        // talonFrontLeft.configPotentiometerTurns(XXX), // if using FeedbackDevice.AnalogEncoder or AnalogPot
+
+		        /* set the peak and nominal outputs, 12V means full */
+		         talonFrontLeft.configNominalOutputVoltage(+0.0f, -0.0f);
+		         talonFrontLeft.configPeakOutputVoltage(+12.0f, 0.0f);
+		        /* set closed loop gains in slot0 */
+		         talonFrontLeft.setProfile(0);
+		         talonFrontLeft.setF(0.1097);
+		         talonFrontLeft.setP(0.22);
+		         talonFrontLeft.setI(0); 
+		         talonFrontLeft.setD(0);
+			}
+			
+			
 			public void Velocloop() {
-				/* get gamepad axis */
-		    	double leftYstick = HumanInput.leftJoystick.getAxis(AxisType.kY);
-		    	double motorOutput = talonFrontLeft.getOutputVoltage() / talonFrontLeft.getBusVoltage();
+				double leftYstick = HumanInput.leftJoystick.getAxis(AxisType.kY);
+		    	double motorOutput =  talonFrontLeft.getOutputVoltage() /  talonFrontLeft.getBusVoltage();
 		    	/* prepare line to print */
 				_sb.append("\tout:");
 				_sb.append(motorOutput);
 		        _sb.append("\tspd:");
-		        _sb.append(talonFrontLeft.getSpeed() );
+		        _sb.append( talonFrontLeft.getSpeed() );
 		        
 		        if(HumanInput.leftJoystick.getRawButton(1)){
 		        	/* Speed mode */
 		        	double targetSpeed = leftYstick * 1500.0; /* 1500 RPM in either direction */
-		        	talonFrontLeft.changeControlMode(TalonControlMode.Speed);
-		        	talonFrontLeft.set(targetSpeed); /* 1500 RPM in either direction */
+		        	 talonFrontLeft.changeControlMode(TalonControlMode.Speed);
+		        	 talonFrontLeft.set(targetSpeed); /* 1500 RPM in either direction */
 
 		        	/* append more signals to print when in speed mode. */
 		            _sb.append("\terr:");
-		            _sb.append(talonFrontLeft.getClosedLoopError());
+		            _sb.append( talonFrontLeft.getClosedLoopError());
 		            _sb.append("\ttrg:");
 		            _sb.append(targetSpeed);
 		        } else {
 		        	/* Percent voltage mode */
-		        	talonFrontLeft.changeControlMode(TalonControlMode.PercentVbus);
-		        	talonFrontLeft.set(leftYstick);
+		        	 talonFrontLeft.changeControlMode(TalonControlMode.PercentVbus);
+		        	 talonFrontLeft.set(leftYstick);
 		        }
 
 		        if(++_loops >= 10) {
@@ -225,4 +242,6 @@ public class DriveSubsystem extends Subsystem{
 		        }
 		        _sb.setLength(0);
 		    }
-		}
+		
+		    }
+		
