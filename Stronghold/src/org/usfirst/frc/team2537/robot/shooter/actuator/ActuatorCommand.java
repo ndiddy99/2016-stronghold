@@ -2,43 +2,26 @@ package org.usfirst.frc.team2537.robot.shooter.actuator;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team2537.robot.Robot;
-import java.time.Instant;
 
 /**
  *
  */
-public class SolenoidCommand extends Command {
-	//Constant
-	private static final boolean WAIT_TO_COMPLETE = true;
-	private static final double WAIT_TIME = 3.1;//Seconds TODO find real time.
+public class ActuatorCommand extends Command {
 	//Varibles
 	private boolean extended;
-	private boolean waitToComplete;
-	private Instant endTime;
 	
-	public SolenoidCommand(boolean extended){
-		this(extended, WAIT_TO_COMPLETE);
-	}
-	
-    public SolenoidCommand(boolean extended, boolean waitToComplete) {
+    public ActuatorCommand(boolean extended) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.shooterActuatorSys);
     	this.extended = extended;
-    	this.waitToComplete = waitToComplete;
     }
     
     @Override
     // Called just before this Command runs the first time
     protected void initialize() {
     	//Fire the solenoid
-    	Robot.shooterActuatorSys.setSolenoid(extended);
-    	if (waitToComplete){
-    		endTime = Instant.now().plusMillis((long) (WAIT_TIME * 1000));
-    	} else {
-    		//Don't wait.
-    		endTime = Instant.MIN;
-    	}
+    	Robot.shooterActuatorSys.setPosition(extended);
     }
     
     @Override
@@ -50,7 +33,11 @@ public class SolenoidCommand extends Command {
     @Override
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Instant.now().isAfter(endTime);
+    	if (extended){
+    		return Robot.shooterActuatorSys.isExtended();
+    	}
+    	//else
+    	return Robot.shooterActuatorSys.isRetracted();
     }
     
     @Override

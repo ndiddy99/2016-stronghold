@@ -34,7 +34,7 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	private final CANTalon angleTalon;
 	
 	public AngleSubsystem() {
-		angleTalon = new CANTalon(Ports.TALON_SHOOTER_ANGLE_PORT);
+		angleTalon = new CANTalon(Ports.SHOOTER_ANGLE_PORT);
 		//Start things.
 		angleTalon.changeControlMode(CANTalon.TalonControlMode.Voltage);
 		//Add limits.

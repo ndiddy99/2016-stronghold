@@ -9,7 +9,6 @@ import org.usfirst.frc.team2537.robot.input.Sensors;
 import org.usfirst.frc.team2537.robot.shooter.angle.AngleSubsystem;
 import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelSubsystem;
 import org.usfirst.frc.team2537.robot.shooter.actuator.ActuatorSubsystem;
-import org.usfirst.frc.team2537.robot.shooter.actuator.NewActuatorSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -29,7 +28,6 @@ public class Robot extends IterativeRobot {
 	public static AngleSubsystem shooterAngleSys;
 	public static ActuatorSubsystem shooterActuatorSys;
 	public static ArmSubsystem armSys;
-	public static NewActuatorSubsystem newActuatorSys;
 	@Override
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -49,7 +47,6 @@ public class Robot extends IterativeRobot {
 		shooterAngleSys		= new AngleSubsystem();
 		shooterActuatorSys	= new ActuatorSubsystem();
 		armSys				= new ArmSubsystem();
-		newActuatorSys 		= new NewActuatorSubsystem();
 		//Sensors
 		sensorSys.init();
 		sensorSys.registerListener(armSys);

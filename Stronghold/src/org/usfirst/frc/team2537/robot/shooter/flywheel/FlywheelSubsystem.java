@@ -29,8 +29,8 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	public FlywheelSubsystem() {
 		//Starting motors.
 		//Make sure the the mode to velocity so we can modify it.
-		leftFlywheelMotor 	= new CANTalon(Ports.TALON_LEFT_FLYWHEEL_PORT);
-		rightFlywheelMotor 	= new CANTalon(Ports.TALON_RIGHT_FLYWHEEL_PORT);
+		leftFlywheelMotor 	= new CANTalon(Ports.LEFT_FLYWHEEL_PORT);
+		rightFlywheelMotor 	= new CANTalon(Ports.RIGHT_FLYWHEEL_PORT);
 		//Set encoder.
 		leftFlywheelMotor.setFeedbackDevice(ENCODER);
 		leftFlywheelMotor.configEncoderCodesPerRev(ENCODER_TICKS_PER_REV);
