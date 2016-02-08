@@ -5,6 +5,8 @@ import org.usfirst.frc.team2537.robot.input.Ports;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
+import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
+import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -17,18 +19,24 @@ public class DriveSubsystem extends Subsystem{
 	protected DriveType driveType;
 	protected boolean drivingStraight;
 	protected boolean driveLowerSpeed;
+		
+		
+	
+	
 	
 	public static final double WHEEL_DIAMETER = 9; //Inches TODO: Magic numbers are fun
 	public static final double PulsesPerRevolution = 20; //for encoders
 	private double initialLeftEncoders = 0; //Inches to subtract (for resetEncoders) 
 	private double initialRightEncoders = 0; //Inches to subtract (for resetEncoders)
+	StringBuilder _sb = new StringBuilder();
+	int _loops = 0;
 	
 	public DriveSubsystem() {
 		talonFrontLeft = new CANTalon(Ports.FRONT_LEFT_MOTOR_PORT);
 		talonFrontRight = new CANTalon(Ports.FRONT_RIGHT_MOTOR_PORT);
 		talonBackLeft = new CANTalon(Ports.BACK_LEFT_MOTOR_PORT);
 		talonBackRight = new CANTalon(Ports.BACK_RIGHT_MOTOR_PORT);
-		setDriveControlMode(TalonControlMode.Speed);
+	//	setDriveControlMode(TalonControlMode.Speed);
 		
 		
 		driveType = DriveType.doubleJoystickXbox; //TODO: set this
@@ -113,7 +121,8 @@ public class DriveSubsystem extends Subsystem{
 	 * @return the average of the front left and back left encoders in inches
 	 */
 	public double getLeftEncoders(){
-		return -(talonBackLeft.getEncPosition() + talonFrontLeft.getEncPosition())/2/PulsesPerRevolution * WHEEL_DIAMETER * Math.PI - initialLeftEncoders;
+		return -(talonBackLeft.getEncPosition() + talonFrontLeft.getEncPosition())/2/PulsesPerRevolution * 
+				WHEEL_DIAMETER * Math.PI - initialLeftEncoders;
 	}
 	
 	/**
@@ -121,7 +130,8 @@ public class DriveSubsystem extends Subsystem{
 	 * @return the average of the front right and back right encoders in inches
 	 */
 	public double getRightEncoders(){
-		return (talonBackRight.getEncPosition() + talonFrontRight.getEncPosition())/2/PulsesPerRevolution * WHEEL_DIAMETER * Math.PI - initialRightEncoders;
+		return (talonBackRight.getEncPosition() + talonFrontRight.getEncPosition())/2/PulsesPerRevolution * 
+				WHEEL_DIAMETER * Math.PI - initialRightEncoders;
 	}
 	
 	/**
@@ -132,12 +142,12 @@ public class DriveSubsystem extends Subsystem{
 		initialRightEncoders += getRightEncoders();
 	}
 	
-	public void setDriveControlMode(TalonControlMode mode){
-		talonFrontLeft.changeControlMode(mode);
-		talonBackLeft.changeControlMode(mode);
-		talonFrontRight.changeControlMode(mode);
-		talonBackRight.changeControlMode(mode);
-	}
+//	public void setDriveControlMode(TalonControlMode mode){
+//		talonFrontLeft.changeControlMode(mode);
+//		talonBackLeft.changeControlMode(mode);
+//		talonFrontRight.changeControlMode(mode);
+//		talonBackRight.changeControlMode(mode);
+//	}
 
 	/**
 	 * sets the default command to JoystickControlCommand
@@ -180,6 +190,39 @@ public class DriveSubsystem extends Subsystem{
 			@Override protected void end() {}
 			@Override protected void interrupted() {}
 		});
+		
 	}
+			public void Velocloop() {
+				/* get gamepad axis */
+		    	double leftYstick = leftJoystick.getAxis(AxisType.kY);
+		    	double motorOutput = talonFrontLeft.getOutputVoltage() / talonFrontLeft.getBusVoltage();
+		    	/* prepare line to print */
+				_sb.append("\tout:");
+				_sb.append(motorOutput);
+		        _sb.append("\tspd:");
+		        _sb.append(talonFrontLeft.getSpeed() );
+		        
+		        if(leftJoystick.getRawButton(1)){
+		        	/* Speed mode */
+		        	double targetSpeed = leftYstick * 1500.0; /* 1500 RPM in either direction */
+		        	talonFrontLeft.changeControlMode(TalonControlMode.Speed);
+		        	talonFrontLeft.set(targetSpeed); /* 1500 RPM in either direction */
 
-}
+		        	/* append more signals to print when in speed mode. */
+		            _sb.append("\terr:");
+		            _sb.append(talonFrontLeft.getClosedLoopError());
+		            _sb.append("\ttrg:");
+		            _sb.append(targetSpeed);
+		        } else {
+		        	/* Percent voltage mode */
+		        	talonFrontLeft.changeControlMode(TalonControlMode.PercentVbus);
+		        	talonFrontLeft.set(leftYstick);
+		        }
+
+		        if(++_loops >= 10) {
+		        	_loops = 0;
+		        	System.out.println(_sb.toString());
+		        }
+		        _sb.setLength(0);
+		    }
+		}
