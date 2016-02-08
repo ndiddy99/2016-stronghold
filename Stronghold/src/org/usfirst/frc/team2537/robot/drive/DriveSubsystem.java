@@ -194,7 +194,7 @@ public class DriveSubsystem extends Subsystem{
 	}
 			public void Velocloop() {
 				/* get gamepad axis */
-		    	double leftYstick = leftJoystick.getAxis(AxisType.kY);
+		    	double leftYstick = HumanInput.leftJoystick.getAxis(AxisType.kY);
 		    	double motorOutput = talonFrontLeft.getOutputVoltage() / talonFrontLeft.getBusVoltage();
 		    	/* prepare line to print */
 				_sb.append("\tout:");
@@ -202,7 +202,7 @@ public class DriveSubsystem extends Subsystem{
 		        _sb.append("\tspd:");
 		        _sb.append(talonFrontLeft.getSpeed() );
 		        
-		        if(leftJoystick.getRawButton(1)){
+		        if(HumanInput.leftJoystick.getRawButton(1)){
 		        	/* Speed mode */
 		        	double targetSpeed = leftYstick * 1500.0; /* 1500 RPM in either direction */
 		        	talonFrontLeft.changeControlMode(TalonControlMode.Speed);
