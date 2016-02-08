@@ -25,6 +25,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	private CANTalon leftFlywheelMotor;
 	private CANTalon rightFlywheelMotor;
 	private final static boolean TESTING = true;
+	
 	public FlywheelSubsystem() {
 		//Starting motors.
 		//Make sure the the mode to velocity so we can modify it.
