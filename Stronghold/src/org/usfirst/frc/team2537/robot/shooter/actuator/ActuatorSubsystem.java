@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2537.robot.shooter.actuator;
 
 import org.usfirst.frc.team2537.robot.input.Ports;
+import org.usfirst.frc.team2537.robot.shooter.angle.HumanInput;
 
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -49,6 +50,9 @@ public class ActuatorSubsystem extends Subsystem {
 	
 	public void registerButtons() {
 		//Needed but not used.
+		//For testing, remove for competition.
+		HumanInput.registerPressedCommand(HumanInput.raiseArm, new ActuatorCommand(true));
+		HumanInput.registerPressedCommand(HumanInput.neutralArm, new ActuatorCommand(false));
 		
 	}
 }
