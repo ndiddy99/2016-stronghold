@@ -198,10 +198,7 @@ public class DriveSubsystem extends Subsystem{
 		        // talonFrontLeft.configEncoderCodesPerRev(XXX), // if using FeedbackDevice.QuadEncoder
 		        // talonFrontLeft.configPotentiometerTurns(XXX), // if using FeedbackDevice.AnalogEncoder or AnalogPot
 
-		        /* set the peak and nominal outputs, 12V means full */
-		         talonFrontLeft.configNominalOutputVoltage(+0.0f, -0.0f);
-		         talonFrontLeft.configPeakOutputVoltage(+12.0f, 0.0f);
-		        /* set closed loop gains in slot0 */
+		       
 		         talonFrontLeft.setProfile(0);
 		         talonFrontLeft.setF(0.1097);
 		         talonFrontLeft.setP(0.22);
