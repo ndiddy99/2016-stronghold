@@ -1,12 +1,12 @@
 package org.usfirst.frc.team2537.robot.shooter.flywheel;
 
 import java.util.HashMap;
-import org.usfirst.frc.team2537.robot.input.HumanInput;
 import org.usfirst.frc.team2537.robot.input.Ports;
 import org.usfirst.frc.team2537.robot.input.Sensor;
+import org.usfirst.frc.team2537.robot.input.HumanInput;
 import org.usfirst.frc.team2537.robot.input.SensorListener;
-import org.usfirst.frc.team2537.robot.shooter.OLDShooterCommandGroup;
-import org.usfirst.frc.team2537.robot.shooter.OLDHarvestCommandGroup;
+import org.usfirst.frc.team2537.robot.shooter.ShootCommandGroup;
+import org.usfirst.frc.team2537.robot.shooter.HarvestCommandGroup;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -69,8 +69,8 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
     }
 	
 	public void registerButtons() {
-		HumanInput.registerPressedCommand(HumanInput.ballShootTrigger, new OLDShooterCommandGroup());
-		HumanInput.registerWhileHeldCommand(HumanInput.harvestBallTrigger,new OLDHarvestCommandGroup());
+		HumanInput.registerPressedCommand(HumanInput.ballShootTrigger,		new ShootCommandGroup());
+		HumanInput.registerWhileHeldCommand(HumanInput.harvestBallTrigger,	new HarvestCommandGroup());
 	}
 	
 	//Set and get speed
