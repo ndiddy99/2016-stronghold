@@ -24,12 +24,4 @@ public class SpinDownCommand extends FlywheelCommand {
     	//Make sure it stops.
     	Robot.shooterFlywheelSys.stop();
     }
-    
-    @Override
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    	Robot.shooterFlywheelSys.setLeftSpeed(0);
-    	Robot.shooterFlywheelSys.setRightSpeed(0);
-    }
 }

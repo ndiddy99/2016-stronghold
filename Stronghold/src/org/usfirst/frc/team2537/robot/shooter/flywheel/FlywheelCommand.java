@@ -36,8 +36,7 @@ public class FlywheelCommand extends Command {
 	@Override
 	protected void initialize() {
 		// Get the motor values to start with.
-		Robot.shooterFlywheelSys.setLeftSpeed(targetSpeed);
-		Robot.shooterFlywheelSys.setRightSpeed(targetSpeed);
+		Robot.shooterFlywheelSys.setSpeed(targetSpeed);
 	}
 
 	@Override
