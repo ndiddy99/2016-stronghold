@@ -28,7 +28,7 @@ public class Distanlines {
         JMenuItem load = new JMenuItem("Load Image");
         load.addActionListener(new ActionListener() {
 
-            private BufferedImage mCurrentImage;
+            private BufferedImage frc2016;
 
             @Override
             public void actionPerformed(ActionEvent pE) {
@@ -48,7 +48,7 @@ public class Distanlines {
                 int aShowOpenDialog = aChooser.showOpenDialog(mView);
                 if(aShowOpenDialog ==JFileChooser.APPROVE_OPTION) {
                     try {
-                        mCurrentImage = ImageIO.read(aChooser.getSelectedFile());
+                        frc2016 = ImageIO.read(aChooser.getSelectedFile());
                     } catch (IOException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();

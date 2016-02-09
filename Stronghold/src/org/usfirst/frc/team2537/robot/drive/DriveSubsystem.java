@@ -36,7 +36,7 @@ public class DriveSubsystem extends Subsystem{
 		talonFrontRight = new CANTalon(Ports.FRONT_RIGHT_MOTOR_PORT);
 		talonBackLeft = new CANTalon(Ports.BACK_LEFT_MOTOR_PORT);
 		talonBackRight = new CANTalon(Ports.BACK_RIGHT_MOTOR_PORT);
-	//	setDriveControlMode(TalonControlMode.Speed);
+		setDriveControlMode(TalonControlMode.Speed);
 		
 		
 		driveType = DriveType.doubleJoystickXbox; //TODO: set this
@@ -142,12 +142,12 @@ public class DriveSubsystem extends Subsystem{
 		initialRightEncoders += getRightEncoders();
 	}
 	
-//	public void setDriveControlMode(TalonControlMode mode){
-//		talonFrontLeft.changeControlMode(mode);
-//		talonBackLeft.changeControlMode(mode);
-//		talonFrontRight.changeControlMode(mode);
-//		talonBackRight.changeControlMode(mode);
-//	}
+	public void setDriveControlMode(TalonControlMode mode){
+		talonFrontLeft.changeControlMode(mode);
+		talonBackLeft.changeControlMode(mode);
+		talonFrontRight.changeControlMode(mode);
+		talonBackRight.changeControlMode(mode);
+	}
 
 	/**
 	 * sets the default command to JoystickControlCommand
@@ -192,53 +192,6 @@ public class DriveSubsystem extends Subsystem{
 		});
 		
 	}
-			public void Veloop() {
-				 talonFrontLeft.setFeedbackDevice(FeedbackDevice.EncFalling);
-		         talonFrontLeft.reverseSensor(false);
-		        // talonFrontLeft.configEncoderCodesPerRev(XXX), // if using FeedbackDevice.QuadEncoder
-		        // talonFrontLeft.configPotentiometerTurns(XXX), // if using FeedbackDevice.AnalogEncoder or AnalogPot
-
-		       
-		         talonFrontLeft.setProfile(0);
-		         talonFrontLeft.setF(0.1097);
-		         talonFrontLeft.setP(0.22);
-		         talonFrontLeft.setI(0); 
-		         talonFrontLeft.setD(0);
-			}
-			
-			
-			public void Velocloop() {
-				double leftYstick = HumanInput.leftJoystick.getAxis(AxisType.kY);
-		    	double motorOutput =  talonFrontLeft.getOutputVoltage() /  talonFrontLeft.getBusVoltage();
-		    	/* prepare line to print */
-				_sb.append("\tout:");
-				_sb.append(motorOutput);
-		        _sb.append("\tspd:");
-		        _sb.append( talonFrontLeft.getSpeed() );
-		        
-		        if(HumanInput.leftJoystick.getRawButton(1)){
-		        	/* Speed mode */
-		        	double targetSpeed = leftYstick * 1500.0; /* 1500 RPM in either direction */
-		        	 talonFrontLeft.changeControlMode(TalonControlMode.Speed);
-		        	 talonFrontLeft.set(targetSpeed); /* 1500 RPM in either direction */
-
-		        	/* append more signals to print when in speed mode. */
-		            _sb.append("\terr:");
-		            _sb.append( talonFrontLeft.getClosedLoopError());
-		            _sb.append("\ttrg:");
-		            _sb.append(targetSpeed);
-		        } else {
-		        	/* Percent voltage mode */
-		        	 talonFrontLeft.changeControlMode(TalonControlMode.PercentVbus);
-		        	 talonFrontLeft.set(leftYstick);
-		        }
-
-		        if(++_loops >= 10) {
-		        	_loops = 0;
-		        	System.out.println(_sb.toString());
-		        }
-		        _sb.setLength(0);
-		    }
 		
 		    }
 		
