@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class ActuatorSubsystem extends Subsystem {
 	//Const
-	private static float extendedPosition = 1;
+	private static float extendedPosition = 90;
 	//Vars
 	private Servo actuator;
 	
@@ -24,7 +24,7 @@ public class ActuatorSubsystem extends Subsystem {
 	 * @return If the arm is in the extended position.
 	 */
 	public boolean isExtended(){
-		return actuator.get() == extendedPosition;
+		return actuator.getAngle() == extendedPosition;
 	}
 	
 	/**
@@ -33,12 +33,12 @@ public class ActuatorSubsystem extends Subsystem {
 	 * @return
 	 */
 	public boolean isRetracted(){
-		return actuator.get() == 0;
+		return actuator.getAngle() == 0;
 	}
 	
 	public void setPosition(boolean extended){
 		//Set the position
-		actuator.set((extended) ? extendedPosition : 0);
+		actuator.setAngle((extended) ? extendedPosition : 0);
 	}
 	
 	@Override
