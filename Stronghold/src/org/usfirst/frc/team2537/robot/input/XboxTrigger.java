@@ -1,7 +1,5 @@
 package org.usfirst.frc.team2537.robot.input;
 
-import org.usfirst.frc.team2537.robot.shooter.angle.HumanInput;
-
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 

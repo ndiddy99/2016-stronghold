@@ -1,11 +1,12 @@
 package org.usfirst.frc.team2537.robot.shooter.flywheel;
 
 import java.util.HashMap;
+
+import org.usfirst.frc.team2537.robot.input.HumanInput;
 import org.usfirst.frc.team2537.robot.input.Ports;
 import org.usfirst.frc.team2537.robot.input.Sensor;
 import org.usfirst.frc.team2537.robot.input.SensorListener;
 import org.usfirst.frc.team2537.robot.shooter.ShootCommandGroup;
-import org.usfirst.frc.team2537.robot.shooter.angle.HumanInput;
 import org.usfirst.frc.team2537.robot.shooter.HarvestCommandGroup;
 
 import edu.wpi.first.wpilibj.CANTalon;
