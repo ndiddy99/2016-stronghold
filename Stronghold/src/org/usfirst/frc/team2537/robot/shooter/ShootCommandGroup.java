@@ -2,8 +2,8 @@ package org.usfirst.frc.team2537.robot.shooter;
 
 import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelCommand;
 import org.usfirst.frc.team2537.robot.shooter.flywheel.SpinDownCommand;
+import org.usfirst.frc.team2537.robot.shooter.actuator.ActuatorCommand;
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
 
 /**
  * This is the class to launch the ball.
@@ -30,10 +30,11 @@ public class ShootCommandGroup extends CommandGroup {
     public ShootCommandGroup(double shootVelocity){
     	//First make sure we are not running already.
     	addSequential(new FlywheelCommand(shootVelocity));
-    	addSequential(new WaitCommand(2.0));
+    	addSequential(new ActuatorCommand(true));//extend
+    	addSequential(new UntilBallCommand());
+    	addParallel(new ActuatorCommand(false));//rectract
     	addSequential(new SpinDownCommand());
     	System.out.println("Shoot Command Group is Running");
-//    	addSequential(new EjectBallCommand());
     }
 	
     @Override

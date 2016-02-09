@@ -10,10 +10,13 @@ import org.usfirst.frc.team2537.robot.Robot;
  * @author Matthew Schweiss
  */
 public class UntilBallCommand extends Command {
+	private static float TIMEOUT = 10;
 
     public UntilBallCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	//We do need a time out.
+    	super(TIMEOUT);
     	requires(Robot.shooterFlywheelSys);
     }
     

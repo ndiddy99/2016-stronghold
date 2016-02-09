@@ -1,17 +1,17 @@
 package org.usfirst.frc.team2537.robot.shooter.actuator;
 
-import org.usfirst.frc.team2537.robot.input.Ports;
-import org.usfirst.frc.team2537.robot.shooter.angle.HumanInput;
-
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import org.usfirst.frc.team2537.robot.input.Ports;
+//import org.usfirst.frc.team2537.robot.shooter.angle.HumanInput;
 
 /**
  *
  */
 public class ActuatorSubsystem extends Subsystem {
 	//Const
-	private static float extendedPosition = 90;
+	private static float extendedAngle = 90;
+	private static float retractedAngle = 0;
 	//Vars
 	private Servo actuator;
 	
@@ -24,7 +24,7 @@ public class ActuatorSubsystem extends Subsystem {
 	 * @return If the arm is in the extended position.
 	 */
 	public boolean isExtended(){
-		return actuator.getAngle() == extendedPosition;
+		return actuator.getAngle() == extendedAngle;
 	}
 	
 	/**
@@ -33,12 +33,12 @@ public class ActuatorSubsystem extends Subsystem {
 	 * @return
 	 */
 	public boolean isRetracted(){
-		return actuator.getAngle() == 0;
+		return actuator.getAngle() == retractedAngle;
 	}
 	
 	public void setPosition(boolean extended){
 		//Set the position
-		actuator.setAngle((extended) ? extendedPosition : 0);
+		actuator.setAngle((extended) ? extendedAngle : retractedAngle);
 	}
 	
 	@Override
@@ -51,8 +51,8 @@ public class ActuatorSubsystem extends Subsystem {
 	public void registerButtons() {
 		//Needed but not used.
 		//For testing, remove for competition.
-		HumanInput.registerPressedCommand(HumanInput.raiseArm, new ActuatorCommand(true));
-		HumanInput.registerPressedCommand(HumanInput.neutralArm, new ActuatorCommand(false));
+		//HumanInput.registerPressedCommand(HumanInput.raiseArm, new ActuatorCommand(true));
+		//HumanInput.registerPressedCommand(HumanInput.neutralArm, new ActuatorCommand(false));
 		
 	}
 }
