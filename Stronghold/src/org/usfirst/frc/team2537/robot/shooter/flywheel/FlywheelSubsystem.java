@@ -106,6 +106,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 		}
 	}
 	
+	
 	/**
 	 * Get the current speed of the left flywheel.
 	 * 
@@ -134,11 +135,14 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	/**
 	 * Get the error of the left flywheel.
 	 * This is the distance from the wanted speed and the current speed.
-	 * @return Difference between current speed and wanted speed.
-	 * 			TODO find unit.
+	 * @return Difference between current speed and wanted speed. In RPM
 	 */
 	public double getLeftError(){
-		return leftFlywheelMotor.getError();
+		//We want to change this from native units (units per 100ms) to RPM.
+		//return leftFlywheelMotor.getError()/100/4096*1000*60;
+		
+		//Simplified for speed.
+		return leftFlywheelMotor.getError()*75/512;
 	}
 	
 	//RIGHT
@@ -224,9 +228,19 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 		//Right wheel stop.
 		rightFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 		rightFlywheelMotor.set(0);
-		rightFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
+		rightFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Speed);	
+	}
+	
+	public void go(){
+		//Left wheel stop.
+		leftFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		leftFlywheelMotor.set(1);//STOP
+		leftFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
 		
-		
+		//Right wheel stop.
+		rightFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		rightFlywheelMotor.set(1);
+		rightFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Speed);	
 	}
 	
 	
