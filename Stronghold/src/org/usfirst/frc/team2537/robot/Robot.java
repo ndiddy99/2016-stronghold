@@ -54,18 +54,18 @@ public class Robot extends IterativeRobot {
 		sensorSys.registerListener(shooterAngleSys);
 		sensorSys.registerListener(shooterFlywheelSys);
 		//Shooter Flywheel
-		//shooterFlywheelSys.initDefaultCommand();
-		//shooterFlywheelSys.registerButtons();
+		shooterFlywheelSys.initDefaultCommand();
+		shooterFlywheelSys.registerButtons();
 		//Shooter Angle
-		//shooterAngleSys.initDefaultCommand();
-		//shooterAngleSys.registerButtons();
+		shooterAngleSys.initDefaultCommand();
+		shooterAngleSys.registerButtons();
 		//Shooter Actuator
-		//shooterActuatorSys.initDefaultCommand();
-		//shooterActuatorSys.registerButtons();
+		shooterActuatorSys.initDefaultCommand();
+		shooterActuatorSys.registerButtons();
 		//Arm
 		//armSys.initDefaultCommand();
 		//armSys.registerButtons();
-		new FlywheelSubsystemTestCommand();
+	//	new FlywheelSubsystemTestCommand();
 	}
 	
 	@Override
