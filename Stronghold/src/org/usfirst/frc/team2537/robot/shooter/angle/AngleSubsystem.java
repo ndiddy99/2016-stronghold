@@ -49,7 +49,8 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 		angleTalon.enableForwardSoftLimit(ENABLE_SOFT_LIMIT);
 		angleTalon.setReverseSoftLimit(MIN_ANGLE/360 * ENCODER_TICKS_PER_REV);
 		angleTalon.enableReverseSoftLimit(ENABLE_SOFT_LIMIT);
-		tiltSensor.setSemiPeriodMode(true); //set the tilt sensor to semi period mode. This means we are only measuring the period of the high pulses. When this is true, it counts just high pulses. http://wpilib.screenstepslive.com/s/4485/m/13809/l/241874-counters-measuring-rotation-counting-pulses-and-more
+		tiltSensor.setSemiPeriodMode(true); //set the tilt sensor to semi period mode. This means we are only measuring the period of the high pulses. When this is true, it counts just high pulses. 
+		//http://wpilib.screenstepslive.com/s/4485/m/13809/l/241874-counters-measuring-rotation-counting-pulses-and-more
 	}
 	
 	@Override
