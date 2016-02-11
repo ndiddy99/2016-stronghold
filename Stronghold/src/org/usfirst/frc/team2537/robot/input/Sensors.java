@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.Ultrasonic;
@@ -47,14 +46,4 @@ public class Sensors {
 		return (double) u.getRangeInches();
 	}
 	
-	protected Double getTalonAngle(int count, int resolution, double lowAngle, double highAngle) {
-		
-		return null;
-	}
-	
-	
-	
-	protected double computeAngle(int count, int numOfTicks, double lowAngle, double highAngle) {
-		return (count/numOfTicks) * 360 - lowAngle;
-	}
 }

@@ -21,6 +21,7 @@ public class ArmManualMovementCommand extends Command {
 
 	protected void execute() {
 		Robot.armSys.setArmTalonSpeed(-Robot.armSys.getRightJoystick());
+		if (ArmSubsystem.debug) System.out.println(Robot.armSys.armMotor.getEncPosition());
 	}
 
 	protected boolean isFinished() {
