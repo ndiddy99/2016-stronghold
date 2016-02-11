@@ -9,6 +9,7 @@ import org.usfirst.frc.team2537.robot.input.SensorListener;
 import org.usfirst.frc.team2537.robot.input.XBoxButtons;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  * The main Arm Subsystem
@@ -18,13 +19,21 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class ArmSubsystem extends Subsystem implements SensorListener {
 
-	private CANTalon armMotor;
+	public CANTalon armMotor;
 	static final boolean debug = true;
 	double currentAngle;
 	double currentDist;
 
 	public ArmSubsystem() {
 		armMotor = new CANTalon(Ports.ARM_TALON);
+		armMotor.ConfigFwdLimitSwitchNormallyOpen(true);
+		armMotor.ConfigRevLimitSwitchNormallyOpen(true);
+		armMotor.enableBrakeMode(true);
+		armMotor.enableForwardSoftLimit(false);
+		armMotor.enableReverseSoftLimit(false);
+		armMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		armMotor.configEncoderCodesPerRev(80);
+		armMotor.setEncPosition(0);
 	}
 
 	public void initDefaultCommand() {
@@ -33,9 +42,9 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 	}
 
 	public void registerButtons() {
-		HumanInput.registerPressedCommand(HumanInput.portcullisButton, new MagicPortcullisCommand());
-		HumanInput.registerPressedCommand(HumanInput.chevalButton, new MagicChevalCommand());
-		HumanInput.registerPressedCommand(HumanInput.raiseArm, new InterruptCommand());
+//		HumanInput.registerPressedCommand(HumanInput.portcullisButton, new MagicPortcullisCommand());
+//		HumanInput.registerPressedCommand(HumanInput.chevalButton, new MagicChevalCommand());
+//		HumanInput.registerPressedCommand(HumanInput.raiseArm, new InterruptCommand());
 	}
 	
 	/**

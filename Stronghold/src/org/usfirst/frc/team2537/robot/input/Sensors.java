@@ -46,14 +46,4 @@ public class Sensors {
 		return (double) u.getRangeInches();
 	}
 	
-	protected Double getTalonAngle(int count, int resolution, double lowAngle, double highAngle) {
-		
-		return null;
-	}
-	
-	
-	
-	protected double computeAngle(int count, int numOfTicks, double lowAngle, double highAngle) {
-		return (count/numOfTicks) * 360 - lowAngle;
-	}
 }
