@@ -19,17 +19,10 @@ public class DriveSubsystem extends Subsystem{
 	protected DriveType driveType;
 	protected boolean drivingStraight;
 	protected boolean driveLowerSpeed;
-		
-		
-	
-	
-	
 	public static final double WHEEL_DIAMETER = 9; //Inches TODO: Magic numbers are fun
 	public static final double PulsesPerRevolution = 20; //for encoders
 	private double initialLeftEncoders = 0; //Inches to subtract (for resetEncoders) 
 	private double initialRightEncoders = 0; //Inches to subtract (for resetEncoders)
-	StringBuilder _sb = new StringBuilder();
-	int _loops = 0;
 	
 	public DriveSubsystem() {
 		talonFrontLeft = new CANTalon(Ports.FRONT_LEFT_MOTOR_PORT);
@@ -192,6 +185,5 @@ public class DriveSubsystem extends Subsystem{
 		});
 		
 	}
-		
-		    }
+}
 		
