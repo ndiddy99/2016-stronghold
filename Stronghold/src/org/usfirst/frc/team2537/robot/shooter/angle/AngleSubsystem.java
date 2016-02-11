@@ -2,6 +2,9 @@ package org.usfirst.frc.team2537.robot.shooter.angle;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.PWM;
+
 import java.util.HashMap;
 
 import org.usfirst.frc.team2537.robot.input.HumanInput;
@@ -23,6 +26,8 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	private static final boolean REV_LIMIT_SWITCH_NORMALLY_OPEN = true;
 	private static final boolean ENABLE_SOFT_LIMIT = true;
 	private static final double ENCODER_TICKS_PER_REV = 1000;
+	private static final PWM tiltSensor = new PWM(Ports.TILT_SENSOR_PORT);//tilt sensor that is a pwm over the dio port in ports
+	
 	
 	//The angle limits.
 	private static final double MAX_ANGLE = 80;//degrees (ball park, not right)
@@ -135,4 +140,14 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 		//Needed but not used.
 		
 	}
+	public static int getTiltSensorRaw() {
+		return tiltSensor.getRaw(); //PWM value that is 0 to 255
+	}
+	public static double getTiltSensorSpeed() { //will need to be calibrated for this to properly function. Has a range of -1.0 to 1.0
+		return tiltSensor.getSpeed();
+	}
+	public static double getTiltSensorPosition() { //will need to be calibrated for this to properly work. Has a range of 0.0 to 1.0
+		return tiltSensor.getPosition();
+	}
+
 }

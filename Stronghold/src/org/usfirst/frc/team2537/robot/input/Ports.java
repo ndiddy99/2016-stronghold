@@ -21,5 +21,7 @@ public final class Ports {
 	SHOOTER_ANGLE_PORT = 5,
 	LEFT_FLYWHEEL_PORT = 1,
 	RIGHT_FLYWHEEL_PORT = 2,
-	ACTUATOR_PORT = 0;
+	ACTUATOR_PORT = 0,
+	//DIO port for the tilt sensor
+	TILT_SENSOR_PORT = 6;
 }
