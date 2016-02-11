@@ -5,6 +5,7 @@ import org.usfirst.frc.team2537.robot.auto.AutoChooser;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team2537.robot.input.Sensors;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -43,8 +44,10 @@ public class Robot extends IterativeRobot {
 		driveSys.registerButtons();
 		sensorSys.registerListener(armSys);
 		autoChooser = new AutoChooser();
+	
+		CameraServer.getInstance().startAutomaticCapture("cam0");
 		
-		(new CameraServerTwo()).startAutomaticCapture("cam0");
+//		(new CameraServerTwo()).startAutomaticCapture("cam0");
 
 	}
 

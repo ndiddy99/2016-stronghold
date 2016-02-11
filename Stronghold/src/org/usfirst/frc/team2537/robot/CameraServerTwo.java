@@ -34,6 +34,7 @@ import edu.wpi.first.wpilibj.vision.USBCamera;
 
 // replicates CameraServer.cpp in java lib
 
+@Deprecated
 public class CameraServerTwo {
 
   private static final int kPort = 1180;
