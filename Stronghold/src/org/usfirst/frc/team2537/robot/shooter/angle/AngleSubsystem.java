@@ -142,7 +142,6 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 		
 	}
 	public double getTiltSensorPeriod(){
-		
 		return tiltSensor.getPeriod(); //period will change with the angle. I would assume it would get longer as the angle increases. This returns the time interval of the most recent count.
 	}
 	public double getTiltSensorAngle() {

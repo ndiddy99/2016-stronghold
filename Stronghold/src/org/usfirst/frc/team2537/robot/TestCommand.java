@@ -1,15 +1,13 @@
-package org.usfirst.frc.team2537.robot.shooter.flywheel;
-
-import org.usfirst.frc.team2537.robot.Robot;
+package org.usfirst.frc.team2537.robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class FlywheelSubsystemTestCommand extends Command {
+public class TestCommand extends Command {
 
-    public FlywheelSubsystemTestCommand() {
+    public TestCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
