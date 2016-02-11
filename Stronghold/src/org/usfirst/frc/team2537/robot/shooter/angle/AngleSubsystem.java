@@ -149,5 +149,9 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	public static double getTiltSensorPosition() { //will need to be calibrated for this to properly work. Has a range of 0.0 to 1.0
 		return tiltSensor.getPosition();
 	}
-
+	public static double getTiltSensorAngle() {
+		//TODO Calibrate this equation using a already accurate angle sensor.
+		return (tiltSensor.getRaw() / 255.0 * 360.0); // get a proportion of the tilt sensor's current value to it's max value and multiply it by 360 degrees which I assume is the max angle it can measure.
+	}
 }
+
