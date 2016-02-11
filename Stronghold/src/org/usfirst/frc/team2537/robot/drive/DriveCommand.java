@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveCommand extends Command {
 	private static final boolean debug = false;
-	private static final double DEADZONE = 0.05;
+	private static final double DEADZONE = 0.0;
 
 	/**
 	 * Takes joystick input depending on Robot.driveSys.driveType Omnipotenet
@@ -61,8 +61,7 @@ public class DriveCommand extends Command {
 		}
 
 		if (left == null || right == null) {
-			if (debug)
-				System.out.println("[DriveCommand] left/right is null");
+			if (debug) System.out.println("[DriveCommand] left/right is null");
 			return;
 		}
 
@@ -87,8 +86,7 @@ public class DriveCommand extends Command {
 			left /= 2;
 		}
 
-		if (debug)
-			System.out.println("[DriveCommand] left: " + left + "\tright: " + right);
+		if (debug) System.out.println("[DriveCommand] left: " + left + "\tright: " + right);
 		Robot.driveSys.setDriveMotors(left, right);
 	}
 
@@ -99,15 +97,13 @@ public class DriveCommand extends Command {
 
 	@Override
 	protected void end() {
-		if (debug)
-			System.out.println("[DriveCommand] It's over");
+		if (debug) System.out.println("[DriveCommand] It's over");
 		Robot.driveSys.setDriveMotors(0);
 	}
 
 	@Override
 	protected void interrupted() {
-		if (debug)
-			System.out.println("[DriveCommand] Interruptions aren't fun.");
+		if (debug) System.out.println("[DriveCommand] Interruptions aren't fun.");
 		Robot.driveSys.setDriveMotors(0);
 	}
 }
