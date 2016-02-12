@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.command.Command;
 public class FlywheelCommand extends Command {
 	// constants
 	private static final long 	TIMEOUT 		= 1000;//seconds
-	private static final double SPEED_PROXIMITY = 5;//error in percent
 	// vars
 	private double targetSpeed;
 
@@ -30,6 +29,7 @@ public class FlywheelCommand extends Command {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		super(TIMEOUT);
+		requires(Robot.shooterFlywheelSys);
 		targetSpeed = speed;
 	}
 
@@ -41,10 +41,7 @@ public class FlywheelCommand extends Command {
 
 	@Override
 	public boolean isFinished() {
-
-		return (isInRange(Robot.shooterFlywheelSys.getLeftSpeed())
-				&& isInRange(Robot.shooterFlywheelSys.getRightSpeed()));
-
+		return Robot.shooterFlywheelSys.isAtSpeed();
 	}
 
 	@Override
@@ -62,9 +59,5 @@ public class FlywheelCommand extends Command {
 	protected void interrupted() {
 		//Interruped, stop the wheels
 		Robot.shooterFlywheelSys.stop();
-	}
-
-	private boolean isInRange(double speed) {
-		return Math.abs(speed - targetSpeed) <= SPEED_PROXIMITY;
 	}
 }

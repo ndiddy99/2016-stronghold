@@ -21,8 +21,8 @@ public class FlywheelSubsystemTestCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	System.out.println(Robot.shooterFlywheelSys.getLeftSpeed());
-    	System.out.println(Robot.shooterFlywheelSys.getRightSpeed());
+//    	System.out.println(Robot.shooterFlywheelSys.getLeftSpeed());
+//    	System.out.println(Robot.shooterFlywheelSys.getRightSpeed());
     }
 
     // Make this return true when this Command no longer needs to run execute()

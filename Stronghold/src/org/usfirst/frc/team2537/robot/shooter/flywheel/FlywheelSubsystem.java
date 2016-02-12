@@ -21,15 +21,17 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class FlywheelSubsystem extends Subsystem implements SensorListener {
 
 	// Constants
+	private final static boolean TESTING = true;
 	private static final CANTalon.FeedbackDevice ENCODER = CANTalon.FeedbackDevice.QuadEncoder;
 	private static final int ENCODER_TICKS_PER_REV = 20;
+	private static final double ERROR_PROXIMITY = 5;//rpm
 	private static final double MOTOR_TOP_SPEED = 2000;// RPM, not calibrated yet
 	private static final double P = .5, I = .05, D = 0.0;
 	// Vars
 	private boolean proximityValue = false;
+	private double targetSpeed = 0;
 	private CANTalon leftFlywheelMotor;
 	private CANTalon rightFlywheelMotor;
-	private final static boolean TESTING = true;
 
 	public FlywheelSubsystem() {
 		// Starting motors.
@@ -67,8 +69,10 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 		// Make the talon's go to the right control mode.
 		// Should be default, not sure if this should be here.
 		leftFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
-		rightFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Follower); 
-		rightFlywheelMotor.set(Ports.LEFT_FLYWHEEL_PORT);
+		rightFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Speed); 
+		
+		//Lidar
+		//lidarSensor = new Ultrasonic
 	}
 
 	@Override
@@ -93,37 +97,47 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	 *            The speed in RPM if each if the motors.
 	 */
 	public void setSpeed(double speed) {
-		if (leftFlywheelMotor.isSensorPresent(ENCODER) == CANTalon.FeedbackDeviceStatus.FeedbackStatusPresent
-				&& rightFlywheelMotor.isSensorPresent(ENCODER) == CANTalon.FeedbackDeviceStatus.FeedbackStatusPresent) {
-			// Both sensors are present.
+		targetSpeed = speed;
+		switch (getSystemState()){
+		case PID_MODE:
+			//Encoders present, Modes have already been checked.
 			leftFlywheelMotor.set(speed);
-			// Set the right only if it is not follower mode.
-			if (rightFlywheelMotor.getControlMode() != CANTalon.TalonControlMode.Follower) {
-				rightFlywheelMotor.set(speed);
-			}
-
-		} else {
-			// Print error
-			if (leftFlywheelMotor.isSensorPresent(ENCODER) == CANTalon.FeedbackDeviceStatus.FeedbackStatusPresent) {
-				// Left sensor is code, right must be bad.
-				System.err.println("Right flywheel sensor is not present.");
-			} else {
-				System.err.println("Left flywheel sensor is not present.");
-			}
-			// Make something up!!
-			CANTalon.TalonControlMode rightMode = rightFlywheelMotor.getControlMode();
-			CANTalon.TalonControlMode leftMode = leftFlywheelMotor.getControlMode();
-			leftFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
-			leftFlywheelMotor.set(speed / MOTOR_TOP_SPEED);// Speed divided Top
-															// speed is voltage
-			leftFlywheelMotor.changeControlMode(leftMode);
-
-			// Only set right if it is not follower mode.
-			if (rightMode != CANTalon.TalonControlMode.Follower) {
-				rightFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
-				rightFlywheelMotor.set(speed / MOTOR_TOP_SPEED);
-				rightFlywheelMotor.changeControlMode(rightMode);
-			}
+			rightFlywheelMotor.set(speed);
+			break;
+			
+		case LEFT_FOLLOWER_MODE:
+			rightFlywheelMotor.set(speed);
+			//Other is moved by being stuck.
+			break;
+		case RIGHT_FOLLOWER_MODE:
+			leftFlywheelMotor.set(speed);
+			break;
+		case VOLTAGE_MODE:
+			double sv = speed / MOTOR_TOP_SPEED;
+			leftFlywheelMotor.set(sv);// Speed divided Top
+			rightFlywheelMotor.set(sv);
+			break;
+		}
+	}
+	
+	public boolean isAtSpeed(){
+		switch (getSystemState()){
+		case PID_MODE:
+			//Compare error
+			return getLeftError() <= ERROR_PROXIMITY && getRightError() <= ERROR_PROXIMITY;
+		case LEFT_FOLLOWER_MODE:
+			//Right error only.
+			return getRightError() <= ERROR_PROXIMITY;
+		case RIGHT_FOLLOWER_MODE:
+			return getLeftError() <= ERROR_PROXIMITY;
+		case VOLTAGE_MODE:
+			//Try to check speed.
+			return Math.abs(getRightSpeed() - targetSpeed) <= ERROR_PROXIMITY && 
+					Math.abs(getLeftSpeed() - targetSpeed) <= ERROR_PROXIMITY;
+		default:
+			//HOW DID I GET HERE.
+			System.out.println("THIS IS TIME TO PANIC!");
+			return true;//Because why not!
 		}
 	}
 	// LEFT
@@ -162,7 +176,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	 * 
 	 * @return flywheel speed in RPM
 	 */
-	public double getLeftSpeed() {
+	private double getLeftSpeed() {
 		switch (leftFlywheelMotor.isSensorPresent(ENCODER)) {
 
 		case FeedbackStatusPresent:
@@ -189,7 +203,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	 * 
 	 * @return Difference between current speed and wanted speed. In RPM
 	 */
-	public double getLeftError() {
+	private double getLeftError() {
 		// We want to change this from native units (units per 100ms) to RPM.
 		// return leftFlywheelMotor.getError()/100/4096*1000*60;
 
@@ -233,7 +247,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	 * 
 	 * @return flywheel speed in RPM
 	 */
-	public double getRightSpeed() {
+	private double getRightSpeed() {
 		switch (rightFlywheelMotor.isSensorPresent(ENCODER)) {
 
 		case FeedbackStatusPresent:
@@ -262,7 +276,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	 * 
 	 * @return Difference between current speed and wanted speed in RPM.
 	 */
-	public double getRightError() {
+	private double getRightError() {
 		return rightFlywheelMotor.getError() * 75 / 512;
 	}
 
@@ -292,7 +306,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 		rightFlywheelMotor.set(1);
 		rightFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
 	}
-
+	
 	@Override
 	// Proximity
 	public void receivedValue(HashMap<String, Double> sensorMap) {
@@ -320,5 +334,65 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	 */
 	public boolean isBall() {
 		return proximityValue;
+	}
+	
+	private enum FlywheelSubsystemMode {
+		PID_MODE,//Everything is normal
+		RIGHT_FOLLOWER_MODE,//Right motor does not have an encoder
+		LEFT_FOLLOWER_MODE, //Left  motor does not have an encoder
+		VOLTAGE_MODE,		//NO ENCODERS!!
+	}
+	/**
+	 * Get the current state of the shooter state.
+	 */
+	private FlywheelSubsystemMode getSystemState(){
+		boolean right = rightFlywheelMotor.isSensorPresent(ENCODER) == CANTalon.FeedbackDeviceStatus.FeedbackStatusPresent;
+		boolean left  = leftFlywheelMotor.isSensorPresent(ENCODER) == CANTalon.FeedbackDeviceStatus.FeedbackStatusPresent;
+		if (right){
+			//Right Encoder
+			if (left){
+				//Left Encoder
+				//All is right with the world.
+				if (leftFlywheelMotor.getControlMode() != CANTalon.TalonControlMode.Speed){
+					leftFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
+				}
+				if (rightFlywheelMotor.getControlMode() != CANTalon.TalonControlMode.Speed){
+					rightFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
+				}
+				return FlywheelSubsystemMode.PID_MODE;
+			} else {
+				//No left encoder.
+				System.err.println("Left flywheel sensor is not present.");
+				//Left is the slave!!
+				//Make sure the left is a follower.
+				if (leftFlywheelMotor.getControlMode() != CANTalon.TalonControlMode.Follower){
+					leftFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Follower);
+					rightFlywheelMotor.set(Ports.RIGHT_FLYWHEEL_PORT);
+				}
+				return FlywheelSubsystemMode.LEFT_FOLLOWER_MODE;
+			}
+		} else {
+			//No right encoder.
+			System.err.println("Right flywheel sensor is not present.");
+			if (left){
+				//Left encoder,
+				//Right's the slave
+				if (rightFlywheelMotor.getControlMode() != CANTalon.TalonControlMode.Follower){
+					rightFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Follower);
+					rightFlywheelMotor.set(Ports.LEFT_FLYWHEEL_PORT);
+				}
+				return FlywheelSubsystemMode.RIGHT_FOLLOWER_MODE;
+			} else {
+				//NO SENSORS, NOOOOOO
+				System.err.println("Left flywheel sensor is not present.");
+				if (leftFlywheelMotor.getControlMode() != CANTalon.TalonControlMode.PercentVbus){
+					leftFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+				}
+				if (rightFlywheelMotor.getControlMode() != CANTalon.TalonControlMode.PercentVbus){
+					rightFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+				}
+				return FlywheelSubsystemMode.VOLTAGE_MODE;//Goin back to the good old days.
+			}
+		}
 	}
 }
