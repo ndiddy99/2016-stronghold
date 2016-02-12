@@ -176,7 +176,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	 * 
 	 * @return flywheel speed in RPM
 	 */
-	private double getLeftSpeed() {
+	public double getLeftSpeed() {
 		switch (leftFlywheelMotor.isSensorPresent(ENCODER)) {
 
 		case FeedbackStatusPresent:
@@ -247,7 +247,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	 * 
 	 * @return flywheel speed in RPM
 	 */
-	private double getRightSpeed() {
+	public double getRightSpeed() {
 		switch (rightFlywheelMotor.isSensorPresent(ENCODER)) {
 
 		case FeedbackStatusPresent:

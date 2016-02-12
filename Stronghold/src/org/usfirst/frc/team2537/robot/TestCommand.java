@@ -1,15 +1,13 @@
-package org.usfirst.frc.team2537.robot.shooter.flywheel;
-
-import org.usfirst.frc.team2537.robot.Robot;
+package org.usfirst.frc.team2537.robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class FlywheelSubsystemTestCommand extends Command {
+public class TestCommand extends Command {
 
-    public FlywheelSubsystemTestCommand() {
+    public TestCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -21,8 +19,8 @@ public class FlywheelSubsystemTestCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-//    	System.out.println(Robot.shooterFlywheelSys.getLeftSpeed());
-//    	System.out.println(Robot.shooterFlywheelSys.getRightSpeed());
+    	System.out.println(Robot.shooterFlywheelSys.getLeftSpeed());
+    	System.out.println(Robot.shooterFlywheelSys.getRightSpeed());
     }
 
     // Make this return true when this Command no longer needs to run execute()

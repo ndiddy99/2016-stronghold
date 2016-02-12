@@ -2,11 +2,9 @@ package org.usfirst.frc.team2537.robot.shooter.angle;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.PWM;
-
 import java.util.HashMap;
-
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 import org.usfirst.frc.team2537.robot.input.Ports;
 import org.usfirst.frc.team2537.robot.input.Sensor;
@@ -26,9 +24,9 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	private static final boolean REV_LIMIT_SWITCH_NORMALLY_OPEN = true;
 	private static final boolean ENABLE_SOFT_LIMIT = true;
 	private static final double ENCODER_TICKS_PER_REV = 1000;
-	private static final PWM tiltSensor = new PWM(Ports.TILT_SENSOR_PORT);//tilt sensor that is a pwm over the dio port in ports
-	
-	
+	private final Counter tiltSensor;//tilt sensor that is a pwm over the dio port in ports
+	private static final double ANGLE_RANGE = 360.0; //max angle minus the min angle of the shooter. Factors into the calculations for the tilt sensor.
+	private static final double MAX_PERIOD = 60.0; //The max period of the last recieved cycle of the tilt sensor. This should just be in seconds.
 	//The angle limits.
 	private static final double MAX_ANGLE = 80;//degrees (ball park, not right)
 	private static final double MIN_ANGLE = -40;//degrees(ball park, not right)
@@ -38,6 +36,7 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	private final CANTalon angleTalon;
 	
 	public AngleSubsystem() {
+		tiltSensor = new Counter(Ports.TILT_SENSOR_PORT);//tilt sensor that is a pwm over the dio port in ports
 		angleTalon = new CANTalon(Ports.SHOOTER_ANGLE_PORT);
 		//Start things.
 		angleTalon.changeControlMode(CANTalon.TalonControlMode.Voltage);
@@ -50,6 +49,8 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 		angleTalon.enableForwardSoftLimit(ENABLE_SOFT_LIMIT);
 		angleTalon.setReverseSoftLimit(MIN_ANGLE/360 * ENCODER_TICKS_PER_REV);
 		angleTalon.enableReverseSoftLimit(ENABLE_SOFT_LIMIT);
+		tiltSensor.setSemiPeriodMode(true); //set the tilt sensor to semi period mode. This means we are only measuring the period of the high pulses. When this is true, it counts just high pulses. 
+		//http://wpilib.screenstepslive.com/s/4485/m/13809/l/241874-counters-measuring-rotation-counting-pulses-and-more
 	}
 	
 	@Override
@@ -140,18 +141,12 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 		//Needed but not used.
 		
 	}
-	public static int getTiltSensorRaw() {
-		return tiltSensor.getRaw(); //PWM value that is 0 to 255
+	public double getTiltSensorPeriod(){
+		return tiltSensor.getPeriod(); //period will change with the angle. I would assume it would get longer as the angle increases. This returns the time interval of the most recent count.
 	}
-	public static double getTiltSensorSpeed() { //will need to be calibrated for this to properly function. Has a range of -1.0 to 1.0
-		return tiltSensor.getSpeed();
+	public double getTiltSensorAngle() {
+		return (tiltSensor.getPeriod() / MAX_PERIOD * ANGLE_RANGE);
 	}
-	public static double getTiltSensorPosition() { //will need to be calibrated for this to properly work. Has a range of 0.0 to 1.0
-		return tiltSensor.getPosition();
-	}
-	public static double getTiltSensorAngle() {
-		//TODO Calibrate this equation using a already accurate angle sensor.
-		return (tiltSensor.getRaw() / 255.0 * 360.0); // get a proportion of the tilt sensor's current value to it's max value and multiply it by 360 degrees which I assume is the max angle it can measure.
-	}
+	
 }
 
