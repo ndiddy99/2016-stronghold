@@ -346,8 +346,8 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	 * Get the current state of the shooter state.
 	 */
 	private FlywheelSubsystemMode getSystemState(){
-		boolean right = rightFlywheelMotor.isSensorPresent(ENCODER) == CANTalon.FeedbackDeviceStatus.FeedbackStatusPresent;
-		boolean left  = leftFlywheelMotor.isSensorPresent(ENCODER) == CANTalon.FeedbackDeviceStatus.FeedbackStatusPresent;
+		boolean right = (rightFlywheelMotor.isSensorPresent(ENCODER) == CANTalon.FeedbackDeviceStatus.FeedbackStatusPresent);
+		boolean left  = (leftFlywheelMotor.isSensorPresent(ENCODER) == CANTalon.FeedbackDeviceStatus.FeedbackStatusPresent);
 		if (right){
 			//Right Encoder
 			if (left){

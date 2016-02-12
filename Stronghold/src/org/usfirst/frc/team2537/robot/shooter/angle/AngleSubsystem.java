@@ -143,6 +143,7 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 		return tiltSensor.getPeriod(); //period will change with the angle. I would assume it would get longer as the angle increases. This returns the time interval of the most recent count.
 	}
 	public double getTiltSensorAngle() {
+		//TODO Still needs to be calibrated.
 		return (tiltSensor.getPeriod() * (-2.083 * Math.pow(10, 6)) + 4184.375); //magic numbers acquired from placing some approximate angles into a graph in google sheets and acquiring the angles for that 
 	}
 	
