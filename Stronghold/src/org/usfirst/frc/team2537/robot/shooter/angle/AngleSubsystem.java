@@ -25,8 +25,6 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	private static final boolean ENABLE_SOFT_LIMIT = true;
 	private static final double ENCODER_TICKS_PER_REV = 1000;
 	private final Counter tiltSensor;//tilt sensor that is a pwm over the dio port in ports
-	private static final double ANGLE_RANGE = 360.0; //max angle minus the min angle of the shooter. Factors into the calculations for the tilt sensor.
-	private static final double MAX_PERIOD = 60.0; //The max period of the last recieved cycle of the tilt sensor. This should just be in seconds.
 	//The angle limits.
 	private static final double MAX_ANGLE = 80;//degrees (ball park, not right)
 	private static final double MIN_ANGLE = -40;//degrees(ball park, not right)
@@ -145,7 +143,7 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 		return tiltSensor.getPeriod(); //period will change with the angle. I would assume it would get longer as the angle increases. This returns the time interval of the most recent count.
 	}
 	public double getTiltSensorAngle() {
-		return (tiltSensor.getPeriod() / MAX_PERIOD * ANGLE_RANGE);
+		return (tiltSensor.getPeriod() * (-2.083 * Math.pow(10, 6)) + 4184.375); //magic numbers acquired from placing some approximate angles into a graph in google sheets and acquiring the angles for that 
 	}
 	
 }
