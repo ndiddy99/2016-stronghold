@@ -42,9 +42,9 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 	}
 
 	public void registerButtons() {
-//		HumanInput.registerPressedCommand(HumanInput.portcullisButton, new MagicPortcullisCommand());
-//		HumanInput.registerPressedCommand(HumanInput.chevalButton, new MagicChevalCommand());
-//		HumanInput.registerPressedCommand(HumanInput.raiseArm, new InterruptCommand());
+		HumanInput.registerPressedCommand(HumanInput.portcullisButton, new MagicPortcullisCommand());
+		HumanInput.registerPressedCommand(HumanInput.chevalButton, new MagicChevalCommand());
+		HumanInput.registerPressedCommand(HumanInput.raiseArm, new InterruptCommand());
 	}
 	
 	/**
@@ -68,10 +68,10 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 	/**
 	 * Used to set the speed of the arm talon
 	 * 
-	 * @param speed	Voltage to set the talon to
+	 * @param outputval	Voltage to set the talon to
 	 */
-	public void setArmTalonSpeed(double speed) {
-		armMotor.set(speed);
+	public void setArmTalon(double outputval) {
+		armMotor.set(outputval);
 	}
 	
 	/**
@@ -90,13 +90,13 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 		try {
 			currentAngle = e.get(Sensor.ARM_ANGLE);
 		} catch(Exception error) {
-//			System.out.println("Bad Angle Sensor");
+			if (debug) System.out.println("Bad Angle Sensor");
 		}
 		try {
 			currentDist = e.get(Sensor.ULTRASONIC_DISTANCE);
 		} catch (Exception error) {
-			System.out.println("Bad Ultrasonic Sensor");
+			if (debug) System.out.println("Bad Ultrasonic Sensor");
 		}
-		System.out.println(currentDist);
+		if (debug) System.out.println(currentDist);
 	}
 }

@@ -5,7 +5,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  * Command Group that crosses the cheval de frise
  * 
+ * WIP
+ * 
  * @author Alex Taber
+ * @deprecated
  *
  */
 public class MagicChevalCommand extends CommandGroup {

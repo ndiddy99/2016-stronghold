@@ -16,11 +16,11 @@ public class ArmManualMovementCommand extends Command {
 	}
 
 	protected void initialize() {
-//		if (ArmSubsystem.debug) System.out.println("Moving Arm!");
+		if (ArmSubsystem.debug) System.out.println("Moving Arm!");
 	}
 
 	protected void execute() {
-		Robot.armSys.setArmTalonSpeed(-Robot.armSys.getRightJoystick());
+		Robot.armSys.setArmTalon(-Robot.armSys.getRightJoystick());
 		if (ArmSubsystem.debug) System.out.println(Robot.armSys.armMotor.getEncPosition());
 	}
 
@@ -29,11 +29,11 @@ public class ArmManualMovementCommand extends Command {
 	}
 
 	protected void end() {
-//		if (ArmSubsystem.debug) System.out.println("Arm movement completed!");
+		if (ArmSubsystem.debug) System.out.println("Arm movement completed!");
 	}
 
 	protected void interrupted() {
-		Robot.armSys.setArmTalonSpeed(0);
+		Robot.armSys.setArmTalon(0);
 	}
 
 }

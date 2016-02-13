@@ -25,6 +25,7 @@ public class CrossCommand extends Command {
 	}
 
 	protected void initialize() {
+		//TODO Use actual angle
 		switch (defense) {
 		case PORTCULLIS:
 			nearRange = 0.0;
@@ -49,7 +50,7 @@ public class CrossCommand extends Command {
 			break;
 		}
 		if (nearRange != null && farRange != null ) {
-			Robot.driveSys.setDriveMotors(.01);
+			Robot.driveSys.setDriveMotors(.1);
 		}
 	}
 

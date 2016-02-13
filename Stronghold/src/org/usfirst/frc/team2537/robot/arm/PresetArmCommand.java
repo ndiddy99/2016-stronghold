@@ -46,7 +46,7 @@ public class PresetArmCommand extends Command {
 			} else {
 				speed = (-.25);
 			}
-			Robot.armSys.setArmTalonSpeed(speed);
+			Robot.armSys.setArmTalon(speed);
 		}
 
 	}
@@ -59,12 +59,12 @@ public class PresetArmCommand extends Command {
 	}
 
 	protected void end() {
-		Robot.armSys.setArmTalonSpeed(0);
+		Robot.armSys.setArmTalon(0);
 	}
 
 	protected void interrupted() {
 		if (ArmSubsystem.debug) System.out.println("[armSys] I've been interrupted!");
-		Robot.armSys.setArmTalonSpeed(0);
+		Robot.armSys.setArmTalon(0);
 	}
 
 }
