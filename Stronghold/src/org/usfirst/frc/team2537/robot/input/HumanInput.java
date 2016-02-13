@@ -1,29 +1,32 @@
 package org.usfirst.frc.team2537.robot.input;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * Class that contains all the button and joystick declarations.
+ * 
+ * Also contains methods necessary to get joystick and button presses.
+ * 
+ * @author Alex Taber
+ *
+ */
 public class HumanInput {
-	public static final int
-		XBOX_LEFT_STICK_X_AXIS = 0,
-		XBOX_LEFT_STICK_Y_AXIS = 1,
-		XBOX_LEFT_TRIGGER_AXIS = 2,
-		XBOX_RIGHT_TRIGGER_AXIS = 3,
-		XBOX_RIGHT_STICK_X_AXIS = 4,
-		XBOX_RIGHT_STICK_Y_AXIS = 5,
-		XBOX_DIRECTIONAL_PAD = 6;
+	public static Joystick xboxController	= new Joystick(Ports.XBOX);
+	public static Joystick leftJoystick		= new Joystick(Ports.JOYSTICK_LEFT_PORT);
+	public static Joystick rightJoystick	= new Joystick(Ports.JOYSTICK_RIGHT_PORT);
 	
-	public static Joystick xboxController = new Joystick(Ports.XBOX);
-	
-	//replace the following 0s with actual numbers once you test them
-	public static Button lowerArm = new JoystickButton(xboxController, XboxButtons.XBOX_A);
-	public static Button raiseArm = new JoystickButton(xboxController, XboxButtons.XBOX_Y);
-	public static Button neutralArm = new JoystickButton(xboxController, XboxButtons.XBOX_B);
+	public static Button portcullisButton	= new JoystickButton(xboxController, XboxButtons.XBOX_A);
+	public static Button raiseArm			= new JoystickButton(xboxController, XboxButtons.XBOX_Y);
+	public static Button chevalButton		= new JoystickButton(xboxController, XboxButtons.XBOX_B);
 	//Shooter things
-	public static final JoystickButton ballShootTrigger = new XboxTrigger(xboxController, XboxButtons.XBOX_RIGHT_TRIGGERS);
-	public static final JoystickButton harvestBallTrigger = new XboxTrigger(xboxController, XboxButtons.XBOX_LEFT_TRIGGERS);
+	public static final JoystickButton ballShootTrigger = 
+			new XboxTrigger(xboxController, XboxButtons.XBOX_RIGHT_TRIGGERS);
+	public static final JoystickButton harvestBallTrigger = 
+			new XboxTrigger(xboxController, XboxButtons.XBOX_LEFT_TRIGGERS);
 	
 	/**
 	 * Get the value of the Xbox axis in question.
@@ -97,4 +100,16 @@ public class HumanInput {
 	public static void toggleWhenPressed(Button b, Command cmd) {
 		b.toggleWhenPressed(cmd);
 	}
+
+	/**
+	 * Method to get the value of a non-Xbox joystick
+	 * 
+	 * @param joystick
+	 * @param ax
+	 * @return
+	 */
+	public static double getJoystickAxis(Joystick joystick, AxisType ax) {
+		return joystick.getAxis(ax);
+	}
+
 }

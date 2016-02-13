@@ -7,8 +7,9 @@ import edu.wpi.first.wpilibj.PWM;
 import java.util.HashMap;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 import org.usfirst.frc.team2537.robot.input.Ports;
-import org.usfirst.frc.team2537.robot.input.Sensor;
+import org.usfirst.frc.team2537.robot.input.SensorEnum;
 import org.usfirst.frc.team2537.robot.input.SensorListener;
+import org.usfirst.frc.team2537.robot.input.XboxButtons;
 
 /**
  * @author Matthew Schweiss
@@ -106,7 +107,7 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	 */
 	public double getJoystickAngle() {
 		// The angle Joystick is the left joystick on the XBOX
-		return HumanInput.getXboxAxis(HumanInput.xboxController, HumanInput.XBOX_LEFT_STICK_Y_AXIS);
+		return HumanInput.getXboxAxis(HumanInput.xboxController, XboxButtons.XBOX_LEFT_Y_AXIS);
 	}
 
 	@Override
@@ -119,8 +120,8 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	 *            by look up by the two character key associated with each
 	 *            sensor.
 	 */
-	public void receivedValue(HashMap<String, Double> sensorMap) {
-		Double value = sensorMap.get(Sensor.SHOOTER_ANGLE);
+	public void receivedValue(HashMap<SensorEnum, Double> sensorMap) {
+		Double value = sensorMap.get(SensorEnum.SHOOTER_ANGLE);
 		if (value != null){
 			currentAngle = value;
 		}

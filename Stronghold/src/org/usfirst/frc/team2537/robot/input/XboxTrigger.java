@@ -7,18 +7,17 @@ public class XboxTrigger extends JoystickButton {
 	private int triggerTypeValue = 0;
 	
 	/**
-	 * 
-	 * @param joystick to go on always xbox.
-	 * @param triggerConstant which trigger to register pulled, from human input axis.
+	 * @param Which joystick to use. Should be the xbox joystick.
+	 * @param Which trigger, either the left or right trigger. Get from xboxbuttons.
 	 */	
-	public XboxTrigger(GenericHID joystick, int triggerConstant) {
+	public XboxTrigger(GenericHID joystick, int trigger) {
 		super(joystick, 0);
-		triggerTypeValue = triggerConstant;
+		triggerTypeValue = trigger;
 	} 
 	
 	@Override 
 	/**
-	 * @return trigger value
+	 * @return boolean if trigger is pressed
 	 */
 	public boolean get() {
 		

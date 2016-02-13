@@ -3,97 +3,56 @@ package org.usfirst.frc.team2537.robot.input;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.SerialPort.Port;
+import edu.wpi.first.wpilibj.Ultrasonic;
 
+/**
+ * 
+ * @author Alex Taber
+ *
+ */
 public class Sensors {
 	private List<SensorListener> listeners = new ArrayList<SensorListener>();
-	private HashMap<String, Double> sensorVals =  new HashMap<String, Double>();
+	private HashMap<SensorEnum, Double> sensorVals = new HashMap<SensorEnum, Double>();
 	private SerialPort serial = new SerialPort(57600, Port.kMXP);
-	
-	
+	boolean done;
+	Ultrasonic ultrasonic = new Ultrasonic(Ports.LIDAR_SENSOR_ECHO_PORT, 
+											Ports.LIDAR_SENSOR_INPUT_PORT);
+
 	public void registerListener(SensorListener listener) {
 		listeners.add(listener);
 	}
-	
+
 	public void init() {
 		serial.flush();
+		ultrasonic.setAutomaticMode(true );
 	}
-	
+
 	/**
 	 * Handle sensor values from Arduino
 	 */
 	public void handleEvents() {
-		try {
-			String sentence = getLastSentence();
-			if (sentence != null) {
-				boolean iterate = false;
-				String tag = "";
-				double val = 0;
+		sensorVals.put(SensorEnum.LIDAR_DISTANCE, getUltrasonicVal(ultrasonic));
+		sensorVals.put(SensorEnum.ARM_ANGLE, null);
 
-				ArrayList<String> parseArray = parse(sentence);
-				if (parseArray.size() >= 2) {
-					for (String s : parseArray) {
-						if (!iterate) {
-							tag = s;
-							iterate = true;
-						} else if (iterate) {
-							try {
-								val = Integer.parseInt(s);
-								sensorVals.put(tag, val);
-								iterate = false;
-							} catch (Exception serialTrouble) {
-								System.out.println("Trouble reading serial");
-								serialTrouble.printStackTrace();
-							}
-						}
-					}
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
 		for (SensorListener b : listeners) {
 			b.receivedValue(sensorVals);
 		}
 	}
 	
-	private ArrayList<String> parse(String STP) {
-		ArrayList<String> parts2 = new ArrayList<>();
-		String[] parts = STP.split("!");
-		
-		for (String s : parts) {
-			String[] subparts = s.split(":");
-			
-			for (String b : subparts) {
-				parts2.add(b);
-			}
-		}
-		return parts2;
-		
+	protected double getUltrasonicVal(Ultrasonic u) {
+		return (double) u.getRangeInches();
 	}
-
-	private String getLastSentence() {
-		try {
-			int numBytes = serial.getBytesReceived();
-			if (numBytes >= 5) {
-				byte readBytes[] = serial.read(numBytes);
-				String sentence = new String(readBytes);
-				int end = sentence.lastIndexOf('\n');
-				if (end >= 4) {
-					sentence = sentence.substring(0, end);
-					int start = sentence.lastIndexOf('<');
-					if ((start >= 0) && (end > start + 1)) {
-						return sentence.substring(start+1, end);
-					}
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	
+	protected Double getTalonAngle(int count, int resolution, double lowAngle, double highAngle) {
+		
 		return null;
 	}
 	
+	
+	
+	protected double computeAngle(int count, int numOfTicks, double lowAngle, double highAngle) {
+		return (count/numOfTicks) * 360 - lowAngle;
+	}
 }

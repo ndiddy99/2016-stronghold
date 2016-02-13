@@ -3,7 +3,7 @@ package org.usfirst.frc.team2537.robot.shooter.flywheel;
 import java.util.HashMap;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 import org.usfirst.frc.team2537.robot.input.Ports;
-import org.usfirst.frc.team2537.robot.input.Sensor;
+import org.usfirst.frc.team2537.robot.input.SensorEnum;
 import org.usfirst.frc.team2537.robot.input.SensorListener;
 import org.usfirst.frc.team2537.robot.shooter.ShootCommandGroup;
 import org.usfirst.frc.team2537.robot.shooter.HarvestCommandGroup;
@@ -154,8 +154,8 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 
 	@Override
 	// Proximity
-	public void receivedValue(HashMap<String, Double> sensorMap) {
-		Double value = sensorMap.get(Sensor.SHOOTER_BALL);
+	public void receivedValue(HashMap<SensorEnum, Double> sensorMap) {
+		Double value = sensorMap.get(SensorEnum.SHOOTER_BALL);
 		if (value != null)
 			proximityValue = (value == 1);
 	}
