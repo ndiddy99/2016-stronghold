@@ -17,7 +17,7 @@ import static edu.wpi.first.wpilibj.CANTalon.FeedbackDevice.QuadEncoder;
 public class FlywheelSubsystem extends Subsystem implements SensorListener {
 
 	// Constants
-	private static final boolean DEBUG = true;
+	//private static final boolean DEBUG = true;
 	private static final int ENCODER_TICKS_PER_REV = 20;
 	private static final double UNITS_PER_100MS_TO_RPM = 100.0 / 4096 * 1000 * 60;
 	// 5 volts per second ramp rate for the flywheels

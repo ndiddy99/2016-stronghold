@@ -3,7 +3,6 @@ package org.usfirst.frc.team2537.robot.shooter;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc.team2537.robot.shooter.angle.MoveToAngleCommand;
 import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelCommand;
-import org.usfirst.frc.team2537.robot.shooter.flywheel.SpinDownCommand;
 
 /**
  * This is the command that will be used to harvest the ball from in front of
@@ -25,12 +24,12 @@ public class HarvestCommandGroup extends CommandGroup {
 		addSequential(new FlywheelCommand(HARVEST_SPEED));
 		// Wait until we get a ball.
 		addSequential(new BallDetectionCommand(true));
-		addSequential(new SpinDownCommand());
+		addSequential(new FlywheelCommand(0));
 	}
 
 	@Override
 	protected void interrupted() {
-		new SpinDownCommand().start();
+		new FlywheelCommand(0).start();
 	}
 
 	@Override
