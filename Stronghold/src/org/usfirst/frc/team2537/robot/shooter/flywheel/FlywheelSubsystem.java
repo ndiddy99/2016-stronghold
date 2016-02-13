@@ -1,20 +1,15 @@
 package org.usfirst.frc.team2537.robot.shooter.flywheel;
 
 import java.util.HashMap;
-
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 import org.usfirst.frc.team2537.robot.input.Ports;
 import org.usfirst.frc.team2537.robot.input.Sensor;
 import org.usfirst.frc.team2537.robot.input.SensorListener;
 import org.usfirst.frc.team2537.robot.shooter.ShootCommandGroup;
 import org.usfirst.frc.team2537.robot.shooter.HarvestCommandGroup;
-
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-/**
- *
- */
 /*
  * Important notice! If we use getSoftLimit() it will be in native units.
  */
@@ -352,6 +347,16 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	/**
 	 * Emergency stops the motors. This directly sets voltage to 0.
 	 */
+	
+	/**
+	 * Check if a ball is in the shooter.
+	 * 
+	 * @return if the proximity sensor is returning true to seeing something.
+	 */
+	public boolean isBall() {
+		return proximityValue;
+	}
+
 	public void stop() {
 		// Left wheel stop.
 		leftFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
@@ -394,14 +399,5 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 		} else {
 			proximityValue = rightFlywheelMotor.isFwdLimitSwitchClosed();
 		}
-	}
-
-	/**
-	 * Check if a ball is in the shooter.
-	 * 
-	 * @return if the proximity sensor is returning true to seeing something.
-	 */
-	public boolean isBall() {
-		return proximityValue;
 	}
 }
