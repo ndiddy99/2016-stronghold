@@ -155,7 +155,7 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 
 	public double getTiltSensorAngle() {
 		// TODO Test, only rough calibration.
-		//Rough Calibration gathered from adrian.
+		//Rough Calibration gathered from Adrian.
 		return (tiltSensor.getPeriod() / TILT_SENSOR_MAX_PERIOD * MAX_ANGLE); 
 
 }
