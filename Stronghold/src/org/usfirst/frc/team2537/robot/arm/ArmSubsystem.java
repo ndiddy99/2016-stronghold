@@ -10,6 +10,7 @@ import org.usfirst.frc.team2537.robot.input.XBoxButtons;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
+import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  * The main Arm Subsystem
@@ -19,32 +20,38 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class ArmSubsystem extends Subsystem implements SensorListener {
 
-	public CANTalon armMotor;
-	static final boolean debug = true;
+	public CANTalon armMotor = new CANTalon(Ports.ARM_TALON);
+	static final boolean debug = false;
 	double currentAngle;
 	double currentDist;
+	
+	public static final double
+		P = 100.0,
+		I = 0.0,
+		D = 0.0;
+	
 
 	public ArmSubsystem() {
-		armMotor = new CANTalon(Ports.ARM_TALON);
-		armMotor.ConfigFwdLimitSwitchNormallyOpen(true);
-		armMotor.ConfigRevLimitSwitchNormallyOpen(true);
-		armMotor.enableBrakeMode(true);
-		armMotor.enableForwardSoftLimit(false);
-		armMotor.enableReverseSoftLimit(false);
 		armMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		armMotor.configEncoderCodesPerRev(80);
+		armMotor.configEncoderCodesPerRev(250);
 		armMotor.setEncPosition(0);
 	}
 
 	public void initDefaultCommand() {
-		ArmManualMovementCommand manual = new ArmManualMovementCommand();
-		this.setDefaultCommand(manual);
+//		ArmManualMovementCommand manual = new ArmManualMovementCommand();
+//		this.setDefaultCommand(manual);
 	}
 
 	public void registerButtons() {
-		HumanInput.registerPressedCommand(HumanInput.portcullisButton, new MagicPortcullisCommand());
-		HumanInput.registerPressedCommand(HumanInput.chevalButton, new MagicChevalCommand());
-		HumanInput.registerPressedCommand(HumanInput.raiseArm, new InterruptCommand());
+//		HumanInput.registerPressedCommand(HumanInput.portcullisButton, new MagicPortcullisCommand());
+//		HumanInput.registerPressedCommand(HumanInput.chevalButton, new MagicChevalCommand());
+		HumanInput.registerPressedCommand(HumanInput.raiseArm, new TestCommand());
+		HumanInput.registerPressedCommand(HumanInput.chevalButton, new TestCommand2());
+	}
+	
+	public void positionMode() {
+		armMotor.changeControlMode(TalonControlMode.Position);
+		armMotor.setPID(P, I, D);
 	}
 	
 	/**
@@ -53,7 +60,7 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 	 * @return	double of the arm angle
 	 */
 	public double getAngle() {
-		return currentAngle;
+		return armMotor.getEncPosition();
 	}
 	
 	/**
@@ -98,5 +105,9 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 			if (debug) System.out.println("Bad Ultrasonic Sensor");
 		}
 		if (debug) System.out.println(currentDist);
+	}
+	
+	public void enable() {
+		armMotor.enableControl();
 	}
 }
