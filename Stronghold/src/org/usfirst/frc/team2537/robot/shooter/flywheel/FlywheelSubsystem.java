@@ -20,6 +20,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	private static final boolean DEBUG = true;
 	private static final int ENCODER_TICKS_PER_REV = 20;
 	private static final double UNITS_PER_100MS_TO_RPM = 100.0 / 4096 * 1000 * 60;
+	private static final double SPEED_TOLERANCE = 2;
 	// 5 volts per second ramp rate for the flywheels
 	private static final double VOLTAGE_RAMP_RATE = 12.0;
 	// yet
@@ -150,6 +151,18 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	 */
 	public boolean isBallPresent() {
 		return proximityValue;
+	}
+
+	public boolean isAtSpeed(double speed) {
+		if ((getRightSpeed() < speed && getRightSpeed() >= speed - SPEED_TOLERANCE)
+				|| (getRightSpeed() > speed && getRightSpeed() <= speed + SPEED_TOLERANCE)) {
+			if ((getLeftSpeed() < speed && getLeftSpeed() >= speed - SPEED_TOLERANCE)
+					|| (getLeftSpeed() > speed && getLeftSpeed() <= speed + SPEED_TOLERANCE)) {
+				return true;
+			}
+		}
+		return false;
+
 	}
 
 	@Override

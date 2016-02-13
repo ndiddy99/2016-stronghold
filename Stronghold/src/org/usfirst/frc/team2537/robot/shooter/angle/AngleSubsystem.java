@@ -18,14 +18,14 @@ import org.usfirst.frc.team2537.robot.input.SensorListener;
  *
  */
 public class AngleSubsystem extends Subsystem implements SensorListener {
-	// Limit Switches
+	//How many times we get a reading from the encoder every revolution.
 	private static final double ENCODER_TICKS_PER_REV = 1000;
 	//TODO Place the tilt sensor in it's own class.
 	private final Counter tiltSensor;// tilt sensor that is a pwm over the dio
 										// port in ports
 	// The angle limits.
-	private static final double MAX_ANGLE = 80;// degrees (ball park, not right)
-	private static final double MIN_ANGLE = -40;// degrees(ball park, not right)
+	private static final double MAX_ANGLE = 90;// degrees (ball park, not right)
+	private static final double MIN_ANGLE = 0;// degrees(ball park, not right)
 	//Difference between the max and min angle.
 	public static final double MAX_ANGLE_DIFFERENCE = MAX_ANGLE - MIN_ANGLE; 
 	//Debugs
@@ -34,6 +34,8 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	// Varibles
 	private static double currentAngle = 0;
 	private final CANTalon angleTalon;
+	//This is in seconds
+	private static final double TILT_SENSOR_MAX_PERIOD = 1990 * Math.pow(10, -6); 
 
 	public AngleSubsystem() {
 		tiltSensor = new Counter(Ports.TILT_SENSOR_PORT);// tilt sensor that is
@@ -152,27 +154,9 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	}
 
 	public double getTiltSensorAngle() {
-		// TODO Still needs to be calibrated.
-		return (tiltSensor.getPeriod() * (-2.083 * Math.pow(10, 6)) + 4184.375); // magic
-																					// numbers
-																					// acquired
-																					// from
-																					// placing
-																					// some
-																					// approximate
-																					// angles
-																					// into
-																					// a
-																					// graph
-																					// in
-																					// google
-																					// sheets
-																					// and
-																					// acquiring
-																					// the
-																					// angles
-																					// for
-																					// that
-	}
+		// TODO Test, only rough calibration.
+		//Rough Calibration gathered from adrian.
+		return (tiltSensor.getPeriod() / TILT_SENSOR_MAX_PERIOD * MAX_ANGLE); 
 
+}
 }
