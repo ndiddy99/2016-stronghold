@@ -18,6 +18,7 @@ import org.usfirst.frc.team2537.robot.shooter.actuator.ActuatorSubsystem;
  * directory.
  */
 public class Robot extends IterativeRobot {
+//	long START_TIME;
 	final String defaultAuto = "Default";
 	final String customAuto = "My Auto";
 	String autoSelected;
@@ -47,24 +48,25 @@ public class Robot extends IterativeRobot {
 		shooterAngleSys		= new AngleSubsystem();
 		shooterActuatorSys	= new ActuatorSubsystem();
 		armSys				= new ArmSubsystem();
-		//Sensors
-		//sensorSys.init();
-		//sensorSys.registerListener(armSys);
-		//sensorSys.registerListener(shooterAngleSys);
-		//sensorSys.registerListener(shooterFlywheelSys);
-		//Shooter Flywheel
+//		Sensors
+		sensorSys.init();
+		sensorSys.registerListener(armSys);
+		sensorSys.registerListener(shooterAngleSys);
+		sensorSys.registerListener(shooterFlywheelSys);
+//		Shooter Flywheel
 		shooterFlywheelSys.initDefaultCommand();
-		//shooterFlywheelSys.registerButtons();
-		//Shooter Angle
-		//shooterAngleSys.initDefaultCommand();
-		//shooterAngleSys.registerButtons();
-		//Shooter Actuator
-		//shooterActuatorSys.initDefaultCommand();
-		//shooterActuatorSys.registerButtons();
-		//Arm
-		//armSys.initDefaultCommand();
-		//armSys.registerButtons();
-	//	new FlywheelSubsystemTestCommand();
+		shooterFlywheelSys.registerButtons();
+//		Shooter Angle
+		shooterAngleSys.initDefaultCommand();
+		shooterAngleSys.registerButtons();
+//		Shooter Actuator
+		shooterActuatorSys.initDefaultCommand();
+		shooterActuatorSys.registerButtons();
+//		Arm
+		armSys.initDefaultCommand();
+		armSys.registerButtons();
+//		Scheduler.getInstance().add(new TestCommand());
+//		START_TIME = System.currentTimeMillis();
 	}
 	
 	@Override
@@ -106,9 +108,8 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-		// System.out.println("Tele Hi!");
 		Scheduler.getInstance().run();
-		//System.out.println("Teleop is running");
+//		Scheduler.getInstance().add(new TestCommand());
 		
 	}
 	
@@ -117,7 +118,12 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during test mode
 	 */
 	public void testPeriodic() {
-
+		Scheduler.getInstance().run();
+		
+	}
+	@Override
+	public void disabledInit() {
+//		System.out.println(System.currentTimeMillis()-START_TIME);
 	}
 
 }
