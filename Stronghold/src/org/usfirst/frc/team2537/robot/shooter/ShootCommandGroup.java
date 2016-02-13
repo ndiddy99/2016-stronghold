@@ -2,8 +2,10 @@ package org.usfirst.frc.team2537.robot.shooter;
 
 import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelCommand;
 import org.usfirst.frc.team2537.robot.shooter.flywheel.SpinDownCommand;
+import org.usfirst.frc.team2537.robot.Robot;
 import org.usfirst.frc.team2537.robot.shooter.actuator.ActuatorCommand;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.Scheduler;
 
 /**
  * This is the class to launch the ball.
@@ -19,7 +21,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class ShootCommandGroup extends CommandGroup {
 	//The default velocity.
-    public static final double SHOOT_VELOCITY = .5;
+    public static final double SHOOT_VELOCITY = 1000;
     
     //Using default velocity.
     public ShootCommandGroup() {
@@ -31,7 +33,7 @@ public class ShootCommandGroup extends CommandGroup {
     	//First make sure we are not running already.
     	addSequential(new FlywheelCommand(shootVelocity));
     	addSequential(new ActuatorCommand(true));//extend
-    	addSequential(new UntilBallCommand());
+    	addSequential(new BallDetectionCommand(false));
     	addParallel(new ActuatorCommand(false));//rectract
     	addSequential(new SpinDownCommand());
     	System.out.println("Shoot Command Group is Running");
@@ -39,7 +41,8 @@ public class ShootCommandGroup extends CommandGroup {
 	
     @Override
     protected void interrupted() {
-    	new SpinDownCommand().start();
+    	System.out.println("Interrupted Shoot Command Group");
+    	Robot.shooterFlywheelSys.setSpeed(0.0);
     }
     
     @Override

@@ -22,6 +22,7 @@ public class SpinDownCommand extends FlywheelCommand {
     // Called once after isFinished returns true
     protected void end() {
     	//Make sure it stops.
-    	Robot.shooterFlywheelSys.stop();
+    	Robot.shooterFlywheelSys.setSpeed(0.0);
+    	System.out.println("Spin Down Called");
     }
 }
