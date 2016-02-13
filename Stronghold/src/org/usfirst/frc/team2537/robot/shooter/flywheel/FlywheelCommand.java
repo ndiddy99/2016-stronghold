@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.command.Command;
  * Change the speed of the flywheels to a particular speed.
  * 
  * @author Matthew Schweiss
- *
  */
 /*
  * This will be overhauled because, now the PID is used in the flywheel
