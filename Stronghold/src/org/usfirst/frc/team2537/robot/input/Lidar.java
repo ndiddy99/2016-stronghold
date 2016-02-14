@@ -1,16 +1,18 @@
 package org.usfirst.frc.team2537.robot.input;
 
 import edu.wpi.first.wpilibj.Counter;
+import edu.wpi.first.wpilibj.PWM;
 
-public class TiltSensor implements SensorInterface {
+public class Lidar implements SensorInterface {
 	//Const
 	private static final double TILT_SENSOR_MAX_PERIOD = 1990 * Math.pow(10, -6);
-	private static final double MAX_ANGLE = 90;// degrees (ball park, not right)
+	private static final double MAX_DISTANCE = 90;//feet (ball park, not right)
 	
 	//Vars
 	private final Counter input;
+	private final PWM	  echo;
 	
-	public TiltSensor(int inputPort){
+	public Lidar(int inputPort, int echoPort){
 		// tilt sensor that is a pwm over the dio port in ports
 		input = new Counter(inputPort);
 		// set the tilt sensor to semiperiod mode. 
@@ -20,9 +22,11 @@ public class TiltSensor implements SensorInterface {
 		input.setSemiPeriodMode(true);
 		// http://wpilib.screenstepslive.com/s/4485/m/13809/l/
 		//241874-counters-measuring-rotation-counting-pulses-and-more
+		
+		//The output.
+		echo = new PWM(echoPort);
 	}
 	
-	@Override
 	public double getValue() {
 		// period will change with the angle. I
 		// would assume it would get longer as
@@ -30,6 +34,7 @@ public class TiltSensor implements SensorInterface {
 		// time interval of the most recent count.
 		
 		//Rough Calibration gathered from Adrian.
-		return (input.getPeriod() / TILT_SENSOR_MAX_PERIOD * MAX_ANGLE);
+		return (input.getPeriod() / TILT_SENSOR_MAX_PERIOD * MAX_DISTANCE);
 	}
+
 }

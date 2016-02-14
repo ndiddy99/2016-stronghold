@@ -3,8 +3,8 @@ package org.usfirst.frc.team2537.robot.input;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import edu.wpi.first.wpilibj.SerialPort;
-import edu.wpi.first.wpilibj.SerialPort.Port;
+//import edu.wpi.first.wpilibj.SerialPort;
+//import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.Ultrasonic;
 
 /**
@@ -18,15 +18,14 @@ public class Sensors {
 	//private SerialPort serial = new SerialPort(57600, Port.kMXP);
 	boolean done;
 	private final Ultrasonic ultrasonic;
-	private final TiltSensor tilt;
-	
+	private final TiltSensor shooterTilt;
 	public Sensors(){
 		//Create the sensors.
 		listeners	= new ArrayList<SensorListener>();
 		sensorVals	= new HashMap<SensorEnum, Double>();
 		ultrasonic	= new Ultrasonic(Ports.LIDAR_SENSOR_ECHO_PORT, 
 				Ports.LIDAR_SENSOR_INPUT_PORT);
-		tilt		 = new TiltSensor(Ports.TILT_SENSOR_PORT);
+		shooterTilt	= new TiltSensor(Ports.TILT_SENSOR_PORT);
 	}
 
 	public void registerListener(SensorListener listener) {
@@ -44,7 +43,7 @@ public class Sensors {
 	public void handleEvents() {
 		sensorVals.put(SensorEnum.LIDAR_DISTANCE, getUltrasonicVal(ultrasonic));
 		sensorVals.put(SensorEnum.ARM_ANGLE, null);
-		sensorVals.put(SensorEnum.SHOOTER_ANGLE, tilt.getAngle());
+		sensorVals.put(SensorEnum.SHOOTER_ANGLE, shooterTilt.getValue());
 
 		for (SensorListener b : listeners) {
 			b.receivedValue(sensorVals);
