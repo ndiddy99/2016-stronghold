@@ -1,8 +1,6 @@
 package org.usfirst.frc.team2537.robot.shooter;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-
-import org.usfirst.frc.team2537.robot.Robot;
 import org.usfirst.frc.team2537.robot.shooter.angle.MoveToAngleCommand;
 import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelCommand;
 

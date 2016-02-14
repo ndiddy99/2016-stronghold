@@ -26,7 +26,7 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	//Difference between the max and min angle.
 	public static final double MAX_ANGLE_DIFFERENCE = MAX_ANGLE - MIN_ANGLE; 
 	//Debugs
-	public static final boolean DEBUG = true;
+	public final boolean DEBUG = true;
 
 	// Varibles
 	private static double currentAngle = 0;
