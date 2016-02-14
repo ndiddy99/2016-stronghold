@@ -10,9 +10,9 @@ public class TiltSensor {
 	//Vars
 	private final Counter input;
 	
-	public TiltSensor(int inputPort, int outputPort){
+	public TiltSensor(int inputPort){
 		// tilt sensor that is a pwm over the dio port in ports
-		input = new Counter(Ports.TILT_SENSOR_PORT);
+		input = new Counter(inputPort);
 		// set the tilt sensor to semiperiod mode. 
 		// This means we are only measuring the period of the
 		// high pulses. When this is true, it counts just 
@@ -22,16 +22,12 @@ public class TiltSensor {
 		//241874-counters-measuring-rotation-counting-pulses-and-more
 	}
 	
-	public double getTiltSensorPeriod() {
+	public double getAngle() {
 		// period will change with the angle. I
 		// would assume it would get longer as
 		// the angle increases. This returns the
-		// time interval of the most recent
-		// count.
-		return input.getPeriod();
-	}
-	
-	public double getTiltSensorAngle() {
+		// time interval of the most recent count.
+		
 		//Rough Calibration gathered from Adrian.
 		return (input.getPeriod() / TILT_SENSOR_MAX_PERIOD * MAX_ANGLE);
 	}

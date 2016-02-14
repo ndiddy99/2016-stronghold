@@ -13,19 +13,28 @@ import edu.wpi.first.wpilibj.Ultrasonic;
  *
  */
 public class Sensors {
-	private List<SensorListener> listeners = new ArrayList<SensorListener>();
-	private HashMap<SensorEnum, Double> sensorVals = new HashMap<SensorEnum, Double>();
-	private SerialPort serial = new SerialPort(57600, Port.kMXP);
+	private final List<SensorListener> listeners;
+	private final HashMap<SensorEnum, Double> sensorVals;
+	//private SerialPort serial = new SerialPort(57600, Port.kMXP);
 	boolean done;
-	Ultrasonic ultrasonic = new Ultrasonic(Ports.LIDAR_SENSOR_ECHO_PORT, 
-											Ports.LIDAR_SENSOR_INPUT_PORT);
+	private final Ultrasonic ultrasonic;
+	private final TiltSensor tilt;
+	
+	public Sensors(){
+		//Create the sensors.
+		listeners	= new ArrayList<SensorListener>();
+		sensorVals	= new HashMap<SensorEnum, Double>();
+		ultrasonic	= new Ultrasonic(Ports.LIDAR_SENSOR_ECHO_PORT, 
+				Ports.LIDAR_SENSOR_INPUT_PORT);
+		tilt		 = new TiltSensor(Ports.TILT_SENSOR_PORT);
+	}
 
 	public void registerListener(SensorListener listener) {
 		listeners.add(listener);
 	}
 
 	public void init() {
-		serial.flush();
+		//serial.flush();
 		ultrasonic.setAutomaticMode(true );
 	}
 
@@ -35,6 +44,7 @@ public class Sensors {
 	public void handleEvents() {
 		sensorVals.put(SensorEnum.LIDAR_DISTANCE, getUltrasonicVal(ultrasonic));
 		sensorVals.put(SensorEnum.ARM_ANGLE, null);
+		sensorVals.put(SensorEnum.SHOOTER_ANGLE, tilt.getAngle());
 
 		for (SensorListener b : listeners) {
 			b.receivedValue(sensorVals);

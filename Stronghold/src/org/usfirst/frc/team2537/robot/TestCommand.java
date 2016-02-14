@@ -26,7 +26,7 @@ public class TestCommand extends Command {
     	//System.out.println("-----------------------------------");
     	//System.out.println("Tilt Sensor Period: " +Robot.shooterAngleSys.getTiltSensorPeriod());
     	//System.out.println("Tilt Sensor Angle: " +Robot.shooterAngleSys.getTiltSensorAngle());
-    	System.out.println(Robot.shooterAngleSys.getTiltSensorPeriod());
+    	//System.out.println(Robot.shooterAngleSys.getTiltSensorPeriod());
     	rollingTime = System.currentTimeMillis();
     	}
     }
