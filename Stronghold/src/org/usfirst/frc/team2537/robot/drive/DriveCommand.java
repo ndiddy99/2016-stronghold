@@ -33,18 +33,18 @@ public class DriveCommand extends Command {
 		
 		switch(Robot.driveSys.driveType){
 		case doubleJoystick:
-			left = HumanInput.getJoystickAxis(HumanInput.leftJoystick,
-					AxisType.kY);
-			right = HumanInput.getJoystickAxis(HumanInput.rightJoystick,
-					AxisType.kY);
+//			left = HumanInput.getJoystickAxis(HumanInput.leftJoystick,
+//					AxisType.kY);
+//			right = HumanInput.getJoystickAxis(HumanInput.rightJoystick,
+//					AxisType.kY);
 			break;
 		case singleJoystick:
-			left = HumanInput.getJoystickAxis(HumanInput.leftJoystick,
-					AxisType.kY);
+//			left = HumanInput.getJoystickAxis(HumanInput.leftJoystick,
+//					AxisType.kY);
 			right = left;
 			
-			left += HumanInput.getJoystickAxis(HumanInput.leftJoystick, AxisType.kX);
-			right -= HumanInput.getJoystickAxis(HumanInput.leftJoystick, AxisType.kX);
+//			left += HumanInput.getJoystickAxis(HumanInput.leftJoystick, AxisType.kX);
+//			right -= HumanInput.getJoystickAxis(HumanInput.leftJoystick, AxisType.kX);
 			break;
 		case doubleJoystickXbox:
 			left = HumanInput.getXboxAxis(HumanInput.xboxController, XBoxButtons.XBOX_LEFT_Y_AXIS);
@@ -54,8 +54,8 @@ public class DriveCommand extends Command {
 			left = HumanInput.getXboxAxis(HumanInput.xboxController, XBoxButtons.XBOX_LEFT_Y_AXIS);
 			right = left;
 			
-			left += HumanInput.getJoystickAxis(HumanInput.leftJoystick, AxisType.kX);
-			right -= HumanInput.getJoystickAxis(HumanInput.leftJoystick, AxisType.kX);			
+//			left += HumanInput.getJoystickAxis(HumanInput.leftJoystick, AxisType.kX);
+//			right -= HumanInput.getJoystickAxis(HumanInput.leftJoystick, AxisType.kX);			
 			break;
 		}
 		

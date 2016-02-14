@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -44,6 +45,7 @@ public class Robot extends IterativeRobot {
 		armSys.initDefaultCommand();
 		armSys.registerButtons();
 		sensorSys.registerListener(armSys);
+		SmartDashboard.putNumber("Encoder pos", 0);
 	}
 
 	/**
@@ -96,6 +98,7 @@ public class Robot extends IterativeRobot {
 		sensorSys.handleEvents();
 		// Scheduler.getInstance().add(new driveCommand());
 		// System.out.println("hi");
+		SmartDashboard.putNumber("Encoder pos", Robot.armSys.armMotor.getEncPosition());
 
 	}
 

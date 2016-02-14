@@ -10,6 +10,7 @@ import org.usfirst.frc.team2537.robot.input.XBoxButtons;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
+import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  * The main Arm Subsystem
@@ -31,9 +32,12 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 		armMotor.enableBrakeMode(true);
 		armMotor.enableForwardSoftLimit(false);
 		armMotor.enableReverseSoftLimit(false);
+//		armMotor.setPID(1, 0, 0);
 		armMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		armMotor.configEncoderCodesPerRev(80);
+		armMotor.configEncoderCodesPerRev(1000);
 		armMotor.setEncPosition(0);
+		armMotor.reverseSensor(true);
+		armMotor.enableControl();
 	}
 
 	public void initDefaultCommand() {
@@ -45,6 +49,10 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 //		HumanInput.registerPressedCommand(HumanInput.portcullisButton, new MagicPortcullisCommand());
 //		HumanInput.registerPressedCommand(HumanInput.chevalButton, new MagicChevalCommand());
 //		HumanInput.registerPressedCommand(HumanInput.raiseArm, new InterruptCommand());
+		HumanInput.registerPressedCommand(HumanInput.lowerArm, new PresetArmCommand(ArmPositions.portcullisDownPos));
+		HumanInput.registerPressedCommand(HumanInput.raiseArm, new PresetArmCommand(ArmPositions.portcullisUpPos));
+		HumanInput.registerPressedCommand(HumanInput.chevalButton, new ResetEncoders());
+		
 	}
 	
 	/**
@@ -53,7 +61,7 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 	 * @return	double of the arm angle
 	 */
 	public double getAngle() {
-		return currentAngle;
+		return armMotor.getEncPosition();
 	}
 	
 	/**
@@ -97,6 +105,10 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 		} catch (Exception error) {
 			System.out.println("Bad Ultrasonic Sensor");
 		}
-		System.out.println(currentDist);
+//		System.out.println(currentDist);
+	}
+	
+	public void getEncoder() {
+		System.out.println(armMotor.getEncPosition());
 	}
 }

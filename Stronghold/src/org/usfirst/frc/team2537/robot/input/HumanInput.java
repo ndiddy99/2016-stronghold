@@ -17,11 +17,11 @@ import org.usfirst.frc.team2537.robot.input.XBoxButtons;
  */
 public class HumanInput {
 	public static Joystick xboxController = new Joystick(Ports.XBOX);
-	public static Joystick leftJoystick = new Joystick(Ports.JOYSTICK_ONE_PORT);
-	public static Joystick rightJoystick = new Joystick(Ports.JOYSTICK_TWO_PORT);
+//	public static Joystick leftJoystick = new Joystick(Ports.JOYSTICK_ONE_PORT);
+//	public static Joystick rightJoystick = new Joystick(Ports.JOYSTICK_TWO_PORT);
 
 	// replace the following 0s with actual numbers once you test them
-	public static Button portcullisButton = new JoystickButton(xboxController, XBoxButtons.XBOX_A);
+	public static Button lowerArm = new JoystickButton(xboxController, XBoxButtons.XBOX_A);
 	public static Button raiseArm = new JoystickButton(xboxController, XBoxButtons.XBOX_Y);
 	public static Button chevalButton = new JoystickButton(xboxController, XBoxButtons.XBOX_B);
 	public static final JoystickButton ballShootTrigger = new XboxTrigger(xboxController,
@@ -30,9 +30,9 @@ public class HumanInput {
 	public static final JoystickButton harvestBallTrigger = new XboxTrigger(xboxController,
 			XBoxButtons.XBOX_LEFT_TRIGGERS);
 	
-	public static final Button driveStraight = new JoystickButton(leftJoystick, 1); //TODO Change
+//	public static final Button driveStraight = new JoystickButton(leftJoystick, 1); //TODO Change
 	
-	public static final Button driveSensetivityToggle = new JoystickButton(leftJoystick, 1); //TODO change
+//	public static final Button driveSensetivityToggle = new JoystickButton(leftJoystick, 1); //TODO change
 
 //	public static Button driveStraight = new JoystickButton(rightJoystick, 0);
 //	public static Button driveSensetivityToggle = new JoystickButton(xboxController, 0);

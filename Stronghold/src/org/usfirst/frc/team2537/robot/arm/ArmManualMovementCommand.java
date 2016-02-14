@@ -1,6 +1,8 @@
 package org.usfirst.frc.team2537.robot.arm;
 
 import org.usfirst.frc.team2537.robot.Robot;
+
+import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -17,11 +19,12 @@ public class ArmManualMovementCommand extends Command {
 
 	protected void initialize() {
 //		if (ArmSubsystem.debug) System.out.println("Moving Arm!");
+		Robot.armSys.armMotor.changeControlMode(TalonControlMode.PercentVbus);
 	}
 
 	protected void execute() {
-		Robot.armSys.setArmTalonSpeed(-Robot.armSys.getRightJoystick());
-		if (ArmSubsystem.debug) System.out.println(Robot.armSys.armMotor.getEncPosition());
+		Robot.armSys.setArmTalonSpeed(Robot.armSys.getRightJoystick() * .75);
+//		if (ArmSubsystem.debug) Robot.armSys.getEncoder();
 	}
 
 	protected boolean isFinished() {

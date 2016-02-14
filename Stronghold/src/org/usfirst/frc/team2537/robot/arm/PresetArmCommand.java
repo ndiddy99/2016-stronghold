@@ -2,6 +2,7 @@ package org.usfirst.frc.team2537.robot.arm;
 
 import org.usfirst.frc.team2537.robot.Robot;
 
+import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -14,7 +15,6 @@ public class PresetArmCommand extends Command {
 
 	double angleToMoveTo;
 	double currentAngle;
-	boolean move;
 	final double tolerance = 5;
 	Double speed;
 	/**
@@ -28,31 +28,19 @@ public class PresetArmCommand extends Command {
 	}
 
 	protected void initialize() {
-		currentAngle = Robot.armSys.getAngle();
 		if (ArmSubsystem.debug) System.out.println("Moving arm!");
-		if (currentAngle <= angleToMoveTo + tolerance && currentAngle >= angleToMoveTo - tolerance) {
-			if (ArmSubsystem.debug) System.out.println("ARM ALREADY IN POSITION");
-			move = false;
-		} else {
-			move = true;
-		}
+		if (ArmSubsystem.debug) System.out.println("Control mode: " + Robot.armSys.armMotor.getControlMode());
+		if (ArmSubsystem.debug) System.out.println("Angle to move to: " + angleToMoveTo);
+		if (ArmSubsystem.debug) System.out.println("Current angle: " + currentAngle);
+		if (ArmSubsystem.debug) System.out.println("Ticks to move: " + (angleToMoveTo - currentAngle));
 	}
 
 	protected void execute() { 
-		currentAngle = Robot.armSys.getAngle();
-		if (move) {
-			if (currentAngle < angleToMoveTo) {
-				speed = (.25);
-			} else {
-				speed = (-.25);
-			}
-			Robot.armSys.setArmTalonSpeed(speed);
-		}
-
+		Robot.armSys.setArmTalonSpeed(angleToMoveTo);
 	}
 
 	protected boolean isFinished() {
-		if ((currentAngle >= angleToMoveTo - tolerance && angleToMoveTo + tolerance >= currentAngle) || (!move)) {
+		if ((currentAngle >= angleToMoveTo - tolerance && angleToMoveTo + tolerance >= currentAngle)) {
 			return true;
 		}
 		return false;
