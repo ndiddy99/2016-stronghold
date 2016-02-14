@@ -16,34 +16,28 @@ import edu.wpi.first.wpilibj.Ultrasonic;
  */
 public class Sensors {
 	private List<SensorListener> listeners = new ArrayList<SensorListener>();
-	private HashMap<String, Double> sensorVals = new HashMap<String, Double>();
-	private SerialPort serial = new SerialPort(57600, Port.kMXP);
-	boolean done;
-	Ultrasonic ultrasonic = new Ultrasonic(Ports.DRIVE_ULTRASONIC_ECHO, Ports.DRIVE_ULTRASONIC_INPUT);
+	private List<SensorInterface> sensors = new ArrayList<SensorInterface>();
+	private HashMap<Sensor, Double> sensorVals = new HashMap<Sensor, Double>();
 
 	public void registerListener(SensorListener listener) {
 		listeners.add(listener);
 	}
 
 	public void init() {
-		serial.flush();
-		ultrasonic.setAutomaticMode(true );
+		sensors.add(new UltrasonicSensor(Ports.DRIVE_ULTRASONIC_ECHO, Ports.DRIVE_ULTRASONIC_INPUT));
 	}
-
-	/**
-	 * Handle sensor values from Arduino
-	 */
+	
+	public void addValue(Sensor sensor, double val) {
+		sensorVals.put(sensor, val);
+	}
+	
 	public void handleEvents() {
-		sensorVals.put(Sensor.ULTRASONIC_DISTANCE, getUltrasonicVal(ultrasonic));
-		sensorVals.put(Sensor.ARM_ANGLE, null);
-
-		for (SensorListener b : listeners) {
-			b.receivedValue(sensorVals);
+		for (SensorInterface s : sensors) {
+			s.getValue();
+		}
+		
+		for (SensorListener l : listeners) {
+			l.receivedValue(sensorVals);
 		}
 	}
-	
-	protected double getUltrasonicVal(Ultrasonic u) {
-		return (double) u.getRangeInches();
-	}
-	
 }
