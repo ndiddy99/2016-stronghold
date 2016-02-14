@@ -32,6 +32,7 @@ public class TiltSensor implements SensorInterface {
 		// time interval of the most recent count.
 		
 		//Rough Calibration gathered from Adrian.
-		Robot.sensorSys.addValue(Sensor.SHOOTER_ANGLE, (input.getPeriod() / TILT_SENSOR_MAX_PERIOD * MAX_ANGLE));
+		Robot.sensorSys.addValue(Sensor.SHOOTER_ANGLE, (input.getPeriod() / 
+				TILT_SENSOR_MAX_PERIOD * MAX_ANGLE));
 	}
 }

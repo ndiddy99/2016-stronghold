@@ -48,21 +48,21 @@ public class Robot extends IterativeRobot {
 		shooterAngleSys		= new AngleSubsystem();
 		shooterActuatorSys	= new ActuatorSubsystem();
 		armSys				= new ArmSubsystem();
-//		Sensors
+		//Sensors
 		sensorSys.init();
-		sensorSys.registerListener(armSys);
+		//sensorSys.registerListener(armSys);
 		sensorSys.registerListener(shooterAngleSys);
 		sensorSys.registerListener(shooterFlywheelSys);
-//		Shooter Flywheel
+		//Shooter Flywheel
 		shooterFlywheelSys.initDefaultCommand();
 		shooterFlywheelSys.registerButtons();
-//		Shooter Angle
+		//Shooter Angle
 		shooterAngleSys.initDefaultCommand();
 		shooterAngleSys.registerButtons();
-//		Shooter Actuator
+		//Shooter Actuator
 		shooterActuatorSys.initDefaultCommand();
 		shooterActuatorSys.registerButtons();
-//		Arm
+		//Arm
 		armSys.initDefaultCommand();
 		armSys.registerButtons();
 //		Scheduler.getInstance().add(new TestCommand());
@@ -108,6 +108,7 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
+		sensorSys.handleEvents();
 		Scheduler.getInstance().run();
 //		Scheduler.getInstance().add(new TestCommand());
 		

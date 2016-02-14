@@ -21,6 +21,7 @@ public class Sensors {
 
 	public void init() {
 		sensors.add(new UltrasonicSensor(Ports.DRIVE_ULTRASONIC_ECHO, Ports.DRIVE_ULTRASONIC_INPUT));
+		sensors.add(new TiltSensor(Ports.TILT_SENSOR_PORT));
 	}
 	
 	public void addValue(Sensor sensor, double val) {
