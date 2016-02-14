@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2537.robot.input;
 
+import org.usfirst.frc.team2537.robot.Robot;
+
 import edu.wpi.first.wpilibj.Counter;
 
 public class TiltSensor implements SensorInterface {
@@ -23,13 +25,13 @@ public class TiltSensor implements SensorInterface {
 	}
 	
 	@Override
-	public double getValue() {
+	public void getValue() {
 		// period will change with the angle. I
 		// would assume it would get longer as
 		// the angle increases. This returns the
 		// time interval of the most recent count.
 		
 		//Rough Calibration gathered from Adrian.
-		return (input.getPeriod() / TILT_SENSOR_MAX_PERIOD * MAX_ANGLE);
+		Robot.sensorSys.addValue(Sensor.SHOOTER_ANGLE, (input.getPeriod() / TILT_SENSOR_MAX_PERIOD * MAX_ANGLE));
 	}
 }
