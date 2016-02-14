@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.CANTalon;
 import java.util.HashMap;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 import org.usfirst.frc.team2537.robot.input.Ports;
-import org.usfirst.frc.team2537.robot.input.SensorEnum;
+import org.usfirst.frc.team2537.robot.input.Sensor;
 import org.usfirst.frc.team2537.robot.input.SensorListener;
 import org.usfirst.frc.team2537.robot.input.XboxButtons;
 
@@ -106,8 +106,8 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	 *            by look up by the two character key associated with each
 	 *            sensor.
 	 */
-	public void receivedValue(HashMap<SensorEnum, Double> sensorMap) {
-		Double value = sensorMap.get(SensorEnum.SHOOTER_ANGLE);
+	public void receivedValue(HashMap<Sensor, Double> sensorMap) {
+		Double value = sensorMap.get(Sensor.SHOOTER_ANGLE);
 		if (value != null){
 			currentAngle = value;
 		}

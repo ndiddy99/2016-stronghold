@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 import org.usfirst.frc.team2537.robot.input.Ports;
-import org.usfirst.frc.team2537.robot.input.SensorEnum;
+import org.usfirst.frc.team2537.robot.input.Sensor;
 import org.usfirst.frc.team2537.robot.input.SensorListener;
 import org.usfirst.frc.team2537.robot.input.XboxButtons;
 
@@ -44,7 +44,7 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 		return HumanInput.getXboxAxis(HumanInput.xboxController, XboxButtons.XBOX_RIGHT_Y_AXIS);
 	}
 
-	public void receivedValue(HashMap<SensorEnum, Double> e) {
-		currentAngle = e.get(SensorEnum.ARM_ANGLE);
+	public void receivedValue(HashMap<Sensor, Double> e) {
+		currentAngle = e.get(Sensor.ARM_ANGLE);
 	}
 }

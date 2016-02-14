@@ -3,65 +3,41 @@ package org.usfirst.frc.team2537.robot.input;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-//import edu.wpi.first.wpilibj.SerialPort;
-//import edu.wpi.first.wpilibj.SerialPort.Port;
+
+import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.Ultrasonic;
 
 /**
+ * Lol you don't need to know about this friendo
  * 
  * @author Alex Taber
  *
  */
 public class Sensors {
-	private final List<SensorListener> listeners;
-	private final HashMap<SensorEnum, Double> sensorVals;
-	//private SerialPort serial = new SerialPort(57600, Port.kMXP);
-	boolean done;
-	private final Ultrasonic ultrasonic;
-	private final TiltSensor shooterTilt;
-	public Sensors(){
-		//Create the sensors.
-		listeners	= new ArrayList<SensorListener>();
-		sensorVals	= new HashMap<SensorEnum, Double>();
-		ultrasonic	= new Ultrasonic(Ports.LIDAR_SENSOR_ECHO_PORT, 
-				Ports.LIDAR_SENSOR_INPUT_PORT);
-		shooterTilt	= new TiltSensor(Ports.TILT_SENSOR_PORT);
-	}
+	private List<SensorListener> listeners = new ArrayList<SensorListener>();
+	private List<SensorInterface> sensors = new ArrayList<SensorInterface>();
+	private HashMap<Sensor, Double> sensorVals = new HashMap<Sensor, Double>();
 
 	public void registerListener(SensorListener listener) {
 		listeners.add(listener);
 	}
 
 	public void init() {
-		//serial.flush();
-		ultrasonic.setAutomaticMode(true );
+		sensors.add(new UltrasonicSensor(Ports.DRIVE_ULTRASONIC_ECHO, Ports.DRIVE_ULTRASONIC_INPUT));
 	}
-
-	/**
-	 * Handle sensor values.
-	 */
+	
+	public void addValue(Sensor sensor, double val) {
+		sensorVals.put(sensor, val);
+	}
+	
 	public void handleEvents() {
-		sensorVals.put(SensorEnum.LIDAR_DISTANCE, getUltrasonicVal(ultrasonic));
-		sensorVals.put(SensorEnum.ARM_ANGLE, null);
-		sensorVals.put(SensorEnum.SHOOTER_ANGLE, shooterTilt.getValue());
-
-		for (SensorListener b : listeners) {
-			b.receivedValue(sensorVals);
+		for (SensorInterface s : sensors) {
+			s.getValue();
 		}
-	}
-	
-	protected double getUltrasonicVal(Ultrasonic u) {
-		return (double) u.getRangeInches();
-	}
-	
-	protected Double getTalonAngle(int count, int resolution, double lowAngle, double highAngle) {
 		
-		return null;
-	}
-	
-	
-	
-	protected double computeAngle(int count, int numOfTicks, double lowAngle, double highAngle) {
-		return (count/numOfTicks) * 360 - lowAngle;
+		for (SensorListener l : listeners) {
+			l.receivedValue(sensorVals);
+		}
 	}
 }

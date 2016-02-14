@@ -10,5 +10,5 @@ import java.util.HashMap;
  */
 public interface SensorListener {
 
-	void receivedValue(HashMap<SensorEnum, Double> sensorVals);
+	void receivedValue(HashMap<Sensor, Double> sensorVals);
 }
