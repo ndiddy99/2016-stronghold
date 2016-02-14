@@ -4,12 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import edu.wpi.first.wpilibj.SerialPort;
-import edu.wpi.first.wpilibj.SerialPort.Port;
-import edu.wpi.first.wpilibj.Ultrasonic;
-
 /**
- * Lol you don't need to know about this friendo
+ * Class that handles the other sensor classes and passes values to the other subsystem
  * 
  * @author Alex Taber
  *
@@ -25,17 +21,18 @@ public class Sensors {
 
 	public void init() {
 		sensors.add(new UltrasonicSensor(Ports.DRIVE_ULTRASONIC_ECHO, Ports.DRIVE_ULTRASONIC_INPUT));
+		sensors.add(new IMU(Ports.ARM_IMU, 0, 0));
 	}
-	
+
 	public void addValue(Sensor sensor, double val) {
 		sensorVals.put(sensor, val);
 	}
-	
+
 	public void handleEvents() {
 		for (SensorInterface s : sensors) {
 			s.getValue();
 		}
-		
+
 		for (SensorListener l : listeners) {
 			l.receivedValue(sensorVals);
 		}

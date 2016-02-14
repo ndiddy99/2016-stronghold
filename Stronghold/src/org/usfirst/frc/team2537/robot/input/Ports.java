@@ -26,5 +26,6 @@ public final class Ports {
 	
 	//Sensors
 	DRIVE_ULTRASONIC_INPUT = 9,
-	DRIVE_ULTRASONIC_ECHO = 8;
+	DRIVE_ULTRASONIC_ECHO = 8,
+	ARM_IMU = 0;
 }
