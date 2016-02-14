@@ -2,8 +2,6 @@ package org.usfirst.frc.team2537.robot.shooter.angle;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.Counter;
-import edu.wpi.first.wpilibj.PWM;
 import java.util.HashMap;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 import org.usfirst.frc.team2537.robot.input.Ports;
@@ -21,9 +19,7 @@ import org.usfirst.frc.team2537.robot.input.XboxButtons;
 public class AngleSubsystem extends Subsystem implements SensorListener {
 	//How many times we get a reading from the encoder every revolution.
 	private static final double ENCODER_TICKS_PER_REV = 1000;
-	//TODO Place the tilt sensor in it's own class.
-	private final Counter tiltSensor;// tilt sensor that is a pwm over the dio
-										// port in ports
+	
 	// The angle limits.
 	private static final double MAX_ANGLE = 90;// degrees (ball park, not right)
 	private static final double MIN_ANGLE = 0;// degrees(ball park, not right)
@@ -35,20 +31,8 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	// Varibles
 	private static double currentAngle = 0;
 	private final CANTalon angleTalon;
-	//This is in seconds
-	private static final double TILT_SENSOR_MAX_PERIOD = 1990 * Math.pow(10, -6); 
 
 	public AngleSubsystem() {
-		tiltSensor = new Counter(Ports.TILT_SENSOR_PORT);// tilt sensor that is
-															// a pwm over the
-															// dio port in ports
-		tiltSensor.setSemiPeriodMode(true); // set the tilt sensor to semi
-											// period mode. This means we are
-											// only measuring the period of the
-											// high pulses. When this is true,
-											// it counts just high pulses.
-		// http://wpilib.screenstepslive.com/s/4485/m/13809/l/241874-counters-measuring-rotation-counting-pulses-and-more
-
 		angleTalon = new CANTalon(Ports.SHOOTER_ANGLE_PORT);
 		// Change control mode of the angleTalon to percent Vbus.
 		angleTalon.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
@@ -145,19 +129,4 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 		// Needed but not used.
 
 	}
-
-	public double getTiltSensorPeriod() {
-		return tiltSensor.getPeriod(); // period will change with the angle. I
-										// would assume it would get longer as
-										// the angle increases. This returns the
-										// time interval of the most recent
-										// count.
-	}
-
-	public double getTiltSensorAngle() {
-		// TODO Test, only rough calibration.
-		//Rough Calibration gathered from Adrian.
-		return (tiltSensor.getPeriod() / TILT_SENSOR_MAX_PERIOD * MAX_ANGLE); 
-
-}
 }

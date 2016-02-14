@@ -30,7 +30,7 @@ public class Sensors {
 	}
 
 	/**
-	 * Handle sensor values from Arduino
+	 * Handle sensor values.
 	 */
 	public void handleEvents() {
 		sensorVals.put(SensorEnum.LIDAR_DISTANCE, getUltrasonicVal(ultrasonic));
