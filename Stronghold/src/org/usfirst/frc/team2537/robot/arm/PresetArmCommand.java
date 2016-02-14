@@ -36,7 +36,7 @@ public class PresetArmCommand extends Command {
 	}
 
 	protected void execute() { 
-		Robot.armSys.setArmTalonSpeed(angleToMoveTo);
+		Robot.armSys.setArmTalon(angleToMoveTo);
 	}
 
 	protected boolean isFinished() {
@@ -47,12 +47,12 @@ public class PresetArmCommand extends Command {
 	}
 
 	protected void end() {
-		Robot.armSys.setArmTalonSpeed(0);
+		Robot.armSys.setArmTalon(0);
 	}
 
 	protected void interrupted() {
 		if (ArmSubsystem.debug) System.out.println("[armSys] I've been interrupted!");
-		Robot.armSys.setArmTalonSpeed(0);
+		Robot.armSys.setArmTalon(0);
 	}
 
 }

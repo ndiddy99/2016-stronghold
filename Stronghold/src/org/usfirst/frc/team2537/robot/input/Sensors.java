@@ -4,46 +4,37 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import edu.wpi.first.wpilibj.SerialPort;
-import edu.wpi.first.wpilibj.SerialPort.Port;
-import edu.wpi.first.wpilibj.Ultrasonic;
-
 /**
- * Lol you don't need to know about this friendo
+ * Class that handles the other sensor classes and passes values to the other subsystem
  * 
  * @author Alex Taber
  *
  */
 public class Sensors {
 	private List<SensorListener> listeners = new ArrayList<SensorListener>();
-	private HashMap<String, Double> sensorVals = new HashMap<String, Double>();
-	private SerialPort serial = new SerialPort(57600, Port.kMXP);
-	boolean done;
-	Ultrasonic ultrasonic = new Ultrasonic(Ports.DRIVE_ULTRASONIC_ECHO, Ports.DRIVE_ULTRASONIC_INPUT);
+	private List<SensorInterface> sensors = new ArrayList<SensorInterface>();
+	private HashMap<Sensor, Double> sensorVals = new HashMap<Sensor, Double>();
 
 	public void registerListener(SensorListener listener) {
 		listeners.add(listener);
 	}
 
 	public void init() {
-		serial.flush();
-		ultrasonic.setAutomaticMode(true );
+		sensors.add(new UltrasonicSensor(Ports.DRIVE_ULTRASONIC_ECHO, Ports.DRIVE_ULTRASONIC_INPUT));
+		sensors.add(new IMU(Ports.ARM_IMU, 0, 0));
 	}
 
-	/**
-	 * Handle sensor values from Arduino
-	 */
-	public void handleEvents() {
-		sensorVals.put(Sensor.ULTRASONIC_DISTANCE, getUltrasonicVal(ultrasonic));
-		sensorVals.put(Sensor.ARM_ANGLE, null);
+	public void addValue(Sensor sensor, double val) {
+		sensorVals.put(sensor, val);
+	}
 
-		for (SensorListener b : listeners) {
-			b.receivedValue(sensorVals);
+	public void handleEvents() {
+		for (SensorInterface s : sensors) {
+			s.getValue();
+		}
+
+		for (SensorListener l : listeners) {
+			l.receivedValue(sensorVals);
 		}
 	}
-	
-	protected double getUltrasonicVal(Ultrasonic u) {
-		return (double) u.getRangeInches();
-	}
-	
 }

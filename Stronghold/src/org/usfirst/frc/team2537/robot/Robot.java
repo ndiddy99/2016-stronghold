@@ -1,8 +1,6 @@
 package org.usfirst.frc.team2537.robot;
 
 import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
-import org.usfirst.frc.team2537.robot.auto.AutoChooser;
-import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team2537.robot.input.Sensors;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -19,7 +17,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	AutoChooser autoChooser;
 	Command autoCommand;
 	final String defaultAuto = "Default";
 	final String customAuto = "My Auto";
@@ -27,7 +24,6 @@ public class Robot extends IterativeRobot {
 	SendableChooser chooser;
 	public static Sensors sensorSys;
 	public static ArmSubsystem armSys;
-	public static DriveSubsystem driveSys;
 	// My stuff
 
 	/**	 * This function is run when the robot is first started up and should be
@@ -38,9 +34,7 @@ public class Robot extends IterativeRobot {
 		System.out.println("Sabre bot online!");
 		sensorSys = new Sensors();
 		sensorSys.init();
-		driveSys = new DriveSubsystem();
-		driveSys.initDefaultCommand();
-		driveSys.registerButtons();
+
 		armSys = new ArmSubsystem();
 		armSys.initDefaultCommand();
 		armSys.registerButtons();
@@ -60,8 +54,6 @@ public class Robot extends IterativeRobot {
 	 * SendableChooser make sure to add them to the chooser code above as well.
 	 */
 	public void autonomousInit() {
-		autoCommand = autoChooser.getAutoChoice();
-		Scheduler.getInstance().add(autoCommand);
 	}
 
 	/**
@@ -96,6 +88,8 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		sensorSys.handleEvents();
+		SmartDashboard.putNumber("Arm Pos", Robot.armSys.getAngle());
+		SmartDashboard.putNumber("PID Loop Error", Robot.armSys.armMotor.getError());
 		// Scheduler.getInstance().add(new driveCommand());
 		// System.out.println("hi");
 		SmartDashboard.putNumber("Encoder pos", Robot.armSys.armMotor.getEncPosition());

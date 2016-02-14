@@ -20,39 +20,40 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class ArmSubsystem extends Subsystem implements SensorListener {
 
-	public CANTalon armMotor;
-	static final boolean debug = true;
+	public CANTalon armMotor = new CANTalon(Ports.ARM_TALON);
+	static final boolean debug = false;
 	double currentAngle;
 	double currentDist;
+	
+	public static final double
+		P = 100.0,
+		I = 0.0,
+		D = 0.0;
+	
 
 	public ArmSubsystem() {
 		armMotor = new CANTalon(Ports.ARM_TALON);
-		armMotor.ConfigFwdLimitSwitchNormallyOpen(true);
-		armMotor.ConfigRevLimitSwitchNormallyOpen(true);
-		armMotor.enableBrakeMode(true);
-		armMotor.enableForwardSoftLimit(false);
-		armMotor.enableReverseSoftLimit(false);
-//		armMotor.setPID(1, 0, 0);
 		armMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		armMotor.configEncoderCodesPerRev(1000);
+		armMotor.configEncoderCodesPerRev(250);
 		armMotor.setEncPosition(0);
-		armMotor.reverseSensor(true);
-		armMotor.enableControl();
+
 	}
 
 	public void initDefaultCommand() {
-		ArmManualMovementCommand manual = new ArmManualMovementCommand();
-		this.setDefaultCommand(manual);
+//		ArmManualMovementCommand manual = new ArmManualMovementCommand();
+//		this.setDefaultCommand(manual);
 	}
 
 	public void registerButtons() {
-//		HumanInput.registerPressedCommand(HumanInput.portcullisButton, new MagicPortcullisCommand());
-//		HumanInput.registerPressedCommand(HumanInput.chevalButton, new MagicChevalCommand());
-//		HumanInput.registerPressedCommand(HumanInput.raiseArm, new InterruptCommand());
+
 		HumanInput.registerPressedCommand(HumanInput.lowerArm, new PresetArmCommand(ArmPositions.portcullisDownPos));
 		HumanInput.registerPressedCommand(HumanInput.raiseArm, new PresetArmCommand(ArmPositions.portcullisUpPos));
 		HumanInput.registerPressedCommand(HumanInput.chevalButton, new ResetEncoders());
-		
+	}
+	
+	public void positionMode() {
+		armMotor.changeControlMode(TalonControlMode.Position);
+		armMotor.setPID(P, I, D);
 	}
 	
 	/**
@@ -76,10 +77,10 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 	/**
 	 * Used to set the speed of the arm talon
 	 * 
-	 * @param speed	Voltage to set the talon to
+	 * @param outputval	Voltage to set the talon to
 	 */
-	public void setArmTalonSpeed(double speed) {
-		armMotor.set(speed);
+	public void setArmTalon(double outputval) {
+		armMotor.set(outputval);
 	}
 	
 	/**
@@ -94,21 +95,24 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 	/**
 	 * An implemented method for SensorListener interface
 	 */
-	public void receivedValue(HashMap<String, Double> e) {
+	public void receivedValue(HashMap<Sensor, Double> e) {
 		try {
 			currentAngle = e.get(Sensor.ARM_ANGLE);
 		} catch(Exception error) {
-//			System.out.println("Bad Angle Sensor");
+			if (debug) System.out.println("Bad Angle Sensor");
 		}
 		try {
 			currentDist = e.get(Sensor.ULTRASONIC_DISTANCE);
 		} catch (Exception error) {
-			System.out.println("Bad Ultrasonic Sensor");
+			if (debug) System.out.println("Bad Ultrasonic Sensor");
 		}
-//		System.out.println(currentDist);
 	}
 	
 	public void getEncoder() {
 		System.out.println(armMotor.getEncPosition());
+	}
+	
+	public void enable() {
+		armMotor.enableControl();
 	}
 }

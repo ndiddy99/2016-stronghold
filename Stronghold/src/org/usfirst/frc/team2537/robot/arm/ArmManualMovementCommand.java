@@ -18,13 +18,12 @@ public class ArmManualMovementCommand extends Command {
 	}
 
 	protected void initialize() {
-//		if (ArmSubsystem.debug) System.out.println("Moving Arm!");
 		Robot.armSys.armMotor.changeControlMode(TalonControlMode.PercentVbus);
 	}
 
 	protected void execute() {
-		Robot.armSys.setArmTalonSpeed(Robot.armSys.getRightJoystick() * .75);
-//		if (ArmSubsystem.debug) Robot.armSys.getEncoder();
+		Robot.armSys.setArmTalon(Robot.armSys.getRightJoystick() * .75);
+		if (ArmSubsystem.debug) Robot.armSys.getEncoder();
 	}
 
 	protected boolean isFinished() {
@@ -32,11 +31,9 @@ public class ArmManualMovementCommand extends Command {
 	}
 
 	protected void end() {
-//		if (ArmSubsystem.debug) System.out.println("Arm movement completed!");
 	}
 
 	protected void interrupted() {
-		Robot.armSys.setArmTalonSpeed(0);
+		
 	}
-
 }
