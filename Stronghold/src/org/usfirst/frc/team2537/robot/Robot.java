@@ -3,8 +3,12 @@ package org.usfirst.frc.team2537.robot;
 import org.usfirst.frc.team2537.robot.camera.CameraFeeds;
 import org.usfirst.frc.team2537.robot.camera.Config;
 import org.usfirst.frc.team2537.robot.camera.Controller;
+import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
+import org.usfirst.frc.team2537.robot.input.Sensors;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -15,15 +19,21 @@ import edu.wpi.first.wpilibj.IterativeRobot;
  */
 public class Robot extends IterativeRobot {
 
+	public static Sensors sensorSys;
+	public static ArmSubsystem armSys;
+
+
     Controller contr = new Controller(Config.Controller.chn, Config.Controller.maxButtons, Config.Controller.linearity);
     CameraFeeds cameraFeeds = new CameraFeeds(contr);
-    
-    /**
-     * This function is run when the robot is first started up and should be
-     * used for any initialization code.
-     */
 	public void robotInit() {
-		
+		sensorSys = new Sensors();
+		sensorSys.init();
+
+		armSys = new ArmSubsystem();
+		armSys.initDefaultCommand();
+		armSys.registerButtons();
+		sensorSys.registerListener(armSys);
+		SmartDashboard.putNumber("Encoder pos", 0);
 	}
 
 	/**
@@ -39,7 +49,8 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousInit() {
 
-    }
+	}
+
 	/**
 	 * This function is called periodically during autonomous
 	 */
@@ -60,8 +71,16 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
+
 		contr.update();
 		cameraFeeds.run();
+		Scheduler.getInstance().run();
+		sensorSys.handleEvents();
+		SmartDashboard.putNumber("Arm Pos", Robot.armSys.getAngle());
+		SmartDashboard.putNumber("PID Loop Error", Robot.armSys.armMotor.getError());
+		// Scheduler.getInstance().add(new driveCommand());
+		// System.out.println("hi");
+		SmartDashboard.putNumber("Encoder pos", Robot.armSys.armMotor.getEncPosition());
 	}
 
 	/**
