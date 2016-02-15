@@ -22,8 +22,6 @@ public class DriveSubsystem extends Subsystem {
 											// resetEncoders)
 	private double initialRightEncoders = 0; // Inches to subtract (for
 												// resetEncoders)
-	StringBuilder _sb = new StringBuilder();
-	int _loops = 0;
 
 	public DriveSubsystem() {
 		talonFrontLeft = new CANTalon(Ports.FRONT_LEFT_MOTOR_PORT);
@@ -32,7 +30,7 @@ public class DriveSubsystem extends Subsystem {
 		talonBackRight = new CANTalon(Ports.BACK_RIGHT_MOTOR_PORT);
 		// setDriveControlMode(TalonControlMode.Speed);
 
-		driveType = DriveType.doubleJoystickXbox; // TODO: set this
+		driveType = DriveType.doubleJoystick; // TODO: set this
 		drivingStraight = false;
 		driveLowerSpeed = false;
 		talonFrontRight.enableForwardSoftLimit(false);
