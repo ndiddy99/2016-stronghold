@@ -1,17 +1,10 @@
 package org.usfirst.frc.team2537.robot;
 
-import edu.wpi.first.wpilibj.DigitalInput;
-import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
-import org.usfirst.frc.team2537.robot.auto.AutoChooser;
-import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
-import org.usfirst.frc.team2537.robot.input.Sensors;
+import org.usfirst.frc.team2537.robot.camera.CameraFeeds;
+import org.usfirst.frc.team2537.robot.camera.Config;
+import org.usfirst.frc.team2537.robot.camera.Controller;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team2537.robot.shooter.angle.AngleSubsystem;
-import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -21,45 +14,16 @@ import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelSubsystem;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	AutoChooser autoChooser;
-	Command autoCommand;
-	public static DriveSubsystem driveSys;	// My stuff
-	public static final Drivetrain drivetrain = new Drivetrain();
-	public static final FlywheelSubsystem shooterFlywheelSubsystem = new FlywheelSubsystem();
-	public static final AngleSubsystem shooterAngleSys = new AngleSubsystem();
-    final String defaultAuto = "Default";
-    final String customAuto = "My Auto";
-    String autoSelected;
-    SendableChooser chooser;
-    public static Sensors sensorSys;
-    public static ArmSubsystem armSys;
-    public static MotorSubsystem motorSys;
-    public static Climber Climb;
-    DigitalInput limitSwitch;
+
+    Controller contr = new Controller(Config.Controller.chn, Config.Controller.maxButtons, Config.Controller.linearity);
+    CameraFeeds cameraFeeds = new CameraFeeds(contr);
     
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
 	public void robotInit() {
-		SaberMessage.printMessage();
-		autoChooser = new AutoChooser();		
-		chooser = new SendableChooser();
-		chooser.addDefault("Default Auto", defaultAuto);
-		chooser.addObject("My Auto", customAuto);
-		SmartDashboard.putData("Auto choices", chooser);
-		sensorSys = new Sensors();
-		sensorSys.init();
-		armSys = new ArmSubsystem();
-		armSys.registerButtons();
-		armSys.initDefaultCommand();
-		driveSys = new DriveSubsystem();
-		driveSys.initDefaultCommand();
-		driveSys.registerButtons();
-		motorSys = new MotorSubsystem();
-		motorSys.initDefaultCommand();
-		sensorSys.registerListener(armSys);
-		sensorSys.registerListener(shooterAngleSys);
+		
 	}
 
 	/**
@@ -74,29 +38,12 @@ public class Robot extends IterativeRobot {
 	 * SendableChooser make sure to add them to the chooser code above as well.
 	 */
 	public void autonomousInit() {
-		autoCommand = autoChooser.getAutoChoice();
-		Scheduler.getInstance().add(autoCommand);
-		autoSelected = (String) chooser.getSelected();
-		// autoSelected = SmartDashboard.getString("Auto Selector",
-		// defaultAuto);
-		System.out.println("Auto selected: " + autoSelected);
-		System.out.println("autonomousInit completed");
+
     }
 	/**
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
-		Scheduler.getInstance().run();
-		sensorSys.handleEvents();
-		switch (autoSelected) {
-		case customAuto:
-			// Put custom auto code here
-			break;
-		case defaultAuto:
-		default:
-			// Put default auto code here
-			break;
-		}
 	}
 
     /**
@@ -107,28 +54,21 @@ public class Robot extends IterativeRobot {
 	 * 
 	 */
 	public void teleopInit(){
-		System.out.println("Teleop init");
-		Scheduler.getInstance().add(new RobotInit());
-		if(autoCommand != null)
-			autoCommand.cancel();
+		cameraFeeds.init();
 	}
 	/**
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-		Scheduler.getInstance().run();
-		sensorSys.handleEvents();
-		// Scheduler.getInstance().add(new driveCommand());
-		drivetrain.inputRecieved(new HumanInputEvent());
-		// System.out.println("hi");
-
+		contr.update();
+		cameraFeeds.run();
 	}
 
 	/**
 	 * This function is called periodically during test mode
 	 */
 	public void testPeriodic() {
-
+		cameraFeeds.end();
 	}
 
 }
