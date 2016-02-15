@@ -17,8 +17,6 @@ import org.usfirst.frc.team2537.robot.input.XboxButtons;
  *
  */
 public class AngleSubsystem extends Subsystem implements SensorListener {
-	//How many times we get a reading from the encoder every revolution.
-	private static final double ENCODER_TICKS_PER_REV = 1000;
 	
 	// The angle limits.
 	private static final double MAX_ANGLE = 90;// degrees (ball park, not right)

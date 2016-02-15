@@ -11,7 +11,8 @@ import org.usfirst.frc.team2537.robot.Robot;
  * @author Matthew Schweiss
  */
 public class BallDetectionCommand extends Command {
-final boolean WAIT_UNTIL_ENTERS;
+	
+	final boolean waitUntilEnters;
 	/**
 	 * This command basically waits until the proximity sensor detecting the
 	 * ball changes to the desired state.
@@ -24,7 +25,7 @@ final boolean WAIT_UNTIL_ENTERS;
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		// We do need a time out.
-		WAIT_UNTIL_ENTERS = waitUntilEnters;
+		this.waitUntilEnters = waitUntilEnters;
 		requires(Robot.shooterFlywheelSys);
 	}
 
@@ -42,7 +43,7 @@ final boolean WAIT_UNTIL_ENTERS;
 	@Override
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		if(WAIT_UNTIL_ENTERS) {
+		if(waitUntilEnters) {
 		return Robot.shooterFlywheelSys.isBallPresent();
 		} else {
 			return !Robot.shooterFlywheelSys.isBallPresent();
