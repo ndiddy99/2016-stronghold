@@ -4,13 +4,16 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team2537.robot.Robot;
 
 /**
- * Wait until the ball is in the bot. The point of this is to have a wait to be
+ * Wait until the ball is in the robot. The point of this is to have a wait to be
  * used by command group's later on. By using this command, a command group can
  * wait for a ball, and so other events can happen.
  *
  * @author Matthew Schweiss
  */
-public class BallDetectionCommand extends Command {	
+public class BallDetectionCommand extends Command {
+	
+	private static final double DEFAULT_TIMEOUT = 5;
+	
 	final boolean waitUntilEnters;
 	/**
 	 * This command basically waits until the proximity sensor detecting the
@@ -19,11 +22,14 @@ public class BallDetectionCommand extends Command {
 	 * @param waitUntilEnters
 	 *            Whether or not the command waits until the proximity sensor
 	 *            detects when the ball enters or leaves the shooter.
+	 *            True -> Wait until the ball is present.
+	 *            False-> Wait until the ball is not present.
 	 */
 	public BallDetectionCommand(boolean waitUntilEnters) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		// We do need a time out.
+		super(DEFAULT_TIMEOUT);
 		this.waitUntilEnters = waitUntilEnters;
 		requires(Robot.shooterFlywheelSys);
 	}
