@@ -17,7 +17,7 @@ import static edu.wpi.first.wpilibj.CANTalon.FeedbackDevice.QuadEncoder;
 public class FlywheelSubsystem extends Subsystem implements SensorListener {
 
 	// Constants
-	//private static final boolean DEBUG = true;
+	public static final boolean DEBUG = false;
 	private static final int ENCODER_TICKS_PER_REV = 20;
 	private static final double UNITS_PER_100MS_TO_RPM = 100.0 / 4096 * 1000 * 60;
 	private static final double SPEED_TOLERANCE = 2;
@@ -171,5 +171,6 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 		Double value = sensorMap.get(Sensor.SHOOTER_BALL);
 		if (value != null)
 			proximityValue = (value == 1);
+		if (DEBUG) System.out.println(sensorMap.get(Sensor.SHOOTER_LIDAR));
 	}
 }

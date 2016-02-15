@@ -3,7 +3,6 @@ package org.usfirst.frc.team2537.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.command.Scheduler;
-//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
 import org.usfirst.frc.team2537.robot.input.Sensors;
 import org.usfirst.frc.team2537.robot.shooter.angle.AngleSubsystem;
@@ -24,11 +23,12 @@ public class Robot extends IterativeRobot {
 	String autoSelected;
 	SendableChooser chooser;
 	// My stuff
-	public static Sensors sensorSys;//TO be done.
+	public static Sensors sensorSys;
 	public static FlywheelSubsystem shooterFlywheelSys;
 	public static AngleSubsystem shooterAngleSys;
 	public static ActuatorSubsystem shooterActuatorSys;
 	public static ArmSubsystem armSys;
+	
 	@Override
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -110,7 +110,6 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		sensorSys.handleEvents();
 		Scheduler.getInstance().run();
-//		Scheduler.getInstance().add(new TestCommand());
 		
 	}
 	

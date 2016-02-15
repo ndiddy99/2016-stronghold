@@ -26,7 +26,7 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	//Difference between the max and min angle.
 	public static final double MAX_ANGLE_DIFFERENCE = MAX_ANGLE - MIN_ANGLE; 
 	//Debugs
-	public final boolean DEBUG = true;
+	public final boolean DEBUG = false;
 
 	// Varibles
 	private static double currentAngle = 0;
@@ -42,10 +42,8 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 		angleTalon.enableLimitSwitch(true, true);// Now the limit switches are
 													// active.
 		// Soft limits for a backup.
-		angleTalon.setForwardSoftLimit(MAX_ANGLE / 360 * ENCODER_TICKS_PER_REV);
-		angleTalon.enableForwardSoftLimit(true);
-		angleTalon.setReverseSoftLimit(MIN_ANGLE / 360 * ENCODER_TICKS_PER_REV);
-		angleTalon.enableReverseSoftLimit(true);
+		angleTalon.enableForwardSoftLimit(false);
+		angleTalon.enableReverseSoftLimit(false);
 
 	}
 
@@ -111,6 +109,7 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 		if (value != null){
 			currentAngle = value;
 		}
+		if (DEBUG) System.out.println("Shooter Angle: " + value);
 	}
 
 	/**
