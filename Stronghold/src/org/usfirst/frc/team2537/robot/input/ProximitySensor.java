@@ -16,7 +16,13 @@ public class ProximitySensor implements SensorInterface {
 		//Ternary Operator
 		//true -> 1
 		//false-> 0
-		Robot.sensorSys.addValue(Sensor.SHOOTER_BALL, input.get() ? 1 : 0);
+		double val;
+		if (input.get()){
+			val = 1;
+		} else {
+			val = 0;
+		}
+		Robot.sensorSys.addValue(Sensor.SHOOTER_BALL, val);
 	}
 
 }
