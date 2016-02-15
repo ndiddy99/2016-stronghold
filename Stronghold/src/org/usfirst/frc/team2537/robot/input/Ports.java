@@ -17,9 +17,9 @@ public final class Ports {
 	
 	//Motor Talons
 	FRONT_RIGHT_MOTOR_PORT = 1, 
-	FRONT_LEFT_MOTOR_PORT = 2,
-	BACK_RIGHT_MOTOR_PORT = 3, 
-	BACK_LEFT_MOTOR_PORT = 4,
+	FRONT_LEFT_MOTOR_PORT = 4,
+	BACK_RIGHT_MOTOR_PORT = 2, 
+	BACK_LEFT_MOTOR_PORT = 3,
 	
 	//Other Talon
 	ARM_TALON = 5, //Change when confirmed

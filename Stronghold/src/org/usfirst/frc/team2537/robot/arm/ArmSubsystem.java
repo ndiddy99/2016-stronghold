@@ -6,7 +6,11 @@ import org.usfirst.frc.team2537.robot.input.HumanInput;
 import org.usfirst.frc.team2537.robot.input.Ports;
 import org.usfirst.frc.team2537.robot.input.Sensor;
 import org.usfirst.frc.team2537.robot.input.SensorListener;
+<<<<<<< HEAD
 import org.usfirst.frc.team2537.robot.input.XBoxButtons;
+=======
+import org.usfirst.frc.team2537.robot.input.xBoxButtons;
+>>>>>>> refs/heads/auto
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
@@ -91,6 +95,7 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 	public double getRightJoystick() {
 		return HumanInput.getXboxAxis(HumanInput.xboxController, XBoxButtons.XBOX_RIGHT_Y_AXIS);
 	}
+
 	
 	/**
 	 * An implemented method for SensorListener interface
@@ -114,5 +119,6 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 	
 	public void enable() {
 		armMotor.enableControl();
+
 	}
 }
