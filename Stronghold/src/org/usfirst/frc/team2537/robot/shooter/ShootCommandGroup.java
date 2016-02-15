@@ -68,5 +68,4 @@ public class ShootCommandGroup extends CommandGroup {
     		super.start();
     	}
     }
-    
 }
