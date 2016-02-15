@@ -24,7 +24,6 @@ public class HarvestCommandGroup extends CommandGroup {
 		addSequential(new FlywheelCommand(HARVEST_SPEED));
 		// Wait until we get a ball.
 		addSequential(new BallDetectionCommand(true));
-		addSequential(new FlywheelCommand(0));
 	}
 
 	@Override
@@ -34,5 +33,6 @@ public class HarvestCommandGroup extends CommandGroup {
 
 	@Override
 	protected void end() {
+		new FlywheelCommand(0).start();
 	}
 }
