@@ -63,8 +63,8 @@ public class Robot extends IterativeRobot {
 		shooterActuatorSys.initDefaultCommand();
 		shooterActuatorSys.registerButtons();
 		//Arm
-		armSys.initDefaultCommand();
-		armSys.registerButtons();
+//		armSys.initDefaultCommand();
+//		armSys.registerButtons();
 //		Scheduler.getInstance().add(new TestCommand());
 //		START_TIME = System.currentTimeMillis();
 	}
