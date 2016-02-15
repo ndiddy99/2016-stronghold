@@ -10,8 +10,7 @@ import org.usfirst.frc.team2537.robot.Robot;
  *
  * @author Matthew Schweiss
  */
-public class BallDetectionCommand extends Command {
-	
+public class BallDetectionCommand extends Command {	
 	final boolean waitUntilEnters;
 	/**
 	 * This command basically waits until the proximity sensor detecting the
