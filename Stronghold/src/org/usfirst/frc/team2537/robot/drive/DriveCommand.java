@@ -2,7 +2,7 @@ package org.usfirst.frc.team2537.robot.drive;
 
 import org.usfirst.frc.team2537.robot.Robot;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
-import org.usfirst.frc.team2537.robot.input.xBoxButtons;
+import org.usfirst.frc.team2537.robot.input.XBoxButtons;
 
 import edu.wpi.first.wpilibj.Joystick.AxisType;
 //import edu.wpi.first.wpilibj.CANTalon;
@@ -48,15 +48,15 @@ public class DriveCommand extends Command {
 			right += HumanInput.getJoystickAxis(HumanInput.leftJoystick, AxisType.kX);
 			break;
 		case doubleJoystickXbox:
-			left = HumanInput.getXboxAxis(HumanInput.xboxController, xBoxButtons.XBOX_LEFT_Y_AXIS);
-			right = HumanInput.getXboxAxis(HumanInput.xboxController, xBoxButtons.XBOX_RIGHT_Y_AXIS);
+			left = HumanInput.getXboxAxis(HumanInput.xboxController, XBoxButtons.XBOX_LEFT_Y_AXIS);
+			right = HumanInput.getXboxAxis(HumanInput.xboxController, XBoxButtons.XBOX_RIGHT_Y_AXIS);
 			break;
 		case singleJoystickXbox:
-			left = HumanInput.getXboxAxis(HumanInput.xboxController, xBoxButtons.XBOX_LEFT_Y_AXIS);
+			left = HumanInput.getXboxAxis(HumanInput.xboxController, XBoxButtons.XBOX_LEFT_Y_AXIS);
 			right = left;
 
-			left -= HumanInput.getXboxAxis(HumanInput.xboxController, xBoxButtons.XBOX_LEFT_X_AXIS);
-			right += HumanInput.getXboxAxis(HumanInput.xboxController, xBoxButtons.XBOX_LEFT_X_AXIS);
+			left -= HumanInput.getXboxAxis(HumanInput.xboxController, XBoxButtons.XBOX_LEFT_X_AXIS);
+			right += HumanInput.getXboxAxis(HumanInput.xboxController, XBoxButtons.XBOX_LEFT_X_AXIS);
 			break;
 		}
 

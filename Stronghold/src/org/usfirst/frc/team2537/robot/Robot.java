@@ -1,18 +1,16 @@
 package org.usfirst.frc.team2537.robot;
 
+import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
 import org.usfirst.frc.team2537.robot.camera.CameraFeeds;
 import org.usfirst.frc.team2537.robot.camera.Config;
 import org.usfirst.frc.team2537.robot.camera.Controller;
-import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
+import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team2537.robot.input.Sensors;
 
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
-<<<<<<< HEAD
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-=======
->>>>>>> refs/heads/auto
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -22,11 +20,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	private AutoChooser autoChooser;
-	private Command autoCommand;
-	private final String defaultAuto = "Default";
-	private final String customAuto = "My Auto";
-	private String autoSelected;
+//	private AutoChooser autoChooser;
+//	private Command autoCommand;
+//	private final String defaultAuto = "Default";
+//	private final String customAuto = "My Auto";
+//	private String autoSelected;
 	public static Sensors sensorSys;
 	public static ArmSubsystem armSys;
 	public static DriveSubsystem driveSys;
@@ -45,8 +43,7 @@ public class Robot extends IterativeRobot {
 		armSys.initDefaultCommand();
 		armSys.registerButtons();
 		sensorSys.registerListener(armSys);
-		SmartDashboard.putNumber("Encoder pos", 0);
-		autoChooser = new AutoChooser();
+//		autoChooser = new AutoChooser();
 	
 	}
 
@@ -62,8 +59,8 @@ public class Robot extends IterativeRobot {
 	 * SendableChooser make sure to add them to the chooser code above as well.
 	 */
 	public void autonomousInit() {
-		autoCommand = autoChooser.getAutoChoice();
-		Scheduler.getInstance().add(autoCommand);
+//		autoCommand = autoChooser.getAutoChoice();
+//		Scheduler.getInstance().add(autoCommand);
 		
 
 	}

@@ -17,8 +17,8 @@ import org.usfirst.frc.team2537.robot.input.XBoxButtons;
  */
 public class HumanInput {
 	public static Joystick xboxController = new Joystick(Ports.XBOX);
-//	public static Joystick leftJoystick = new Joystick(Ports.JOYSTICK_ONE_PORT);
-//	public static Joystick rightJoystick = new Joystick(Ports.JOYSTICK_TWO_PORT);
+	public static Joystick leftJoystick = new Joystick(Ports.JOYSTICK_ONE_PORT);
+	public static Joystick rightJoystick = new Joystick(Ports.JOYSTICK_TWO_PORT);
 
 	// replace the following 0s with actual numbers once you test them
 	public static Button lowerArm = new JoystickButton(xboxController, XBoxButtons.XBOX_A);
