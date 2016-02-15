@@ -11,21 +11,17 @@ import org.usfirst.frc.team2537.robot.Robot;
  * @author Matthew Schweiss
  */
 public class BallDetectionCommand extends Command {
+	private static final double DEFUALT_TIMEOUT = 5;//seconds
 	
-	final boolean waitUntilEnters;
 	/**
 	 * This command basically waits until the proximity sensor detecting the
 	 * ball changes to the desired state.
-	 * 
-	 * @param waitUntilEnters
-	 *            Whether or not the command waits until the proximity sensor
-	 *            detects when the ball enters or leaves the shooter.
 	 */
-	public BallDetectionCommand(boolean waitUntilEnters) {
+	public BallDetectionCommand() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		// We do need a time out.
-		this.waitUntilEnters = waitUntilEnters;
+		super(DEFUALT_TIMEOUT);
 		requires(Robot.shooterFlywheelSys);
 	}
 
@@ -43,11 +39,7 @@ public class BallDetectionCommand extends Command {
 	@Override
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		if(waitUntilEnters) {
 		return Robot.shooterFlywheelSys.isBallPresent();
-		} else {
-			return !Robot.shooterFlywheelSys.isBallPresent();
-		}
 	}
 
 	@Override

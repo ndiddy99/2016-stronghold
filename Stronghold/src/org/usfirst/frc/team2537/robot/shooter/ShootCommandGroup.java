@@ -31,7 +31,7 @@ public class ShootCommandGroup extends CommandGroup {
     	//First make sure we are not running already.
     	addSequential(new FlywheelCommand(shootVelocity));
     	addSequential(new ActuatorCommand(true));//extend
-    	addSequential(new BallDetectionCommand(false));
+    	addSequential(new BallDetectionCommand());
     	addParallel(new ActuatorCommand(false));//rectract
     	addSequential(new FlywheelCommand(0));
     	System.out.println("Shoot Command Group is Running");
