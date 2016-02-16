@@ -162,7 +162,6 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 			}
 		}
 		return false;
-
 	}
 
 	@Override
