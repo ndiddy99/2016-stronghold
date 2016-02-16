@@ -28,21 +28,24 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 
 	// Varibles
 	private static double currentAngle = 0;
-	private final CANTalon angleTalon;
+	private final CANTalon angleMotor;
 
 	public AngleSubsystem() {
-		angleTalon = new CANTalon(Ports.SHOOTER_ANGLE_PORT);
+		angleMotor = new CANTalon(Ports.SHOOTER_ANGLE_PORT);
 		// Change control mode of the angleTalon to percent Vbus.
-		angleTalon.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		angleMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 		// Add limits.
-		angleTalon.ConfigFwdLimitSwitchNormallyOpen(true);
-		angleTalon.ConfigRevLimitSwitchNormallyOpen(true);
-		angleTalon.enableLimitSwitch(true, true);// Now the limit switches are
+		angleMotor.ConfigFwdLimitSwitchNormallyOpen(true);
+		angleMotor.ConfigRevLimitSwitchNormallyOpen(true);
+		angleMotor.enableLimitSwitch(true, true);// Now the limit switches are
 													// active.
 		// Soft limits for a backup.
-		angleTalon.enableForwardSoftLimit(false);
-		angleTalon.enableReverseSoftLimit(false);
-
+		angleMotor.enableForwardSoftLimit(false);
+		angleMotor.enableReverseSoftLimit(false);
+		
+		//The motor will backdrive if it does not get current.
+		//Set a electric break.
+		angleMotor.enableBrakeMode(true);
 	}
 
 	@Override
@@ -57,7 +60,7 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	 *            A speed between [-1, 1] which is the voltage that will be set.
 	 */
 	public void setVoltagePercent(double percent) {
-		angleTalon.set(percent);
+		angleMotor.set(percent);
 	}
 
 	// Did we hit a limit.
@@ -68,7 +71,7 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	 * @return boolean if the forward limit switch is activated.
 	 */
 	public boolean isHighestPosition() {
-		return angleTalon.isFwdLimitSwitchClosed();
+		return angleMotor.isFwdLimitSwitchClosed();
 	}
 
 	/**
@@ -78,7 +81,7 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	 * @return boolean if the forward limit switch is activated.
 	 */
 	public boolean isLowestPosition() {
-		return angleTalon.isRevLimitSwitchClosed();
+		return angleMotor.isRevLimitSwitchClosed();
 	}
 
 	// And get joystick values.
