@@ -21,6 +21,8 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	private static final int ENCODER_TICKS_PER_REV = 20;
 	private static final double UNITS_PER_100MS_TO_RPM = 100.0 / 4096 * 1000 * 60;
 	private static final double SPEED_TOLERANCE = 2;
+	//Max voltage that can be output from the flywheel talons.
+	private static final float MAX_VOLTAGE = 6.0f;
 	// 5 volts per second ramp rate for the flywheels
 	private static final double VOLTAGE_RAMP_RATE = 3.0;
 	// yet
@@ -54,10 +56,10 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 		// Nominal voltages, not sure if this is needed
 		leftFlywheelMotor.configNominalOutputVoltage(0.0f, 0.0f);
 		leftFlywheelMotor.configPeakOutputVoltage(12.0f, -12.0f);
-		leftFlywheelMotor.configMaxOutputVoltage(12.0f);
+		leftFlywheelMotor.configMaxOutputVoltage(MAX_VOLTAGE);
 		rightFlywheelMotor.configNominalOutputVoltage(0.0f, 0.0f);
 		rightFlywheelMotor.configPeakOutputVoltage(12.0f, -12.0f);
-		rightFlywheelMotor.configMaxOutputVoltage(12.0f);
+		rightFlywheelMotor.configMaxOutputVoltage(MAX_VOLTAGE);
 		
 
 		// Set rightFlywheelMotor to be reversed of everything else.
