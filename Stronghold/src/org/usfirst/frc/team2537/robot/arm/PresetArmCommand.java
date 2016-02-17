@@ -2,7 +2,6 @@ package org.usfirst.frc.team2537.robot.arm;
 
 import org.usfirst.frc.team2537.robot.Robot;
 
-import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
