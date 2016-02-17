@@ -13,7 +13,6 @@ public class ProximitySensor implements SensorInterface {
 
 	@Override
 	public void getValue() {
-		//Ternary Operator
 		//true -> 1
 		//false-> 0
 		double val;
