@@ -54,8 +54,11 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 		// Nominal voltages, not sure if this is needed
 		leftFlywheelMotor.configNominalOutputVoltage(0.0f, 0.0f);
 		leftFlywheelMotor.configPeakOutputVoltage(12.0f, -12.0f);
+		leftFlywheelMotor.configMaxOutputVoltage(12.0f);
 		rightFlywheelMotor.configNominalOutputVoltage(0.0f, 0.0f);
 		rightFlywheelMotor.configPeakOutputVoltage(12.0f, -12.0f);
+		rightFlywheelMotor.configMaxOutputVoltage(12.0f);
+		
 
 		// Set rightFlywheelMotor to be reversed of everything else.
 		rightFlywheelMotor.reverseOutput(true);
