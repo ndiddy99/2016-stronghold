@@ -5,5 +5,7 @@
 	<classpathentry kind="var" path="networktables"/>
 	<classpathentry kind="var" path="wpilib" sourcepath="/wpilib.sources"/>
 	<classpathentry kind="var" path="JRE_LIB"/>
+	<classpathentry kind="lib" path="E:/WPILib.jar"/>
+	<classpathentry kind="lib" path="E:/NetworkTables.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

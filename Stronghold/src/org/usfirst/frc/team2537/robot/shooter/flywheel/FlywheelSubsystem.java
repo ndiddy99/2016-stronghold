@@ -157,9 +157,9 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	}
 
 	public boolean isAtSpeed(double speed) {
-		if ((getRightSpeed() < speed && getRightSpeed() >= speed - SPEED_TOLERANCE)
+		if ((getRightSpeed() <= speed && getRightSpeed() >= speed - SPEED_TOLERANCE)
 				|| (getRightSpeed() > speed && getRightSpeed() <= speed + SPEED_TOLERANCE)) {
-			if ((getLeftSpeed() < speed && getLeftSpeed() >= speed - SPEED_TOLERANCE)
+			if ((getLeftSpeed() <= speed && getLeftSpeed() >= speed - SPEED_TOLERANCE)
 					|| (getLeftSpeed() > speed && getLeftSpeed() <= speed + SPEED_TOLERANCE)) {
 				return true;
 			}
