@@ -30,8 +30,7 @@ public class DriveSubsystem extends Subsystem{
 		talonBackRight = new CANTalon(Ports.BACK_RIGHT_MOTOR_PORT);
 		setDriveControlMode(TalonControlMode.Speed);
 		
-		
-		driveType = DriveType.doubleJoystickXbox; //TODO: set this
+		driveType = DriveType.doubleJoystickXbox;
 		drivingStraight = false;
 		driveLowerSpeed = false;
 		talonFrontRight.enableForwardSoftLimit(false);
@@ -181,10 +180,7 @@ public class DriveSubsystem extends Subsystem{
 			@Override protected boolean isFinished() {return true;}
 			@Override protected void end() {}
 			@Override protected void interrupted() {}
-		});
-		
-		
+		});		
 	}
-		
-		    }
+}
 		

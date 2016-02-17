@@ -14,7 +14,7 @@ public class DriveCommand extends Command {
 	private static final double DEADZONE = 0.0;
 
 	/**
-	 * Takes joystick input depending on Robot.driveSys.driveType Omnipotenet
+	 * Takes joystick input depending on Robot.driveSys.driveType. Omnipotenet
 	 * drive command. Does EVERYTHING Why have multiple drive commands when you
 	 * can have one?
 	 * 
