@@ -5,8 +5,6 @@ import org.usfirst.frc.team2537.robot.input.Ports;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
-import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
-import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -19,17 +17,11 @@ public class DriveSubsystem extends Subsystem{
 	protected DriveType driveType;
 	protected boolean drivingStraight;
 	protected boolean driveLowerSpeed;
-		
-		
-	
-	
-	
+
 	public static final double WHEEL_DIAMETER = 9; //Inches TODO: Magic numbers are fun
 	public static final double PulsesPerRevolution = 20; //for encoders
 	private double initialLeftEncoders = 0; //Inches to subtract (for resetEncoders) 
 	private double initialRightEncoders = 0; //Inches to subtract (for resetEncoders)
-	StringBuilder _sb = new StringBuilder();
-	int _loops = 0;
 	
 	public DriveSubsystem() {
 		talonFrontLeft = new CANTalon(Ports.FRONT_LEFT_MOTOR_PORT);
