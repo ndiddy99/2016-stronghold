@@ -37,8 +37,13 @@ public class DriveCommand extends Command {
 		// double/single joystick/xbox driving
 		switch (Robot.driveSys.driveType) {
 		case doubleJoystick:
+			//basic double joystick
 			left = HumanInput.getJoystickAxis(HumanInput.leftJoystick, AxisType.kY);
 			right = HumanInput.getJoystickAxis(HumanInput.rightJoystick, AxisType.kY);
+
+			//uses xbox x axis for rotation
+			left -= HumanInput.getXboxAxis(HumanInput.xboxController, xBoxButtons.XBOX_LEFT_X_AXIS)/10;
+			right += HumanInput.getXboxAxis(HumanInput.xboxController, xBoxButtons.XBOX_LEFT_X_AXIS)/10;
 			break;
 		case singleJoystick:
 			left = HumanInput.getJoystickAxis(HumanInput.leftJoystick, AxisType.kY);
