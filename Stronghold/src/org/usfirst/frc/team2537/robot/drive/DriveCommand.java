@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveCommand extends Command {
 	private static final boolean debug = false;
 	private static final double DEADZONE = 0.0;
-	private static final double ROTATE_SCALE = 10.0; //scales down rotation from xbox controller during joystick drive
+	private static final double ROTATE_SCALE = 6.0; //scales down rotation from xbox controller during joystick drive
 
 	/**
 	 * Takes joystick input depending on Robot.driveSys.driveType. Omnipotenet
