@@ -28,7 +28,7 @@ public class Robot extends IterativeRobot {
 	public static Sensors sensorSys;
 	public static ArmSubsystem armSys;
 	public static DriveSubsystem driveSys;
-    private Controller contr = new Controller(Config.Controller.chn, Config.Controller.maxButtons, Config.Controller.linearity);
+	private Controller contr = new Controller(Config.Controller.chn, Config.Controller.maxButtons, Config.Controller.linearity);
     private CameraFeeds cameraFeeds = new CameraFeeds(contr);
     
 	public void robotInit() {
@@ -90,9 +90,6 @@ public class Robot extends IterativeRobot {
 		cameraFeeds.run();
 		
 		sensorSys.handleEvents();
-		SmartDashboard.putNumber("Arm Pos", Robot.armSys.getAngle());
-		SmartDashboard.putNumber("PID Loop Error", Robot.armSys.armMotor.getError());
-		SmartDashboard.putNumber("Encoder pos", Robot.armSys.armMotor.getEncPosition());
 	}
 
 	/**

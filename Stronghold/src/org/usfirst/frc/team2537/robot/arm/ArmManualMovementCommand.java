@@ -22,8 +22,8 @@ public class ArmManualMovementCommand extends Command {
 	}
 
 	protected void execute() {
-		Robot.armSys.setArmTalon(Robot.armSys.getRightJoystick() * .75);
-		if (ArmSubsystem.debug) Robot.armSys.getEncoder();
+		Robot.armSys.setArmTalon(Robot.armSys.getRightJoystick());
+		if (ArmSubsystem.debug) System.out.println("Setting arm to " + (Robot.armSys.getRightJoystick()));
 	}
 
 	protected boolean isFinished() {

@@ -16,8 +16,8 @@ public class Config
     	public static final int btCamLeft = 3;
     	
     	public static final String camNameCenter = "cam0";
-    	public static final String camNameRight = "cam1";
-    	public static final String camNameLeft = "cam2";
+    	public static final String camNameRight = "cam2";
+    	public static final String camNameLeft = "cam3";
     	public static final int imgQuality = 60;
     }
 }
