@@ -3,7 +3,6 @@ package org.usfirst.frc.team2537.robot.shooter.actuator;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team2537.robot.input.Ports;
-//import org.usfirst.frc.team2537.robot.shooter.angle.HumanInput;
 
 /**
  *
