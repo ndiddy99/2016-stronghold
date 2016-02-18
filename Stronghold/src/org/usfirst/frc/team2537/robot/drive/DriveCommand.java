@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveCommand extends Command {
 	private static final boolean debug = false;
 	private static final double DEADZONE = 0.0;
+	private static final double ROTATE_SCALE = 10.0; //scales down rotation from xbox controller during joystick drive
 
 	/**
 	 * Takes joystick input depending on Robot.driveSys.driveType. Omnipotenet
@@ -25,8 +26,7 @@ public class DriveCommand extends Command {
 
 	@Override
 	protected void initialize() {
-		if (debug)
-			System.out.println("[DriveCommand] Initializing... drivetype: " + Robot.driveSys.driveType);
+		if (debug) System.out.println("[DriveCommand] Initializing... drivetype: " + Robot.driveSys.driveType);
 	}
 
 	@Override
@@ -42,8 +42,8 @@ public class DriveCommand extends Command {
 			right = HumanInput.getJoystickAxis(HumanInput.rightJoystick, AxisType.kY);
 
 			//uses xbox x axis for rotation
-			left -= HumanInput.getXboxAxis(HumanInput.xboxController, xBoxButtons.XBOX_LEFT_X_AXIS)/10;
-			right += HumanInput.getXboxAxis(HumanInput.xboxController, xBoxButtons.XBOX_LEFT_X_AXIS)/10;
+			left -= HumanInput.getXboxAxis(HumanInput.xboxController, xBoxButtons.XBOX_LEFT_X_AXIS)/ROTATE_SCALE;
+			right += HumanInput.getXboxAxis(HumanInput.xboxController, xBoxButtons.XBOX_LEFT_X_AXIS)/ROTATE_SCALE;
 			break;
 		case singleJoystick:
 			left = HumanInput.getJoystickAxis(HumanInput.leftJoystick, AxisType.kY);
@@ -51,6 +51,11 @@ public class DriveCommand extends Command {
 
 			left -= HumanInput.getJoystickAxis(HumanInput.leftJoystick, AxisType.kX);
 			right += HumanInput.getJoystickAxis(HumanInput.leftJoystick, AxisType.kX);
+
+			//uses xbox x axis for rotation
+			left -= HumanInput.getXboxAxis(HumanInput.xboxController, xBoxButtons.XBOX_LEFT_X_AXIS)/ROTATE_SCALE;
+			right += HumanInput.getXboxAxis(HumanInput.xboxController, xBoxButtons.XBOX_LEFT_X_AXIS)/ROTATE_SCALE;
+
 			break;
 		case doubleJoystickXbox:
 			left = HumanInput.getXboxAxis(HumanInput.xboxController, xBoxButtons.XBOX_LEFT_Y_AXIS);
