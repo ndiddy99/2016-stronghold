@@ -86,6 +86,17 @@ public class DriveCommand extends Command {
 			left /= 2;
 		}
 
+		if (Robot.driveSys.reversed){
+			//swap left and right
+			double tmp = left;
+			left = right;
+			right = tmp;
+			
+			//reverse left and right values
+			left = -left;
+			right = -right;
+		}
+		
 		if (debug) System.out.println("[DriveCommand] left: " + left + "\tright: " + right);
 		Robot.driveSys.setDriveMotors(left, right);
 	}

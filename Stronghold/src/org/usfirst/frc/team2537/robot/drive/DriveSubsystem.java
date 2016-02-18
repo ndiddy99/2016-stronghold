@@ -17,6 +17,7 @@ public class DriveSubsystem extends Subsystem{
 	protected DriveType driveType;
 	protected boolean drivingStraight;
 	protected boolean driveLowerSpeed;
+	protected boolean reversed;
 
 	public static final double WHEEL_DIAMETER = 9; //Inches TODO: Magic numbers are fun
 	public static final double PulsesPerRevolution = 20; //for encoders
@@ -34,6 +35,7 @@ public class DriveSubsystem extends Subsystem{
 		driveType = DriveType.doubleJoystickXbox;
 		drivingStraight = false;
 		driveLowerSpeed = false;
+		reversed = false;
 		talonFrontRight.enableForwardSoftLimit(false);
 		talonFrontRight.enableReverseSoftLimit(false);
 	}
@@ -181,6 +183,14 @@ public class DriveSubsystem extends Subsystem{
 			@Override protected void end() {}
 			@Override protected void interrupted() {}
 		});		
+		
+		HumanInput.registerPressedCommand(HumanInput.reverseDrive, new Command(){
+			@Override protected void initialize() {reversed = !reversed;}
+			@Override protected void execute() {}
+			@Override protected boolean isFinished() {return true;}
+			@Override protected void end() {}
+			@Override protected void interrupted() {}
+		});
 	}
 }
 		

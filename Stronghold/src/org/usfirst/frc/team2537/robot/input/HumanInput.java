@@ -16,6 +16,7 @@ public class HumanInput {
 
 	public static Button driveStraight = new JoystickButton(leftJoystick, 0);
 	public static Button driveSensetivityToggle = new JoystickButton(xboxController, 0);
+	public static Button reverseDrive = new JoystickButton(leftJoystick, 6);
 	public static Button lowerArm = new JoystickButton(xboxController, xBoxButtons.XBOX_A);
 	public static Button raiseArm = new JoystickButton(xboxController, xBoxButtons.XBOX_Y);
 	public static Button neutralArm = new JoystickButton(xboxController, xBoxButtons.XBOX_B);
