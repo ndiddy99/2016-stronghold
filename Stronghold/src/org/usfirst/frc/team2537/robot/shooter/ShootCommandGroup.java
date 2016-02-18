@@ -2,6 +2,7 @@ package org.usfirst.frc.team2537.robot.shooter;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelCommand;
+import org.usfirst.frc.team2537.robot.Robot;
 import org.usfirst.frc.team2537.robot.shooter.actuator.ActuatorCommand;
 
 /**
@@ -18,7 +19,7 @@ import org.usfirst.frc.team2537.robot.shooter.actuator.ActuatorCommand;
  */
 public class ShootCommandGroup extends CommandGroup {
 	//The default velocity.
-    public static final double SHOOT_VELOCITY = 1000;
+    public static final double SHOOT_VELOCITY = 25.0;
     
     //Using default velocity.
     public ShootCommandGroup() {
@@ -32,12 +33,13 @@ public class ShootCommandGroup extends CommandGroup {
     	addSequential(new ActuatorCommand(true));//extend
     	addSequential(new BallDetectionCommand(true));
     	addParallel(new ActuatorCommand(false));//rectract
-    	addSequential(new FlywheelCommand(0));
+    	addSequential(new FlywheelCommand(0.0));
     }
 	
     @Override
     protected void interrupted() {
     	System.out.println("Interrupted Shoot Command Group");
+    	Robot.shooterFlywheelSys.setSpeed(0.0);
     	new FlywheelCommand(0).start();
     }
     

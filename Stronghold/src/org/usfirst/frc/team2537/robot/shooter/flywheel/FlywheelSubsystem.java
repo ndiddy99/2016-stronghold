@@ -20,13 +20,13 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	public static final boolean DEBUG = false;
 	private static final int ENCODER_TICKS_PER_REV = 20;
 	private static final double UNITS_PER_100MS_TO_RPM = 100.0 / 4096 * 1000 * 60;
-	private static final double SPEED_TOLERANCE = 2;
+	private static final double SPEED_TOLERANCE = 20;
 	//Max voltage that can be output from the flywheel talons.
-	private static final float MAX_VOLTAGE = 6.0f;
+	private static final float MAX_VOLTAGE = 4.5f;
 	// 5 volts per second ramp rate for the flywheels
-	private static final double VOLTAGE_RAMP_RATE = 3.0;
+	private static final double VOLTAGE_RAMP_RATE = 12;
 	// yet
-	private static final double P = .5, I = .05, D = 0.0;
+	private static final double P = 100, I = .05, D = 0.0;
 	// Vars
 	private boolean proximityValue = false;
 	private CANTalon leftFlywheelMotor;
@@ -63,10 +63,10 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 		
 
 		// Set rightFlywheelMotor to be reversed of everything else.
-		rightFlywheelMotor.reverseOutput(true);
-		rightFlywheelMotor.reverseSensor(true);
-		leftFlywheelMotor.reverseOutput(false);
-		leftFlywheelMotor.reverseSensor(false);
+		rightFlywheelMotor.reverseOutput(false);
+		rightFlywheelMotor.reverseSensor(false);
+		leftFlywheelMotor.reverseOutput(true);
+		leftFlywheelMotor.reverseSensor(true);
 
 		// Set PID's
 		leftFlywheelMotor.setPID(P, I, D);
@@ -98,6 +98,9 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	 *            in RPM.
 	 */
 	public void setSpeed(double speed) {
+		if(DEBUG) {
+			System.out.println("Left Flywheel Speed: " +leftFlywheelMotor.getSpeed());
+		}
 		leftFlywheelMotor.set(speed);
 		rightFlywheelMotor.set(speed);
 	}
@@ -109,6 +112,10 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	 * @return flywheel speed in RPM
 	 */
 	public double getLeftSpeed() {
+		if(DEBUG) {
+			System.out.println("Left Flywheel Speed: " +leftFlywheelMotor.getSpeed());
+			System.out.println("Right Flywheel Speed: " +rightFlywheelMotor.getSpeed());
+		}
 		return leftFlywheelMotor.getSpeed();
 	}
 
@@ -136,6 +143,9 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	 * @return flywheel speed in RPM
 	 */
 	public double getRightSpeed() {
+		if(DEBUG) {
+			System.out.println("Right Flywheel Speed: " +rightFlywheelMotor.getSpeed());
+		}
 		return rightFlywheelMotor.getSpeed();
 	}
 
@@ -159,16 +169,22 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	}
 
 	public boolean isAtSpeed(double speed) {
+//		System.out.println("Flywheel Speed (L/R): " +leftFlywheelMotor.getSpeed() + "|" 
+//				+ rightFlywheelMotor.getSpeed());
+		
 		if ((getRightSpeed() <= speed && getRightSpeed() >= speed - SPEED_TOLERANCE)
 				|| (getRightSpeed() > speed && getRightSpeed() <= speed + SPEED_TOLERANCE)) {
+			System.out.println("Right Is At Speed " + getRightSpeed());
 			if ((getLeftSpeed() <= speed && getLeftSpeed() >= speed - SPEED_TOLERANCE)
 					|| (getLeftSpeed() > speed && getLeftSpeed() <= speed + SPEED_TOLERANCE)) {
+				System.out.println("Left is At Speed " +getLeftSpeed());
 				return true;
 			}
 		}
 		return false;
 	}
-
+	
+	
 	@Override
 	// Proximity
 	public void receivedValue(HashMap<Sensor, Double> sensorMap) {

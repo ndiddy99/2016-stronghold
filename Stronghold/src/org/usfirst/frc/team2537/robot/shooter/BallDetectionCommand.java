@@ -43,6 +43,7 @@ public class BallDetectionCommand extends Command {
 	@Override
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
+		System.out.println(Robot.shooterFlywheelSys.isBallPresent());
 	}
 
 	@Override

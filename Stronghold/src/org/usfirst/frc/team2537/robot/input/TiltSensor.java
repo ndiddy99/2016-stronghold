@@ -11,6 +11,7 @@ public class TiltSensor implements SensorInterface {
 	
 	//Vars
 	private final Counter input;
+	private static final boolean DEBUG = false;
 	
 	public TiltSensor(int inputPort){
 		// tilt sensor that is a pwm over the dio port in ports
@@ -32,6 +33,10 @@ public class TiltSensor implements SensorInterface {
 		// time interval of the most recent count.
 		
 		//Rough Calibration gathered from Adrian.
+		if(DEBUG) {
+		System.out.println("Tilt sensor angle:" +(input.getPeriod() / 
+				TILT_SENSOR_MAX_PERIOD * MAX_ANGLE));
+		}
 		Robot.sensorSys.addValue(Sensor.SHOOTER_ANGLE, (input.getPeriod() / 
 				TILT_SENSOR_MAX_PERIOD * MAX_ANGLE));
 	}

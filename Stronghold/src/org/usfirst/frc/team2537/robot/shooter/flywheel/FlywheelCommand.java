@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class FlywheelCommand extends Command {
 	// constants
-	private static final long DEFAULT_TIMEOUT = 2;// seconds
+	private static final double DEFAULT_TIMEOUT = 10;// seconds
 	// vars
 	private final double TARGET_SPEED;
 
@@ -52,8 +52,9 @@ public class FlywheelCommand extends Command {
 	@Override
 	public boolean isFinished() {
 		// Check if the flywheels are at the target speed
-		return Robot.shooterFlywheelSys.isAtSpeed(TARGET_SPEED);
-	}
+
+		return Robot.shooterFlywheelSys.isAtSpeed(-TARGET_SPEED);
+		}
 
 	@Override
 	protected void end() {
