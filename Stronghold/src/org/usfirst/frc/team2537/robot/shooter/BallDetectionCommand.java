@@ -11,6 +11,7 @@ import org.usfirst.frc.team2537.robot.Robot;
  * @author Matthew Schweiss
  */
 public class BallDetectionCommand extends Command {
+	private static final boolean DEBUG = false;
 	
 	private static final double DEFAULT_TIMEOUT = 5;
 	
@@ -38,6 +39,7 @@ public class BallDetectionCommand extends Command {
 	@Override
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		if (DEBUG) System.out.print("BallDetectionCommand started (waitForBall = " + waitUntilEnters + ")");
 	}
 
 	@Override
@@ -59,11 +61,13 @@ public class BallDetectionCommand extends Command {
 	@Override
 	// Called once after isFinished returns true
 	protected void end() {
+		if (DEBUG) System.out.println("BallDetectionCommand ended. (waitForBall = " + waitUntilEnters + ")");
 	}
 
 	@Override
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
+		if (DEBUG) System.out.println("BallDetectionCommand was canceled. (waitForBall = " + waitUntilEnters + ")");
 	}
 }

@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.DigitalOutput;
 
 public class LidarSensor implements SensorInterface {
 	//Const
+	private static final boolean DEBUG = false;
 	//So the lidar communates at 
 	//1msec/meter
 	//=.001sec/meter
@@ -39,6 +40,9 @@ public class LidarSensor implements SensorInterface {
 	public void getValue() {
 		//Value on cm
 		trigger.set(false);//make sure this stay's low.
-		Robot.sensorSys.addValue(Sensor.SHOOTER_LIDAR, input.getPeriod()*FACTOR);
+		double value = input.getPeriod()*FACTOR;
+		
+		if (DEBUG) System.out.println("Lidar sees at an object at " + value + "cm.");
+		Robot.sensorSys.addValue(Sensor.SHOOTER_LIDAR, value);
 	}
 }

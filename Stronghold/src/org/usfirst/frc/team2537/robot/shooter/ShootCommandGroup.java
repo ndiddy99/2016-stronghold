@@ -2,7 +2,6 @@ package org.usfirst.frc.team2537.robot.shooter;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelCommand;
-import org.usfirst.frc.team2537.robot.Robot;
 import org.usfirst.frc.team2537.robot.shooter.actuator.ActuatorCommand;
 
 /**
@@ -15,9 +14,9 @@ import org.usfirst.frc.team2537.robot.shooter.actuator.ActuatorCommand;
  */
 /*
  * documentation done by Matthew Schweiss
- * TODO Figure out the unit of the SHOOT_VELOCITY.
  */
 public class ShootCommandGroup extends CommandGroup {
+	private static final boolean DEBUG = true;
 	//The default velocity.
     public static final double SHOOT_VELOCITY = 25.0;
     
@@ -31,16 +30,25 @@ public class ShootCommandGroup extends CommandGroup {
     	//First make sure we are not running already.
     	addSequential(new FlywheelCommand(shootVelocity));
     	addSequential(new ActuatorCommand(true));//extend
-    	addSequential(new BallDetectionCommand(true));
-    	addParallel(new ActuatorCommand(false));//rectract
+    	addSequential(new BallDetectionCommand(false));//Wait until ball is gone.
+    	addParallel(new ActuatorCommand(false));//retract
     	addSequential(new FlywheelCommand(0.0));
     }
 	
     @Override
+    protected void initialize(){
+    	//Yes, CommandGroup.initialize() is blank but in the future it may change
+    	//and things like that. Besides, it would be could anyway and therefore can
+    	//not possibly hurt.
+    	if (DEBUG) System.out.println("ShootCommandGroup was started.");
+    	super.initialize();
+    }
+    
+    @Override
     protected void interrupted() {
-    	System.out.println("Interrupted Shoot Command Group");
-    	Robot.shooterFlywheelSys.setSpeed(0.0);
-    	new FlywheelCommand(0).start();
+    	if (DEBUG) System.out.println("ShootCommandGroup Interrupted");
+    	new ActuatorCommand(false).start();//retract
+    	new FlywheelCommand(0).start();//stop wheels.
     }
     
     @Override
@@ -60,9 +68,11 @@ public class ShootCommandGroup extends CommandGroup {
      */
     public void start(){
     	if (isRunning()){
+    		if (DEBUG) System.out.println("ShootCommandGroup.start() called while running; Canceling.");
     		//I am already running, no a won't go.
     		cancel();
     	} else {
+    		if (DEBUG) System.out.println("ShootCommandGroup.start() called.");
     		//I'm not running, lets start!
     		super.start();
     	}

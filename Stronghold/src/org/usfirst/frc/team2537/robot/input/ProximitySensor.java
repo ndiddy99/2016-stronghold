@@ -1,10 +1,11 @@
 package org.usfirst.frc.team2537.robot.input;
 
 import org.usfirst.frc.team2537.robot.Robot;
-
 import edu.wpi.first.wpilibj.DigitalInput;
 
 public class ProximitySensor implements SensorInterface {
+	private static final boolean DEBUG = false;
+	
 	private DigitalInput input;
 	
 	public ProximitySensor(int port){
@@ -13,15 +14,21 @@ public class ProximitySensor implements SensorInterface {
 
 	@Override
 	public void getValue() {
-		//true -> 1
-		//false-> 0
-		double val;
-		if (input.get()){
-			val = 1;
-		} else {
-			val = 0;
+		double value = (input.get()) ? 
+				1://true -> 1 
+				0;//false-> 0
+		
+		if (DEBUG) {
+			System.out.println("Ball is ");
+			if (value==1) { 
+				System.out.print("present");
+			} else {
+				System.out.print("absent");
+			}
+			System.out.println(" (val = " + value + ", raw = " + input.get() + ")");
 		}
-		Robot.sensorSys.addValue(Sensor.SHOOTER_BALL, val);
+		
+		Robot.sensorSys.addValue(Sensor.SHOOTER_BALL, value);
 	}
 
 }
