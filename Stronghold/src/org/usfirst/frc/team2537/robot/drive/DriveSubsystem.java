@@ -28,7 +28,8 @@ public class DriveSubsystem extends Subsystem{
 		talonFrontRight = new CANTalon(Ports.FRONT_RIGHT_MOTOR_PORT);
 		talonBackLeft = new CANTalon(Ports.BACK_LEFT_MOTOR_PORT);
 		talonBackRight = new CANTalon(Ports.BACK_RIGHT_MOTOR_PORT);
-		setDriveControlMode(TalonControlMode.Speed);
+//		SPEED MODE CODE
+//		setDriveControlMode(TalonControlMode.Speed);
 		
 		driveType = DriveType.doubleJoystickXbox;
 		drivingStraight = false;
@@ -40,20 +41,19 @@ public class DriveSubsystem extends Subsystem{
 	/**
 	 * Sets the output of a CANTalon
 	 * 
-	 * @param outputValue 
-	 * 		in speed mode, speed of talon in inches/second
-	 * 		in other modes, consult the javadocs
+	 * @param outputValue consult talon javadocs
 	 * @param talon The CANTalon to set the speed on
 	 * 
 	 */
 	public void set(double outputValue, CANTalon talon) {
-		// inches/second to pulses/tenMS
-		// (x pulses)/ (radius*pi tenMS)
+//		SPEED MODE CODE
+//		switch(talon.getControlMode()){
+//		case Speed: talon.set(1500 * outputValue); break;
+//		default: if(outputValue != 0) System.out.println(talonFrontRight.getEncPosition()); talon.set(outputValue);
+//		}
 		
-		switch(talon.getControlMode()){
-		case Speed: talon.set(1500 * outputValue / (WHEEL_DIAMETER/2 * Math.PI)); break;
-		default: if(outputValue != 0) System.out.println(talonFrontRight.getEncPosition()); talon.set(outputValue);
-		}
+		talon.set(outputValue);
+	
 	}
 
 	/**
