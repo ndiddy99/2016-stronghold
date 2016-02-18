@@ -12,7 +12,7 @@ import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelCommand;
  * @author Matthew Schweiss
  */
 public class HarvestCommandGroup extends CommandGroup {
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 	private static final double HARVEST_ANGLE = -10;
 	private static final double HARVEST_SPEED = -500;
 
