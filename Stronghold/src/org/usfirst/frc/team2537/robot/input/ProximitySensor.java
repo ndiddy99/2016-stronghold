@@ -19,7 +19,7 @@ public class ProximitySensor implements SensorInterface {
 				0;//false-> 0
 		
 		if (DEBUG) {
-			System.out.println("Ball is ");
+			System.out.print("Ball is ");
 			if (value==1) { 
 				System.out.print("present");
 			} else {

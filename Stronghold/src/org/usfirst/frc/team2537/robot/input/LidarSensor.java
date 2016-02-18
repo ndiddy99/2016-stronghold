@@ -41,6 +41,7 @@ public class LidarSensor implements SensorInterface {
 		//Value on cm
 		trigger.set(false);//make sure this stay's low.
 		double value = input.getPeriod()*FACTOR;
+		//Anouther possible method that may fix this is getRate();
 		
 		if (DEBUG) System.out.println("Lidar sees at an object at " + value + "cm.");
 		Robot.sensorSys.addValue(Sensor.SHOOTER_LIDAR, value);
