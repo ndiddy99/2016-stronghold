@@ -20,6 +20,7 @@ public class AutoChooser {
         		addSequential(new AutoDriveToCommandGroup(20, 8));
         	}
         });
+        autoChoice.addObject("Prints", new CourseCorrect(0, 0));
         SmartDashboard.putData("point to point stuff", autoChoice);
 	}
 	public Command getAutoChoice(){
