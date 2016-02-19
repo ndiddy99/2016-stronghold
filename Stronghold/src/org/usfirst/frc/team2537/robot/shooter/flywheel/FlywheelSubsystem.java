@@ -54,10 +54,13 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 		rightFlywheelMotor.enableLimitSwitch(false, false);
 
 		// Nominal voltages, not sure if this is needed
-		leftFlywheelMotor.configNominalOutputVoltage(0.0f, 0.0f);
+		//Something found indicated that if the PID is bad,
+		//voltage will ramp to the nominal Output, we should try 
+		//turning these off.
+		//leftFlywheelMotor.configNominalOutputVoltage(0.0f, 0.0f);
 		leftFlywheelMotor.configPeakOutputVoltage(12.0f, -12.0f);
 		leftFlywheelMotor.configMaxOutputVoltage(MAX_VOLTAGE);
-		rightFlywheelMotor.configNominalOutputVoltage(0.0f, 0.0f);
+		//rightFlywheelMotor.configNominalOutputVoltage(0.0f, 0.0f);
 		rightFlywheelMotor.configPeakOutputVoltage(12.0f, -12.0f);
 		rightFlywheelMotor.configMaxOutputVoltage(MAX_VOLTAGE);
 		
@@ -169,15 +172,12 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	}
 
 	public boolean isAtSpeed(double speed) {
-//		System.out.println("Flywheel Speed (L/R): " +leftFlywheelMotor.getSpeed() + "|" 
-//				+ rightFlywheelMotor.getSpeed());
 		
 		if ((getRightSpeed() <= speed && getRightSpeed() >= speed - SPEED_TOLERANCE)
 				|| (getRightSpeed() > speed && getRightSpeed() <= speed + SPEED_TOLERANCE)) {
-			System.out.println("Right Is At Speed " + getRightSpeed());
 			if ((getLeftSpeed() <= speed && getLeftSpeed() >= speed - SPEED_TOLERANCE)
 					|| (getLeftSpeed() > speed && getLeftSpeed() <= speed + SPEED_TOLERANCE)) {
-				System.out.println("Left is At Speed " +getLeftSpeed());
+			
 				return true;
 			}
 		}
@@ -191,6 +191,15 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 		Double value = sensorMap.get(Sensor.SHOOTER_BALL);
 		if (value != null)
 			proximityValue = (value == 1);
-		if (DEBUG) System.out.println(sensorMap.get(Sensor.SHOOTER_LIDAR));
+		
+		//This is routenly called regardless of motor activation, should use this to 
+		//put debug code.
+		if (DEBUG) {
+			System.out.print("Flywheel ");
+			System.out.print("L Speed: " + getLeftSpeed());
+			System.out.print("L Error: " + getLeftError());
+			System.out.print("R Speed: " + getRightSpeed());
+			System.out.println("R Error: " + getRightError());
+		}
 	}
 }

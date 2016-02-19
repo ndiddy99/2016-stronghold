@@ -1,9 +1,8 @@
 package org.usfirst.frc.team2537.robot.input;
 
-import org.usfirst.frc.team2537.robot.Robot;
-
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalOutput;
+import org.usfirst.frc.team2537.robot.Robot;
 
 public class LidarSensor implements SensorInterface {
 	//Const
@@ -19,7 +18,7 @@ public class LidarSensor implements SensorInterface {
 	private final Counter 		input;
 	private final DigitalOutput	trigger;
 	
-	public LidarSensor(int echoPort, int inputPort){
+	public LidarSensor(int triggerPort, int inputPort){
 		// tilt sensor that is a pwm over the dio port in ports
 		input = new Counter(inputPort);
 		// set the tilt sensor to semiperiod mode. 
@@ -31,7 +30,7 @@ public class LidarSensor implements SensorInterface {
 		//241874-counters-measuring-rotation-counting-pulses-and-more
 		
 		//The output.
-		trigger = new DigitalOutput(echoPort);
+		trigger = new DigitalOutput(triggerPort);
 		
 		//Set the power to low. This will force the lidar to keep printing values.
 		trigger.set(false);
