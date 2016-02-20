@@ -15,7 +15,7 @@ public class LidarSensor implements SensorInterface {
 	private static final double FACTOR = 10;//1E-3;
 	
 	//Vars
-	private final Counter 		input;
+	public final Counter 		input;
 	private final DigitalOutput	trigger;
 	
 	public LidarSensor(int triggerPort, int inputPort){

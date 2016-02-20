@@ -176,8 +176,8 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	int counter = 0;
 	public boolean isAtSpeed(double speed) {
 		System.out.println(counter);
-		if (Math.abs(getRightSpeed() - speed) <= SPEED_TOLERANCE
-				&& Math.abs(-getLeftSpeed() - speed) <= SPEED_TOLERANCE) {
+		if (Math.abs(-getRightSpeed() - speed) <= SPEED_TOLERANCE
+				&& Math.abs(getLeftSpeed() - speed) <= SPEED_TOLERANCE) {
 			counter++;
 		} else {
 			counter = 0;
