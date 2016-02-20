@@ -9,7 +9,7 @@ import org.usfirst.frc.team2537.robot.input.Ports;
  */
 public class ActuatorSubsystem extends Subsystem {
 	//Const
-	private static float extendedAngle = 90;
+	private static float extendedAngle = 45;
 	private static float retractedAngle = 0;
 	//Vars
 	private Servo actuator;
@@ -38,6 +38,11 @@ public class ActuatorSubsystem extends Subsystem {
 	public void setPosition(boolean extended){
 		//Set the position
 		actuator.setAngle((extended) ? extendedAngle : retractedAngle);
+	}
+	
+	public double getAngle() {
+		//Get angle.
+		return actuator.getAngle();
 	}
 	
 	@Override
