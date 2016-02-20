@@ -2,11 +2,17 @@ package org.usfirst.frc.team2537.robot.auto;
 
 import org.usfirst.frc.team2537.robot.Robot;
 
+import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class AutoRotateCommand extends Command{
 	private double speed;
-	private double angle; //are we using angle sensors (magnetometer, etc) or distance sensors (encoders)?
+	private double gangle; //are we using angle sensors (magnetometer, etc) or distance sensors (encoders)?
 	private static final boolean debug = false;
 	private static final double DEFAULT_SPEED = 0.5;
 	private static final double ROBOT_DIAMETER = 10; //Inches  TODO: Magic numbers are fun
@@ -26,29 +32,34 @@ public class AutoRotateCommand extends Command{
 	 */
 	public AutoRotateCommand(double angle){
 		requires(Robot.driveSys);
-		this.angle = angle;
-		if(angle < 0)
+		double gangle = ahrs.getAngle();	
+		if(gangle < angle)
 			speed = -DEFAULT_SPEED;
 		else
 			speed = DEFAULT_SPEED;
 	}
-	
+	  AHRS ahrs;
+	  RobotDrive myRobot;
+	  Joystick stick;
+	  PIDController turnController;
+	  double rotateToAngleRate;
+	  
 	/**
 	 * spins [angle] degrees at [speed]
 	 * counterclockwise (untested)
-	 * @param angle
+	 * @param angle]
 	 * @param speed
 	 */
 	public AutoRotateCommand(double angle, double speed){
 		requires(Robot.driveSys);
-		this.angle = angle;
+		angle = ahrs.getAngle();
 		this.speed = speed;
 	}
 	
 	@Override
 	protected void initialize() {
 		Robot.driveSys.resetEncoders();
-		if(debug) System.out.println("[AutoRotateCommand] Initializing. speed: " + speed + " angle: " + angle);
+		if(debug) System.out.println("[AutoRotateCommand] Initializing. speed: " + speed + " angle: " + gangle);
 		Robot.driveSys.setDriveMotors(-speed, speed);
 	}
 
@@ -59,7 +70,7 @@ public class AutoRotateCommand extends Command{
 
 	@Override
 	protected boolean isFinished() {
-		return getCurrentAngle() >= angle;
+		return getCurrentAngle() >= gangle;
 	}
 
 	@Override
@@ -77,4 +88,6 @@ public class AutoRotateCommand extends Command{
 	private double getCurrentAngle(){
 		return 360 * Robot.driveSys.getEncoderAverage()/2/ROBOT_DIAMETER * Math.PI;
 	}
+
+
 }

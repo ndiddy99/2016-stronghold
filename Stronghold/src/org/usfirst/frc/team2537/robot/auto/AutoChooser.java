@@ -15,6 +15,7 @@ public class AutoChooser {
 		autoChoice= new SendableChooser();
         autoChoice.addDefault("Default Autonomous", new DefaultAutoCommand());
         autoChoice.addObject("Drive Straight 5 inches", new AutoDriveStraightCommand(5));
+        autoChoice.addObject("CourseCorrectAuto", new CourseCorrect(100));
         autoChoice.addObject("Spin forever", new AutoRotateCommand());
         autoChoice.addObject("DriveToFun", new CommandGroup(){
         	{

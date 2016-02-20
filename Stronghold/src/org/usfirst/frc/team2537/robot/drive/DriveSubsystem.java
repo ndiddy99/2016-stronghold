@@ -29,7 +29,7 @@ public class DriveSubsystem extends Subsystem{
 		talonBackLeft = new CANTalon(Ports.BACK_LEFT_MOTOR_PORT);
 		talonBackRight = new CANTalon(Ports.BACK_RIGHT_MOTOR_PORT);
 //		SPEED MODE CODE
-//		setDriveControlMode(TalonControlMode.Speed);
+	//	setDriveControlMode(TalonControlMode.Speed);
 		
 		driveType = DriveType.doubleJoystickXbox;
 		drivingStraight = false;
@@ -193,16 +193,11 @@ public class DriveSubsystem extends Subsystem{
 	protected void setReversed(boolean reversed) {
 		this.reversed = reversed;
 	}
-	
-	public void registerButtons() {
+		public void registerButtons() {
 		HumanInput.registerPressedCommand(HumanInput.driveStraight, new DriveStraightToggleCommand(true));
-		
 		HumanInput.registerReleasedCommand(HumanInput.driveStraight, new DriveStraightToggleCommand(false));
-		
 		HumanInput.registerPressedCommand(HumanInput.driveSensetivityToggle, new DriveLowerSpeedToggleCommand());
-		
 		HumanInput.registerPressedCommand(HumanInput.driveTypeToggle, new DriveTypeToggleCommand());		
-		
 		HumanInput.registerPressedCommand(HumanInput.reverseDrive, new DriveReverseToggleCommand());
 	}
 

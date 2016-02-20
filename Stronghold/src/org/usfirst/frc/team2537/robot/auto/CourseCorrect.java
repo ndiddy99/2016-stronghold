@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2537.robot.auto;
 
+import org.usfirst.frc.team2537.robot.Robot;
+
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -13,33 +15,96 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class CourseCorrect extends Command {
+
+public class CourseCorrect extends Command implements PIDOutput{
 	private AHRS ahrs;
 	private RobotDrive myRobot;
 	private Joystick stick;
 	private PIDController turnController;
 	private double rotateToAngleRate;
-	private double angle;
+	
 	private double gangle;
-
-	public CourseCorrect(double x, double y) {
-
+	private double angle;
+	private double speed;
+	private double distance;
+	private static final boolean debug = false;
+	private static final double DEFAULT_SPEED = 0.5;
+	
+	 static final double kP = 0.03;
+	  static final double kI = 0.00;
+	  static final double kD = 0.00;
+	  static final double kF = 0.00;
+	  
+	  static final double kToleranceDegrees = 2.0f;
+	  
+	public CourseCorrect() {
+		this(0);
+	}
+	public CourseCorrect(double distance) {
+		requires(Robot.driveSys);
+		this.distance = distance;
+		if (distance < 0)
+			speed = -DEFAULT_SPEED;
+		else
+			speed = DEFAULT_SPEED;
+	}
+	
+	public CourseCorrect(double distance, double speed) {
+		requires(Robot.driveSys);
+		this.distance = distance;
+		this.speed = speed;
 	}
 
 	@Override
-	protected void initialize() {}
-
+	protected void initialize() {
+		Robot.driveSys.setDriveMotors(speed);
+		Robot.driveSys.resetEncoders();
+		 angle = ahrs.getAngle();
+		  myRobot.setSafetyEnabled(false);
+	      myRobot.drive(0.0, 0.0);    // stop robot
+	      Timer.delay(2.0);		    //    for 2 seconds
+	      myRobot.drive(0.0, 0.0);	
+	}
+	
 	
 	@Override
 	protected void execute() {
-
+		myRobot = new RobotDrive(0, 1);
+	      myRobot.setExpiration(0.1);
+	      stick = new Joystick(0);
+	      try {
+	          /* Communicate w/navX-MXP via the MXP SPI Bus.                                     */
+	          /* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
+	          /* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
+	          ahrs = new AHRS(SPI.Port.kMXP); 
+	      } catch (RuntimeException ex ) {
+	          DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
+	      }
+	      turnController = new PIDController(kP, kI, kD, kF, ahrs, this);
+	      turnController.setInputRange(-180.0f,  180.0f);
+	      turnController.setOutputRange(-1.0, 1.0);
+	      turnController.setAbsoluteTolerance(kToleranceDegrees);
+	      turnController.setContinuous(true);
+	      
 		Timer.delay(0.020); /* wait for one motor update time period (50Hz) */
-
+		
+		   myRobot.setSafetyEnabled(true);
+		     
+		          boolean rotateToAngle = false;
+		       
 		boolean zero_yaw_pressed = stick.getTrigger();
 		if (zero_yaw_pressed) {
 			ahrs.zeroYaw();
-			angle = ahrs.getAngle();
+			gangle = ahrs.getAngle();
 		}
+		if (gangle < angle ) {
+			turnController.setSetpoint(angle);
+			rotateToAngle = true;
+		};
+		if (gangle > angle ){
+			turnController.setSetpoint(angle);
+			rotateToAngle = true;
+		};
 		SmartDashboard.putBoolean("IMU_Connected", ahrs.isConnected());
 		SmartDashboard.putBoolean("IMU_IsCalibrating", ahrs.isCalibrating());
 		SmartDashboard.putNumber("IMU_Yaw", ahrs.getYaw());
@@ -145,23 +210,38 @@ public class CourseCorrect extends Command {
 		/* Connectivity Debugging Support */
 		SmartDashboard.putNumber("IMU_Byte_Count", ahrs.getByteCount());
 		SmartDashboard.putNumber("IMU_Update_Count", ahrs.getUpdateCount());
-
+		          }
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return false;
+		if (distance < 0) {
+			return (Robot.driveSys.getEncoderAverage() <= distance);
+		}
+		return (Robot.driveSys.getEncoderAverage() >= distance);
 	}
 
 	@Override
 	protected void end() {
-
+		if (debug){
+			System.out.println("[AutoDriveStraightCommand] good end");
+		}
+		Robot.driveSys.setDriveMotors(0);
 	}
 
 	@Override
 	protected void interrupted() {
-
+		if (debug){
+			System.out.println("[AutoDriveStraightCommand] bad end");
+		}
+		Robot.driveSys.setDriveMotors(0);
+	}
+	@Override
+	public void pidWrite(double output) {
+		// TODO Auto-generated method stub
+		rotateToAngleRate = output;
+		
 	}
 
-
 }
+
