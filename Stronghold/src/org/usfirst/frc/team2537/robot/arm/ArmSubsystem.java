@@ -10,7 +10,6 @@ import org.usfirst.frc.team2537.robot.input.XBoxButtons;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
-import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -33,7 +32,6 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 		armMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		armMotor.configEncoderCodesPerRev(250);
 		armMotor.setEncPosition(0);
-
 	}
 
 	public void initDefaultCommand() {

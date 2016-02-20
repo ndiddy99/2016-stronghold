@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2537.robot.arm;
 /**
- * List of variables of arm positions
+ * List of variables of arm positions, in encoder ticks / 1000
  * 
  * @author Alex Taber
  * 
@@ -8,7 +8,6 @@ package org.usfirst.frc.team2537.robot.arm;
 
 public class ArmPositions {
 	public static final double
-		//TODO Change to actual angle measurements
 		portcullisDownPos = -228.00,
 		portcullisUpPos = 0.00,
 		lowbarPos = 0.00,

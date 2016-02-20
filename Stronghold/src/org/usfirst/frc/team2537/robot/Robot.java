@@ -88,6 +88,7 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		contr.update();
 		cameraFeeds.run();
+		SmartDashboard.putNumber("Arm Pos", armSys.getAngle());
 		
 		sensorSys.handleEvents();
 	}
