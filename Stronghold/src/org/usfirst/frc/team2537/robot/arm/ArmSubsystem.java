@@ -10,6 +10,7 @@ import org.usfirst.frc.team2537.robot.input.XBoxButtons;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
+import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -44,11 +45,11 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 //		HumanInput.registerPressedCommand(HumanInput.raiseArm, new PresetArmCommand(ArmPositions.portcullisUpPos));
 //		HumanInput.registerPressedCommand(HumanInput.chevalButton, new ResetEncoders());
 	}
-//
-//	public void positionMode() {
-//		armMotor.changeControlMode(TalonControlMode.Position);
-//		armMotor.setPID(P, I, D);
-//	}
+
+	public void positionMode() {
+		armMotor.changeControlMode(TalonControlMode.Position);
+		armMotor.setPID(P, I, D);
+	}
 
 	/**
 	 * Used to get the angle that the manipulator arm is currently in
@@ -109,8 +110,8 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 		System.out.println(armMotor.getEncPosition());
 	}
 
-//	public void enable() {
-//		armMotor.enableControl();
-//
-//	}
+	public void enable() {
+		armMotor.enableControl();
+
+	}
 }
