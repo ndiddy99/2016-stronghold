@@ -8,9 +8,7 @@ import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
 import org.usfirst.frc.team2537.robot.input.Sensors;
 import org.usfirst.frc.team2537.robot.shooter.angle.AngleSubsystem;
 import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelSubsystem;
-import org.usfirst.frc.team2537.robot.shooter.actuator.ActuatorCommand;
 import org.usfirst.frc.team2537.robot.shooter.actuator.ActuatorSubsystem;
-import org.usfirst.frc.team2537.robot.shooter.actuator.ActuatorTestKickCommandGroup;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -71,8 +69,6 @@ public class Robot extends IterativeRobot {
 //		armSys.registerButtons();
 //		Scheduler.getInstance().add(new TestCommand());
 //		START_TIME = System.currentTimeMillis();
-		new ActuatorTestKickCommandGroup().start();
-		//new ActuatorCommand(false).start();
 	}
 	
 	@Override
@@ -116,11 +112,13 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		sensorSys.handleEvents();
 		Scheduler.getInstance().run();
-		//SmartDashboard.putNumber("Left Encoder Value", shooterFlywheelSys.getLeftSpeed());
-		//SmartDashboard.putNumber("Right Encoder Value", shooterFlywheelSys.getRightSpeed());
-		//SmartDashboard.putNumber("Right Error", shooterFlywheelSys.rightFlywheelMotor.getError());
-		//SmartDashboard.putNumber("Right Setpoint", shooterFlywheelSys.rightFlywheelMotor.getSetpoint());
-		//SmartDashboard.putNumber("Actuator Position", shooterActuatorSys.getAngle());
+		SmartDashboard.putNumber("Left Encoder Value", shooterFlywheelSys.getLeftSpeed());
+		SmartDashboard.putNumber("Right Encoder Value", shooterFlywheelSys.getRightSpeed());
+		SmartDashboard.putNumber("Right Error", shooterFlywheelSys.rightFlywheelMotor.getError());
+		SmartDashboard.putNumber("Right Setpoint", shooterFlywheelSys.rightFlywheelMotor.getSetpoint());
+		SmartDashboard.putNumber("Left Error", shooterFlywheelSys.leftFlywheelMotor.getError());
+		SmartDashboard.putNumber("Left Setpoint", shooterFlywheelSys.leftFlywheelMotor.getSetpoint());
+		SmartDashboard.putNumber("Actuator Position", shooterActuatorSys.getAngle());
 		System.out.println("Actuator Position: " + shooterActuatorSys.getAngle());
 	}
 	
