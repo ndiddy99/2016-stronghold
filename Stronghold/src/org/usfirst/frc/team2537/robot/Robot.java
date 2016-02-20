@@ -71,6 +71,7 @@ public class Robot extends IterativeRobot {
 		// armSys.registerButtons();
 		// Scheduler.getInstance().add(new TestCommand());
 		// START_TIME = System.currentTimeMillis();
+		
 	}
 
 	@Override
@@ -106,7 +107,9 @@ public class Robot extends IterativeRobot {
 			break;
 		}
 	}
-
+	@Override
+	public void teleopInit() {
+	}
 	@Override
 	/**
 	 * This function is called periodically during operator control
@@ -120,6 +123,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right Setpoint", shooterFlywheelSys.rightFlywheelMotor.getSetpoint());
 		SmartDashboard.putNumber("Left Error", shooterFlywheelSys.leftFlywheelMotor.getError());
 		SmartDashboard.putNumber("Left Setpoint", shooterFlywheelSys.leftFlywheelMotor.getSetpoint());
+		SmartDashboard.putNumber("Lidar Value", sensorSys.lidar.input.getPeriod());
+		SmartDashboard.putNumber("Tilt Sensor Value", sensorSys.tilt.input.getPeriod());
 		//TODO get proximity value
 //		SmartDashboard.putNumber("Proximity Sensor", );
 		SmartDashboard.putNumber("Actuator Position", shooterActuatorSys.getAngle());

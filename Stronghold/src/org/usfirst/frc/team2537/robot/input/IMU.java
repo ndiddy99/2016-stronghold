@@ -14,7 +14,7 @@ public class IMU implements SensorInterface {
 	private Sensor sensor;
 	
 	//Vars
-	private final Counter input;
+	public final Counter input;
 	
 	public IMU(int inputPort, int minAngle, int maxAngle, int maxPeriod, Sensor sensor){
 		this.maxAngle = maxAngle;
