@@ -20,7 +20,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	public static final boolean DEBUG = true;
 	private static final int ENCODER_TICKS_PER_REV = 20;
 	private static final double UNITS_PER_100MS_TO_RPM = 100.0 / 4096 * 1000 * 60;
-	private static final double SPEED_TOLERANCE = 20;
+	private static final double SPEED_TOLERANCE = 5;
 	//Max voltage that can be output from the flywheel talons.
 	private static final float MAX_VOLTAGE = 4.5f;
 	// 5 volts per second ramp rate for the flywheels
@@ -29,7 +29,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	private static final double P = 10.0, I = 0.0, D = 0.0;
 	// Vars
 	private boolean proximityValue = false;
-	private CANTalon leftFlywheelMotor;
+	public CANTalon leftFlywheelMotor;
 	public CANTalon rightFlywheelMotor;
 
 	public FlywheelSubsystem() {
@@ -66,10 +66,9 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 		
 
 		// Set rightFlywheelMotor to be reversed of everything else.
-		rightFlywheelMotor.reverseOutput(false
-				);
+		rightFlywheelMotor.reverseOutput(false);
 		rightFlywheelMotor.reverseSensor(false);
-		leftFlywheelMotor.reverseOutput(true);
+		leftFlywheelMotor.reverseOutput(false);
 		leftFlywheelMotor.reverseSensor(true);
 
 		// Set PID's

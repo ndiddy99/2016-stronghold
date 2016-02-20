@@ -53,7 +53,7 @@ public class FlywheelCommand extends Command {
 	public boolean isFinished() {
 		// Check if the flywheels are at the target speed
 
-		return Robot.shooterFlywheelSys.isAtSpeed(-TARGET_SPEED);
+		return Robot.shooterFlywheelSys.isAtSpeed(TARGET_SPEED);
 		}
 
 	@Override

@@ -116,6 +116,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right Encoder Value", shooterFlywheelSys.getRightSpeed());
 		SmartDashboard.putNumber("Right Error", shooterFlywheelSys.rightFlywheelMotor.getError());
 		SmartDashboard.putNumber("Right Setpoint", shooterFlywheelSys.rightFlywheelMotor.getSetpoint());
+		SmartDashboard.putNumber("Left Error", shooterFlywheelSys.leftFlywheelMotor.getError());
+		SmartDashboard.putNumber("Left Setpoint", shooterFlywheelSys.leftFlywheelMotor.getSetpoint());
 	}
 	
 	@Override
