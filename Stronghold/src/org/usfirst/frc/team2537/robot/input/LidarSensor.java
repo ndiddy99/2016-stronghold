@@ -15,7 +15,7 @@ public class LidarSensor implements SensorInterface {
 	private static final double FACTOR = 10;//1E-3;
 	
 	//Vars
-	private final Counter 		input;
+	public final Counter 		input;
 	private final DigitalOutput	trigger;
 	
 	public LidarSensor(int triggerPort, int inputPort){
@@ -25,7 +25,7 @@ public class LidarSensor implements SensorInterface {
 		// This means we are only measuring the period of the
 		// high pulses. When this is true, it counts just 
 		// high pulses.
-		//input.setSemiPeriodMode(true);
+		input.setSemiPeriodMode(true);
 		// http://wpilib.screenstepslive.com/s/4485/m/13809/l/
 		//241874-counters-measuring-rotation-counting-pulses-and-more
 		
@@ -44,5 +44,6 @@ public class LidarSensor implements SensorInterface {
 		
 		if (DEBUG) System.out.println("Lidar sees at an object at " + value + "cm.");
 		Robot.sensorSys.addValue(Sensor.SHOOTER_LIDAR, value);
+		
 	}
 }
