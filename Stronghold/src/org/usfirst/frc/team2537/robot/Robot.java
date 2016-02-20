@@ -55,11 +55,11 @@ public class Robot extends IterativeRobot {
 		sensorSys.registerListener(shooterAngleSys);
 		sensorSys.registerListener(shooterFlywheelSys);
 		//Shooter Flywheel
-		//shooterFlywheelSys.initDefaultCommand();
-		//shooterFlywheelSys.registerButtons();
+		shooterFlywheelSys.initDefaultCommand();
+		shooterFlywheelSys.registerButtons();
 		//Shooter Angle
-		//shooterAngleSys.initDefaultCommand();
-		//shooterAngleSys.registerButtons();
+		shooterAngleSys.initDefaultCommand();
+		shooterAngleSys.registerButtons();
 		//Shooter Actuator
 		shooterActuatorSys.initDefaultCommand();
 		shooterActuatorSys.registerButtons();
@@ -121,7 +121,7 @@ public class Robot extends IterativeRobot {
 		//TODO get proximity value
 //		SmartDashboard.putNumber("Proximity Sensor", );
 		SmartDashboard.putNumber("Actuator Position", shooterActuatorSys.getAngle());
-		System.out.println("Actuator Position: " + shooterActuatorSys.getAngle());
+		//System.out.println("Actuator Position: " + shooterActuatorSys.getAngle());
 	}
 	
 	@Override
