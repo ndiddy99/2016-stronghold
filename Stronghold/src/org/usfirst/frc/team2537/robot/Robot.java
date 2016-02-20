@@ -75,15 +75,15 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		sensorSys.handleEvents();
-		switch (autoSelected) {
-		case customAuto:
-			// Put custom auto code here
-			break;
-		case defaultAuto:
-		default:
-			// Put default auto code here
-			break;
-		}
+//		switch (autoSelected) {
+//		case customAuto:
+//			// Put custom auto code here
+//			break;
+//		case defaultAuto:
+//		default:
+//			// Put default auto code here
+//			break;
+//		}
 	}
 
 	/**

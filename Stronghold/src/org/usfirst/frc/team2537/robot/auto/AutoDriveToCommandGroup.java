@@ -10,6 +10,11 @@ public class AutoDriveToCommandGroup extends CommandGroup{
 	private double currentAngle = 0; //degrees
 	AHRS ahrs;
 	
+	/**
+	 * drives to x y pos in inches
+	 * @param x
+	 * @param y
+	 */
 	public AutoDriveToCommandGroup(double x, double y){
 /*		System.out.println("I ran");
 		System.out.println(ahrs);
