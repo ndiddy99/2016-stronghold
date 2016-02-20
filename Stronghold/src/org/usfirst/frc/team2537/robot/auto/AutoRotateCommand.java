@@ -4,10 +4,11 @@ import org.usfirst.frc.team2537.robot.Robot;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.Joystick;
+
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class AutoRotateCommand extends Command{
@@ -16,7 +17,12 @@ public class AutoRotateCommand extends Command{
 	private static final boolean debug = false;
 	private static final double DEFAULT_SPEED = 0.5;
 	private static final double ROBOT_DIAMETER = 10; //Inches  TODO: Magic numbers are fun
-	
+	 AHRS ahrs;
+	  RobotDrive myRobot;
+	  
+	  PIDController turnController;
+	  double rotateToAngleRate;
+	  
 	/**
 	 * spins 10000000 degrees at default speed
 	 * counterclockwise (untested)
@@ -31,6 +37,7 @@ public class AutoRotateCommand extends Command{
 	 * @param angle
 	 */
 	public AutoRotateCommand(double angle){
+		AHRS ahrs = new AHRS(Port.kMXP);
 		requires(Robot.driveSys);
 		double gangle = ahrs.getAngle();	
 		if(gangle < angle)
@@ -38,11 +45,7 @@ public class AutoRotateCommand extends Command{
 		else
 			speed = DEFAULT_SPEED;
 	}
-	  AHRS ahrs;
-	  RobotDrive myRobot;
-	  Joystick stick;
-	  PIDController turnController;
-	  double rotateToAngleRate;
+	 
 	  
 	/**
 	 * spins [angle] degrees at [speed]
@@ -51,6 +54,7 @@ public class AutoRotateCommand extends Command{
 	 * @param speed
 	 */
 	public AutoRotateCommand(double angle, double speed){
+		AHRS ahrs = new AHRS(Port.kMXP);
 		requires(Robot.driveSys);
 		angle = ahrs.getAngle();
 		this.speed = speed;

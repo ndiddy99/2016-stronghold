@@ -28,7 +28,7 @@ public class CourseCorrect extends Command implements PIDOutput{
 	private double speed;
 	private double distance;
 	private static final boolean debug = false;
-	private static final double DEFAULT_SPEED = 0.1;
+	private static final double DEFAULT_SPEED = 0.3;
 	
 	 static final double kP = 0.03;
 	  static final double kI = 0.00;
