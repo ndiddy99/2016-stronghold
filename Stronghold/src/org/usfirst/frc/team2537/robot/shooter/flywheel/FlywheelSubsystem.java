@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2537.robot.shooter.flywheel;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -21,6 +22,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	private static final int ENCODER_TICKS_PER_REV = 20;
 	private static final double UNITS_PER_100MS_TO_RPM = 100.0 / 4096 * 1000 * 60;
 	private static final double ERROR_TOLERANCE = 5;
+	private static final double SPEED_TOLERANCE = 5;
 	// Max voltage that can be output from the flywheel talons.
 	private static final float MAX_VOLTAGE = 12.0f;
 	// 5 volts per second ramp rate for the flywheels
@@ -170,29 +172,33 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	public boolean isBallPresent() {
 		return proximityValue;
 	}
-		double firstRightSpeed =0.0;
-		double firstLeftSpeed = 0.0;
-		double isAtSpeedStart = 0.0;
+//ArrayList<Double> rightSpeedValueSet = new ArrayList<Double>();
+//ArrayList<Double> leftSpeedValueSet = new ArrayList<Double>();
 	public boolean isAtSpeed(double speed) {
-		if(isAtSpeedStart == 0.0) {
-			isAtSpeedStart = System.currentTimeMillis();
-			firstRightSpeed = getRightSpeed();
-			firstLeftSpeed = getLeftSpeed();
-		}
-		if(System.currentTimeMillis() - isAtSpeedStart >= 50) {
-			if(Math.abs(firstRightSpeed - getRightSpeed()) <= ERROR_TOLERANCE) {
-				if(Math.abs(firstLeftSpeed - getLeftSpeed()) <= ERROR_TOLERANCE) {
-					if(getRightError() < ERROR_TOLERANCE && getLeftError() < ERROR_TOLERANCE) {
-						isAtSpeedStart = 0.0;
-						firstRightSpeed = 0.0;
-						firstLeftSpeed = 0.0;
-						return true;
-					}
-				}
-			}
+// Check if the speed of each motor is around the value we want for 10 measurements.
+//		if(rightSpeedValueSet.size() < 10) {
+//			rightSpeedValueSet.add(getRightSpeed());
+//			leftSpeedValueSet.add(getLeftSpeed());
+//		} else {
+//			for(int i = 0; i < rightSpeedValueSet.size(); i++) {
+//				if(Math.abs(rightSpeedValueSet.get(i) - speed) > SPEED_TOLERANCE || Math.abs(leftSpeedValueSet.get(i) - speed) > SPEED_TOLERANCE) {
+//					rightSpeedValueSet.clear();
+//					leftSpeedValueSet.clear();
+//					return false;
+//				}
+//			}
+//			rightSpeedValueSet.clear();
+//			leftSpeedValueSet.clear();
+//			return true;
+//		}
+		
+		if (getRightError() < ERROR_TOLERANCE && getLeftError() < ERROR_TOLERANCE
+				&& Math.abs(getRightSpeed() - speed) < SPEED_TOLERANCE
+				&& Math.abs(getLeftSpeed() - speed) < SPEED_TOLERANCE) {
+			return true;
 		}
 		return false;
-		
+
 	}
 
 	@Override

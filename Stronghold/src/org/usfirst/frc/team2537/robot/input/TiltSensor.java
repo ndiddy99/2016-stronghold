@@ -5,7 +5,7 @@ import org.usfirst.frc.team2537.robot.Robot;
 
 public class TiltSensor implements SensorInterface {
 	//Const
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 //	private static final double TILT_SENSOR_MAX_PERIOD = 1990 * Math.pow(10, -6);
 //	private static final double MAX_ANGLE = 180;// degrees (ball park, not right)
 	private static final double ANGLE_OFFSET = 90;//90 degrees from the sensor actually means 0
