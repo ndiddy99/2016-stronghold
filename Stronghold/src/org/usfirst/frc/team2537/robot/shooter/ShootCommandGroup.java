@@ -30,8 +30,8 @@ public class ShootCommandGroup extends CommandGroup {
     	//First make sure we are not running already.
     	addSequential(new FlywheelCommand(shootVelocity));
     	addSequential(new ActuatorCommand(true));//extend
-    	addSequential(new BallDetectionCommand(false));//Wait until ball is gone.
-    	addParallel(new ActuatorCommand(false));//retract
+    	//addSequential(new BallDetectionCommand(false));//Wait until ball is gone.
+//    	addParallel(new ActuatorCommand(false));//retract
     	addSequential(new FlywheelCommand(0.0));
     }
 	

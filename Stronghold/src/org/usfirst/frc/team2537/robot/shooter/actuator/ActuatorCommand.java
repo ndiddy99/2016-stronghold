@@ -9,7 +9,7 @@ import org.usfirst.frc.team2537.robot.Robot;
 public class ActuatorCommand extends Command {
 	//Varibles
 	private boolean extended;
-	private static double TIMEOUT = .25;
+	private static double TIMEOUT = 5;
 	
     public ActuatorCommand(boolean extended) {
         // Use requires() here to declare subsystem dependencies
@@ -30,6 +30,7 @@ public class ActuatorCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//What for the time.
+    	System.out.println("Actuator Running.");
     }
     
     @Override

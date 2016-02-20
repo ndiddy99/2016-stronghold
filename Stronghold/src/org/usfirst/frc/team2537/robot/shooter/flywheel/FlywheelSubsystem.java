@@ -20,7 +20,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	public static final boolean DEBUG = false;
 	private static final int ENCODER_TICKS_PER_REV = 20;
 	private static final double UNITS_PER_100MS_TO_RPM = 100.0 / 4096 * 1000 * 60;
-	private static final double ERROR_TOLERANCE = 5;
+	private static final double SPEED_TOLERANCE = 5;
 	// Max voltage that can be output from the flywheel talons.
 	private static final float MAX_VOLTAGE = 12.0f;
 	// 5 volts per second ramp rate for the flywheels
@@ -29,58 +29,58 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	private static final double P = 2.5, I = 0.01, D = 0.0;
 	// Vars
 	private boolean proximityValue = false;
-	public CANTalon leftFlywheelMotor;
 	public CANTalon rightFlywheelMotor;
+	public CANTalon leftFlywheelMotor;
 
 	public FlywheelSubsystem() {
 		// Make sure the the mode to velocity so we can modify it.
-		leftFlywheelMotor = new CANTalon(Ports.LEFT_FLYWHEEL_PORT);
 		rightFlywheelMotor = new CANTalon(Ports.RIGHT_FLYWHEEL_PORT);
+		leftFlywheelMotor = new CANTalon(Ports.LEFT_FLYWHEEL_PORT);
 
 		// Set encoder.
-		leftFlywheelMotor.setFeedbackDevice(QuadEncoder);
-		leftFlywheelMotor.configEncoderCodesPerRev(ENCODER_TICKS_PER_REV);
 		rightFlywheelMotor.setFeedbackDevice(QuadEncoder);
 		rightFlywheelMotor.configEncoderCodesPerRev(ENCODER_TICKS_PER_REV);
+		leftFlywheelMotor.setFeedbackDevice(QuadEncoder);
+		leftFlywheelMotor.configEncoderCodesPerRev(ENCODER_TICKS_PER_REV);
 
 		// Make sure the soft limits are disabled.
-		leftFlywheelMotor.enableForwardSoftLimit(false);
-		leftFlywheelMotor.enableReverseSoftLimit(false);
 		rightFlywheelMotor.enableForwardSoftLimit(false);
 		rightFlywheelMotor.enableReverseSoftLimit(false);
+		leftFlywheelMotor.enableForwardSoftLimit(false);
+		leftFlywheelMotor.enableReverseSoftLimit(false);
 
 		// Disable the limit switchs, as they do not exist.
-		leftFlywheelMotor.enableLimitSwitch(false, false);
 		rightFlywheelMotor.enableLimitSwitch(false, false);
+		leftFlywheelMotor.enableLimitSwitch(false, false);
 
 		// Nominal voltages, not sure if this is needed
 		// Something found indicated that if the PID is bad,
 		// voltage will ramp to the nominal Output, we should try
 		// turning these off.
-		leftFlywheelMotor.configNominalOutputVoltage(0.0f, 0.0f);
-		leftFlywheelMotor.configPeakOutputVoltage(12.0f, -12.0f);
-		leftFlywheelMotor.configMaxOutputVoltage(MAX_VOLTAGE);
 		rightFlywheelMotor.configNominalOutputVoltage(0.0f, 0.0f);
 		rightFlywheelMotor.configPeakOutputVoltage(12.0f, -12.0f);
 		rightFlywheelMotor.configMaxOutputVoltage(MAX_VOLTAGE);
+		leftFlywheelMotor.configNominalOutputVoltage(0.0f, 0.0f);
+		leftFlywheelMotor.configPeakOutputVoltage(12.0f, -12.0f);
+		leftFlywheelMotor.configMaxOutputVoltage(MAX_VOLTAGE);
 
 		// Set rightFlywheelMotor to be reversed of everything else.
-		rightFlywheelMotor.reverseOutput(false);
-		rightFlywheelMotor.reverseSensor(false);
 		leftFlywheelMotor.reverseOutput(false);
-		leftFlywheelMotor.reverseSensor(true);
+		leftFlywheelMotor.reverseSensor(false);
+		rightFlywheelMotor.reverseOutput(false);
+		rightFlywheelMotor.reverseSensor(true);
 
 		// Set PID's
-		leftFlywheelMotor.setPID(P, I, D);
-		leftFlywheelMotor.setF(0);
 		rightFlywheelMotor.setPID(P, I, D);
 		rightFlywheelMotor.setF(0);
-		rightFlywheelMotor.setVoltageRampRate(VOLTAGE_RAMP_RATE);
+		leftFlywheelMotor.setPID(P, I, D);
+		leftFlywheelMotor.setF(0);
 		leftFlywheelMotor.setVoltageRampRate(VOLTAGE_RAMP_RATE);
+		rightFlywheelMotor.setVoltageRampRate(VOLTAGE_RAMP_RATE);
 
 		// Make the talons go into the speed control mode.
-		leftFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
 		rightFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
+		leftFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
 	}
 
 	@Override
@@ -102,10 +102,10 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	public void setSpeed(double speed) {
 		System.out.println("Set Motor Speed");
 		if (DEBUG) {
-			System.out.println("Left Flywheel Speed: " + leftFlywheelMotor.getSpeed());
+			System.out.println("Left Flywheel Speed: " + rightFlywheelMotor.getSpeed());
 		}
-		leftFlywheelMotor.set(-speed);
-		rightFlywheelMotor.set(speed);
+		rightFlywheelMotor.set(-speed);
+		leftFlywheelMotor.set(speed);
 	}
 
 	// LEFT
@@ -116,10 +116,10 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	 */
 	public double getLeftSpeed() {
 		if (DEBUG) {
-			System.out.println("Left Flywheel Speed: " + leftFlywheelMotor.getSpeed());
-			System.out.println("Right Flywheel Speed: " + rightFlywheelMotor.getSpeed());
+			System.out.println("Left Flywheel Speed: " + rightFlywheelMotor.getSpeed());
+			System.out.println("Right Flywheel Speed: " + leftFlywheelMotor.getSpeed());
 		}
-		return leftFlywheelMotor.getSpeed();
+		return rightFlywheelMotor.getSpeed();
 	}
 
 	/**
@@ -136,7 +136,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 		 * 
 		 */
 		// Simplified for speed.
-		return leftFlywheelMotor.getError() * UNITS_PER_100MS_TO_RPM;
+		return rightFlywheelMotor.getError() * UNITS_PER_100MS_TO_RPM;
 	}
 
 	// RIGHT
@@ -147,9 +147,9 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	 */
 	public double getRightSpeed() {
 		if (DEBUG) {
-			System.out.println("Right Flywheel Speed: " + rightFlywheelMotor.getSpeed());
+			System.out.println("Right Flywheel Speed: " + leftFlywheelMotor.getSpeed());
 		}
-		return rightFlywheelMotor.getSpeed();
+		return leftFlywheelMotor.getSpeed();
 	}
 
 	/**
@@ -159,7 +159,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	 * @return Difference between current speed and wanted speed in RPM.
 	 */
 	public double getRightError() {
-		return rightFlywheelMotor.getError() * UNITS_PER_100MS_TO_RPM;
+		return leftFlywheelMotor.getError() * UNITS_PER_100MS_TO_RPM;
 	}
 
 	/**
@@ -170,29 +170,23 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	public boolean isBallPresent() {
 		return proximityValue;
 	}
-		double firstRightSpeed =0.0;
-		double firstLeftSpeed = 0.0;
-		double isAtSpeedStart = 0.0;
+
+	// Counter is only used for is at speed to determine how many consecutive
+	// measurments are at the speed that we want to be at.
+	int counter = 0;
 	public boolean isAtSpeed(double speed) {
-		if(isAtSpeedStart == 0.0) {
-			isAtSpeedStart = System.currentTimeMillis();
-			firstRightSpeed = getRightSpeed();
-			firstLeftSpeed = getLeftSpeed();
+		System.out.println(counter);
+		if (Math.abs(getRightSpeed() - speed) <= SPEED_TOLERANCE
+				&& Math.abs(-getLeftSpeed() - speed) <= SPEED_TOLERANCE) {
+			counter++;
+		} else {
+			counter = 0;
 		}
-		if(System.currentTimeMillis() - isAtSpeedStart >= 50) {
-			if(Math.abs(firstRightSpeed - getRightSpeed()) <= ERROR_TOLERANCE) {
-				if(Math.abs(firstLeftSpeed - getLeftSpeed()) <= ERROR_TOLERANCE) {
-					if(getRightError() < ERROR_TOLERANCE && getLeftError() < ERROR_TOLERANCE) {
-						isAtSpeedStart = 0.0;
-						firstRightSpeed = 0.0;
-						firstLeftSpeed = 0.0;
-						return true;
-					}
-				}
-			}
+		if (counter == 10) {
+			counter = 0;
+			return true;
 		}
 		return false;
-		
 	}
 
 	@Override
