@@ -12,7 +12,7 @@ public enum DriveType {
 		singleJoystickXbox.next = doubleJoystick;
 	}
 	
-	public DriveType getNext(){
+	public DriveType getNextDriveTypeInEnum(){
 		return next;
 	}
 }

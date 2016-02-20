@@ -75,6 +75,6 @@ public class AutoRotateCommand extends Command{
 	}
 
 	private double getCurrentAngle(){
-		return 360 * Robot.driveSys.getEncoders()/2/ROBOT_DIAMETER * Math.PI;
+		return 360 * Robot.driveSys.getEncoderAverage()/2/ROBOT_DIAMETER * Math.PI;
 	}
 }

@@ -5,19 +5,18 @@ import org.usfirst.frc.team2537.robot.input.Ports;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 
 public class DriveSubsystem extends Subsystem{
-	public CANTalon talonFrontLeft;
-	public CANTalon talonFrontRight;
-	public CANTalon talonBackRight;
-	public CANTalon talonBackLeft;
-	protected DriveType driveType;
-	protected boolean drivingStraight;
-	protected boolean driveLowerSpeed;
-	protected boolean reversed;
+	private CANTalon talonFrontLeft;
+	private CANTalon talonFrontRight;
+	private CANTalon talonBackRight;
+	private CANTalon talonBackLeft;
+	private DriveType driveType;
+	private boolean drivingStraight;
+	private boolean driveLowerSpeed;
+	private boolean reversed;
 
 	public static final double WHEEL_DIAMETER = 9; //Inches TODO: Magic numbers are fun
 	public static final double PulsesPerRevolution = 20; //for encoders
@@ -36,8 +35,8 @@ public class DriveSubsystem extends Subsystem{
 		drivingStraight = false;
 		driveLowerSpeed = false;
 		reversed = false;
-		talonFrontRight.enableForwardSoftLimit(false);
-		talonFrontRight.enableReverseSoftLimit(false);
+		enableForwardSoftLimit(false);
+		enableReverseSoftLimit(false);
 	}
 
 	/**
@@ -47,7 +46,7 @@ public class DriveSubsystem extends Subsystem{
 	 * @param talon The CANTalon to set the speed on
 	 * 
 	 */
-	public void set(double outputValue, CANTalon talon) {
+	private void set(double outputValue, CANTalon talon) {
 //		SPEED MODE CODE
 //		switch(talon.getControlMode()){
 //		case Speed: talon.set(1500 * outputValue); break;
@@ -97,14 +96,10 @@ public class DriveSubsystem extends Subsystem{
 		setRightDriveMotors(right);
 	}
 	
-	public double get(CANTalon talon){
-		return talon.get();
-	}
-	
 	/**
 	 * returns the average between all the encoders
 	 */
-	public double getEncoders(){
+	public double getEncoderAverage(){
 		return (getLeftEncoders() + getRightEncoders())/2;
 	}
 	
@@ -114,8 +109,11 @@ public class DriveSubsystem extends Subsystem{
 	 * @return the average of the front left and back left encoders in inches
 	 */
 	public double getLeftEncoders(){
-		return -(talonBackLeft.getEncPosition() + talonFrontLeft.getEncPosition())/2/PulsesPerRevolution * 
-				WHEEL_DIAMETER * Math.PI - initialLeftEncoders;
+		//gets average encoder value, converts to revolutions, 
+		//converts to distance in inches using circumfrense of the wheel, 
+		//subtracts from original position to find distance 
+		//multiply by -1 because left motors are wired backwards
+		return -(talonBackLeft.getEncPosition() + talonFrontLeft.getEncPosition())/2/PulsesPerRevolution * WHEEL_DIAMETER * Math.PI - initialLeftEncoders;
 	}
 	
 	/**
@@ -123,74 +121,91 @@ public class DriveSubsystem extends Subsystem{
 	 * @return the average of the front right and back right encoders in inches
 	 */
 	public double getRightEncoders(){
-		return (talonBackRight.getEncPosition() + talonFrontRight.getEncPosition())/2/PulsesPerRevolution * 
-				WHEEL_DIAMETER * Math.PI - initialRightEncoders;
+		//gets average encoder value, converts to revolutions, 
+		//converts to distance in inches using circumfrense of the wheel, 
+		//subtracts from original position to find distance 
+		return (talonBackRight.getEncPosition() + talonFrontRight.getEncPosition())/2/PulsesPerRevolution * WHEEL_DIAMETER * Math.PI - initialRightEncoders;
 	}
 	
 	/**
-	 * Sets the encoders to 0 (basically).
+	 * Sets the encoder position to 0.
 	 */
 	public void resetEncoders(){
 		initialLeftEncoders += getLeftEncoders();
 		initialRightEncoders += getRightEncoders();
 	}
 	
-	public void setDriveControlMode(TalonControlMode mode){
+	private void setDriveTalonControlMode(TalonControlMode mode){
 		talonFrontLeft.changeControlMode(mode);
 		talonBackLeft.changeControlMode(mode);
 		talonFrontRight.changeControlMode(mode);
 		talonBackRight.changeControlMode(mode);
 	}
+	
+	private void enableForwardSoftLimit(boolean b){
+		talonFrontRight.enableForwardSoftLimit(b);
+		talonFrontLeft.enableForwardSoftLimit(b);
+		talonBackRight.enableForwardSoftLimit(b);
+		talonBackLeft.enableForwardSoftLimit(b);
+	}
 
-	/**
-	 * sets the default command to JoystickControlCommand
-	 */
+	private void enableReverseSoftLimit(boolean b){
+		talonFrontRight.enableReverseSoftLimit(b);
+		talonFrontLeft.enableReverseSoftLimit(b);
+		talonBackRight.enableReverseSoftLimit(b);
+		talonBackLeft.enableReverseSoftLimit(b);
+	}
+
+
 	public void initDefaultCommand() {
 		DriveCommand drive = new DriveCommand();
 		this.setDefaultCommand(drive);
 	}
+	
+	protected void setDriveStraight(boolean b) {
+		drivingStraight = b;
+	}
+	
+	public boolean getDrivingStraight() {
+		return drivingStraight;
+	}
+	
+	protected void setLowSpeed(boolean b) {
+		driveLowerSpeed = b;
+	}
+	
+	protected boolean getLowSpeed() {
+		return driveLowerSpeed;
+	}
 
+	protected DriveType getDriveType() {
+		return driveType;
+	}
+
+	protected void setDriveType(DriveType driveType) {
+		this.driveType = driveType;
+	}
+	
+	protected boolean getReversed() {
+		return reversed;
+	}
+
+	protected void setReversed(boolean reversed) {
+		this.reversed = reversed;
+	}
 	
 	public void registerButtons() {
-		HumanInput.registerPressedCommand(HumanInput.driveStraight, new Command(){
-			@Override protected void initialize() {drivingStraight = true;}
-			@Override protected void execute() {}
-			@Override protected boolean isFinished() {return true;}			
-			@Override protected void end() {}
-			@Override protected void interrupted() {}
-		});
+		HumanInput.registerPressedCommand(HumanInput.driveStraight, new DriveStraightToggleCommand(true));
 		
-		HumanInput.registerReleasedCommand(HumanInput.driveStraight, new Command(){
-			@Override protected void initialize() {drivingStraight = false;}
-			@Override protected void execute() {}
-			@Override protected boolean isFinished() {return true;}
-			@Override protected void end() {}
-			@Override protected void interrupted() {}
-		});
+		HumanInput.registerReleasedCommand(HumanInput.driveStraight, new DriveStraightToggleCommand(false));
 		
-		HumanInput.registerPressedCommand(HumanInput.driveSensetivityToggle, new Command(){
-			@Override protected void initialize() {driveLowerSpeed = !driveLowerSpeed;}
-			@Override protected void execute() {}
-			@Override protected boolean isFinished() {return true;}
-			@Override protected void end() {}
-			@Override protected void interrupted() {}
-		});
+		HumanInput.registerPressedCommand(HumanInput.driveSensetivityToggle, new DriveLowerSpeedToggleCommand());
 		
-		HumanInput.registerPressedCommand(HumanInput.driveTypeToggle, new Command(){
-			@Override protected void initialize() {driveType = driveType.getNext();}
-			@Override protected void execute() {}
-			@Override protected boolean isFinished() {return true;}
-			@Override protected void end() {}
-			@Override protected void interrupted() {}
-		});		
+		HumanInput.registerPressedCommand(HumanInput.driveTypeToggle, new DriveTypeToggleCommand());		
 		
-		HumanInput.registerPressedCommand(HumanInput.reverseDrive, new Command(){
-			@Override protected void initialize() {reversed = !reversed;}
-			@Override protected void execute() {}
-			@Override protected boolean isFinished() {return true;}
-			@Override protected void end() {}
-			@Override protected void interrupted() {}
-		});
+		HumanInput.registerPressedCommand(HumanInput.reverseDrive, new DriveReverseToggleCommand());
 	}
+
+
 }
 		

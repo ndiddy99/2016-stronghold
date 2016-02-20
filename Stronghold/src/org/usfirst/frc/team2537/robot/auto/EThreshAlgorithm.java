@@ -1,5 +1,9 @@
 package org.usfirst.frc.team2537.robot.auto;
-
+/**
+ * used by Auto Distance Lines on the camera 
+ * @author Fahim Karim
+ *
+ */
 public enum EThreshAlgorithm {
 
     BINARY,

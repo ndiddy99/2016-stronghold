@@ -23,8 +23,6 @@ public class Robot extends IterativeRobot {
 	final String defaultAuto = "Default";
 	final String customAuto = "My Auto";
 	String autoSelected;
-	public static Sensors sensorSys;
-	public static ArmSubsystem armSys;
 	public static DriveSubsystem driveSys;
 	// My stuff
 
@@ -32,23 +30,10 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-//		SaberMessage.printMessage();
-		sensorSys = new Sensors();
-		sensorSys.init();
-		armSys = new ArmSubsystem();
-		armSys.initDefaultCommand();
-		armSys.registerButtons();
-
 		driveSys = new DriveSubsystem();
 		driveSys.initDefaultCommand();
 		driveSys.registerButtons();
-		sensorSys.registerListener(armSys);
 		autoChooser = new AutoChooser();
-	
-		CameraServer.getInstance().startAutomaticCapture("cam0");
-		
-//		(new CameraServerTwo()).startAutomaticCapture("cam0");
-
 	}
 
 	/**

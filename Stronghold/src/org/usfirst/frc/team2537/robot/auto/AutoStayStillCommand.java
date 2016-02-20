@@ -4,6 +4,11 @@ import org.usfirst.frc.team2537.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * Needs to be tested, probably need to rewrite using position mode
+ * @author Arden Zhang
+ *
+ */
 public class AutoStayStillCommand extends Command{
 	private double leftEncoder;
 	private double rightEncoder;
