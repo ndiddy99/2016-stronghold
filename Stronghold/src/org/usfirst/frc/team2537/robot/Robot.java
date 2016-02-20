@@ -2,6 +2,7 @@ package org.usfirst.frc.team2537.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
 import org.usfirst.frc.team2537.robot.input.Sensors;
@@ -62,6 +63,7 @@ public class Robot extends IterativeRobot {
 		//Shooter Actuator
 		shooterActuatorSys.initDefaultCommand();
 		shooterActuatorSys.registerButtons();
+		
 		//Arm
 //		armSys.initDefaultCommand();
 //		armSys.registerButtons();
@@ -110,7 +112,10 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		sensorSys.handleEvents();
 		Scheduler.getInstance().run();
-		
+		SmartDashboard.putNumber("Left Encoder Value", shooterFlywheelSys.getLeftSpeed());
+		SmartDashboard.putNumber("Right Encoder Value", shooterFlywheelSys.getRightSpeed());
+		SmartDashboard.putNumber("Right Error", shooterFlywheelSys.rightFlywheelMotor.getError());
+		SmartDashboard.putNumber("Right Setpoint", shooterFlywheelSys.rightFlywheelMotor.getSetpoint());
 	}
 	
 	@Override

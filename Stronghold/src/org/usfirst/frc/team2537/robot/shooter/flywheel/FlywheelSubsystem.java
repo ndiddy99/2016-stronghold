@@ -17,7 +17,7 @@ import static edu.wpi.first.wpilibj.CANTalon.FeedbackDevice.QuadEncoder;
 public class FlywheelSubsystem extends Subsystem implements SensorListener {
 
 	// Constants
-	public static final boolean DEBUG = false;
+	public static final boolean DEBUG = true;
 	private static final int ENCODER_TICKS_PER_REV = 20;
 	private static final double UNITS_PER_100MS_TO_RPM = 100.0 / 4096 * 1000 * 60;
 	private static final double SPEED_TOLERANCE = 20;
@@ -26,11 +26,11 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	// 5 volts per second ramp rate for the flywheels
 	private static final double VOLTAGE_RAMP_RATE = 12;
 	// yet
-	private static final double P = 100, I = .05, D = 0.0;
+	private static final double P = 10.0, I = 0.0, D = 0.0;
 	// Vars
 	private boolean proximityValue = false;
 	private CANTalon leftFlywheelMotor;
-	private CANTalon rightFlywheelMotor;
+	public CANTalon rightFlywheelMotor;
 
 	public FlywheelSubsystem() {
 		// Make sure the the mode to velocity so we can modify it.
@@ -57,16 +57,17 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 		//Something found indicated that if the PID is bad,
 		//voltage will ramp to the nominal Output, we should try 
 		//turning these off.
-		//leftFlywheelMotor.configNominalOutputVoltage(0.0f, 0.0f);
+		leftFlywheelMotor.configNominalOutputVoltage(0.0f, 0.0f);
 		leftFlywheelMotor.configPeakOutputVoltage(12.0f, -12.0f);
 		leftFlywheelMotor.configMaxOutputVoltage(MAX_VOLTAGE);
-		//rightFlywheelMotor.configNominalOutputVoltage(0.0f, 0.0f);
+		rightFlywheelMotor.configNominalOutputVoltage(0.0f, 0.0f);
 		rightFlywheelMotor.configPeakOutputVoltage(12.0f, -12.0f);
 		rightFlywheelMotor.configMaxOutputVoltage(MAX_VOLTAGE);
 		
 
 		// Set rightFlywheelMotor to be reversed of everything else.
-		rightFlywheelMotor.reverseOutput(false);
+		rightFlywheelMotor.reverseOutput(false
+				);
 		rightFlywheelMotor.reverseSensor(false);
 		leftFlywheelMotor.reverseOutput(true);
 		leftFlywheelMotor.reverseSensor(true);
