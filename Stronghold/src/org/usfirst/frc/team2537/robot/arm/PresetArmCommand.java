@@ -24,6 +24,8 @@ public class PresetArmCommand extends Command {
 	public PresetArmCommand(double angle) {
 		requires(Robot.armSys); 
 		angleToMoveTo = angle;
+		Robot.armSys.positionMode();
+		Robot.armSys.enable();
 	}
 
 	protected void initialize() {
