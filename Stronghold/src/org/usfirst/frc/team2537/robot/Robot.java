@@ -117,13 +117,11 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right Setpoint", shooterFlywheelSys.rightFlywheelMotor.getSetpoint());
 		SmartDashboard.putNumber("Left Error", shooterFlywheelSys.leftFlywheelMotor.getError());
 		SmartDashboard.putNumber("Left Setpoint", shooterFlywheelSys.leftFlywheelMotor.getSetpoint());
-		//TODO get proximity value
+
 //		SmartDashboard.putNumber("Proximity Sensor", );
 		SmartDashboard.putNumber("Actuator Position", shooterActuatorSys.getAngle());
 		SmartDashboard.putBoolean("Shooter Proximity Value", shooterFlywheelSys.isBallPresent());
 		SmartDashboard.putBoolean("Raw Proximity Value", sensorSys.prox.input.get());
-		// System.out.println("Actuator Position: " +
-		// shooterActuatorSys.getAngle());
 	}
 
 	@Override
