@@ -115,10 +115,10 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		SmartDashboard.putNumber("Left Encoder Value", shooterFlywheelSys.getLeftSpeed());
 		SmartDashboard.putNumber("Right Encoder Value", shooterFlywheelSys.getRightSpeed());
-		SmartDashboard.putNumber("Right Error", shooterFlywheelSys.leftFlywheelMotor.getError());
-		SmartDashboard.putNumber("Right Setpoint", shooterFlywheelSys.leftFlywheelMotor.getSetpoint());
-		SmartDashboard.putNumber("Left Error", shooterFlywheelSys.rightFlywheelMotor.getError());
-		SmartDashboard.putNumber("Left Setpoint", shooterFlywheelSys.rightFlywheelMotor.getSetpoint());
+		SmartDashboard.putNumber("Right Error", shooterFlywheelSys.rightFlywheelMotor.getError());
+		SmartDashboard.putNumber("Right Setpoint", shooterFlywheelSys.rightFlywheelMotor.getSetpoint());
+		SmartDashboard.putNumber("Left Error", shooterFlywheelSys.leftFlywheelMotor.getError());
+		SmartDashboard.putNumber("Left Setpoint", shooterFlywheelSys.leftFlywheelMotor.getSetpoint());
 		//TODO get proximity value
 //		SmartDashboard.putNumber("Proximity Sensor", );
 		SmartDashboard.putNumber("Actuator Position", shooterActuatorSys.getAngle());
