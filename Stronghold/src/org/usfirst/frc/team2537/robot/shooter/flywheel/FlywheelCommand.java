@@ -58,6 +58,7 @@ public class FlywheelCommand extends Command {
 
 	@Override
 	protected void end() {
+		System.out.println("Flywheel Command Finished");
 		// Nothing to finish with.
 		// Keep wheels spinning.
 	}

@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 public class ProximitySensor implements SensorInterface {
 	private static final boolean DEBUG = false;
 	
-	private DigitalInput input;
+	public DigitalInput input;
 	
 	public ProximitySensor(int port){
 		input = new DigitalInput(port);

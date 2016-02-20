@@ -17,16 +17,16 @@ import static edu.wpi.first.wpilibj.CANTalon.FeedbackDevice.QuadEncoder;
 public class FlywheelSubsystem extends Subsystem implements SensorListener {
 
 	// Constants
-	public static final boolean DEBUG = true;
+	public static final boolean DEBUG = false;
 	private static final int ENCODER_TICKS_PER_REV = 20;
 	private static final double UNITS_PER_100MS_TO_RPM = 100.0 / 4096 * 1000 * 60;
-	private static final double SPEED_TOLERANCE = 5;
+	private static final double ERROR_TOLERANCE = 5;
 	//Max voltage that can be output from the flywheel talons.
-	private static final float MAX_VOLTAGE = 4.5f;
+	private static final float MAX_VOLTAGE = 12.0f;
 	// 5 volts per second ramp rate for the flywheels
 	private static final double VOLTAGE_RAMP_RATE = 12;
 	// yet
-	private static final double P = 10.0, I = 0.0, D = 0.0;
+	private static final double P = 2.5, I = 0.01, D = 0.0;
 	// Vars
 	private boolean proximityValue = false;
 	public CANTalon leftFlywheelMotor;
@@ -104,7 +104,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 		if(DEBUG) {
 			System.out.println("Left Flywheel Speed: " +leftFlywheelMotor.getSpeed());
 		}
-		leftFlywheelMotor.set(speed);
+		leftFlywheelMotor.set(-speed);
 		rightFlywheelMotor.set(speed);
 	}
 
@@ -173,15 +173,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 
 	public boolean isAtSpeed(double speed) {
 		
-		if ((getRightSpeed() <= speed && getRightSpeed() >= speed - SPEED_TOLERANCE)
-				|| (getRightSpeed() > speed && getRightSpeed() <= speed + SPEED_TOLERANCE)) {
-			if ((getLeftSpeed() <= speed && getLeftSpeed() >= speed - SPEED_TOLERANCE)
-					|| (getLeftSpeed() > speed && getLeftSpeed() <= speed + SPEED_TOLERANCE)) {
-			
-				return true;
-			}
-		}
-		return false;
+		return ((getRightError() <= ERROR_TOLERANCE) && (getLeftError() <= ERROR_TOLERANCE));
 	}
 	
 	

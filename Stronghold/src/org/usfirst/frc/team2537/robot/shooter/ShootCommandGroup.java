@@ -18,7 +18,7 @@ import org.usfirst.frc.team2537.robot.shooter.actuator.ActuatorCommand;
 public class ShootCommandGroup extends CommandGroup {
 	private static final boolean DEBUG = true;
 	//The default velocity.
-    public static final double SHOOT_VELOCITY = 60.0;
+    public static final double SHOOT_VELOCITY = 1000;
     
     //Using default velocity.
     public ShootCommandGroup() {
