@@ -46,11 +46,11 @@ public class LidarSensor implements SensorInterface {
 		Robot.sensorSys.addValue(Sensor.SHOOTER_LIDAR, value);
 		
 		int count = input.get();
-		float period = input.getPeriod();
-		float rate = input.getRate();
+		float period = (float) input.getPeriod();
+		float rate = (float) input.getRate();
 		int samplesToAverage = input.getSamplesToAverage();
 		boolean stopped = input.getStopped();
-		float distance = input.getDistance();
+		float distance = (float) input.getDistance();
 		boolean direction = input.getDirection();
 	}
 }
