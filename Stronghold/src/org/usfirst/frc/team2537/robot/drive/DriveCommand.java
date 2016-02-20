@@ -2,7 +2,7 @@ package org.usfirst.frc.team2537.robot.drive;
 
 import org.usfirst.frc.team2537.robot.Robot;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
-import org.usfirst.frc.team2537.robot.input.xBoxButtons;
+import org.usfirst.frc.team2537.robot.input.XBoxButtons;
 
 import edu.wpi.first.wpilibj.Joystick.AxisType;
 //import edu.wpi.first.wpilibj.CANTalon;
@@ -48,9 +48,9 @@ public class DriveCommand extends Command {
 
 			// uses xbox x axis for rotation
 			left -= HumanInput.getXboxAxis(HumanInput.xboxController,
-					xBoxButtons.XBOX_LEFT_X_AXIS) / ROTATE_SCALE;
+					XBoxButtons.XBOX_LEFT_X_AXIS) / ROTATE_SCALE;
 			right += HumanInput.getXboxAxis(HumanInput.xboxController,
-					xBoxButtons.XBOX_LEFT_X_AXIS) / ROTATE_SCALE;
+					XBoxButtons.XBOX_LEFT_X_AXIS) / ROTATE_SCALE;
 			break;
 		case singleJoystick:
 			left = HumanInput.getJoystickAxis(HumanInput.leftJoystick,
@@ -64,26 +64,26 @@ public class DriveCommand extends Command {
 
 			// uses xbox x axis for rotation
 			left -= HumanInput.getXboxAxis(HumanInput.xboxController,
-					xBoxButtons.XBOX_LEFT_X_AXIS) / ROTATE_SCALE;
+					XBoxButtons.XBOX_LEFT_X_AXIS) / ROTATE_SCALE;
 			right += HumanInput.getXboxAxis(HumanInput.xboxController,
-					xBoxButtons.XBOX_LEFT_X_AXIS) / ROTATE_SCALE;
+					XBoxButtons.XBOX_LEFT_X_AXIS) / ROTATE_SCALE;
 
 			break;
 		case doubleJoystickXbox:
 			left = HumanInput.getXboxAxis(HumanInput.xboxController,
-					xBoxButtons.XBOX_LEFT_Y_AXIS);
+					XBoxButtons.XBOX_LEFT_Y_AXIS);
 			right = HumanInput.getXboxAxis(HumanInput.xboxController,
-					xBoxButtons.XBOX_RIGHT_Y_AXIS);
+					XBoxButtons.XBOX_RIGHT_Y_AXIS);
 			break;
 		case singleJoystickXbox:
 			left = HumanInput.getXboxAxis(HumanInput.xboxController,
-					xBoxButtons.XBOX_LEFT_Y_AXIS);
+					XBoxButtons.XBOX_LEFT_Y_AXIS);
 			right = left;
 
 			left -= HumanInput.getXboxAxis(HumanInput.xboxController,
-					xBoxButtons.XBOX_LEFT_X_AXIS);
+					XBoxButtons.XBOX_LEFT_X_AXIS);
 			right += HumanInput.getXboxAxis(HumanInput.xboxController,
-					xBoxButtons.XBOX_LEFT_X_AXIS);
+					XBoxButtons.XBOX_LEFT_X_AXIS);
 			break;
 		}
 

@@ -1,11 +1,8 @@
 package org.usfirst.frc.team2537.robot;
 
-import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
 import org.usfirst.frc.team2537.robot.auto.AutoChooser;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
-import org.usfirst.frc.team2537.robot.input.Sensors;
 
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -59,16 +56,6 @@ public class Robot extends IterativeRobot {
 	
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		sensorSys.handleEvents();
-		switch (autoSelected) {
-		case customAuto:
-			// Put custom auto code here
-			break;
-		case defaultAuto:
-		default:
-			// Put default auto code here
-			break;
-		}
 	}
 
 	/**
@@ -76,7 +63,6 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopInit(){
 		System.out.println("Teleop init");
-		Scheduler.getInstance().add(new RobotInit());
 		if(autoCommand != null)
 			autoCommand.cancel();
 	}
@@ -85,18 +71,12 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		sensorSys.handleEvents();
-		// Scheduler.getInstance().add(new driveCommand());
-		// System.out.println("hi");
-
 	}
 
 	/**
 	 * This function is called periodically during test mode
 	 */
 	public void testPeriodic() {
-		sensorSys.handleEvents();
-
 	}
 
 }
