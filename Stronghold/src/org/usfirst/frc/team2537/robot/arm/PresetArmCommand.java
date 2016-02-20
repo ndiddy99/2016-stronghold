@@ -34,10 +34,12 @@ public class PresetArmCommand extends Command {
 		if (ArmSubsystem.debug) System.out.println("Angle to move to: " + angleToMoveTo);
 		if (ArmSubsystem.debug) System.out.println("Current angle: " + currentAngle);
 		if (ArmSubsystem.debug) System.out.println("Ticks to move: " + (angleToMoveTo - currentAngle));
+		if (ArmSubsystem.debug) System.out.println("Rotations to move: " + (angleToMoveTo)/1000);
+		Robot.armSys.setArmTalon(angleToMoveTo/1000);
 	}
 
-	protected void execute() { 
-		Robot.armSys.setArmTalon(angleToMoveTo);
+	protected void execute() {
+		currentAngle = Robot.armSys.getAngle();
 	}
 
 	protected boolean isFinished() {
@@ -48,12 +50,10 @@ public class PresetArmCommand extends Command {
 	}
 
 	protected void end() {
-		Robot.armSys.setArmTalon(0);
 	}
 
 	protected void interrupted() {
 		if (ArmSubsystem.debug) System.out.println("[armSys] I've been interrupted!");
-		Robot.armSys.setArmTalon(0);
 	}
 
 }

@@ -21,7 +21,7 @@ public class Sensors {
 
 	public void init() {
 		sensors.add(new UltrasonicSensor(Ports.DRIVE_ULTRASONIC_ECHO, Ports.DRIVE_ULTRASONIC_INPUT));
-		sensors.add(new IMU(Ports.ARM_IMU, 0, 0));
+		sensors.add(new IMU(Ports.ARM_IMU, 0, 0, Sensor.ARM_ANGLE));
 	}
 
 	public void addValue(Sensor sensor, double val) {

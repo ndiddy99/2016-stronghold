@@ -85,12 +85,11 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
+		sensorSys.handleEvents();
 		Scheduler.getInstance().run();
 		contr.update();
 		cameraFeeds.run();
 		SmartDashboard.putNumber("Arm Pos", armSys.getAngle());
-		
-		sensorSys.handleEvents();
 	}
 
 	/**

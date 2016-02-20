@@ -8,13 +8,15 @@ public class IMU implements SensorInterface {
 	//Const
 	private double maxPeriod;
 	private double maxAngle;
+	private Sensor sensor;
 	
 	//Vars
 	private final Counter input;
 	
-	public IMU(int inputPort, int maxAngle, int maxPeriod){
+	public IMU(int inputPort, int maxAngle, int maxPeriod, Sensor sensor){
 		this.maxAngle = maxAngle;
 		this.maxPeriod = maxPeriod;
+		this.sensor = sensor;
 		input = new Counter(inputPort);
 		input.setSemiPeriodMode(true);
 	}
@@ -24,6 +26,6 @@ public class IMU implements SensorInterface {
 	}
 
 	public void getValue() {
-		Robot.sensorSys.addValue(Sensor.SHOOTER_ANGLE, getAngle());
+		Robot.sensorSys.addValue(sensor, getAngle());
 	}
 }

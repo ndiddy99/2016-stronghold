@@ -25,14 +25,14 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 	static final boolean debug = true;
 	double currentAngle;
 	double currentDist;
+	final int encoderTicksPerRev = 250;
 
 	public static final double P = 100.0, I = 0.0, D = 0.0;
 
 	public ArmSubsystem() {
 		armMotor = new CANTalon(Ports.ARM_TALON);
 		armMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		armMotor.configEncoderCodesPerRev(250);
-		armMotor.setEncPosition(0);
+		armMotor.configEncoderCodesPerRev(encoderTicksPerRev);
 	}
 
 	public void initDefaultCommand() {
@@ -40,10 +40,22 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 		this.setDefaultCommand(manual);
 	}
 
+	/**
+	 * Calling this will calibrate the arm (theoretically, assuming we're on
+	 * flat ground).
+	 * 
+	 * Works
+	 * 
+	 */
+	public void init() {
+		int anglesToEncTicks = (int) ((90 - currentAngle) * encoderTicksPerRev);
+		armMotor.setEncPosition(anglesToEncTicks);
+	}
+
 	public void registerButtons() {
-//		HumanInput.registerPressedCommand(HumanInput.lowerArm, new PresetArmCommand(ArmPositions.portcullisDownPos));
-//		HumanInput.registerPressedCommand(HumanInput.raiseArm, new PresetArmCommand(ArmPositions.portcullisUpPos));
-//		HumanInput.registerPressedCommand(HumanInput.chevalButton, new ResetEncoders());
+		HumanInput.registerPressedCommand(HumanInput.lowerArm, new PresetArmCommand(ArmPositions.portcullisDownPos));
+		HumanInput.registerPressedCommand(HumanInput.raiseArm, new PresetArmCommand(ArmPositions.portcullisUpPos));
+
 	}
 
 	public void positionMode() {
@@ -94,13 +106,13 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 	public void receivedValue(HashMap<Sensor, Double> e) {
 		try {
 			currentAngle = e.get(Sensor.ARM_ANGLE);
-		} catch (Exception error) {
+		} catch (NullPointerException error) {
 			if (debug)
 				System.out.println("Bad Angle Sensor");
 		}
 		try {
 			currentDist = e.get(Sensor.ULTRASONIC_DISTANCE);
-		} catch (Exception error) {
+		} catch (NullPointerException error) {
 			if (debug)
 				System.out.println("Bad Ultrasonic Sensor");
 		}
