@@ -13,7 +13,7 @@ import org.usfirst.frc.team2537.robot.Robot;
 public class BallDetectionCommand extends Command {
 	private static final boolean DEBUG = false;
 	
-	private static final double DEFAULT_TIMEOUT = 5;
+	private static final double DEFAULT_TIMEOUT = 1.0;
 	
 	final boolean waitUntilEnters;
 	/**

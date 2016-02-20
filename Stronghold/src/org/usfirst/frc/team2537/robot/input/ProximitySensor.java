@@ -15,8 +15,9 @@ public class ProximitySensor implements SensorInterface {
 	@Override
 	public void getValue() {
 		double value = (input.get()) ? 
-				1://true -> 1 
-				0;//false-> 0
+				0://true -> 0 
+				1;//false-> 1
+			
 		
 		if (DEBUG) {
 			System.out.print("Ball is ");
@@ -30,5 +31,6 @@ public class ProximitySensor implements SensorInterface {
 		
 		Robot.sensorSys.addValue(Sensor.SHOOTER_BALL, value);
 	}
-
+	
+	
 }

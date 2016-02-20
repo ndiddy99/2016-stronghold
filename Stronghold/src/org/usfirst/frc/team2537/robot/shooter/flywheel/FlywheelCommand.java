@@ -45,14 +45,16 @@ public class FlywheelCommand extends Command {
 
 	@Override
 	protected void initialize() {
-		// Get the motor values to start with.
+		System.out.println("Flywheel Command Started");
 		Robot.shooterFlywheelSys.setSpeed(TARGET_SPEED);
+		// Get the motor values to start with.
+		
 	}
 
 	@Override
 	public boolean isFinished() {
 		// Check if the flywheels are at the target speed
-
+	
 		return Robot.shooterFlywheelSys.isAtSpeed(TARGET_SPEED);
 		}
 

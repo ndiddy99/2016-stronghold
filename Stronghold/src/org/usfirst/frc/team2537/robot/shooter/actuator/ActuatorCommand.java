@@ -9,10 +9,12 @@ import org.usfirst.frc.team2537.robot.Robot;
 public class ActuatorCommand extends Command {
 	//Varibles
 	private boolean extended;
+	private static double TIMEOUT = 1.0;
 	
     public ActuatorCommand(boolean extended) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	super(TIMEOUT);
     	requires(Robot.shooterActuatorSys);
     	this.extended = extended;
     }

@@ -21,7 +21,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	private static final int ENCODER_TICKS_PER_REV = 20;
 	private static final double UNITS_PER_100MS_TO_RPM = 100.0 / 4096 * 1000 * 60;
 	private static final double ERROR_TOLERANCE = 5;
-	//Max voltage that can be output from the flywheel talons.
+	// Max voltage that can be output from the flywheel talons.
 	private static final float MAX_VOLTAGE = 12.0f;
 	// 5 volts per second ramp rate for the flywheels
 	private static final double VOLTAGE_RAMP_RATE = 12;
@@ -54,16 +54,15 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 		rightFlywheelMotor.enableLimitSwitch(false, false);
 
 		// Nominal voltages, not sure if this is needed
-		//Something found indicated that if the PID is bad,
-		//voltage will ramp to the nominal Output, we should try 
-		//turning these off.
+		// Something found indicated that if the PID is bad,
+		// voltage will ramp to the nominal Output, we should try
+		// turning these off.
 		leftFlywheelMotor.configNominalOutputVoltage(0.0f, 0.0f);
 		leftFlywheelMotor.configPeakOutputVoltage(12.0f, -12.0f);
 		leftFlywheelMotor.configMaxOutputVoltage(MAX_VOLTAGE);
 		rightFlywheelMotor.configNominalOutputVoltage(0.0f, 0.0f);
 		rightFlywheelMotor.configPeakOutputVoltage(12.0f, -12.0f);
 		rightFlywheelMotor.configMaxOutputVoltage(MAX_VOLTAGE);
-		
 
 		// Set rightFlywheelMotor to be reversed of everything else.
 		rightFlywheelMotor.reverseOutput(false);
@@ -101,8 +100,9 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	 *            in RPM.
 	 */
 	public void setSpeed(double speed) {
-		if(DEBUG) {
-			System.out.println("Left Flywheel Speed: " +leftFlywheelMotor.getSpeed());
+		System.out.println("Set Motor Speed");
+		if (DEBUG) {
+			System.out.println("Left Flywheel Speed: " + leftFlywheelMotor.getSpeed());
 		}
 		leftFlywheelMotor.set(-speed);
 		rightFlywheelMotor.set(speed);
@@ -115,9 +115,9 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	 * @return flywheel speed in RPM
 	 */
 	public double getLeftSpeed() {
-		if(DEBUG) {
-			System.out.println("Left Flywheel Speed: " +leftFlywheelMotor.getSpeed());
-			System.out.println("Right Flywheel Speed: " +rightFlywheelMotor.getSpeed());
+		if (DEBUG) {
+			System.out.println("Left Flywheel Speed: " + leftFlywheelMotor.getSpeed());
+			System.out.println("Right Flywheel Speed: " + rightFlywheelMotor.getSpeed());
 		}
 		return leftFlywheelMotor.getSpeed();
 	}
@@ -146,8 +146,8 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	 * @return flywheel speed in RPM
 	 */
 	public double getRightSpeed() {
-		if(DEBUG) {
-			System.out.println("Right Flywheel Speed: " +rightFlywheelMotor.getSpeed());
+		if (DEBUG) {
+			System.out.println("Right Flywheel Speed: " + rightFlywheelMotor.getSpeed());
 		}
 		return rightFlywheelMotor.getSpeed();
 	}
@@ -170,22 +170,41 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	public boolean isBallPresent() {
 		return proximityValue;
 	}
-
+		double firstRightSpeed =0.0;
+		double firstLeftSpeed = 0.0;
+		double isAtSpeedStart = 0.0;
 	public boolean isAtSpeed(double speed) {
+		if(isAtSpeedStart == 0.0) {
+			isAtSpeedStart = System.currentTimeMillis();
+			firstRightSpeed = getRightSpeed();
+			firstLeftSpeed = getLeftSpeed();
+		}
+		if(System.currentTimeMillis() - isAtSpeedStart >= 50) {
+			if(Math.abs(firstRightSpeed - getRightSpeed()) <= ERROR_TOLERANCE) {
+				if(Math.abs(firstLeftSpeed - getLeftSpeed()) <= ERROR_TOLERANCE) {
+					if(getRightError() < ERROR_TOLERANCE && getLeftError() < ERROR_TOLERANCE) {
+						isAtSpeedStart = 0.0;
+						firstRightSpeed = 0.0;
+						firstLeftSpeed = 0.0;
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 		
-		return ((getRightError() <= ERROR_TOLERANCE) && (getLeftError() <= ERROR_TOLERANCE));
 	}
-	
-	
+
 	@Override
 	// Proximity
 	public void receivedValue(HashMap<Sensor, Double> sensorMap) {
 		Double value = sensorMap.get(Sensor.SHOOTER_BALL);
 		if (value != null)
 			proximityValue = (value == 1);
-		
-		//This is routenly called regardless of motor activation, should use this to 
-		//put debug code.
+
+		// This is routenly called regardless of motor activation, should use
+		// this to
+		// put debug code.
 		if (DEBUG) {
 			System.out.print("Flywheel ");
 			System.out.print("L Speed: " + getLeftSpeed());

@@ -5,6 +5,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
+import org.usfirst.frc.team2537.robot.input.Ports;
+import org.usfirst.frc.team2537.robot.input.ProximitySensor;
 import org.usfirst.frc.team2537.robot.input.Sensors;
 import org.usfirst.frc.team2537.robot.shooter.angle.AngleSubsystem;
 import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelSubsystem;
@@ -55,15 +57,14 @@ public class Robot extends IterativeRobot {
 		sensorSys.registerListener(shooterAngleSys);
 		sensorSys.registerListener(shooterFlywheelSys);
 		//Shooter Flywheel
-		//shooterFlywheelSys.initDefaultCommand();
-		//shooterFlywheelSys.registerButtons();
+		shooterFlywheelSys.initDefaultCommand();
+		shooterFlywheelSys.registerButtons();
 		//Shooter Angle
-		//shooterAngleSys.initDefaultCommand();
-		//shooterAngleSys.registerButtons();
+		shooterAngleSys.initDefaultCommand();
+		shooterAngleSys.registerButtons();
 		//Shooter Actuator
 		shooterActuatorSys.initDefaultCommand();
 		shooterActuatorSys.registerButtons();
-		
 		//Arm
 //		armSys.initDefaultCommand();
 //		armSys.registerButtons();
@@ -121,7 +122,8 @@ public class Robot extends IterativeRobot {
 		//TODO get proximity value
 //		SmartDashboard.putNumber("Proximity Sensor", );
 		SmartDashboard.putNumber("Actuator Position", shooterActuatorSys.getAngle());
-		System.out.println("Actuator Position: " + shooterActuatorSys.getAngle());
+		SmartDashboard.putBoolean("Shooter Proximity Value", shooterFlywheelSys.isBallPresent());
+		SmartDashboard.putBoolean("Raw Proximity Value",sensorSys.prox.input.get());
 	}
 	
 	@Override
