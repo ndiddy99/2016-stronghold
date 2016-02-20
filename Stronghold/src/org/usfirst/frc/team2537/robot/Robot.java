@@ -68,6 +68,7 @@ public class Robot extends IterativeRobot {
 		// armSys.registerButtons();
 		// Scheduler.getInstance().add(new TestCommand());
 		// START_TIME = System.currentTimeMillis();
+		
 	}
 
 	@Override
@@ -103,7 +104,9 @@ public class Robot extends IterativeRobot {
 			break;
 		}
 	}
-
+	@Override
+	public void teleopInit() {
+	}
 	@Override
 	/**
 	 * This function is called periodically during operator control

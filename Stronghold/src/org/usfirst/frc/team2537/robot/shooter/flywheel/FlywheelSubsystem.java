@@ -2,6 +2,7 @@ package org.usfirst.frc.team2537.robot.shooter.flywheel;
 
 import java.util.HashMap;
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team2537.robot.input.Ports;
 import org.usfirst.frc.team2537.robot.input.Sensor;
@@ -29,8 +30,10 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	private static final double P = 2.5, I = 0.01, D = 0.0;
 	// Vars
 	private boolean proximityValue = false;
+	//The orientation assumes that you are facing the bot
 	public CANTalon leftFlywheelMotor;
 	public CANTalon rightFlywheelMotor;
+	public static final boolean ENABLE_VOLTAGE_OVERRIDE = false;
 
 	public FlywheelSubsystem() {
 		// Make sure the the mode to velocity so we can modify it.
@@ -100,12 +103,18 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	 *            in RPM.
 	 */
 	public void setSpeed(double speed) {
-		System.out.println("Set Motor Speed");
 		if (DEBUG) {
 			System.out.println("Left Flywheel Speed: " + leftFlywheelMotor.getSpeed());
 		}
+		if(!ENABLE_VOLTAGE_OVERRIDE) {
 		leftFlywheelMotor.set(-speed);
 		rightFlywheelMotor.set(speed);
+		} else {
+			leftFlywheelMotor.changeControlMode(TalonControlMode.PercentVbus);
+			rightFlywheelMotor.changeControlMode(TalonControlMode.PercentVbus);
+			leftFlywheelMotor.set(speed / 5670.666);
+			rightFlywheelMotor.set(speed/ 5670.666);
+		}
 	}
 
 	// LEFT
