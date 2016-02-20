@@ -14,7 +14,7 @@ public class ManualAngleCommand extends Command {
 	 * Adjust the sensitivity of the joystickAngle. Values less than 1 decrease
 	 * the maximum speed. Values more than 1 increase the maximum speed.
 	 */
-	private static final double JOYSTICK_FACTOR = 1;
+	private static final double JOYSTICK_FACTOR = -.75;
 
 	/**
 	 * Create a ManualAngleCommand. There typically should only be one.

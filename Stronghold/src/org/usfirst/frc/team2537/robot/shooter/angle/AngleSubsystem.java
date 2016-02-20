@@ -19,8 +19,10 @@ import org.usfirst.frc.team2537.robot.input.XboxButtons;
 public class AngleSubsystem extends Subsystem implements SensorListener {
 	
 	// The angle limits.
-	private static final double MAX_ANGLE = 90;// degrees (ball park, not right)
+	private static final double MAX_ANGLE = 20;// degrees (ball park, not right)
 	private static final double MIN_ANGLE = 0;// degrees(ball park, not right)
+	private static final double MAX_VOLTAGE = 6;
+	private static final double MIN_VOLTAGE = -3;
 	//Difference between the max and min angle.
 	public static final double MAX_ANGLE_DIFFERENCE = MAX_ANGLE - MIN_ANGLE; 
 	//Debugs
@@ -46,6 +48,9 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 		//The motor will backdrive if it does not get current.
 		//Set a electric break.
 		angleMotor.enableBrakeMode(true);
+		
+		//We don't want this going so fast.
+		angleMotor.configMaxOutputVoltage(6);
 	}
 
 	@Override
@@ -60,6 +65,9 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	 *            A speed between [-1, 1] which is the voltage that will be set.
 	 */
 	public void setVoltagePercent(double percent) {
+		if (isHighestPosition() && (percent > 0)) return;//Don't set
+		if (isLowestPosition() && (percent < 0)) return;//Don't set
+		//else
 		angleMotor.set(percent);
 	}
 
@@ -71,7 +79,7 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	 * @return boolean if the forward limit switch is activated.
 	 */
 	public boolean isHighestPosition() {
-		return angleMotor.isFwdLimitSwitchClosed();
+		return currentAngle >= MAX_ANGLE || angleMotor.isFwdLimitSwitchClosed();
 	}
 
 	/**
@@ -81,7 +89,7 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	 * @return boolean if the forward limit switch is activated.
 	 */
 	public boolean isLowestPosition() {
-		return angleMotor.isRevLimitSwitchClosed();
+		return currentAngle <= MIN_ANGLE || angleMotor.isRevLimitSwitchClosed();
 	}
 
 	// And get joystick values.
@@ -111,6 +119,13 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 			currentAngle = value;
 		}
 		if (DEBUG) System.out.println("Shooter Angle: " + value);
+		
+		//SOFT LIMITS
+		if (currentAngle <= MIN_ANGLE || currentAngle >= MAX_ANGLE){
+			//TOO High or low stop motor.
+			System.out.println("Position Is at Max.");
+			angleMotor.set(0);
+		}
 	}
 
 	/**
