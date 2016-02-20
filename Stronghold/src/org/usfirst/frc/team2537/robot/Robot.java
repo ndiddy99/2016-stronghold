@@ -5,8 +5,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
-import org.usfirst.frc.team2537.robot.input.Ports;
-import org.usfirst.frc.team2537.robot.input.ProximitySensor;
 import org.usfirst.frc.team2537.robot.input.Sensors;
 import org.usfirst.frc.team2537.robot.shooter.angle.AngleSubsystem;
 import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelSubsystem;
@@ -20,7 +18,6 @@ import org.usfirst.frc.team2537.robot.shooter.actuator.ActuatorSubsystem;
  * directory.
  */
 public class Robot extends IterativeRobot {
-//	long START_TIME;
 	final String defaultAuto = "Default";
 	final String customAuto = "My Auto";
 	String autoSelected;
@@ -31,47 +28,48 @@ public class Robot extends IterativeRobot {
 	public static AngleSubsystem shooterAngleSys;
 	public static ActuatorSubsystem shooterActuatorSys;
 	public static ArmSubsystem armSys;
-	
+
 	@Override
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-		//SaberMessage.printMessage();
-		//Dashboard
-		/*chooser = new SendableChooser();
-		chooser.addDefault("Default Auto", defaultAuto);
-		chooser.addObject("My Auto", customAuto);
-		SmartDashboard.putData("Auto choices", chooser);*/
-		
-		//Initalize Everything
-		sensorSys			= new Sensors();
-		shooterFlywheelSys	= new FlywheelSubsystem();
-		shooterAngleSys		= new AngleSubsystem();
-		shooterActuatorSys	= new ActuatorSubsystem();
-		armSys				= new ArmSubsystem();
-		//Sensors
+		// SaberMessage.printMessage();
+		// Dashboard
+		/*
+		 * chooser = new SendableChooser(); chooser.addDefault("Default Auto",
+		 * defaultAuto); chooser.addObject("My Auto", customAuto);
+		 * SmartDashboard.putData("Auto choices", chooser);
+		 */
+
+		// Initalize Everything
+		sensorSys = new Sensors();
+		shooterFlywheelSys = new FlywheelSubsystem();
+		shooterAngleSys = new AngleSubsystem();
+		shooterActuatorSys = new ActuatorSubsystem();
+		armSys = new ArmSubsystem();
+		// Sensors
 		sensorSys.init();
-		//sensorSys.registerListener(armSys);
+		// sensorSys.registerListener(armSys);
 		sensorSys.registerListener(shooterAngleSys);
 		sensorSys.registerListener(shooterFlywheelSys);
-		//Shooter Flywheel
+		// Shooter Flywheel
 		shooterFlywheelSys.initDefaultCommand();
 		shooterFlywheelSys.registerButtons();
-		//Shooter Angle
+		// Shooter Angle
 		shooterAngleSys.initDefaultCommand();
 		shooterAngleSys.registerButtons();
-		//Shooter Actuator
+		// Shooter Actuator
 		shooterActuatorSys.initDefaultCommand();
 		shooterActuatorSys.registerButtons();
-		//Arm
-//		armSys.initDefaultCommand();
-//		armSys.registerButtons();
-//		Scheduler.getInstance().add(new TestCommand());
-//		START_TIME = System.currentTimeMillis();
+		// Arm
+		// armSys.initDefaultCommand();
+		// armSys.registerButtons();
+		// Scheduler.getInstance().add(new TestCommand());
+		// START_TIME = System.currentTimeMillis();
 	}
-	
+
 	@Override
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
@@ -119,14 +117,15 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right Setpoint", shooterFlywheelSys.rightFlywheelMotor.getSetpoint());
 		SmartDashboard.putNumber("Left Error", shooterFlywheelSys.leftFlywheelMotor.getError());
 		SmartDashboard.putNumber("Left Setpoint", shooterFlywheelSys.leftFlywheelMotor.getSetpoint());
-		//TODO get proximity value
-//		SmartDashboard.putNumber("Proximity Sensor", );
+		// TODO get proximity value
+		// SmartDashboard.putNumber("Proximity Sensor", );
 		SmartDashboard.putNumber("Actuator Position", shooterActuatorSys.getAngle());
 		SmartDashboard.putBoolean("Shooter Proximity Value", shooterFlywheelSys.isBallPresent());
-		SmartDashboard.putBoolean("Raw Proximity Value",sensorSys.prox.input.get());
-		//System.out.println("Actuator Position: " + shooterActuatorSys.getAngle());
+		SmartDashboard.putBoolean("Raw Proximity Value", sensorSys.prox.input.get());
+		// System.out.println("Actuator Position: " +
+		// shooterActuatorSys.getAngle());
 	}
-	
+
 	@Override
 	/**
 	 * This function is called periodically during test mode
@@ -134,11 +133,12 @@ public class Robot extends IterativeRobot {
 	public void testPeriodic() {
 		sensorSys.handleEvents();
 		Scheduler.getInstance().run();
-		
+
 	}
+
 	@Override
 	public void disabledInit() {
-//		System.out.println(System.currentTimeMillis()-START_TIME);
+		// System.out.println(System.currentTimeMillis()-START_TIME);
 	}
 
 }

@@ -35,7 +35,7 @@ public class ActuatorCommand extends Command {
     @Override
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return false;//We will wait for timeout.s
+    	return isTimedOut();//We will wait for timeout.s
     }
     
     @Override
