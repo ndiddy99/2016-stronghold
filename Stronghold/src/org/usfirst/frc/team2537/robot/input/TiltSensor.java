@@ -1,15 +1,20 @@
 package org.usfirst.frc.team2537.robot.input;
 
-import org.usfirst.frc.team2537.robot.Robot;
-
 import edu.wpi.first.wpilibj.Counter;
+import org.usfirst.frc.team2537.robot.Robot;
 
 public class TiltSensor implements SensorInterface {
 	//Const
-	private static final boolean DEBUG = false;
-	private static final double TILT_SENSOR_MAX_PERIOD = 1990 * Math.pow(10, -6);
-	private static final double MAX_ANGLE = 90;// degrees (ball park, not right)
+	private static final boolean DEBUG = true;
+//	private static final double TILT_SENSOR_MAX_PERIOD = 1990 * Math.pow(10, -6);
+//	private static final double MAX_ANGLE = 180;// degrees (ball park, not right)
+	private static final double ANGLE_OFFSET = 90;//90 degrees from the sensor actually means 0
 	
+	private static final double INPUT_MIN_VALUE = 0;
+	private static final double INPUT_MAX_VALUE = 1990;
+	
+	private static final double OUTPUT_MIN_VALUE = 0;
+	private static final double OUTPUT_MAX_VALUE = 180;
 	//Vars
 	private final Counter input;
 	
@@ -33,7 +38,12 @@ public class TiltSensor implements SensorInterface {
 		// time interval of the most recent count.
 		
 		//Rough Calibration gathered from Adrian.
-		double value = input.getPeriod() * MAX_ANGLE / TILT_SENSOR_MAX_PERIOD;
+		//double value = input.getPeriod() * MAX_ANGLE / TILT_SENSOR_MAX_PERIOD - ANGLE_OFFSET;
+		//A rather complicated general conversion algorthm given by Adrian
+		double value = (input.getPeriod() - INPUT_MIN_VALUE) * (OUTPUT_MAX_VALUE - OUTPUT_MIN_VALUE) 
+				/ (INPUT_MAX_VALUE - INPUT_MIN_VALUE) + OUTPUT_MIN_VALUE - ANGLE_OFFSET;
+		
+		
 		if (DEBUG) System.out.println("Tilt sensor angle: " + value);
 		
 		Robot.sensorSys.addValue(Sensor.SHOOTER_ANGLE, value);
