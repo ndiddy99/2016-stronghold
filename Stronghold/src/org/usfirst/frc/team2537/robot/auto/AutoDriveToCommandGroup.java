@@ -11,14 +11,14 @@ public class AutoDriveToCommandGroup extends CommandGroup{
 	AHRS ahrs;
 	
 	public AutoDriveToCommandGroup(double x, double y){
-		System.out.println("I ran");
+/*		System.out.println("I ran");
 		System.out.println(ahrs);
 		currentX = ahrs.getDisplacementX();
 		System.out.println(currentX);
 		currentY = ahrs.getDisplacementY();
 		System.out.println(currentY);
 		currentAngle = ahrs.getAngle();
-		System.out.println(currentAngle);
+		System.out.println(currentAngle);*/
 
 		double angle = Math.toDegrees(Math.atan2(y, x)) - currentAngle;
 		while(angle > 180) angle -= 180;

@@ -45,7 +45,7 @@ public class Robot extends IterativeRobot {
 		sensorSys.registerListener(armSys);
 		autoChooser = new AutoChooser();
 	
-		CameraServer.getInstance().startAutomaticCapture("cam0");
+//		CameraServer.getInstance().startAutomaticCapture("cam0");
 		
 //		(new CameraServerTwo()).startAutomaticCapture("cam0");
 
