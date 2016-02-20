@@ -44,5 +44,13 @@ public class LidarSensor implements SensorInterface {
 		
 		if (DEBUG) System.out.println("Lidar sees at an object at " + value + "cm.");
 		Robot.sensorSys.addValue(Sensor.SHOOTER_LIDAR, value);
+		
+		int count = input.get();
+		float period = input.getPeriod();
+		float rate = input.getRate();
+		int samplesToAverage = input.getSamplesToAverage();
+		boolean stopped = input.getStopped();
+		float distance = input.getDistance();
+		boolean direction = input.getDirection();
 	}
 }
