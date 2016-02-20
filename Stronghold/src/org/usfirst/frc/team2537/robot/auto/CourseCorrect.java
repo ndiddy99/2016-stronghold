@@ -28,7 +28,7 @@ public class CourseCorrect extends Command implements PIDOutput{
 	private double speed;
 	private double distance;
 	private static final boolean debug = false;
-	private static final double DEFAULT_SPEED = 0.5;
+	private static final double DEFAULT_SPEED = 0.1;
 	
 	 static final double kP = 0.03;
 	  static final double kI = 0.00;
@@ -100,11 +100,16 @@ public class CourseCorrect extends Command implements PIDOutput{
 		if (gangle < angle ) {
 			turnController.setSetpoint(angle);
 			rotateToAngle = true;
-		};
-		if (gangle > angle ){
+		}
+		else if (gangle > angle ){
 			turnController.setSetpoint(angle);
 			rotateToAngle = true;
-		};
+	
+		}
+		else{
+			rotateToAngle = false;
+		}
+		;
 		SmartDashboard.putBoolean("IMU_Connected", ahrs.isConnected());
 		SmartDashboard.putBoolean("IMU_IsCalibrating", ahrs.isCalibrating());
 		SmartDashboard.putNumber("IMU_Yaw", ahrs.getYaw());
@@ -211,7 +216,7 @@ public class CourseCorrect extends Command implements PIDOutput{
 		SmartDashboard.putNumber("IMU_Byte_Count", ahrs.getByteCount());
 		SmartDashboard.putNumber("IMU_Update_Count", ahrs.getUpdateCount());
 		          }
-	}
+	
 
 	@Override
 	protected boolean isFinished() {
