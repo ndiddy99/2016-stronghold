@@ -25,7 +25,7 @@ public class LidarSensor implements SensorInterface {
 		// This means we are only measuring the period of the
 		// high pulses. When this is true, it counts just 
 		// high pulses.
-		//input.setSemiPeriodMode(true);
+		input.setSemiPeriodMode(true);
 		// http://wpilib.screenstepslive.com/s/4485/m/13809/l/
 		//241874-counters-measuring-rotation-counting-pulses-and-more
 		
