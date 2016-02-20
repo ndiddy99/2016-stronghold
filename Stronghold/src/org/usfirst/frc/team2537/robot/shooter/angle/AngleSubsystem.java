@@ -22,7 +22,6 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	private static final double MAX_ANGLE = 20;// degrees (ball park, not right)
 	private static final double MIN_ANGLE = 0;// degrees(ball park, not right)
 	private static final double MAX_VOLTAGE = 6;
-	private static final double MIN_VOLTAGE = -3;
 	//Difference between the max and min angle.
 	public static final double MAX_ANGLE_DIFFERENCE = MAX_ANGLE - MIN_ANGLE; 
 	//Debugs
@@ -50,7 +49,7 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 		angleMotor.enableBrakeMode(true);
 		
 		//We don't want this going so fast.
-		angleMotor.configMaxOutputVoltage(6);
+		angleMotor.configMaxOutputVoltage(MAX_VOLTAGE);
 	}
 
 	@Override
