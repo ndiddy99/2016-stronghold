@@ -25,6 +25,7 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 	static final boolean debug = true;
 	double currentAngle;
 	double currentDist;
+	double armIMUAngle;
 	final int encoderTicksPerRev = 250;
 
 	public static final double P = 100.0, I = 0.0, D = 0.0;
@@ -106,7 +107,7 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 	 */
 	public void receivedValue(HashMap<Sensor, Double> e) {
 		try {
-			currentAngle = e.get(Sensor.ARM_ANGLE);
+			armIMUAngle = e.get(Sensor.ARM_ANGLE);
 		} catch (NullPointerException error) {
 			if (debug)
 				System.out.println("Bad Angle Sensor");
@@ -126,5 +127,9 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 	public void enable() {
 		armMotor.enableControl();
 
+	}
+
+	public double getIMUAngle() {
+		return armIMUAngle;
 	}
 }

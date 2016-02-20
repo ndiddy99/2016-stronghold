@@ -28,8 +28,8 @@ public class Robot extends IterativeRobot {
 	public static Sensors sensorSys;
 	public static ArmSubsystem armSys;
 	public static DriveSubsystem driveSys;
-	private Controller contr = new Controller(Config.Controller.chn, Config.Controller.maxButtons, Config.Controller.linearity);
-    private CameraFeeds cameraFeeds = new CameraFeeds(contr);
+//	private Controller contr = new Controller(Config.Controller.chn, Config.Controller.maxButtons, Config.Controller.linearity);
+//    private CameraFeeds cameraFeeds = new CameraFeeds(contr);
     
 	public void robotInit() {
 		sensorSys = new Sensors();
@@ -79,7 +79,7 @@ public class Robot extends IterativeRobot {
 	 * 
 	 */
 	public void teleopInit(){
-		cameraFeeds.init();
+//		cameraFeeds.init();
 	}
 	/**
 	 * This function is called periodically during operator control
@@ -87,16 +87,16 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		sensorSys.handleEvents();
 		Scheduler.getInstance().run();
-		contr.update();
-		cameraFeeds.run();
-		SmartDashboard.putNumber("Arm Pos", armSys.getAngle());
+//		contr.update();
+//		cameraFeeds.run();
+		SmartDashboard.putNumber("Arm Angle", armSys.getIMUAngle());
 	}
 
 	/**
 	 * This function is called periodically during test mode
 	 */
 	public void testPeriodic() {
-		cameraFeeds.end();
+//		cameraFeeds.end();
 	}
 
 }

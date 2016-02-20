@@ -6,26 +6,28 @@ import edu.wpi.first.wpilibj.Counter;
 
 public class IMU implements SensorInterface {
 	//Const
-	private double maxPeriod;
-	private double maxAngle;
+	private int maxPeriod;
+	private int maxAngle;
+	private int minAngle;
 	private Sensor sensor;
 	
 	//Vars
 	private final Counter input;
 	
-	public IMU(int inputPort, int maxAngle, int maxPeriod, Sensor sensor){
+	public IMU(int inputPort, int minAngle, int maxAngle, int maxPeriod, Sensor sensor){
 		this.maxAngle = maxAngle;
+		this.minAngle = minAngle;
 		this.maxPeriod = maxPeriod;
 		this.sensor = sensor;
 		input = new Counter(inputPort);
 		input.setSemiPeriodMode(true);
 	}
-	
-	public double getAngle() {
-		return (input.getPeriod() / maxPeriod * maxAngle);
-	}
 
 	public void getValue() {
-		Robot.sensorSys.addValue(sensor, getAngle());
+		Robot.sensorSys.addValue(sensor, getAngle(input.getPeriod(), 16, maxPeriod, minAngle, maxAngle));
+	}
+	
+	private double getAngle(double x, int in_min, int in_max, int out_min, int out_max) {
+	  return (x * 1000000 - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 	}
 }
