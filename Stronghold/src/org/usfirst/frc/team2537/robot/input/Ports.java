@@ -22,8 +22,8 @@ public final class Ports {
 	BACK_LEFT_MOTOR_PORT = 4,
 	ARM_TALON = 5, //Change when confirmed
 	SHOOTER_ANGLE_PORT		= 4,
-	LEFT_FLYWHEEL_PORT		= 2,
-	RIGHT_FLYWHEEL_PORT		= 1,
+	RIGHT_FLYWHEEL_PORT		= 2,
+	LEFT_FLYWHEEL_PORT		= 1,
 	
 	//PWM
 	ACTUATOR_PORT = 6,

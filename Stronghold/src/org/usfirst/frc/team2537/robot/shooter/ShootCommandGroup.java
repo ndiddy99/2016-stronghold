@@ -18,7 +18,7 @@ import org.usfirst.frc.team2537.robot.shooter.actuator.ActuatorCommand;
 public class ShootCommandGroup extends CommandGroup {
 	private static final boolean DEBUG = true;
 	//The default velocity.
-    public static final double SHOOT_VELOCITY = 200;
+    public static final double SHOOT_VELOCITY = 1000;
     
     //Using default velocity.
     public ShootCommandGroup() {
@@ -30,8 +30,8 @@ public class ShootCommandGroup extends CommandGroup {
     	//First make sure we are not running already.
     	addSequential(new FlywheelCommand(shootVelocity));
     	addSequential(new ActuatorCommand(true));//extend
-    	addSequential(new BallDetectionCommand(false));//Wait until ball is gone.
-    	addParallel(new ActuatorCommand(false));//retract
+    	//addSequential(new BallDetectionCommand(false));//Wait until ball is gone.
+//    	addParallel(new ActuatorCommand(false));//retract
     	addSequential(new FlywheelCommand(0.0));
     }
 	
