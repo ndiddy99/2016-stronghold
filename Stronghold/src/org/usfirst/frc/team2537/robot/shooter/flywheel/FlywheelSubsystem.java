@@ -17,7 +17,7 @@ import static edu.wpi.first.wpilibj.CANTalon.FeedbackDevice.QuadEncoder;
 public class FlywheelSubsystem extends Subsystem implements SensorListener {
 
 	// Constants
-	public static final boolean DEBUG = true;
+	public static final boolean DEBUG = false;
 	private static final int ENCODER_TICKS_PER_REV = 20;
 	private static final double UNITS_PER_100MS_TO_RPM = 100.0 / 4096 * 1000 * 60;
 	private static final double SPEED_TOLERANCE = 20;

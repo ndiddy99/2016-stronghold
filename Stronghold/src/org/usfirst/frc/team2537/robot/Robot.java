@@ -8,7 +8,9 @@ import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
 import org.usfirst.frc.team2537.robot.input.Sensors;
 import org.usfirst.frc.team2537.robot.shooter.angle.AngleSubsystem;
 import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelSubsystem;
+import org.usfirst.frc.team2537.robot.shooter.actuator.ActuatorCommand;
 import org.usfirst.frc.team2537.robot.shooter.actuator.ActuatorSubsystem;
+import org.usfirst.frc.team2537.robot.shooter.actuator.ActuatorTestKickCommandGroup;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -55,11 +57,11 @@ public class Robot extends IterativeRobot {
 		sensorSys.registerListener(shooterAngleSys);
 		sensorSys.registerListener(shooterFlywheelSys);
 		//Shooter Flywheel
-		shooterFlywheelSys.initDefaultCommand();
-		shooterFlywheelSys.registerButtons();
+		//shooterFlywheelSys.initDefaultCommand();
+		//shooterFlywheelSys.registerButtons();
 		//Shooter Angle
-		shooterAngleSys.initDefaultCommand();
-		shooterAngleSys.registerButtons();
+		//shooterAngleSys.initDefaultCommand();
+		//shooterAngleSys.registerButtons();
 		//Shooter Actuator
 		shooterActuatorSys.initDefaultCommand();
 		shooterActuatorSys.registerButtons();
@@ -69,6 +71,8 @@ public class Robot extends IterativeRobot {
 //		armSys.registerButtons();
 //		Scheduler.getInstance().add(new TestCommand());
 //		START_TIME = System.currentTimeMillis();
+		new ActuatorTestKickCommandGroup().start();
+		//new ActuatorCommand(false).start();
 	}
 	
 	@Override
@@ -85,7 +89,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousInit() {
 		autoSelected = (String) chooser.getSelected();
-		// autoSelected = SmartDashboard.getString("Auto Selector", defaultAuto);
+		autoSelected = SmartDashboard.getString("Auto Selector", defaultAuto);
 		System.out.println("Auto selected: " + autoSelected);
 	}
 
@@ -112,10 +116,12 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		sensorSys.handleEvents();
 		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("Left Encoder Value", shooterFlywheelSys.getLeftSpeed());
-		SmartDashboard.putNumber("Right Encoder Value", shooterFlywheelSys.getRightSpeed());
-		SmartDashboard.putNumber("Right Error", shooterFlywheelSys.rightFlywheelMotor.getError());
-		SmartDashboard.putNumber("Right Setpoint", shooterFlywheelSys.rightFlywheelMotor.getSetpoint());
+		//SmartDashboard.putNumber("Left Encoder Value", shooterFlywheelSys.getLeftSpeed());
+		//SmartDashboard.putNumber("Right Encoder Value", shooterFlywheelSys.getRightSpeed());
+		//SmartDashboard.putNumber("Right Error", shooterFlywheelSys.rightFlywheelMotor.getError());
+		//SmartDashboard.putNumber("Right Setpoint", shooterFlywheelSys.rightFlywheelMotor.getSetpoint());
+		//SmartDashboard.putNumber("Actuator Position", shooterActuatorSys.getAngle());
+		System.out.println("Actuator Position: " + shooterActuatorSys.getAngle());
 	}
 	
 	@Override
