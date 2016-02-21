@@ -2,4 +2,7 @@
 /Stronghold/build.*
 /Stronghold/.classpath
 /build/
+<<<<<<< HEAD
 /Stronghold/.gitignore
+=======
+>>>>>>> refs/remotes/origin/shooter

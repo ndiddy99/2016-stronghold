@@ -9,5 +9,7 @@ import java.util.HashMap;
  *
  */
 public interface SensorListener {
+
 	void receivedValue(HashMap<Sensor, Double> sensorVals);
 }
+

@@ -13,23 +13,36 @@ import java.util.List;
 public class Sensors {
 	private List<SensorListener> listeners = new ArrayList<SensorListener>();
 	private List<SensorInterface> sensors = new ArrayList<SensorInterface>();
-	public HashMap<Sensor, Double> sensorVals = new HashMap<Sensor, Double>();
 
+	private HashMap<Sensor, Double> sensorVals = new HashMap<Sensor, Double>();
+	public ProximitySensor prox = new ProximitySensor(Ports.SHOOTER_PROXIMITY_PORT);
+	public IMU tilt = new IMU(Ports.TILT_SENSOR_PORT, 0, 180, 2023, Sensor.SHOOTER_ANGLE);
+	public LidarSensor lidar = new LidarSensor(Ports.LIDAR_SENSOR_TRIGGER_PORT, Ports.LIDAR_SENSOR_INPUT_PORT);
+	public UltrasonicSensor ultrasonic = new UltrasonicSensor(Ports.DRIVE_ULTRASONIC_ECHO, Ports.DRIVE_ULTRASONIC_INPUT);
+	
 	public void registerListener(SensorListener listener) {
 		listeners.add(listener);
 	}
 
 	public void init() {
-		sensors.add(new UltrasonicSensor(Ports.DRIVE_ULTRASONIC_ECHO, Ports.DRIVE_ULTRASONIC_INPUT));
-		sensors.add(new IMU(Ports.ARM_IMU, -90, 90, 2023, Sensor.ARM_ANGLE));
-		sensors.add(new LidarSensor(Ports.SHOOTER_LIDAR_TRIGGER, Ports.SHOOTER_LIDAR_INPUT, Sensor.SHOOTER_LIDAR));
+
+		sensors.add(ultrasonic);
+		sensors.add(tilt);
+		sensors.add(lidar);
+//		sensors.add(new ProximitySensor(Ports.SHOOTER_PROXIMITY_PORT));
+		sensors.add(prox);
+
 	}
+
 
 	public void addValue(Sensor sensor, double val) {
 		sensorVals.put(sensor, val);
 	}
 
 	public void handleEvents() {
+	
+		sensorVals.clear();//Make sure we don't copy old values.
+		
 		for (SensorInterface s : sensors) {
 			s.getValue();
 		}

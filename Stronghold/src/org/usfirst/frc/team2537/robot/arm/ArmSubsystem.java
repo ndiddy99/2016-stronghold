@@ -6,7 +6,7 @@ import org.usfirst.frc.team2537.robot.input.HumanInput;
 import org.usfirst.frc.team2537.robot.input.Ports;
 import org.usfirst.frc.team2537.robot.input.Sensor;
 import org.usfirst.frc.team2537.robot.input.SensorListener;
-import org.usfirst.frc.team2537.robot.input.XBoxButtons;
+import org.usfirst.frc.team2537.robot.input.XboxButtons;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class ArmSubsystem extends Subsystem implements SensorListener {
 
-	public CANTalon armMotor = new CANTalon(Ports.ARM_TALON);
+	public CANTalon armMotor;
 	static final boolean debug = true;
 	double currentAngle;
 	double currentDist;
@@ -99,7 +99,7 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 	 * @return double of the right joystick
 	 */
 	public double getRightJoystick() {
-		return HumanInput.getXboxAxis(HumanInput.xboxController, XBoxButtons.XBOX_RIGHT_Y_AXIS);
+		return HumanInput.getXboxAxis(HumanInput.xboxController, XboxButtons.XBOX_RIGHT_Y_AXIS);
 	}
 
 	/**
