@@ -1,50 +1,31 @@
 package org.usfirst.frc.team2537.robot.auto;
 
 import org.usfirst.frc.team2537.robot.Robot;
+import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-public class AutoRotateCommand extends Command implements PIDOutput {
-	private double speed;
-	private double gangle, angle; // are we using angle sensors (magnetometer,
-									// etc) or distance sensors (encoders)?
-	private static final boolean debug = true;
-	private static final double DEFAULT_SPEED = 0.5;
-	 // Inches TODO: Magic
-														// numbers are fun
+public class AutoRotateCommand extends Command {
 	private AHRS ahrs;
-	static final double kP = 0.50;
-	static final double kI = 0.10;
-	static final double kD = 0.5;
-	static final double kF = 0.00;
+	private RobotDrive myRobot;
+	private PIDController turnController;
+	private double rotateToAngleRate;
+	private double gangle;
+	private double angle;
 
-	static final double kToleranceDegrees = 2.0f;
+	private static final double DEFAULT_SPEED = 0.5;
 
-	RobotDrive myRobot;
-
-	PIDController turnController;
-	double rotateToAngleRate;
-
-	/**
-	 * spins 10000000 degrees at default speed counterclockwise (untested) Don't
-	 * know why anybody would want the robot to spin forever
-	 */
-
-	/**
-	 * Spins [angle] at default speed
-	 * 
-	 * @param angle
-	 */
-	public AutoRotateCommand(double angle) {
-		this(angle,DEFAULT_SPEED);
-	}
+	double speed = DEFAULT_SPEED;
 
 	/**
 	 * spins [angle] degrees at [speed] counterclockwise (untested)
@@ -52,75 +33,58 @@ public class AutoRotateCommand extends Command implements PIDOutput {
 	 * @param angle]
 	 * @param speed
 	 */
-	public AutoRotateCommand(double angle, double speed) {
-		
-		ahrs = Robot.driveSys.getAhrs();
+	public AutoRotateCommand(double angle) {
 		requires(Robot.driveSys);
+		ahrs = Robot.driveSys.getAhrs();
 		this.angle = angle;
-		myRobot = new RobotDrive(0, 1);
-	
-		turnController = new PIDController(kP, kI, kD, kF, ahrs, this);
-		turnController.setInputRange(-180.0f, 180.0f);//LIMITS IN ANGLES
-		turnController.setOutputRange(-1.0, 1.0);//SPEED LIMITS
-		turnController.setAbsoluteTolerance(kToleranceDegrees);//maximum error
-		turnController.setContinuous(true);//this means that it wraps from 180 to -180 degrees
+		gangle = Robot.driveSys.getAhrs().getAngle();
 
-		this.speed = speed;
-		if (gangle < angle)
-			this.speed = -Math.abs(speed);
-		else
-			this.speed = Math.abs(speed);
 	}
 
 	@Override
 	protected void initialize() {
-		ahrs.zeroYaw();
-		if (debug)
-			System.out.println("[AutoRotateCommand] Initializing. speed: " + speed + " angle: " + gangle);
-		Robot.driveSys.setDriveMotors(-speed, speed);
+
 	}
 
 	@Override
+
 	protected void execute() {
-		myRobot = new RobotDrive(0, 1);
-	      myRobot.setExpiration(15);
-		System.out.println("Desired"+angle);
-		System.out.println("NAVX"+Robot.driveSys.getAhrs().getAngle());
+		requires(Robot.driveSys);
+		ahrs = Robot.driveSys.getAhrs();
+		double gangle = ahrs.getAngle();
+		turnController.setSetpoint(angle);
+		while (gangle < angle || gangle > angle) {
+			Robot.driveSys.setDriveMotors(-speed, speed);
+			if (gangle == angle) {
+				Robot.driveSys.setDriveMotors(0);
+				break;
+			}
+		}
+		;
+
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return true;
-//		boolean val = false;
-//		if (angle <= 0 && Robot.driveSys.getAhrs().getAngle() >= angle) {
-//			val = true;
-//		} else if (angle >= 0 && Robot.driveSys.getAhrs().getAngle() <= angle) {
-//			val = true;
-//		}
-//		return val;
+		boolean val = false;
+		if (angle <= 0 && Robot.driveSys.getAhrs().getAngle() >= angle) {
+			val = true;
+		} else if (angle >= 0 && Robot.driveSys.getAhrs().getAngle() <= angle) {
+			val = true;
+			System.out.println("done");
+		}
+		return val;
+
 	}
 
 	@Override
 	protected void end() {
-		if (debug)
-			System.out.println("[AutoRotateCommand] good end");
 		Robot.driveSys.setDriveMotors(0);
 	}
 
 	@Override
 	protected void interrupted() {
-		if (debug)
-			System.out.println("[AutoRotateCommand] bad end");
 		Robot.driveSys.setDriveMotors(0);
-	}
-
-
-
-	@Override
-	public void pidWrite(double output) {
-		
-		
-
 	}
 
 }
