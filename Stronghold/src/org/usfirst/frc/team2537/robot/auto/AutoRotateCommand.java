@@ -20,7 +20,6 @@ public class AutoRotateCommand extends Command {
 	private RobotDrive myRobot;
 	private PIDController turnController;
 	private double rotateToAngleRate;
-	private double gangle;
 	private double angle;
 
 	private static final double DEFAULT_SPEED = 0.5;
@@ -37,7 +36,7 @@ public class AutoRotateCommand extends Command {
 		requires(Robot.driveSys);
 		ahrs = Robot.driveSys.getAhrs();
 		this.angle = angle;
-		gangle = Robot.driveSys.getAhrs().getAngle();
+		Robot.driveSys.getAhrs().getAngle();
 
 	}
 
@@ -53,15 +52,21 @@ public class AutoRotateCommand extends Command {
 		ahrs = Robot.driveSys.getAhrs();
 		double gangle = ahrs.getAngle();
 		turnController.setSetpoint(angle);
-		while (gangle < angle || gangle > angle) {
+		while (gangle < angle ) {
 			Robot.driveSys.setDriveMotors(-speed, speed);
 			if (gangle == angle) {
 				Robot.driveSys.setDriveMotors(0);
 				break;
 			}
 		}
-		;
-
+		while (gangle > angle){
+			Robot.driveSys.setDriveMotors(speed, -speed);
+			if (gangle == angle) {
+				Robot.driveSys.setDriveMotors(0);
+				break;
+				
+		}
+			}
 	}
 
 	@Override
