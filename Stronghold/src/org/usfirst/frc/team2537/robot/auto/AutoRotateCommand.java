@@ -4,27 +4,25 @@ import org.usfirst.frc.team2537.robot.Robot;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 public class AutoRotateCommand extends Command implements PIDOutput {
 	private double speed;
-	private double gangle;
-	
+	private double gangle, angle; // are we using angle sensors (magnetometer,
+									// etc) or distance sensors (encoders)?
 	private static final boolean debug = true;
 	private static final double DEFAULT_SPEED = 0.5;
+	 // Inches TODO: Magic
+														// numbers are fun
 	private AHRS ahrs;
-	double angle;
-	static final double kP = 0.03;
-	static final double kI = 0.00;
-	static final double kD = 0.00;
+	static final double kP = 0.50;
+	static final double kI = 0.10;
+	static final double kD = 0.5;
 	static final double kF = 0.00;
 
 	static final double kToleranceDegrees = 2.0f;
@@ -33,7 +31,7 @@ public class AutoRotateCommand extends Command implements PIDOutput {
 
 	PIDController turnController;
 	double rotateToAngleRate;
-	boolean rotateToAngle;
+
 	/**
 	 * spins 10000000 degrees at default speed counterclockwise (untested) Don't
 	 * know why anybody would want the robot to spin forever
@@ -44,8 +42,9 @@ public class AutoRotateCommand extends Command implements PIDOutput {
 	 * 
 	 * @param angle
 	 */
-
-	
+	public AutoRotateCommand(double angle) {
+		this(angle,DEFAULT_SPEED);
+	}
 
 	/**
 	 * spins [angle] degrees at [speed] counterclockwise (untested)
@@ -53,83 +52,52 @@ public class AutoRotateCommand extends Command implements PIDOutput {
 	 * @param angle]
 	 * @param speed
 	 */
-	public AutoRotateCommand(double angle) {
+	public AutoRotateCommand(double angle, double speed) {
 		
-		AHRS ahrs = new AHRS(Port.kMXP);
+		ahrs = Robot.driveSys.getAhrs();
 		requires(Robot.driveSys);
-		double gangle = ahrs.getAngle();	
-		if(gangle < angle)
-			speed = -DEFAULT_SPEED;
+		this.angle = angle;
+		myRobot = new RobotDrive(0, 1);
+	
+		turnController = new PIDController(kP, kI, kD, kF, ahrs, this);
+		turnController.setInputRange(-180.0f, 180.0f);//LIMITS IN ANGLES
+		turnController.setOutputRange(-1.0, 1.0);//SPEED LIMITS
+		turnController.setAbsoluteTolerance(kToleranceDegrees);//maximum error
+		turnController.setContinuous(true);//this means that it wraps from 180 to -180 degrees
+
+		this.speed = speed;
+		if (gangle < angle)
+			this.speed = -Math.abs(speed);
 		else
-			speed = DEFAULT_SPEED;
-		angle = ahrs.getAngle();
-		  gangle = 90.0f;
-	      myRobot = new RobotDrive(0, 1);
-	      myRobot.setExpiration(0.1);
-	 
-	      try {
-	          /* Communicate w/navX-MXP via the MXP SPI Bus.                                     */
-	          /* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
-	          /* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
-	          ahrs = new AHRS(SPI.Port.kMXP); 
-	      } catch (RuntimeException ex ) {
-	          DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
-	      }
-	      turnController = new PIDController(kP, kI, kD, kF, ahrs, this);
-	      turnController.setInputRange(-180.0f,  180.0f);
-	      turnController.setOutputRange(-1.0, 1.0);
-	      turnController.setAbsoluteTolerance(kToleranceDegrees);
-	      turnController.setContinuous(true);
-	      
-	      /* Add the PID Controller to the Test-mode dashboard, allowing manual  */
-	      /* tuning of the Turn Controller's P, I and D coefficients.            */
-	      /* Typically, only the P value needs to be modified.                   */
-	      LiveWindow.addActuator("DriveSystem", "RotateController", turnController);
+			this.speed = Math.abs(speed);
 	}
 
 	@Override
 	protected void initialize() {
-		myRobot.setSafetyEnabled(false);
-	      myRobot.drive(0.0, 0.0);    // stop robot
-	      Timer.delay(2.0);		    //    for 2 seconds
-	      myRobot.drive(0.0, 0.0);	// stop robot
+		ahrs.zeroYaw();
+		if (debug)
+			System.out.println("[AutoRotateCommand] Initializing. speed: " + speed + " angle: " + gangle);
+		Robot.driveSys.setDriveMotors(-speed, speed);
 	}
 
 	@Override
 	protected void execute() {
-		myRobot.setSafetyEnabled(true);
-	      
-	          boolean rotateToAngle = false;
-	          if (angle < gangle){
-	        	  turnController.setSetpoint(gangle);
-	              rotateToAngle = true;
-	          }
-	          else if ( angle > gangle){
-	        	  turnController.setSetpoint(gangle);
-	              rotateToAngle = true;
-	          }  else{
-	        	  turnController.disable();
-	              
-	          }
-	          while (rotateToAngle = true){
-	        	  Robot.driveSys.setDriveMotors(-speed, speed);
-	        	  rotateToAngle = false;
-	          }
-		}
-		
-		
-	
+		myRobot = new RobotDrive(0, 1);
+	      myRobot.setExpiration(15);
+		System.out.println("Desired"+angle);
+		System.out.println("NAVX"+Robot.driveSys.getAhrs().getAngle());
+	}
 
 	@Override
 	protected boolean isFinished() {
-		boolean val = false;
+		return true;
+//		boolean val = false;
 //		if (angle <= 0 && Robot.driveSys.getAhrs().getAngle() >= angle) {
 //			val = true;
 //		} else if (angle >= 0 && Robot.driveSys.getAhrs().getAngle() <= angle) {
 //			val = true;
-//			System.out.println("done");
 //		}
-		return val;
+//		return val;
 	}
 
 	@Override
@@ -146,9 +114,13 @@ public class AutoRotateCommand extends Command implements PIDOutput {
 		Robot.driveSys.setDriveMotors(0);
 	}
 
+
+
 	@Override
 	public void pidWrite(double output) {
-		rotateToAngleRate = output;
+		
+		
+
 	}
 
 }
