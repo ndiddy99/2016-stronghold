@@ -201,7 +201,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	@Override
 	// Proximity
 	public void receivedValue(HashMap<Sensor, Double> sensorMap) {
-		Double value = sensorMap.get(Sensor.SHOOTER_BALL);
+		Double value = sensorMap.get(Sensor.SHOOTER_PROXIMITY);
 		if (value != null)
 			proximityValue = (value == 1);
 

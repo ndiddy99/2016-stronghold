@@ -54,10 +54,10 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 	}
 
 	public void registerButtons() {
-		HumanInput.registerPressedCommand(HumanInput.aButton, new PresetArmCommand(ArmPositions.portcullisDownPos));
-		HumanInput.registerPressedCommand(HumanInput.yButton, new PresetArmCommand(ArmPositions.portcullisUpPos));
-		HumanInput.registerPressedCommand(HumanInput.lBumper, new LowBarCommandGroup(true));
-		HumanInput.registerReleasedCommand(HumanInput.lBumper, new LowBarCommandGroup(false));
+		HumanInput.registerPressedCommand(HumanInput.lowerArmButton, new PresetArmCommand(ArmPositions.portcullisDownPos));
+		HumanInput.registerPressedCommand(HumanInput.raiseArmButton, new PresetArmCommand(ArmPositions.portcullisUpPos));
+		HumanInput.registerPressedCommand(HumanInput.lowBarModeEnableButton, new LowBarCommandGroup(true));
+		HumanInput.registerReleasedCommand(HumanInput.lowBarModeEnableButton, new LowBarCommandGroup(false));
 	}
 
 	public void positionMode() {

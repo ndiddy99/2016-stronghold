@@ -7,9 +7,11 @@ public class ProximitySensor implements SensorInterface {
 	private static final boolean DEBUG = false;
 	
 	public DigitalInput input;
+	private Sensor sensor;
 	
-	public ProximitySensor(int port){
+	public ProximitySensor(int port, Sensor shooterProximity){
 		input = new DigitalInput(port);
+		this.sensor = sensor;
 	}
 
 	@Override
@@ -29,7 +31,7 @@ public class ProximitySensor implements SensorInterface {
 			System.out.println(" (val = " + value + ", raw = " + input.get() + ")");
 		}
 		
-		Robot.sensorSys.addValue(Sensor.SHOOTER_BALL, value);
+		Robot.sensorSys.addValue(sensor, value);
 	}
 	
 	

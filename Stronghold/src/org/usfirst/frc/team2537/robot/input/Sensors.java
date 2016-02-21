@@ -15,10 +15,10 @@ public class Sensors {
 	private List<SensorInterface> sensors = new ArrayList<SensorInterface>();
 
 	private HashMap<Sensor, Double> sensorVals = new HashMap<Sensor, Double>();
-	public ProximitySensor prox = new ProximitySensor(Ports.SHOOTER_PROXIMITY_PORT);
+	public ProximitySensor prox = new ProximitySensor(Ports.SHOOTER_PROXIMITY_PORT,Sensor.SHOOTER_PROXIMITY);
 	public IMU tilt = new IMU(Ports.TILT_SENSOR_PORT, 0, 180, 2023, Sensor.SHOOTER_ANGLE);
-	public LidarSensor lidar = new LidarSensor(Ports.LIDAR_SENSOR_TRIGGER_PORT, Ports.LIDAR_SENSOR_INPUT_PORT);
-	public UltrasonicSensor ultrasonic = new UltrasonicSensor(Ports.DRIVE_ULTRASONIC_ECHO, Ports.DRIVE_ULTRASONIC_INPUT);
+	public LidarSensor lidar = new LidarSensor(Ports.SHOOTER_SIDE_LIDAR_SENSOR_TRIGGER_PORT, Ports.SHOOTER_SIDE_LIDAR_SENSOR_INPUT_PORT, Sensor.SHOOTER_LIDAR);
+	public UltrasonicSensor ultrasonic = new UltrasonicSensor(Ports.DRIVE_ULTRASONIC_ECHO, Ports.DRIVE_ULTRASONIC_INPUT, Sensor.ULTRASONIC_DISTANCE);
 	
 	public void registerListener(SensorListener listener) {
 		listeners.add(listener);
@@ -29,7 +29,6 @@ public class Sensors {
 		sensors.add(ultrasonic);
 		sensors.add(tilt);
 		sensors.add(lidar);
-//		sensors.add(new ProximitySensor(Ports.SHOOTER_PROXIMITY_PORT));
 		sensors.add(prox);
 
 	}

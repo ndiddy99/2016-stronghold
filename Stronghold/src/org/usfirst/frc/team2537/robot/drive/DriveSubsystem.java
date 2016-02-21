@@ -213,7 +213,7 @@ public class DriveSubsystem extends Subsystem {
 		HumanInput.registerPressedCommand(HumanInput.driveStraight, new DriveStraightToggleCommand(true));
 		HumanInput.registerReleasedCommand(HumanInput.driveStraight, new DriveStraightToggleCommand(false));
 		HumanInput.registerPressedCommand(HumanInput.driveSensetivityToggle, new DriveLowerSpeedToggleCommand());
-		HumanInput.registerPressedCommand(HumanInput.driveTypeToggle, new DriveTypeToggleCommand());		
+		HumanInput.registerPressedCommand(HumanInput.driveTypeToggle, new DriveTypeToggleCommand());
 		HumanInput.registerPressedCommand(HumanInput.reverseDrive, new DriveReverseToggleCommand());
 	}
 }

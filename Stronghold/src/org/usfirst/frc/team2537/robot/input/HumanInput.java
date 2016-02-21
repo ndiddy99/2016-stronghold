@@ -16,26 +16,26 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class HumanInput {
 	public static Joystick xboxController = new Joystick(Ports.XBOX);
-	public static Joystick leftJoystick = new Joystick(Ports.JOYSTICK_ONE_PORT);
-	public static Joystick rightJoystick = new Joystick(Ports.JOYSTICK_TWO_PORT);
+	public static Joystick leftJoystick = new Joystick(Ports.JOYSTICK_LEFT_PORT);
+	public static Joystick rightJoystick = new Joystick(Ports.JOYSTICK_RIGHT_PORT);
 
-	// replace the following 0s with actual numbers once you test them
-	public static Button aButton = new JoystickButton(xboxController, XBoxButtons.XBOX_A);
-	public static Button yButton = new JoystickButton(xboxController, XBoxButtons.XBOX_Y);
-	public static Button bButton = new JoystickButton(xboxController, XBoxButtons.XBOX_B);
-	public static Button lBumper = new JoystickButton(xboxController, XBoxButtons.XBOX_LB);
 	public static final JoystickButton ballShootTrigger = new XboxTrigger(xboxController,
-			XBoxButtons.XBOX_RIGHT_TRIGGERS);
-	public static Button driveStraight = new JoystickButton(leftJoystick, 0);
-	public static Button driveSensetivityToggle = new JoystickButton(xboxController, 0);
-	public static Button reverseDrive = new JoystickButton(leftJoystick, 6);
-	public static Button lowerArm = new JoystickButton(xboxController, XBoxButtons.XBOX_A);
-	public static Button raiseArm = new JoystickButton(xboxController, XBoxButtons.XBOX_Y);
-	public static Button neutralArm = new JoystickButton(xboxController, XBoxButtons.XBOX_B);
-	public static Button driveTypeToggle = new JoystickButton(rightJoystick, 0);
+			XboxButtons.XBOX_RIGHT_TRIGGERS);
+	public static Button driveStraight = new JoystickButton(leftJoystick, 1);
+	public static Button driveSensetivityToggle = new JoystickButton(leftJoystick, 2);
+	public static Button reverseDrive = new JoystickButton(leftJoystick, 3);
+	public static Button driveTypeToggle = new JoystickButton(leftJoystick, 4);
+	
+    public static Button lowerArmButton = new JoystickButton(xboxController, XboxButtons.XBOX_A);
+	public static Button raiseArmButton = new JoystickButton(xboxController, XboxButtons.XBOX_Y);
+	public static Button neutralArmButton = new JoystickButton(xboxController, XboxButtons.XBOX_B);
+	public static Button lowBarModeEnableButton = new JoystickButton(xboxController, XboxButtons.XBOX_LB);
+	
 	public static final JoystickButton harvestBallTrigger = new XboxTrigger(xboxController,
-			XBoxButtons.XBOX_LEFT_TRIGGERS);
+			XboxButtons.XBOX_LEFT_TRIGGERS);
 
+	//public static Button portcullisButton	= new JoystickButton(xboxController, XboxButtons.XBOX_A);
+	//public static Button chevalButton		= new JoystickButton(xboxController, XboxButtons.XBOX_B);
 	/**
 	 * Method to register a pressed button command. When you use this method it
 	 * will set the button to trigger a command when pressed down
@@ -60,18 +60,7 @@ public class HumanInput {
 	 */
 	public static void registerReleasedCommand(Button b, Command c) {
 		b.whenReleased(c);
-	public static Joystick xboxController	= new Joystick(Ports.XBOX);
-	public static Joystick leftJoystick		= new Joystick(Ports.JOYSTICK_LEFT_PORT);
-	public static Joystick rightJoystick	= new Joystick(Ports.JOYSTICK_RIGHT_PORT);
-	
-	public static Button portcullisButton	= new JoystickButton(xboxController, XboxButtons.XBOX_A);
-	public static Button raiseArm			= new JoystickButton(xboxController, XboxButtons.XBOX_Y);
-	public static Button chevalButton		= new JoystickButton(xboxController, XboxButtons.XBOX_B);
-	//Shooter things
-	public static final JoystickButton ballShootTrigger = 
-			new XboxTrigger(xboxController, XboxButtons.XBOX_RIGHT_TRIGGERS);
-	public static final JoystickButton harvestBallTrigger = 
-			new XboxTrigger(xboxController, XboxButtons.XBOX_LEFT_TRIGGERS);
+	}
 	
 	/**
 	 * Get the value of the Xbox axis in question.
@@ -82,19 +71,6 @@ public class HumanInput {
 	public static double getXboxAxis(Joystick j, int i) {
 		return j.getRawAxis(i);
 	}
-
-	/**
-	 * Method to get the value of an XBox joystick
-	 * 
-	 * @param joystick
-	 *            Joystick, most likely HumanInput.xboxController
-	 * @param axis
-	 *            Axis from the XBoxButtons.java class
-	 * @return
-	 */
-	public static double getXboxAxis(Joystick joystick, int axis) {
-		return joystick.getRawAxis(axis);
-	
 	/** 
 	 * Get a boolean value as to if one of the xbox triggers has been triggered.
 	 * 
@@ -107,20 +83,6 @@ public class HumanInput {
 	public static boolean getXboxTrigger(Joystick j, int i){
 		return j.getRawAxis(i) != 0;
 	}
-		
-	/**
-	 * register a command for when the button is pressed
-	 * 
-	 * @param b
-	 *            the button to be registered found as a static Button in the
-	 *            HumanInput class.
-	 * @param cmd
-	 *            the user provided Command to be registered
-	 */
-	//Registers
-	public static void registerPressedCommand(Button b, Command cmd) {
-		 b.whenPressed(cmd);
-	}
 
 	/**
 	 * Method to get the value of a non-XBox joystick
@@ -131,6 +93,7 @@ public class HumanInput {
 	 */
 	public static double getJoystickAxis(Joystick joystick, AxisType ax) {
 		return joystick.getAxis(ax);
+	}
 	
 	/**
 	 * register a command for when the button is released
@@ -176,8 +139,6 @@ public class HumanInput {
 	 * @param ax
 	 * @return
 	 */
-	public static double getJoystickAxis(Joystick joystick, AxisType ax) {
-		return joystick.getAxis(ax);
-	}
+
 
 }
