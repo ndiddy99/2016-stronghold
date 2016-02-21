@@ -13,20 +13,20 @@ public class AutoChooser {
 	 */
 	public AutoChooser(){
 		autoChoice= new SendableChooser();
-        autoChoice.addDefault("Default Autonomous", new DefaultAutoCommand());
-        autoChoice.addObject("Drive Straight 5 inches", new AutoDriveStraightCommand(5));
-        autoChoice.addObject("CourseCorrectAuto", new CourseCorrect(100));
-        autoChoice.addObject("Spin forever", new AutoRotateCommand());
-        autoChoice.addObject("DriveToFun", new CommandGroup(){
-        	{
-        		addSequential(new AutoDriveToCommandGroup(5, 5));
-        		addSequential(new AutoDriveToCommandGroup(8, 5));
-        		addSequential(new AutoDriveToCommandGroup(2, 10));
-        		addSequential(new AutoDriveToCommandGroup(20, 8));
-        	}
-        });
-        autoChoice.addObject("Prints", new CourseCorrect(0, 0));
-        SmartDashboard.putData("point to point stuff", autoChoice);
+        autoChoice.addDefault("Default Autonomous", new CourseCorrect(100));
+//        autoChoice.addObject("Drive Straight 5 inches", new AutoDriveStraightCommand(5));
+//        autoChoice.addObject("CourseCorrectAuto", new CourseCorrect(100));
+//        autoChoice.addObject("90 degree turn", new AutoRotateCommand(90));
+//        autoChoice.addObject("DriveToFun", new CommandGroup(){
+//        	{
+//        		addSequential(new AutoDriveToCommandGroup(5, 5));
+//        		addSequential(new AutoDriveToCommandGroup(8, 5));
+//        		addSequential(new AutoDriveToCommandGroup(2, 10));
+//        		addSequential(new AutoDriveToCommandGroup(20, 8));
+//        	}
+//        });
+//        autoChoice.addObject("Prints", new CourseCorrect(100));
+//        SmartDashboard.putData("point to point stuff", autoChoice);
 	}
 	
 	/**

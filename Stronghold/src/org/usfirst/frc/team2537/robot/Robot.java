@@ -1,12 +1,10 @@
 package org.usfirst.frc.team2537.robot;
 
 import org.usfirst.frc.team2537.robot.auto.AutoChooser;
+import org.usfirst.frc.team2537.robot.auto.AutoRotateCommand;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 
-import com.kauailabs.navx.frc.AHRS;
-
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
@@ -48,11 +46,8 @@ public class Robot extends IterativeRobot {
 	 * SendableChooser make sure to add them to the chooser code above as well.
 	 */
 	public void autonomousInit() {
-		AHRS ahrs = new AHRS(Port.kMXP);
-		double angle;
-		angle = ahrs.getAngle();
-		autoCommand = autoChooser.getAutoChoice();
-		Scheduler.getInstance().add(autoCommand);
+		driveSys.getAhrs().zeroYaw();
+		Scheduler.getInstance().add(new AutoRotateCommand(90));
 		
 	}
 
