@@ -20,15 +20,15 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	
 	// The angle limits.
 	private static final double MAX_ANGLE = 20;// degrees (ball park, not right)
-	private static final double MIN_ANGLE = 0;// degrees(ball park, not right)
-	private static final double MAX_VOLTAGE = 6;
+	private static final double MIN_ANGLE =  0;// degrees(ball park, not right)
+	private static final double MAX_VOLTAGE= 5;
 	//Difference between the max and min angle.
 	public static final double MAX_ANGLE_DIFFERENCE = MAX_ANGLE - MIN_ANGLE; 
 	//Debugs
-	public final boolean DEBUG = false;
+	public static final boolean DEBUG = false;
 
 	// Varibles
-	private static double currentAngle = 0;
+	private Double currentAngle = 0.0;
 	private final CANTalon angleMotor;
 
 	public AngleSubsystem() {
@@ -78,7 +78,9 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	 * @return boolean if the forward limit switch is activated.
 	 */
 	public boolean isHighestPosition() {
-		return currentAngle >= MAX_ANGLE || angleMotor.isFwdLimitSwitchClosed();
+		if (currentAngle != null && currentAngle >= MAX_ANGLE)
+			return true;
+		return angleMotor.isFwdLimitSwitchClosed();
 	}
 
 	/**
@@ -88,7 +90,9 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	 * @return boolean if the forward limit switch is activated.
 	 */
 	public boolean isLowestPosition() {
-		return currentAngle <= MIN_ANGLE || angleMotor.isRevLimitSwitchClosed();
+		if (currentAngle != null && currentAngle <= MIN_ANGLE)
+			return true;
+		return angleMotor.isRevLimitSwitchClosed();
 	}
 
 	// And get joystick values.
@@ -114,13 +118,12 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	 */
 	public void receivedValue(HashMap<Sensor, Double> sensorMap) {
 		Double value = sensorMap.get(Sensor.SHOOTER_ANGLE);
-		if (value != null){
-			currentAngle = value;
-		}
+		currentAngle = value;//Set the value.
+		
 		if (DEBUG) System.out.println("Shooter Angle: " + value);
 		
 		//SOFT LIMITS
-		if (currentAngle <= MIN_ANGLE || currentAngle >= MAX_ANGLE){
+		if (isHighestPosition() || isLowestPosition()){
 			//TOO High or low stop motor.
 			System.out.println("Position Is at Max.");
 			angleMotor.set(0);
@@ -133,9 +136,10 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	 * @return angle in degrees that was cached from the sensors earlier. If the
 	 *         angle is not regularly given, give either 0 or the most recent
 	 *         value however old that maybe. Range [-180, 180] though the should
-	 *         be between [MIN_ANGLE, MAX_ANGLE] typically.
+	 *         be between [MIN_ANGLE, MAX_ANGLE] typically. Will return null if sensor is
+	 *         not present.
 	 */
-	public double getCurrentAngle() {
+	public Double getCurrentAngle() {
 		return currentAngle;
 	}
 

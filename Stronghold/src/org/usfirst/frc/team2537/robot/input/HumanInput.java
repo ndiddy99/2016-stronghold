@@ -15,14 +15,16 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class HumanInput {
-	public static Joystick xboxController	= new Joystick(Ports.XBOX);
-	public static Joystick leftJoystick		= new Joystick(Ports.JOYSTICK_LEFT_PORT);
-	public static Joystick rightJoystick	= new Joystick(Ports.JOYSTICK_RIGHT_PORT);
+	public static final Joystick xboxController	= new Joystick(Ports.XBOX);
+	public static final Joystick leftJoystick		= new Joystick(Ports.JOYSTICK_LEFT_PORT);
+	public static final Joystick rightJoystick	= new Joystick(Ports.JOYSTICK_RIGHT_PORT);
 	
-	public static Button portcullisButton	= new JoystickButton(xboxController, XboxButtons.XBOX_A);
-	public static Button raiseArm			= new JoystickButton(xboxController, XboxButtons.XBOX_Y);
-	public static Button chevalButton		= new JoystickButton(xboxController, XboxButtons.XBOX_B);
+	public static final Button portcullisButton	= new JoystickButton(xboxController, XboxButtons.XBOX_A);
+	public static final Button raiseArm			= new JoystickButton(xboxController, XboxButtons.XBOX_Y);
+	public static final Button chevalButton		= new JoystickButton(xboxController, XboxButtons.XBOX_B);
 	//Shooter things
+	public static final Button shootCancelButton= new JoystickButton(xboxController, XboxButtons.XBOX_RB);
+	
 	public static final JoystickButton ballShootTrigger = 
 			new XboxTrigger(xboxController, XboxButtons.XBOX_RIGHT_TRIGGERS);
 	public static final JoystickButton harvestBallTrigger = 
@@ -99,6 +101,15 @@ public class HumanInput {
 	 */
 	public static void toggleWhenPressed(Button b, Command cmd) {
 		b.toggleWhenPressed(cmd);
+	}
+	
+	/**
+	 * Cancels the command whenever the button is pressed.
+	 * @param b
+	 * @param cmd
+	 */
+	public static void cancelWhenPressed(Button b, Command cmd) {
+		b.cancelWhenPressed(cmd);
 	}
 
 	/**

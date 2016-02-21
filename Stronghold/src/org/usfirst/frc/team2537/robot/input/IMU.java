@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class IMU implements SensorInterface {
 	//Const
+	private static final boolean DEBUG = false;
 	private static final double ANGLE_OFFSET = 90;
 	private int maxPeriod;
 	private int maxAngle;
@@ -27,12 +28,16 @@ public class IMU implements SensorInterface {
 
 	public void getValue() {
 		double value = getAngle(input.getPeriod(), 16, maxPeriod, minAngle, maxAngle);
-		Robot.sensorSys.addValue(sensor, value);
 		SmartDashboard.putNumber("IMU sensor: ", value);
-		System.out.println("IMU sensor: " + value);
+		if (DEBUG) System.out.println("IMU sensor: " + value);
+		if (value == Double.POSITIVE_INFINITY) {
+			Robot.sensorSys.addValue(sensor, null);
+		} else {
+			Robot.sensorSys.addValue(sensor, value);
+		}
 	}
 	
 	private double getAngle(double x, int in_min, int in_max, int out_min, int out_max) {
-	  return (x * 1000000 - in_min) * (out_max - out_min) / (in_max - in_min) + out_min - ANGLE_OFFSET;
+		return (x * 1000000 - in_min) * (out_max - out_min) / (in_max - in_min) + out_min - ANGLE_OFFSET;
 	}
 }

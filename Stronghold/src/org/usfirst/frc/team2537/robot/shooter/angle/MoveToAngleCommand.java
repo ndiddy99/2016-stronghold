@@ -13,6 +13,7 @@ import org.usfirst.frc.team2537.robot.Robot;
  *         angle. This goes to the angle but slows as it approaches the angle.
  */
 public class MoveToAngleCommand extends Command {
+	private static final boolean DEBUG = false;
 	// Constants
 	private static final double TOLERANCE = .5; // How far the shooter can be
 												// from the desired angle in
@@ -38,20 +39,26 @@ public class MoveToAngleCommand extends Command {
 
 	@Override
 	protected void initialize() {
-		if (Robot.shooterAngleSys.DEBUG)
+		if (DEBUG)
 			System.out.println("Moving Shooter to " + posToMoveTo);
 	}
 
 	@Override
 	protected void execute() {
-		currentPosition = Robot.shooterAngleSys.getCurrentAngle();
-		Robot.shooterAngleSys.setVoltagePercent((currentPosition - posToMoveTo) / AngleSubsystem.MAX_ANGLE_DIFFERENCE);
+		try {
+			currentPosition = Robot.shooterAngleSys.getCurrentAngle();
+			Robot.shooterAngleSys.setVoltagePercent((currentPosition - posToMoveTo) / AngleSubsystem.MAX_ANGLE_DIFFERENCE);
+		} catch (NullPointerException e) {
+			//Nothing. To do, can't move without sensor.
+			if (DEBUG) System.out.println("MoveToAngleCommand stopped because sensor is not present.");
+			this.cancel();
+		}
 	}
 
 	@Override
 	protected boolean isFinished() {
 		// If we are close enough to the angle to call it.
-		return Math.abs(currentPosition - posToMoveTo) < TOLERANCE;
+		return Math.abs(currentPosition - posToMoveTo) <= TOLERANCE;
 	}
 
 	@Override
@@ -62,7 +69,7 @@ public class MoveToAngleCommand extends Command {
 
 	@Override
 	protected void interrupted() {
-		if (Robot.shooterAngleSys.DEBUG)
+		if (DEBUG)
 			System.out.println("Shooter Interrupted");
 		// Stop the motor.
 		Robot.shooterAngleSys.setVoltagePercent(0);

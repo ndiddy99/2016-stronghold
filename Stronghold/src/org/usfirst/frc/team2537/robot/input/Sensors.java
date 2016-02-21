@@ -30,7 +30,7 @@ public class Sensors {
 		sensors.add(prox);
 	}
 	
-	public void addValue(Sensor sensor, double val) {
+	public void addValue(Sensor sensor, Double val) {
 		sensorVals.put(sensor, val);
 	}
 	
