@@ -6,6 +6,8 @@ import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team2537.robot.input.Sensor;
 import org.usfirst.frc.team2537.robot.input.Sensors;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.command.Command;
@@ -38,7 +40,7 @@ public class Robot extends IterativeRobot {
 //    private CameraFeeds cameraFeeds = new CameraFeeds(contr);
     
 	public void robotInit() {
-s		sensorSys = new Sensors();
+		sensorSys = new Sensors();
 		sensorSys.init();
 		
 		driveSys = new DriveSubsystem();
