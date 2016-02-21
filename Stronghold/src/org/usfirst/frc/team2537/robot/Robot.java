@@ -44,7 +44,14 @@ public class Robot extends IterativeRobot {
 		armSys.registerButtons();
 		sensorSys.registerListener(armSys);
 //		autoChooser = new AutoChooser();
-	
+		
+		System.out.println("  _________     ___.                   __________        __   ");
+		System.out.println(" /   _____/____ \\_ |_________   ____   \\______   \\ _____/  |_ ");
+		System.out.println(" \\_____  \\\\__  \\ | __ \\_  __ \\_/ __ \\   |    |  _//  _ \\   __\\");
+		System.out.println(" /        \\/ __ \\| \\_\\ \\  | \\/\\  ___/   |    |   (  <_> )  |  ");
+		System.out.println("/_______  (____  /___  /__|    \\___  >  |______  /\\____/|__|  ");
+		System.out.println("        \\/     \\/    \\/            \\/          \\/             ");
+		
 	}
 
 	/**
