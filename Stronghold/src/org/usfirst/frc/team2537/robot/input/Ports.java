@@ -27,5 +27,7 @@ public final class Ports {
 	//Sensors
 	DRIVE_ULTRASONIC_INPUT = 9,
 	DRIVE_ULTRASONIC_ECHO = 8,
-	ARM_IMU = 1;
+	ARM_IMU = 1,
+	SHOOTER_LIDAR_TRIGGER = 6,
+	SHOOTER_LIDAR_INPUT = 5;
 }

@@ -5,6 +5,7 @@ import org.usfirst.frc.team2537.robot.camera.CameraFeeds;
 import org.usfirst.frc.team2537.robot.camera.Config;
 import org.usfirst.frc.team2537.robot.camera.Controller;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
+import org.usfirst.frc.team2537.robot.input.Sensor;
 import org.usfirst.frc.team2537.robot.input.Sensors;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -96,7 +97,7 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 //		contr.update();
 //		cameraFeeds.run();
-		SmartDashboard.putNumber("Arm Angle", armSys.getIMUAngle());
+		SmartDashboard.putNumber("Lidar Val", sensorSys.sensorVals.get(Sensor.SHOOTER_LIDAR));
 	}
 
 	/**
