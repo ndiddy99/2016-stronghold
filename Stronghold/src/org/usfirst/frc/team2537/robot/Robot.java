@@ -1,14 +1,14 @@
 package org.usfirst.frc.team2537.robot;
 
 import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
-import org.usfirst.frc.team2537.robot.camera.CameraFeeds;
-import org.usfirst.frc.team2537.robot.camera.Config;
-import org.usfirst.frc.team2537.robot.camera.Controller;
+import org.usfirst.frc.team2537.robot.auto.AutoChooser;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team2537.robot.input.Sensor;
 import org.usfirst.frc.team2537.robot.input.Sensors;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.SPI.Port;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -28,12 +28,17 @@ public class Robot extends IterativeRobot {
 //	private String autoSelected;
 	public static Sensors sensorSys;
 	public static ArmSubsystem armSys;
+	AutoChooser autoChooser;
+	Command autoCommand;
+	final String defaultAuto = "Default";
+	final String customAuto = "My Auto";
+	String autoSelected;
 	public static DriveSubsystem driveSys;
 //	private Controller contr = new Controller(Config.Controller.chn, Config.Controller.maxButtons, Config.Controller.linearity);
 //    private CameraFeeds cameraFeeds = new CameraFeeds(contr);
     
 	public void robotInit() {
-		sensorSys = new Sensors();
+s		sensorSys = new Sensors();
 		sensorSys.init();
 		
 		driveSys = new DriveSubsystem();
@@ -44,7 +49,7 @@ public class Robot extends IterativeRobot {
 		armSys.initDefaultCommand();
 		armSys.registerButtons();
 		sensorSys.registerListener(armSys);
-//		autoChooser = new AutoChooser();
+		autoChooser = new AutoChooser();
 		
 		System.out.println("  _________     ___.                   __________        __   ");
 		System.out.println(" /   _____/____ \\_ |_________   ____   \\______   \\ _____/  |_ ");
@@ -52,7 +57,6 @@ public class Robot extends IterativeRobot {
 		System.out.println(" /        \\/ __ \\| \\_\\ \\  | \\/\\  ___/   |    |   (  <_> )  |  ");
 		System.out.println("/_______  (____  /___  /__|    \\___  >  |______  /\\____/|__|  ");
 		System.out.println("        \\/     \\/    \\/            \\/          \\/             ");
-		
 	}
 
 	/**
@@ -67,16 +71,18 @@ public class Robot extends IterativeRobot {
 	 * SendableChooser make sure to add them to the chooser code above as well.
 	 */
 	public void autonomousInit() {
-//		autoCommand = autoChooser.getAutoChoice();
-//		Scheduler.getInstance().add(autoCommand);
-		
-
+		AHRS ahrs = new AHRS(Port.kMXP);
+		double angle;
+		angle = ahrs.getAngle();
+		autoCommand = autoChooser.getAutoChoice();
+		Scheduler.getInstance().add(autoCommand);		
 	}
 
 	/**
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
+		Scheduler.getInstance().run();
 	}
 
     /**
@@ -87,8 +93,10 @@ public class Robot extends IterativeRobot {
 	 * 
 	 */
 	public void teleopInit(){
-//		cameraFeeds.init();
-	}
+		System.out.println("Teleop init");
+		if(autoCommand != null)
+			autoCommand.cancel();
+		}
 	/**
 	 * This function is called periodically during operator control
 	 */
@@ -104,7 +112,7 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during test mode
 	 */
 	public void testPeriodic() {
-//		cameraFeeds.end();
+
 	}
 
 }

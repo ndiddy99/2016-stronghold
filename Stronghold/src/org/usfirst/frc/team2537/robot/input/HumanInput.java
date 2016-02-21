@@ -27,7 +27,13 @@ public class HumanInput {
 	public static Button lBumper = new JoystickButton(xboxController, XBoxButtons.XBOX_LB);
 	public static final JoystickButton ballShootTrigger = new XboxTrigger(xboxController,
 			XBoxButtons.XBOX_RIGHT_TRIGGERS);
-
+	public static Button driveStraight = new JoystickButton(leftJoystick, 0);
+	public static Button driveSensetivityToggle = new JoystickButton(xboxController, 0);
+	public static Button reverseDrive = new JoystickButton(leftJoystick, 6);
+	public static Button lowerArm = new JoystickButton(xboxController, XBoxButtons.XBOX_A);
+	public static Button raiseArm = new JoystickButton(xboxController, XBoxButtons.XBOX_Y);
+	public static Button neutralArm = new JoystickButton(xboxController, XBoxButtons.XBOX_B);
+	public static Button driveTypeToggle = new JoystickButton(rightJoystick, 0);
 	public static final JoystickButton harvestBallTrigger = new XboxTrigger(xboxController,
 			XBoxButtons.XBOX_LEFT_TRIGGERS);
 
@@ -56,12 +62,14 @@ public class HumanInput {
 	public static void registerReleasedCommand(Button b, Command c) {
 		b.whenReleased(c);
 	}
-	
+
 	/**
 	 * Method to get the value of an XBox joystick
 	 * 
-	 * @param	joystick	Joystick, most likely HumanInput.xboxController
-	 * @param	axis		Axis from the XBoxButtons.java class
+	 * @param joystick
+	 *            Joystick, most likely HumanInput.xboxController
+	 * @param axis
+	 *            Axis from the XBoxButtons.java class
 	 * @return
 	 */
 	public static double getXboxAxis(Joystick joystick, int axis) {
@@ -71,7 +79,7 @@ public class HumanInput {
 	/**
 	 * Method to get the value of a non-XBox joystick
 	 * 
-	 * @param	joystick
+	 * @param joystick
 	 * @param ax
 	 * @return
 	 */
