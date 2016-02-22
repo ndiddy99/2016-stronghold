@@ -1,8 +1,9 @@
 package org.usfirst.frc.team2537.robot.shooter.actuator;
 
+import org.usfirst.frc.team2537.robot.Ports;
+
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import org.usfirst.frc.team2537.robot.input.Ports;
 
 /**
  *

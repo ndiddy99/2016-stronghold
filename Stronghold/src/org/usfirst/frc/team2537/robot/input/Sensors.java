@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.usfirst.frc.team2537.robot.Ports;
+
 /**
  * Class that handles the other sensor classes and passes values to the other subsystem
  * 

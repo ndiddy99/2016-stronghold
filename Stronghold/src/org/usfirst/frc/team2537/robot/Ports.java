@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2537.robot.input;
+package org.usfirst.frc.team2537.robot;
 
 /**
  * List of ports that we will use on the robot. Change as necessary
