@@ -14,9 +14,10 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class FlywheelCommand extends Command {
 	// constants
+	private static final boolean DEBUG = false;
 	private static final double DEFAULT_TIMEOUT = 10;// seconds
 	// vars
-	private final double TARGET_SPEED;
+	private final double targetSpeed;
 
 	/**
 	 * Create the flywheel command. Move the flywheels to speed. If timeout is
@@ -30,7 +31,7 @@ public class FlywheelCommand extends Command {
 	public FlywheelCommand(double speed, double timeout) {
 		super(timeout);
 		requires(Robot.shooterFlywheelSys);
-		TARGET_SPEED = speed;
+		targetSpeed = speed;
 	}
 
 	/**
@@ -45,8 +46,8 @@ public class FlywheelCommand extends Command {
 
 	@Override
 	protected void initialize() {
-		System.out.println("Flywheel Command Started");
-		Robot.shooterFlywheelSys.setSpeed(TARGET_SPEED);
+		if (DEBUG) System.out.println("Flywheel Command Started");
+		Robot.shooterFlywheelSys.setSpeed(targetSpeed);
 		// Get the motor values to start with.
 		
 	}
@@ -54,12 +55,8 @@ public class FlywheelCommand extends Command {
 	@Override
 	public boolean isFinished() {
 		// Check if the flywheels are at the target speed
-		if(Robot.shooterFlywheelSys.isAtSpeed(TARGET_SPEED)) {
-			System.out.println("Flywheel Command Finished");
-			return true;
-		}
-		return false;
-		}
+		return Robot.shooterFlywheelSys.isAtSpeed(targetSpeed) || isTimedOut();
+	}
 
 	@Override
 	protected void end() {
@@ -76,6 +73,7 @@ public class FlywheelCommand extends Command {
 	@Override
 	protected void interrupted() {
 		// Interruped, stop the wheels
+		if (DEBUG) System.out.println("Flywheel Command was Interrupted");
 		Robot.shooterFlywheelSys.setSpeed(0.0);
 	}
 }

@@ -1,5 +1,8 @@
 package org.usfirst.frc.team2537.robot.input;
 
+import org.usfirst.frc.team2537.robot.camera.RotateCamerasLeftCommand;
+import org.usfirst.frc.team2537.robot.camera.RotateCamerasRightCommand;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -15,21 +18,27 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class HumanInput {
-	public static Joystick xboxController = new Joystick(Ports.XBOX);
-	public static Joystick leftJoystick = new Joystick(Ports.JOYSTICK_LEFT_PORT);
-	public static Joystick rightJoystick = new Joystick(Ports.JOYSTICK_RIGHT_PORT);
+	public static final Joystick xboxController = new Joystick(Ports.XBOX);
+	public static final Joystick leftJoystick = new Joystick(Ports.JOYSTICK_LEFT_PORT);
+	public static final Joystick rightJoystick = new Joystick(Ports.JOYSTICK_RIGHT_PORT);
 
 	public static final JoystickButton ballShootTrigger = new XboxTrigger(xboxController,
 			XboxButtons.XBOX_RIGHT_TRIGGERS);
-	public static Button driveStraight = new JoystickButton(leftJoystick, 1);
-	public static Button driveSensetivityToggle = new JoystickButton(leftJoystick, 2);
-	public static Button reverseDrive = new JoystickButton(leftJoystick, 3);
-	public static Button driveTypeToggle = new JoystickButton(leftJoystick, 4);
-	
-    public static Button lowerArmButton = new JoystickButton(xboxController, XboxButtons.XBOX_A);
-	public static Button raiseArmButton = new JoystickButton(xboxController, XboxButtons.XBOX_Y);
-	public static Button neutralArmButton = new JoystickButton(xboxController, XboxButtons.XBOX_B);
-	public static Button lowBarModeEnableButton = new JoystickButton(xboxController, XboxButtons.XBOX_LB);
+	public static final Button driveStraight = new JoystickButton(leftJoystick, 1);
+	public static final Button driveSensetivityToggle = new JoystickButton(leftJoystick, 2);
+	public static final Button reverseDrive = new JoystickButton(leftJoystick, 3);
+	public static final Button driveTypeToggle = new JoystickButton(leftJoystick, 4);
+
+    public static final Button lowerArmButton = new JoystickButton(xboxController, XboxButtons.XBOX_A);
+	public static final Button raiseArmButton = new JoystickButton(xboxController, XboxButtons.XBOX_Y);
+	public static final Button neutralArmButton = new JoystickButton(xboxController, XboxButtons.XBOX_B);
+	public static final Button lowBarModeEnableButton = new JoystickButton(xboxController, XboxButtons.XBOX_LB);
+
+	public static final Button cameraRotateLeft= new DpadButtonWrapper(false);
+	public static final Button cameraRotateRight= new DpadButtonWrapper(true);
+
+	public static final Button shootCancelButton= new JoystickButton(xboxController, XboxButtons.XBOX_RB);
+
 	
 	public static final JoystickButton harvestBallTrigger = new XboxTrigger(xboxController,
 			XboxButtons.XBOX_LEFT_TRIGGERS);
@@ -60,8 +69,7 @@ public class HumanInput {
 	 */
 	public static void registerReleasedCommand(Button b, Command c) {
 		b.whenReleased(c);
-	}
-	
+	}	
 	/**
 	 * Get the value of the Xbox axis in question.
 	 * @param j The joystick to get axis measures from.
@@ -130,6 +138,15 @@ public class HumanInput {
 	 */
 	public static void toggleWhenPressed(Button b, Command cmd) {
 		b.toggleWhenPressed(cmd);
+	}
+	
+	/**
+	 * Cancels the command whenever the button is pressed.
+	 * @param b
+	 * @param cmd
+	 */
+	public static void cancelWhenPressed(Button b, Command cmd) {
+		b.cancelWhenPressed(cmd);
 	}
 
 	/**

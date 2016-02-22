@@ -120,7 +120,6 @@ public class Robot extends IterativeRobot {
 		sensorSys.handleEvents();
 		feeds.run();
 		Scheduler.getInstance().run();
-		// contr.update();
 	}
 
 	@Override

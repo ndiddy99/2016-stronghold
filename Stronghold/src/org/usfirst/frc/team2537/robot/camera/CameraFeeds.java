@@ -41,8 +41,8 @@ public class CameraFeeds
 	
 	public void init()
 	{
-		HumanInput.registerPressedCommand(new DpadButtonWrapper(true), new RotateCamerasRightCommand());
-		HumanInput.registerPressedCommand(new DpadButtonWrapper(false), new RotateCamerasLeftCommand());
+		HumanInput.registerPressedCommand(HumanInput.cameraRotateRight, new RotateCamerasRightCommand());
+		HumanInput.registerPressedCommand(HumanInput.cameraRotateLeft, new RotateCamerasLeftCommand());
 		changeCam(curCam);
 	}
 	

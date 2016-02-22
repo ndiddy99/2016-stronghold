@@ -3,7 +3,10 @@ package org.usfirst.frc.team2537.robot.shooter.flywheel;
 import java.util.HashMap;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.usfirst.frc.team2537.robot.input.Ports;
 import org.usfirst.frc.team2537.robot.input.Sensor;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
@@ -31,8 +34,8 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	// Vars
 	private boolean proximityValue = false;
 	//The orientation assumes that you are facing the bot
-	public CANTalon leftFlywheelMotor;
-	public CANTalon rightFlywheelMotor;
+	private CANTalon leftFlywheelMotor;
+	private CANTalon rightFlywheelMotor;
 	public static final boolean ENABLE_VOLTAGE_OVERRIDE = false;
 
 	public FlywheelSubsystem() {
@@ -69,7 +72,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 
 		// Set rightFlywheelMotor to be reversed of everything else.
 		rightFlywheelMotor.reverseOutput(false);
-		rightFlywheelMotor.reverseSensor(true);
+		rightFlywheelMotor.reverseSensor(false);
 		leftFlywheelMotor.reverseOutput(false);
 		leftFlywheelMotor.reverseSensor(false);
 
@@ -91,7 +94,9 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	}
 
 	public void registerButtons() {
-		HumanInput.registerPressedCommand(HumanInput.ballShootTrigger, new ShootCommandGroup());
+		Command shootCommand = new ShootCommandGroup();
+		HumanInput.registerPressedCommand(HumanInput.ballShootTrigger, shootCommand);
+		HumanInput.cancelWhenPressed(HumanInput.shootCancelButton, shootCommand);
 		HumanInput.registerWhileHeldCommand(HumanInput.harvestBallTrigger, new HarvestCommandGroup());
 	}
 
@@ -103,12 +108,11 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	 *            in RPM.
 	 */
 	public void setSpeed(double speed) {
-		if (DEBUG) {
-			System.out.println("Left Flywheel Speed: " + leftFlywheelMotor.getSpeed());
-		}
+		SmartDashboard.putString("Left Talon Mode", leftFlywheelMotor.getControlMode().toString());
+		SmartDashboard.putString("Right Talon Mode", rightFlywheelMotor.getControlMode().toString());
 		if(!ENABLE_VOLTAGE_OVERRIDE) {
-		leftFlywheelMotor.set(-speed);
-		rightFlywheelMotor.set(speed);
+			leftFlywheelMotor.set(-speed);
+			rightFlywheelMotor.set(speed);
 		} else {
 			leftFlywheelMotor.changeControlMode(TalonControlMode.PercentVbus);
 			rightFlywheelMotor.changeControlMode(TalonControlMode.PercentVbus);
@@ -116,6 +120,14 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 			rightFlywheelMotor.set(speed/ 5670.666);
 		}
 	}
+	
+	public void stop(){
+		System.out.println("MOTORS STOP!!!!!");
+		rightFlywheelMotor.set(0);
+		leftFlywheelMotor.set(0);
+	}
+	
+	
 
 	// LEFT
 	/**
@@ -155,9 +167,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	 * @return flywheel speed in RPM
 	 */
 	public double getRightSpeed() {
-		if (DEBUG) {
-			System.out.println("Right Flywheel Speed: " + rightFlywheelMotor.getSpeed());
-		}
+		if (DEBUG) System.out.println("Right Flywheel Speed: " + rightFlywheelMotor.getSpeed());
 		return rightFlywheelMotor.getSpeed();
 	}
 
@@ -184,7 +194,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	// measurments are at the speed that we want to be at.
 	int counter = 0;
 	public boolean isAtSpeed(double speed) {
-		System.out.println(counter);
+		if (DEBUG) System.out.println("Good speeds sampled: " + counter);
 		if (Math.abs(-getRightSpeed() - speed) <= SPEED_TOLERANCE
 				&& Math.abs(getLeftSpeed() - speed) <= SPEED_TOLERANCE) {
 			counter++;
@@ -192,7 +202,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 			counter = 0;
 		}
 		if (counter == 10) {
-			counter = 0;
+			counter = 0; 
 			return true;
 		}
 		return false;
