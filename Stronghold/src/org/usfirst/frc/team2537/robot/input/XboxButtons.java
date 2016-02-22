@@ -19,5 +19,6 @@ public class XboxButtons {
 		XBOX_LEFT_TRIGGERS = 2,
 		XBOX_RIGHT_TRIGGERS = 3,
 		XBOX_RIGHT_X_AXIS = 4,
-		XBOX_RIGHT_Y_AXIS = 5;
+		XBOX_RIGHT_Y_AXIS = 5,
+		DPAD_AXIS = 6;
 }

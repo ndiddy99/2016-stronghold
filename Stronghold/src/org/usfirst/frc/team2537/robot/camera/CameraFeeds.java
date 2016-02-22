@@ -1,5 +1,11 @@
 package org.usfirst.frc.team2537.robot.camera;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
+import org.usfirst.frc.team2537.robot.input.DpadButtonWrapper;
+import org.usfirst.frc.team2537.robot.input.HumanInput;
+
 import com.ni.vision.NIVision;
 import com.ni.vision.NIVision.Image;
 import com.ni.vision.NIVision.Point;
@@ -14,39 +20,34 @@ public class CameraFeeds
 	private int curCam;
 	private Image frame;
 	private CameraServer server;
-	private Controller contr;
+	private Queue<Integer> cameras;
 	
-	public CameraFeeds(Controller newContr)
+	public CameraFeeds()
 	{
         // Get camera ids by supplying camera name ex 'cam0', found on roborio web interface
         camCenter = NIVision.IMAQdxOpenCamera(Config.CameraFeeds.camNameCenter, NIVision.IMAQdxCameraControlMode.CameraControlModeController);
         camRight = NIVision.IMAQdxOpenCamera(Config.CameraFeeds.camNameRight, NIVision.IMAQdxCameraControlMode.CameraControlModeController);
         camLeft = NIVision.IMAQdxOpenCamera(Config.CameraFeeds.camNameLeft, NIVision.IMAQdxCameraControlMode.CameraControlModeController);
         curCam = camCenter;
+        cameras = new LinkedList<Integer>();
+        cameras.add(camRight);
+        cameras.add(camLeft);
         // Img that will contain camera img
         frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
         // Server that we'll give the img to
         server = CameraServer.getInstance();
         server.setQuality(Config.CameraFeeds.imgQuality);
-        contr = newContr;
 	}
 	
 	public void init()
 	{
-		changeCam(camCenter);
+		HumanInput.registerPressedCommand(new DpadButtonWrapper(true), new RotateCamerasRightCommand());
+		HumanInput.registerPressedCommand(new DpadButtonWrapper(false), new RotateCamerasLeftCommand());
+		changeCam(curCam);
 	}
 	
 	public void run()
 	{
-		if(contr.getButton(Config.CameraFeeds.btCamCenter))
-			changeCam(camCenter);
-		
-		if(contr.getButton(Config.CameraFeeds.btCamRight))
-			changeCam(camRight);
-		
-		if(contr.getButton(Config.CameraFeeds.btCamLeft))
-			changeCam(camLeft);
-		
 		updateCam();
 	}
 	
@@ -81,4 +82,16 @@ public class CameraFeeds
     	}
         server.setImage(frame);
     }
+	public int getCurCam() {
+		return curCam;
+	}
+
+	public void setCurCam(int curCam) {
+		this.curCam = curCam;
+	}
+
+	public Queue<Integer> getCameras() {
+		return cameras;
+	}
+
 }
