@@ -1,8 +1,6 @@
 package org.usfirst.frc.team2537.robot.input;
 
 import org.usfirst.frc.team2537.robot.Ports;
-import org.usfirst.frc.team2537.robot.camera.RotateCamerasLeftCommand;
-import org.usfirst.frc.team2537.robot.camera.RotateCamerasRightCommand;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Joystick.AxisType;

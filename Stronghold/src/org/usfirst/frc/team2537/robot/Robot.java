@@ -2,7 +2,6 @@ package org.usfirst.frc.team2537.robot;
 
 import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
 import org.usfirst.frc.team2537.robot.auto.AutoChooser;
-import org.usfirst.frc.team2537.robot.camera.CameraFeeds;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team2537.robot.input.Sensors;
 import org.usfirst.frc.team2537.robot.shooter.actuator.ActuatorSubsystem;
@@ -34,7 +33,7 @@ public class Robot extends IterativeRobot {
 	final String customAuto = "My Auto";
 	String autoSelected;
 	public static DriveSubsystem driveSys;
-	public static CameraFeeds feeds;
+//	public static CameraFeeds feeds;
 	// private Controller contr = new Controller(Config.Controller.chn,
 	// Config.Controller.maxButtons, Config.Controller.linearity);
 	// private CameraFeeds cameraFeeds = new CameraFeeds(contr);
@@ -95,7 +94,7 @@ public class Robot extends IterativeRobot {
 		sensorSys.registerListener(shooterAngleSys);
 		sensorSys.registerListener(shooterFlywheelSys);
 
-		feeds = new CameraFeeds();
+//		feeds = new CameraFeeds();
 	}
 
 	@Override
@@ -107,7 +106,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void teleopInit() {
-		feeds.init();
+//		feeds.init();
 		System.out.println("Teleop init");
 		if (autoCommand != null) {
 			autoCommand.cancel();
@@ -119,11 +118,9 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		sensorSys.handleEvents();
-		feeds.run();
+//		feeds.run();
 		Scheduler.getInstance().run();
-		SmartDashboard.putBoolean("IR Sensor", shooterFlywheelSys.isBallPresent());
 		SmartDashboard.putNumber("Arm IMU", armSys.getIMUAngle());
-		SmartDashboard.putNumber("Arm Encoder", armSys.getAngle());
 	}
 
 	@Override

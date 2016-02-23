@@ -24,7 +24,7 @@ public final class Ports {
 
 		ARM_TALON = 8,
 		
-		//PWM Servo
+		//PWM Serv
 		SERVO_PORT = 1,
 
 		// Sensors
