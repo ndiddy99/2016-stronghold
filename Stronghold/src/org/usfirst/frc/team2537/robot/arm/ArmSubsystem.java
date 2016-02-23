@@ -3,6 +3,7 @@ package org.usfirst.frc.team2537.robot.arm;
 import java.util.HashMap;
 
 import org.usfirst.frc.team2537.robot.Ports;
+import org.usfirst.frc.team2537.robot.Robot;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 import org.usfirst.frc.team2537.robot.input.Sensor;
 import org.usfirst.frc.team2537.robot.input.SensorListener;
@@ -49,13 +50,16 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 	 * 
 	 */
 	public void init() {
-		int anglesToEncTicks = (int) ((90 - currentAngle) * encoderTicksPerRev);
-		armMotor.setEncPosition(anglesToEncTicks);
+//		int anglesToEncTicks = (int) ((90 - currentAngle) * encoderTicksPerRev);
+//		armMotor.setEncPosition(anglesToEncTicks);
+		while (armMotor.isFwdLimitSwitchClosed() != true) {
+			armMotor.set(.2);
+		}
+		System.out.println("Calibrated!");
+		armMotor.setEncPosition(0);
 	}
 
 	public void registerButtons() {
-//		HumanInput.registerPressedCommand(HumanInput.lowerArmButton, new PresetArmCommand(ArmPositions.portcullisDownPos));
-		HumanInput.registerPressedCommand(HumanInput.raiseArmButton, new PresetArmCommand(ArmPositions.portcullisUpPos));
 		HumanInput.registerPressedCommand(HumanInput.lowBarModeEnableButton, new LowBarCommandGroup(true));
 		HumanInput.registerReleasedCommand(HumanInput.lowBarModeEnableButton, new LowBarCommandGroup(false));
 	}

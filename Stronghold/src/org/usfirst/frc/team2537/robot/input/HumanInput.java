@@ -28,19 +28,15 @@ public class HumanInput {
 	public static final Button reverseDrive = new JoystickButton(leftJoystick, 3);
 	public static final Button driveTypeToggle = new JoystickButton(leftJoystick, 4);
 
-    public static final Button lowerArmButton = new JoystickButton(xboxController, XboxButtons.XBOX_A);
-	public static final Button raiseArmButton = new JoystickButton(xboxController, XboxButtons.XBOX_Y);
-	public static final Button neutralArmButton = new JoystickButton(xboxController, XboxButtons.XBOX_B);
 	public static final Button lowBarModeEnableButton = new JoystickButton(xboxController, XboxButtons.XBOX_LB);
 
-	public static final Button cameraRotateLeft= new DpadButtonWrapper(false);
-	public static final Button cameraRotateRight= new DpadButtonWrapper(true);
 
 	public static final Button shootCancelButton= new JoystickButton(xboxController, XboxButtons.XBOX_RB);
 
 	
 	public static final JoystickButton harvestBallTrigger = new XboxTrigger(xboxController,
 			XboxButtons.XBOX_LEFT_TRIGGERS);
+	public static final Button changeCameraButton = new JoystickButton(xboxController, XboxButtons.XBOX_Y);
 
 	//public static Button portcullisButton	= new JoystickButton(xboxController, XboxButtons.XBOX_A);
 	//public static Button chevalButton		= new JoystickButton(xboxController, XboxButtons.XBOX_B);

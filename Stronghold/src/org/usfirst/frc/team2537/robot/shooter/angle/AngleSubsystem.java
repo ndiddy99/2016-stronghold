@@ -145,6 +145,5 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 
 	public void registerButtons() {
 		// Needed but not used.
-		HumanInput.registerPressedCommand(HumanInput.lowerArmButton, new MoveToAngleCommand(15));
 	}
 }

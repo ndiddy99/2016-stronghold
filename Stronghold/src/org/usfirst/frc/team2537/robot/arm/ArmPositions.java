@@ -8,9 +8,9 @@ package org.usfirst.frc.team2537.robot.arm;
 
 public class ArmPositions {
 	public static final double
-		portcullisDownPos = -228.00,
+		portcullisDownPos = 0.00,
 		portcullisUpPos = 0.00,
-		lowbarPos = 0.00,
+		lowbarPos = -256.00,
 		chevalUpPos = 0.00,
 		chevalDownPos = 0.00;
 }
