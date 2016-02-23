@@ -104,6 +104,10 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 	}
+	
+	public void autonomousInit() {
+		Robot.armSys.init();
+	}
 
 	public void teleopInit() {
 //		feeds.init();
@@ -121,6 +125,9 @@ public class Robot extends IterativeRobot {
 //		feeds.run();
 		Scheduler.getInstance().run();
 		SmartDashboard.putNumber("Arm IMU", armSys.getIMUAngle());
+		SmartDashboard.putNumber("Arm Encoder", armSys.getAngle());
+		SmartDashboard.putBoolean("Is Fwd limit switch enabled", Robot.armSys.armMotor.isFwdLimitSwitchClosed());
+		SmartDashboard.putBoolean("Is Rev limit switch enabled", Robot.armSys.armMotor.isRevLimitSwitchClosed());
 	}
 
 	@Override
