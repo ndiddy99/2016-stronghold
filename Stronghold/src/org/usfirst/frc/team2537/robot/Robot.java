@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -120,6 +121,7 @@ public class Robot extends IterativeRobot {
 		sensorSys.handleEvents();
 		feeds.run();
 		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("Arm IMU", armSys.getIMUAngle());
 	}
 
 	@Override
