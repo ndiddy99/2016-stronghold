@@ -18,9 +18,24 @@ public class RotateCamerasRightCommand extends Command {
 	protected void execute() {
 		// TODO Auto-generated method stub
 		Queue<Integer> cameras = Robot.feeds.getCameras();
+		
+		System.out.println(Robot.feeds.getCurCam());
+		System.out.println(cameras.toArray()[0]);
+		System.out.println(cameras.toArray()[1]);
+		
 		cameras.add(Robot.feeds.getCurCam());
-		Robot.feeds.setCurCam(cameras.poll());
-		Robot.feeds.changeCam(Robot.feeds.getCurCam());
+		
+		System.out.println(cameras.toArray()[0]);
+		System.out.println(cameras.toArray()[1]);
+		System.out.println(cameras.toArray()[2]);
+		
+		
+
+		
+		Robot.feeds.changeCam(cameras.poll());
+		
+		System.out.println(cameras.toArray()[0]);
+		System.out.println(cameras.toArray()[1]);
 	}
 
 	@Override

@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import org.usfirst.frc.team2537.robot.Ports;
-import org.usfirst.frc.team2537.robot.input.DpadButtonWrapper;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 
 import com.ni.vision.NIVision;
@@ -42,8 +41,8 @@ public class CameraFeeds
 	
 	public void init()
 	{
-		HumanInput.registerPressedCommand(HumanInput.cameraRotateRight, new RotateCamerasRightCommand());
-		HumanInput.registerPressedCommand(HumanInput.cameraRotateLeft, new RotateCamerasLeftCommand());
+		HumanInput.registerPressedCommand(HumanInput.changeCameraButton, new RotateCamerasRightCommand());
+		System.out.println("init");
 		changeCam(curCam);
 	}
 	
@@ -66,6 +65,7 @@ public class CameraFeeds
 	 */
 	public void changeCam(int newId)
     {
+		System.out.println(newId);
 		NIVision.IMAQdxStopAcquisition(curCam);
     	NIVision.IMAQdxConfigureGrab(newId);
     	NIVision.IMAQdxStartAcquisition(newId);
@@ -77,6 +77,7 @@ public class CameraFeeds
 	 */
     public void updateCam()
     {
+    	System.out.println();
     	NIVision.IMAQdxGrab(curCam, frame, 1);
     	if(curCam == camCenter){
     		NIVision.imaqDrawLineOnImage(frame, frame, NIVision.DrawMode.DRAW_VALUE, new Point(320, 0), new Point(320, 480), 120);
