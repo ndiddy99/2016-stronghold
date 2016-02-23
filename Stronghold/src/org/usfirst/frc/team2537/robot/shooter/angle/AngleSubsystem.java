@@ -20,9 +20,9 @@ import org.usfirst.frc.team2537.robot.input.XboxButtons;
 public class AngleSubsystem extends Subsystem implements SensorListener {
 	
 	// The angle limits.
-	private static final double MAX_ANGLE = 20;// degrees (ball park, not right)
-	private static final double MIN_ANGLE =  0;// degrees(ball park, not right)
-	private static final double MAX_VOLTAGE= 5;
+	private static final double MAX_ANGLE = 28;// degrees (ball park, not right)
+	private static final double MIN_ANGLE =  -4.5;// degrees(ball park, not right)
+	private static final double MAX_VOLTAGE= 4.3;
 	//Difference between the max and min angle.
 	public static final double MAX_ANGLE_DIFFERENCE = MAX_ANGLE - MIN_ANGLE; 
 	//Debugs
@@ -65,8 +65,8 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	 *            A speed between [-1, 1] which is the voltage that will be set.
 	 */
 	public void setVoltagePercent(double percent) {
-		if (isHighestPosition() && (percent > 0)) return;//Don't set
-		if (isLowestPosition() && (percent < 0)) return;//Don't set
+		if (isHighestPosition() && (percent < 0)) return;//Don't set
+		if (isLowestPosition() && (percent > 0)) return;//Don't set
 		//else
 		angleMotor.set(percent);
 	}
@@ -126,8 +126,7 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 		//SOFT LIMITS
 		if (isHighestPosition() || isLowestPosition()){
 			//TOO High or low stop motor.
-			System.out.println("Position Is at Max.");
-			angleMotor.set(0);
+			System.out.println("Position Is at Max or Min.");
 		}
 	}
 
@@ -146,6 +145,6 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 
 	public void registerButtons() {
 		// Needed but not used.
-
+		HumanInput.registerPressedCommand(HumanInput.lowerArmButton, new MoveToAngleCommand(15));
 	}
 }

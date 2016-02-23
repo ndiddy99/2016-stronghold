@@ -3,6 +3,7 @@ package org.usfirst.frc.team2537.robot.camera;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import org.usfirst.frc.team2537.robot.Ports;
 import org.usfirst.frc.team2537.robot.input.DpadButtonWrapper;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 
@@ -25,9 +26,9 @@ public class CameraFeeds
 	public CameraFeeds()
 	{
         // Get camera ids by supplying camera name ex 'cam0', found on roborio web interface
-        camCenter = NIVision.IMAQdxOpenCamera(Config.CameraFeeds.camNameCenter, NIVision.IMAQdxCameraControlMode.CameraControlModeController);
-        camRight = NIVision.IMAQdxOpenCamera(Config.CameraFeeds.camNameRight, NIVision.IMAQdxCameraControlMode.CameraControlModeController);
-        camLeft = NIVision.IMAQdxOpenCamera(Config.CameraFeeds.camNameLeft, NIVision.IMAQdxCameraControlMode.CameraControlModeController);
+        camCenter = NIVision.IMAQdxOpenCamera(Ports.DOWNWARD_BREACHING_CAMERA, NIVision.IMAQdxCameraControlMode.CameraControlModeController);
+        camRight = NIVision.IMAQdxOpenCamera(Ports.UPWARD_BREACHING_CAMERA, NIVision.IMAQdxCameraControlMode.CameraControlModeController);
+        camLeft = NIVision.IMAQdxOpenCamera(Ports.SHOOTING_CAMERA, NIVision.IMAQdxCameraControlMode.CameraControlModeController);
         curCam = camCenter;
         cameras = new LinkedList<Integer>();
         cameras.add(camRight);

@@ -7,13 +7,13 @@ import org.usfirst.frc.team2537.robot.Robot;
 /**
  * MoveToAngleCommand
  * 
- * @author matthewschweiss
+ * @author Matthew Schweiss
  *
  *         The point of this command is to put the shooter to a particular
  *         angle. This goes to the angle but slows as it approaches the angle.
  */
 public class MoveToAngleCommand extends Command {
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 	// Constants
 	private static final double TOLERANCE = .5; // How far the shooter can be
 												// from the desired angle in
@@ -47,7 +47,7 @@ public class MoveToAngleCommand extends Command {
 	protected void execute() {
 		try {
 			currentPosition = Robot.shooterAngleSys.getCurrentAngle();
-			Robot.shooterAngleSys.setVoltagePercent((currentPosition - posToMoveTo) / AngleSubsystem.MAX_ANGLE_DIFFERENCE);
+			Robot.shooterAngleSys.setVoltagePercent(-(currentPosition - posToMoveTo) / AngleSubsystem.MAX_ANGLE_DIFFERENCE);
 		} catch (NullPointerException e) {
 			//Nothing. To do, can't move without sensor.
 			if (DEBUG) System.out.println("MoveToAngleCommand stopped because sensor is not present.");
