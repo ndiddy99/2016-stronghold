@@ -126,7 +126,7 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 		//SOFT LIMITS
 		if (isHighestPosition() || isLowestPosition()){
 			//TOO High or low stop motor.
-			System.out.println("Position Is at Max or Min.");
+//			System.out.println("Position Is at Max or Min.");
 		}
 	}
 
