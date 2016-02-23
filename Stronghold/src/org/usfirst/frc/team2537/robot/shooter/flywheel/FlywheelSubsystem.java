@@ -30,13 +30,15 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	// 5 volts per second ramp rate for the flywheels
 	private static final double VOLTAGE_RAMP_RATE = 12;
 	// yet
-	private static final double P = 2.5, I = 0.01, D = 0.0;
+	private static final double P = 3.1, I = 0.01, D = 0.31;
 	// Vars
 	private boolean proximityValue = false;
 	//The orientation assumes that you are facing the bot
 	private CANTalon leftFlywheelMotor;
 	private CANTalon rightFlywheelMotor;
 	public static final boolean ENABLE_VOLTAGE_OVERRIDE = false;
+	private static final double F_GAIN_RIGHT = 0.18235294117;
+	private static final double F_GAIN_LEFT = 0.19597701149;
 
 	public FlywheelSubsystem() {
 		// Make sure the the mode to velocity so we can modify it.
@@ -78,9 +80,9 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 
 		// Set PID's
 		leftFlywheelMotor.setPID(P, I, D);
-		leftFlywheelMotor.setF(0);
+		leftFlywheelMotor.setF(F_GAIN_LEFT);
 		rightFlywheelMotor.setPID(P, I, D);
-		rightFlywheelMotor.setF(0);
+		rightFlywheelMotor.setF(F_GAIN_RIGHT);
 		rightFlywheelMotor.setVoltageRampRate(VOLTAGE_RAMP_RATE);
 		leftFlywheelMotor.setVoltageRampRate(VOLTAGE_RAMP_RATE);
 
@@ -122,7 +124,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	}
 	
 	public void stop(){
-		System.out.println("MOTORS STOP!!!!!");
+//		System.out.println("MOTORS STOP!!!!!");
 		rightFlywheelMotor.set(0);
 		leftFlywheelMotor.set(0);
 	}
