@@ -130,7 +130,6 @@ public class Robot extends IterativeRobot {
 	public void testPeriodic() {
 		sensorSys.handleEvents();
 		Scheduler.getInstance().run();
-
 	}
 
 	@Override

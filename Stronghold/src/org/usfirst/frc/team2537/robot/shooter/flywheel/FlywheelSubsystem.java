@@ -24,8 +24,8 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	public static final boolean DEBUG = false;
 	private static final int ENCODER_TICKS_PER_REV = 20;
 	private static final double UNITS_PER_100MS_TO_RPM = 100.0 / 4096 * 1000 * 60;
-	private static final double SPEED_TOLERANCE = 5;
-	// Max voltage that can be output from the flywheel talons.
+	private static final double SPEED_TOLERANCE = 12.5;
+	// Max voltage that can be output from the flyweel talons.
 	private static final float MAX_VOLTAGE = 12.0f;
 	// 5 volts per second ramp rate for the flywheels
 	private static final double VOLTAGE_RAMP_RATE = 12;
