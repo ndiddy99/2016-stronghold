@@ -121,6 +121,8 @@ public class Robot extends IterativeRobot {
 //		feeds.run();
 		Scheduler.getInstance().run();
 		SmartDashboard.putNumber("Arm IMU", armSys.getIMUAngle());
+		Double shooterAngle = shooterAngleSys.getCurrentAngle();
+		SmartDashboard.putString("Shooter IMU", shooterAngle==null?"null":shooterAngle.toString());
 	}
 
 	@Override

@@ -19,7 +19,7 @@ import org.usfirst.frc.team2537.robot.Robot;
 public class ShootCommandGroup extends CommandGroup {
 	private static final boolean DEBUG = false;
 	//The default velocity.
-    public static final double SHOOT_VELOCITY = -500;
+    public static final double SHOOT_VELOCITY = -1000;
     
     //Using default velocity.
     public ShootCommandGroup() {
@@ -29,6 +29,7 @@ public class ShootCommandGroup extends CommandGroup {
     //Using a specified speed.
     public ShootCommandGroup(double shootVelocity){
     	//First make sure we are not running already.
+    	addParallel(new ActuatorCommand(false));//retract
     	addSequential(new FlywheelCommand(shootVelocity));
     	addSequential(new ActuatorCommand(true));//extend
     	addSequential(new BallDetectionCommand(false));//Wait until ball is gone.
@@ -48,7 +49,7 @@ public class ShootCommandGroup extends CommandGroup {
     @Override
     protected void interrupted() {
     	if (DEBUG) System.out.println("ShootCommandGroup Interrupted");
-    	new ActuatorCommand(false).start();//retract
+    	Robot.shooterActuatorSys.setPosition(false);
     	//new FlywheelCommand(0).start();//stop wheels.
     	//Robot.shooterFlywheelSys.setSpeed(0.0);
     	Robot.shooterFlywheelSys.stop();

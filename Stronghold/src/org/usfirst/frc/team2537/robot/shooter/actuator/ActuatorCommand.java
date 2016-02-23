@@ -9,7 +9,7 @@ import org.usfirst.frc.team2537.robot.Robot;
 public class ActuatorCommand extends Command {
 	//Varibles
 	private boolean extended;
-	private static double TIMEOUT = 5;
+	private static double TIMEOUT = .25;
 	
     public ActuatorCommand(boolean extended) {
         // Use requires() here to declare subsystem dependencies

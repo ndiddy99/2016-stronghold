@@ -24,7 +24,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	public static final boolean DEBUG = false;
 	private static final int ENCODER_TICKS_PER_REV = 20;
 	private static final double UNITS_PER_100MS_TO_RPM = 100.0 / 4096 * 1000 * 60;
-	private static final double SPEED_TOLERANCE = 12.5;
+	private static final double SPEED_TOLERANCE = 50;
 	// Max voltage that can be output from the flyweel talons.
 	private static final float MAX_VOLTAGE = 12.0f;
 	// 5 volts per second ramp rate for the flywheels
@@ -197,8 +197,8 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	int counter = 0;
 	public boolean isAtSpeed(double speed) {
 		if (DEBUG) System.out.println("Good speeds sampled: " + counter);
-		if (Math.abs(-getRightSpeed() - speed) <= SPEED_TOLERANCE
-				&& Math.abs(getLeftSpeed() - speed) <= SPEED_TOLERANCE) {
+		if (Math.abs(Math.abs(getRightSpeed()) - Math.abs(speed)) <= SPEED_TOLERANCE
+				&& Math.abs(Math.abs(getLeftSpeed()) - Math.abs(speed)) <= SPEED_TOLERANCE) {
 			counter++;
 		} else {
 			counter = 0;

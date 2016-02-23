@@ -51,7 +51,7 @@ public class MoveToAngleCommand extends Command {
 		} catch (NullPointerException e) {
 			//Nothing. To do, can't move without sensor.
 			if (DEBUG) System.out.println("MoveToAngleCommand stopped because sensor is not present.");
-			this.cancel();
+//			this.cancel();
 		}
 	}
 
