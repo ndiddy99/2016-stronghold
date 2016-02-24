@@ -22,6 +22,14 @@ public class IMU implements SensorInterface {
 		input = new Counter(inputPort);
 		input.setSemiPeriodMode(true);
 	}
+	
+	public Double getCurrentAngle(){
+		if (getAngle(input.getPeriod(), 16, maxPeriod, minAngle, maxAngle) == Double.POSITIVE_INFINITY || getAngle(input.getPeriod(), 16, maxPeriod, minAngle, maxAngle) == Double.NEGATIVE_INFINITY) {
+			return null;
+		} else {
+			return getAngle(input.getPeriod(), 16, maxPeriod, minAngle, maxAngle);
+		}
+	}
 
 	public void getValue() {
 		if (getAngle(input.getPeriod(), 16, maxPeriod, minAngle, maxAngle) == Double.POSITIVE_INFINITY || getAngle(input.getPeriod(), 16, maxPeriod, minAngle, maxAngle) == Double.NEGATIVE_INFINITY) {
