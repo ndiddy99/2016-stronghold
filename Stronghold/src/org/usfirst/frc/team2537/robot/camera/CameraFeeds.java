@@ -15,9 +15,9 @@ import edu.wpi.first.wpilibj.CameraServer;
 
 public class CameraFeeds
 {
-	private final int camCenter;
-	private final int camRight;
-	private final int camLeft;
+	private int camCenter;
+	private int camRight;
+	private int camLeft;
 	private int curCam;
 	private Image frame;
 	private CameraServer server;
@@ -25,6 +25,7 @@ public class CameraFeeds
 	
 	public CameraFeeds()
 	{
+		try{
         // Get camera ids by supplying camera name ex 'cam0', found on roborio web interface
         camCenter = NIVision.IMAQdxOpenCamera(Ports.DOWNWARD_BREACHING_CAMERA, NIVision.IMAQdxCameraControlMode.CameraControlModeController);
         camRight = NIVision.IMAQdxOpenCamera(Ports.UPWARD_BREACHING_CAMERA, NIVision.IMAQdxCameraControlMode.CameraControlModeController);
@@ -38,6 +39,9 @@ public class CameraFeeds
         // Server that we'll give the img to
         server = CameraServer.getInstance();
         server.setQuality(Config.CameraFeeds.imgQuality);
+		}
+		catch(Exception e){}
+		
 	}
 	
 	public void init()
@@ -57,7 +61,12 @@ public class CameraFeeds
 	 */
 	public void end()
 	{
+		try{
 		NIVision.IMAQdxStopAcquisition(curCam);
+		}
+		catch(Exception e){
+			
+		}
 	}
 	
 	/**
@@ -66,11 +75,15 @@ public class CameraFeeds
 	 */
 	public void changeCam(int newId)
     {
+		try{
 		System.out.println(newId);
 		NIVision.IMAQdxStopAcquisition(curCam);
     	NIVision.IMAQdxConfigureGrab(newId);
     	NIVision.IMAQdxStartAcquisition(newId);
-    	curCam = newId;
+    	curCam = newId;}
+		catch(Exception e){
+			
+		}
     }
     
 	/**
@@ -78,12 +91,14 @@ public class CameraFeeds
 	 */
     public void updateCam()
     {
+    	try{
     	System.out.println();
     	NIVision.IMAQdxGrab(curCam, frame, 1);
     	if(curCam == camCenter){
     		NIVision.imaqDrawLineOnImage(frame, frame, NIVision.DrawMode.DRAW_VALUE, new Point(320, 0), new Point(320, 480), 120);
     	}
-        server.setImage(frame);
+        server.setImage(frame);}
+    	catch(Exception e){}
     }
 	public int getCurCam() {
 		return curCam;
