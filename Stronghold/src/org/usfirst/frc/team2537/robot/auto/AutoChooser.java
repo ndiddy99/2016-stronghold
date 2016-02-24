@@ -1,9 +1,7 @@
 package org.usfirst.frc.team2537.robot.auto;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AutoChooser {
 	public static SendableChooser autoChoice;
@@ -14,6 +12,7 @@ public class AutoChooser {
 	public AutoChooser(){
 		autoChoice= new SendableChooser();
         autoChoice.addDefault("Default Autonomous", new CourseCorrect(100));
+        autoChoice.addObject("Drive 5 units", new AutoDriveStraightCommand(5));
 //        autoChoice.addObject("Drive Straight 5 inches", new AutoDriveStraightCommand(5));
 //        autoChoice.addObject("CourseCorrectAuto", new CourseCorrect(100));
 //        autoChoice.addObject("90 degree turn", new AutoRotateCommand(90));

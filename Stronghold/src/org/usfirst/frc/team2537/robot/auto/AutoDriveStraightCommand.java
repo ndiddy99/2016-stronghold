@@ -6,14 +6,15 @@ import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Untested
+ * 
  * @author Arden Zhang
  *
  */
 public class AutoDriveStraightCommand extends Command {
 	private double speed;
 	private double distance;
-	private static final boolean debug = false;
-	private static final double DEFAULT_SPEED = 0.5;
+	private static final boolean debug = true;
+	private static final double DEFAULT_SPEED = -0.5;
 
 	/**
 	 * drives forward nowhere
@@ -26,7 +27,7 @@ public class AutoDriveStraightCommand extends Command {
 	 * Drives [distance] at the default speed
 	 * 
 	 * @param distance
-	 *            in inches
+	 *            in ???
 	 */
 	public AutoDriveStraightCommand(double distance) {
 		requires(Robot.driveSys);
@@ -54,32 +55,50 @@ public class AutoDriveStraightCommand extends Command {
 	@Override
 	protected void initialize() {
 		if (debug) {
-			System.out.println("[AutoDriveStraightCommand] Driving " + distance
-					+ " at " + speed);
+			System.out.println("[AutoDriveStraightCommand] Driving " + distance + " at " + speed);
 		}
 		Robot.driveSys.setDriveMotors(speed);
-		Robot.driveSys.resetEncoders();
+		// Robot.driveSys.resetEncoders();
+
+		//ATLAS
+		Robot.driveSys.lencoder.reset();
+		Robot.driveSys.rencoder.reset();
 	}
 
 	@Override
 	protected void execute() {
 		if (debug) {
+			// System.out.println("[AutoDriveStraightCommand] Current distance:
+			// "
+			// + Robot.driveSys.getEncoderAverage() + "\tTarget distance: " +
+			// distance);
+			
+			//ATLAS
 			System.out.println("[AutoDriveStraightCommand] Current distance: "
-					+ Robot.driveSys.getEncoderAverage());
+					+ getEncoderAverage() + "\tTarget distance: "
+					+ distance);
 		}
 	}
 
 	@Override
 	protected boolean isFinished() {
+//		if (distance < 0) {
+//			return (Robot.driveSys.getEncoderAverage() <= distance);
+//		}
+//		return (Robot.driveSys.getEncoderAverage() >= distance);
+
+		
+		//ATLAS
 		if (distance < 0) {
-			return (Robot.driveSys.getEncoderAverage() <= distance);
+			return (getEncoderAverage() <= distance);
 		}
-		return (Robot.driveSys.getEncoderAverage() >= distance);
+		return (getEncoderAverage() >= distance);
+
 	}
 
 	@Override
 	protected void end() {
-		if (debug){
+		if (debug) {
 			System.out.println("[AutoDriveStraightCommand] good end");
 		}
 		Robot.driveSys.setDriveMotors(0);
@@ -87,10 +106,18 @@ public class AutoDriveStraightCommand extends Command {
 
 	@Override
 	protected void interrupted() {
-		if (debug){
+		if (debug) {
 			System.out.println("[AutoDriveStraightCommand] bad end");
 		}
 		Robot.driveSys.setDriveMotors(0);
 	}
 
+	//ATLAS
+	/**
+	 * average encoder distance in revolutions
+	 * @return
+	 */
+	private double getEncoderAverage(){
+		return ((Robot.driveSys.lencoder.get() + Robot.driveSys.rencoder.get())/2.0)/40.0;
+	}
 }

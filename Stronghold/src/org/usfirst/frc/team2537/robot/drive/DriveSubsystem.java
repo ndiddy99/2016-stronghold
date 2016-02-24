@@ -7,6 +7,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -27,6 +28,10 @@ public class DriveSubsystem extends Subsystem {
 											// resetEncoders)
 	private double initialRightEncoders = 0; // Inches to subtract (for
 												// resetEncoders)
+
+	//Atlas encoder code
+	public Encoder lencoder = new Encoder(2, 3);
+	public Encoder rencoder = new Encoder(0, 1);
 
 	private AHRS ahrs;
 
