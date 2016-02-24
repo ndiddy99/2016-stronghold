@@ -1,3 +1,4 @@
 /bin/
-/Stronghold/build.*
-/Stronghold/.classpath
+/dist/
+/sysProps.xml
+/build/
