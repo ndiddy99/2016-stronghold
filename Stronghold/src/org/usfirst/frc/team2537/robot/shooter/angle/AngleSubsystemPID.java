@@ -159,6 +159,26 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 
 	@Override
 	protected void usePIDOutput(double output) {
-		angleMotor.set(output);
+		angleMotor.pidWrite(output);
 	}
+	public double averageError() {
+		return getPIDController().getAvgError();
+	}
+	public double PIDValue() {
+		return getPIDController().get();
+	}
+	public double getPIDControllerSetpoint() {
+		return getPIDController().getSetpoint();
+	}
+	public double getSubsystemSetpoint() {
+		return getSetpoint();
+	}
+	public double getError() {
+		return getPIDController().getError();
+	}
+	public boolean isAtAngle() {
+		return getPIDController().onTarget();
+	}
+	
+	
 }
