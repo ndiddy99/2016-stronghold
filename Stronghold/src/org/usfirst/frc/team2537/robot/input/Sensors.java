@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.usfirst.frc.team2537.robot.Ports;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 /**
  * Class that handles the other sensor classes and passes values to the other subsystem
  * 
@@ -38,7 +40,13 @@ public class Sensors {
 	public void addValue(Sensor sensor, Double val) {
 		sensorVals.put(sensor, val);
 	}
-
+	public void updateSmartDashboardValues(){
+		SmartDashboard.putNumber("Ultrasonic", sensorVals.get(Sensor.ULTRASONIC_DISTANCE));
+		SmartDashboard.putNumber("Shooter Tilt Sensor", sensorVals.get(Sensor.SHOOTER_ANGLE));
+		SmartDashboard.putNumber("Shooter Lidar", sensorVals.get(Sensor.SHOOTER_LIDAR));
+		SmartDashboard.putNumber("Shooter Proximity", sensorVals.get(Sensor.SHOOTER_PROXIMITY));
+		SmartDashboard.putNumber("Arm Tilt Sensor", sensorVals.get(Sensor.ARM_ANGLE));
+	}
 	public void handleEvents() {
 	
 		sensorVals.clear();//Make sure we don't copy old values.

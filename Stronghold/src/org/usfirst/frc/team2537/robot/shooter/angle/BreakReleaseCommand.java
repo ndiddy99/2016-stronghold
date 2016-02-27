@@ -16,22 +16,28 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class BreakReleaseCommand extends Command {
 	private static final boolean DEBUG = false;
-	private static final float TIMEOUT = .05f;//It takes 50ms to turn the brake off.
-	private static final float POWER = -1;//Full power to take brake off. REVERESED
-
-    public BreakReleaseCommand() {
+	private static final double TIMEOUT = .001;//It takes 50ms to turn the brake off.
+	private static final double POWER = -1.0;//Full power to take brake off. REVERESED
+	private final boolean GOING_UP;
+    public BreakReleaseCommand(boolean goingUp) {
     	super(TIMEOUT);
         requires(Robot.shooterAngleSys);    	
+        GOING_UP = goingUp;
     }
 
     @Override
     protected void initialize() {
     	if (DEBUG) System.out.println("BreakReleaseCommand started.");
+    	if(GOING_UP) {
     	Robot.shooterAngleSys.setVoltagePercent(POWER);
+    	} else {
+    		Robot.shooterAngleSys.setVoltagePercent(-POWER);
+    	}
     }
 
     @Override
     protected void execute() {
+    	
     }
     
     @Override

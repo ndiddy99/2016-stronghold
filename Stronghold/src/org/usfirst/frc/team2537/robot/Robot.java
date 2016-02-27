@@ -1,14 +1,9 @@
 package org.usfirst.frc.team2537.robot;
 
-import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
-import org.usfirst.frc.team2537.robot.auto.AutoChooser;
-import org.usfirst.frc.team2537.robot.camera.CameraFeeds;
-import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team2537.robot.input.Sensors;
 import org.usfirst.frc.team2537.robot.shooter.actuator.ActuatorSubsystem;
 import org.usfirst.frc.team2537.robot.shooter.angle.AngleSubsystem;
-import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelSubsystem;
-
+import org.usfirst.frc.team2537.robot.shooter.angle.AngleSubsystemPID;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -28,13 +23,13 @@ public class Robot extends IterativeRobot {
 	// private final String defaultAuto = "Default";
 	// private final String customAuto = "My Auto";
 	// private String autoSelected;
-	AutoChooser autoChooser;
-	Command autoCommand;
+//	AutoChooser autoChooser;
+//	Command autoCommand;
 	final String defaultAuto = "Default";
 	final String customAuto = "My Auto";
 	String autoSelected;
-	public static DriveSubsystem driveSys;
-	public static CameraFeeds feeds;
+//	public static DriveSubsystem driveSys;
+//	public static CameraFeeds feeds;
 	// private Controller contr = new Controller(Config.Controller.chn,
 	// Config.Controller.maxButtons, Config.Controller.linearity);
 	// private CameraFeeds cameraFeeds = new CameraFeeds(contr);
@@ -42,10 +37,11 @@ public class Robot extends IterativeRobot {
 	SendableChooser chooser;
 	// My stuff
 	public static Sensors sensorSys;
-	public static FlywheelSubsystem shooterFlywheelSys;
+//	public static FlywheelSubsystem shooterFlywheelSys;
 	public static AngleSubsystem shooterAngleSys;
 	public static ActuatorSubsystem shooterActuatorSys;
-	public static ArmSubsystem armSys;
+	public static AngleSubsystemPID shooterAutoAngleSys;
+//	public static ArmSubsystem armSys;
 
 	@Override
 	/**
@@ -63,22 +59,22 @@ public class Robot extends IterativeRobot {
 
 		// Initalize Everything
 
-		driveSys = new DriveSubsystem();
-		driveSys.registerButtons();
-		driveSys.initDefaultCommand();
+//		driveSys = new DriveSubsystem();
+//		driveSys.registerButtons();
+//		driveSys.initDefaultCommand();
 
-		armSys = new ArmSubsystem();
-		armSys.initDefaultCommand();
-		armSys.registerButtons();
+//		armSys = new ArmSubsystem();
+//		armSys.initDefaultCommand();
+//		armSys.registerButtons();
+//
+//		autoChooser = new AutoChooser();
 
-		autoChooser = new AutoChooser();
-
-		shooterFlywheelSys = new FlywheelSubsystem();
+//		shooterFlywheelSys = new FlywheelSubsystem();
 		shooterAngleSys = new AngleSubsystem();
 		shooterActuatorSys = new ActuatorSubsystem();
 
-		shooterFlywheelSys.initDefaultCommand();
-		shooterFlywheelSys.registerButtons();
+//		shooterFlywheelSys.initDefaultCommand();
+//		shooterFlywheelSys.registerButtons();
 
 		// Shooter Angle
 		shooterAngleSys.initDefaultCommand();
@@ -91,11 +87,12 @@ public class Robot extends IterativeRobot {
 		sensorSys = new Sensors();
 		sensorSys.init();
 
-		sensorSys.registerListener(armSys);
+//		sensorSys.registerListener(armSys);
 		sensorSys.registerListener(shooterAngleSys);
-		sensorSys.registerListener(shooterFlywheelSys);
+//		sensorSys.registerListener(shooterFlywheelSys);
+//		sensorSys.registerListener(shooterA);
 
-		feeds = new CameraFeeds();
+//		feeds = new CameraFeeds();
 	}
 
 	@Override
@@ -107,15 +104,13 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void autonomousInit() {
-		Robot.armSys.init();
+//		Robot.armSys.init();
 	}
 
 	public void teleopInit() {
-		feeds.init();
-		System.out.println("Teleop init");
-		if (autoCommand != null) {
-			autoCommand.cancel();
-		}
+//		feeds.init();
+		
+		
 	}
 
 	/**
@@ -123,14 +118,15 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		sensorSys.handleEvents();
-		feeds.run();
+//		sensorSys.updateSmartDashboardValues();
+//		feeds.run();
 		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("Arm IMU", armSys.getIMUAngle());
-		Double shooterAngle = shooterAngleSys.getCurrentAngle();
-		SmartDashboard.putString("Shooter IMU", shooterAngle==null?"null":shooterAngle.toString());
-		SmartDashboard.putNumber("Arm Encoder", armSys.getAngle());
-		SmartDashboard.putBoolean("Is Fwd limit switch enabled", Robot.armSys.armMotor.isFwdLimitSwitchClosed());
-		SmartDashboard.putBoolean("Is Rev limit switch enabled", Robot.armSys.armMotor.isRevLimitSwitchClosed());
+//		SmartDashboard.putNumber("Arm IMU", armSys.getIMUAngle());
+//		Double shooterAngle = shooterAngleSys.getCurrentAngle();
+//		SmartDashboard.putString("Shooter IMU", shooterAngle==null?"null":shooterAngle.toString());
+//		SmartDashboard.putNumber("Arm Encoder", armSys.getAngle());
+//		SmartDashboard.putBoolean("Is Fwd limit switch enabled", Robot.armSys.armMotor.isFwdLimitSwitchClosed());
+//		SmartDashboard.putBoolean("Is Rev limit switch enabled", Robot.armSys.armMotor.isRevLimitSwitchClosed());
 	}
 
 	@Override
