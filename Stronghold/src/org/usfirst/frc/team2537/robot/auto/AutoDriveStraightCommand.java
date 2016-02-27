@@ -61,6 +61,7 @@ public class AutoDriveStraightCommand extends Command {
 	protected void initialize() {
 		
 		if (debug) {
+			
 			System.out.println("[AutoDriveStraightCommand] Driving " + distance + " at " + speed);
 		}
 		Robot.driveSys.setDriveMotors(speed);
