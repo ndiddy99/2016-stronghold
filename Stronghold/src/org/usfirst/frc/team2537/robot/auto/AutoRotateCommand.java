@@ -1,85 +1,56 @@
 package org.usfirst.frc.team2537.robot.auto;
 
 import org.usfirst.frc.team2537.robot.Robot;
-import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AutoRotateCommand extends Command {
 	private AHRS ahrs;
-	private RobotDrive myRobot;
-	private PIDController turnController;
-	private double rotateToAngleRate;
-	private double angle;
+	private double destinationAngle;
 
 	private static final double DEFAULT_SPEED = 0.5;
+	private static final double TOLERANCE = 5; //degrees
 
-	double speed = DEFAULT_SPEED;
-
+	private double speed;
+	private boolean slowingDown = false;
+	
 	/**
-	 * spins [angle] degrees at [speed] counterclockwise (untested)
-	 * 
-	 * @param angle]
-	 * @param speed
+	 * spins destinationAngle degrees
+	 * @param destinationAngle
 	 */
-	public AutoRotateCommand(double angle) {
+	public AutoRotateCommand(double destinationAngle) {
 		requires(Robot.driveSys);
 		ahrs = Robot.driveSys.getAhrs();
-		this.angle = angle;
-		Robot.driveSys.getAhrs().getAngle();
-
+		this.destinationAngle = destinationAngle;
+		speed = DEFAULT_SPEED;
 	}
 
 	@Override
 	protected void initialize() {
-
 	}
 
 	@Override
-
 	protected void execute() {
-		requires(Robot.driveSys);
-		ahrs = Robot.driveSys.getAhrs();
-		double gangle = ahrs.getAngle();
-		turnController.setSetpoint(angle);
-		while (gangle < angle ) {
+		double currentAngle = ahrs.getAngle();
+		SmartDashboard.putNumber("Current Angle", currentAngle);
+		if(currentAngle <= destinationAngle - TOLERANCE)
 			Robot.driveSys.setDriveMotors(-speed, speed);
-			if (gangle == angle) {
-				Robot.driveSys.setDriveMotors(0);
-				break;
-			}
-		}
-		while (gangle > angle){
+		if(currentAngle >= destinationAngle + TOLERANCE)
 			Robot.driveSys.setDriveMotors(speed, -speed);
-			if (gangle == angle) {
-				Robot.driveSys.setDriveMotors(0);
-				break;
-				
+		
+		if(!slowingDown && Math.abs(Math.abs(destinationAngle)- Math.abs(currentAngle)) < 45){
+			speed = speed/2;
+			slowingDown = true;
 		}
-			}
 	}
 
 	@Override
 	protected boolean isFinished() {
-		boolean val = false;
-		if (angle <= 0 && Robot.driveSys.getAhrs().getAngle() >= angle) {
-			val = true;
-		} else if (angle >= 0 && Robot.driveSys.getAhrs().getAngle() <= angle) {
-			val = true;
-			System.out.println("done");
-		}
-		return val;
-
+		double currentAngle = Robot.driveSys.getAhrs().getAngle();
+		return (currentAngle <= destinationAngle + TOLERANCE && currentAngle >= destinationAngle - TOLERANCE);		
 	}
 
 	@Override
