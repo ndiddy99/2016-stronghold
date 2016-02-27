@@ -47,7 +47,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousInit() {
 		//autoCommand = autoChooser.getAutoChoice();
-		autoCommand = new CourseCorrect(24);
+		autoCommand = new CourseCorrect(84);
 		Scheduler.getInstance().add(autoCommand);
 	}
 

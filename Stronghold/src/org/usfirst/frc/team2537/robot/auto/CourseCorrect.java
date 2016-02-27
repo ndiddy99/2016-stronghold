@@ -7,9 +7,9 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class CourseCorrect extends Command {
-	private static final double DEFAULT_SPEED = -0.5;
-	private static final double CORRECTION_PROPORTION = 180;
-	private static final double TOLERANCE = 5;
+	private static final double DEFAULT_SPEED = -0.25;
+	private static final double CORRECTION_PROPORTION = 45;
+	private static final double TOLERANCE = 1;
 	private double speed;
 	private double startAngle;
 	private double distance;
@@ -43,14 +43,19 @@ public class CourseCorrect extends Command {
 	@Override
 	protected void initialize() {
 		startAngle = ahrs.getAngle();
+		if(startAngle > 180)
+			startAngle -= 360;
 		System.out.println("Init: start: " + startAngle + "\t current: " + ahrs.getAngle());
 		Robot.driveSys.lencoder.reset();
-		Robot.driveSys.rencoder.reset();	
+		Robot.driveSys.rencoder.reset();
 	}
 
 	@Override
 	protected void execute() {
-		System.out.println("Start angle: " + startAngle + "\tCurrent angle: " + (ahrs.getAngle()));
+		double currentAngle = ahrs.getAngle();
+		if(currentAngle > 180)
+			currentAngle -= 360;
+		System.out.println("Start angle: " + startAngle + "\tCurrent angle: " + currentAngle);
 		if(!slowingDown && Math.abs(Math.abs(distance) - Math.abs(getEncoderAverage())) < 6){
 			speed /= 2;
 			slowingDown = true;
@@ -59,13 +64,11 @@ public class CourseCorrect extends Command {
 		double left = speed;
 		double right = speed;
 		double correction = 0;
-		if(Math.abs(ahrs.getAngle() - startAngle) > TOLERANCE && Math.abs(ahrs.getAngle() + 360 - startAngle) > TOLERANCE)
-			if(Math.abs(ahrs.getAngle() - startAngle) > TOLERANCE)
-				correction = (ahrs.getAngle() - startAngle)/CORRECTION_PROPORTION;
-			else
-				correction = (ahrs.getAngle() + 360 - startAngle)/CORRECTION_PROPORTION;
-		left -= correction;
-		right += correction;
+		if(Math.abs(currentAngle - startAngle) > TOLERANCE)
+			if(Math.abs(currentAngle - startAngle) > TOLERANCE)
+				correction = (currentAngle - startAngle)/CORRECTION_PROPORTION;
+		left += correction;
+		right -= correction;
 		Robot.driveSys.setDriveMotors(left, right);
 	}
 
