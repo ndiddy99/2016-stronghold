@@ -10,6 +10,7 @@ public class IMU implements SensorInterface {
 	private int maxAngle;
 	private int minAngle;
 	private Sensor sensor;
+	private final static boolean DEBUG = false;
 
 	// Vars
 	private final Counter input;
@@ -40,6 +41,7 @@ public class IMU implements SensorInterface {
 	}
 
 	private double getAngle(double x, int in_min, int in_max, int out_min, int out_max) {
+		if (DEBUG) System.out.println(x);
 		return (x * 1000000 - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 	}
 }

@@ -2,6 +2,7 @@ package org.usfirst.frc.team2537.robot;
 
 import org.usfirst.frc.team2537.robot.input.Sensors;
 import org.usfirst.frc.team2537.robot.shooter.actuator.ActuatorSubsystem;
+import org.usfirst.frc.team2537.robot.shooter.angle.AlexAnglePIDTest;
 import org.usfirst.frc.team2537.robot.shooter.angle.AngleSubsystem;
 import org.usfirst.frc.team2537.robot.shooter.angle.AngleSubsystemPID;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -38,9 +39,9 @@ public class Robot extends IterativeRobot {
 	// My stuff
 	public static Sensors sensorSys;
 //	public static FlywheelSubsystem shooterFlywheelSys;
-	public static AngleSubsystem shooterAngleSys;
+//	public static AngleSubsystem shooterAngleSys;
 	public static ActuatorSubsystem shooterActuatorSys;
-	public static AngleSubsystemPID shooterAutoAngleSys;
+	public static AlexAnglePIDTest shooterAngleSys;
 //	public static ArmSubsystem armSys;
 
 	@Override
@@ -70,7 +71,7 @@ public class Robot extends IterativeRobot {
 //		autoChooser = new AutoChooser();
 
 //		shooterFlywheelSys = new FlywheelSubsystem();
-		shooterAngleSys = new AngleSubsystem();
+		shooterAngleSys = new AlexAnglePIDTest();
 		shooterActuatorSys = new ActuatorSubsystem();
 
 //		shooterFlywheelSys.initDefaultCommand();
@@ -78,7 +79,7 @@ public class Robot extends IterativeRobot {
 
 		// Shooter Angle
 		shooterAngleSys.initDefaultCommand();
-		shooterAngleSys.registerButtons();
+//		shooterAngleSys.registerButtons();
 
 		// Shooter Actuator
 		shooterActuatorSys.initDefaultCommand();
@@ -109,7 +110,7 @@ public class Robot extends IterativeRobot {
 
 	public void teleopInit() {
 //		feeds.init();
-		
+		sensorSys.handleEvents();
 		
 	}
 

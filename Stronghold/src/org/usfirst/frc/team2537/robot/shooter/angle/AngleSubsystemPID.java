@@ -30,7 +30,7 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 	//Difference between the max and min angle.
 	public static final double MAX_ANGLE_DIFFERENCE = MAX_ANGLE - MIN_ANGLE; 
 	//Debugs
-	public static final boolean DEBUG = false;
+	public static final boolean DEBUG = true;
 
 	// Varibles
 	private Double currentAngle = null;
@@ -124,9 +124,19 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 	 */
 	public void receivedValue(HashMap<Sensor, Double> sensorMap) {
 		Double value = sensorMap.get(Sensor.SHOOTER_ANGLE);
-		currentAngle = value;//Set the value.
-		
-		if (DEBUG) System.out.println("Shooter Angle: " + value);
+		if (value == null) {
+			currentAngle = 0.0;
+		} else {
+			value = (value-90);
+			if (value > -90 && value < 0) {
+				currentAngle = -(value)/2;//Set the value.
+			} else if (value < -90) {
+				currentAngle = -(value+180)/2; 
+			} else {
+				currentAngle = null;
+			}
+		}
+		if (DEBUG) System.out.println("Shooter Angle: " + currentAngle);
 		
 		//SOFT LIMITS
 		if (isHighestPosition() || isLowestPosition()){
