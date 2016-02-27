@@ -1,7 +1,6 @@
 package org.usfirst.frc.team2537.robot.auto;
 
 import org.usfirst.frc.team2537.robot.Robot;
-import org.usfirst.frc.team2537.robot.input.*;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -16,10 +15,6 @@ public class AutoDriveStraightCommand extends Command {
 	private double distance;
 	private static final boolean debug = true;
 	private static final double DEFAULT_SPEED = -0.5;
-	private double enc1 = Ports.ENCODER_A1;
-	private double enc2 = Ports.ENCODER_B1;
-	private double enc3 = Ports.ENCODER_A2;
-	private double enc4 = Ports.ENCODER_B1;
 	
 	/**
 	 * drives forward nowhere
@@ -32,7 +27,7 @@ public class AutoDriveStraightCommand extends Command {
 	 * Drives [distance] at the default speed
 	 * 
 	 * @param distance
-	 *            in ???
+	 *            in encoder ticks
 	 */
 	public AutoDriveStraightCommand(double distance) {
 		requires(Robot.driveSys);
@@ -47,7 +42,7 @@ public class AutoDriveStraightCommand extends Command {
 	 * Drives [distance] at [speed]
 	 * 
 	 * @param distance
-	 *            distance in inches
+	 *            distance in encoder ticks
 	 * @param speed
 	 *            speed from -1.0 to 1.0
 	 */
@@ -127,6 +122,6 @@ public class AutoDriveStraightCommand extends Command {
 	 * @return
 	 */
 	private double getEncoderAverage(){
-		return ((Robot.driveSys.lencoder.get() + Robot.driveSys.rencoder.get())/2.0)/40.0;
+		return ((Robot.driveSys.lencoder.get() + Robot.driveSys.rencoder.get())/2.0);
 	}
 }

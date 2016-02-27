@@ -15,12 +15,6 @@ public final class Ports {
 	BACK_RIGHT_MOTOR_PORT = 2, 
 	BACK_LEFT_MOTOR_PORT = 3,
 	
-	//E4 Encoders
-	ENCODER_A1 = 2,
-	ENCODER_B1 = 2,
-	ENCODER_A2 = 3,
-	ENCODER_B2 = 3,
-	
 	//Other Talon
 	ARM_TALON = 5; //Change when confirmed
 

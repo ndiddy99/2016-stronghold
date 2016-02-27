@@ -12,7 +12,7 @@ public class AutoChooser {
 	public AutoChooser(){
 		autoChoice= new SendableChooser();
         autoChoice.addDefault("Default Autonomous", new CourseCorrect(100));
-        autoChoice.addObject("Drive 5 units", new AutoDriveStraightCommand(5));
+        autoChoice.addObject("Drive 50 units", new AutoDriveStraightCommand(50));
 //        autoChoice.addObject("Drive Straight 5 inches", new AutoDriveStraightCommand(5));
 //        autoChoice.addObject("CourseCorrectAuto", new CourseCorrect(100));
 //        autoChoice.addObject("90 degree turn", new AutoRotateCommand(90));
