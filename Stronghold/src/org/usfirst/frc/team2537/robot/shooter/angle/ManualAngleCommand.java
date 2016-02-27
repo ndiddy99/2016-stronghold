@@ -17,7 +17,7 @@ public class ManualAngleCommand extends Command {
 	private static final double JOYSTICK_FACTOR = .005;
 	private static final double JOYSTICK_FACTOR_DOWN = .0001;
 	private static final double JOYSTICK_DEADZONE = .1;
-	public static boolean shouldReleaseBrake = false;
+	public static boolean shouldReleaseBrake = true;
 	
 	/**
 	 * Create a ManualAngleCommand. There typically should only be one.
@@ -28,7 +28,6 @@ public class ManualAngleCommand extends Command {
 
 	@Override
 	protected void initialize() {
-		shouldReleaseBrake = !shouldReleaseBrake;
 	}
 	
 
@@ -71,6 +70,7 @@ public class ManualAngleCommand extends Command {
 	protected void end() {
 		// Well we better make sure the motors are not moving.
 		Robot.shooterAngleSys.setVoltagePercent(0);
+		shouldReleaseBrake = true;
 	}
 
 	@Override
@@ -79,5 +79,7 @@ public class ManualAngleCommand extends Command {
 		if (Robot.shooterAngleSys.DEBUG)
 			System.out.println("ManualAngleCommand was interrupted!");
 		Robot.shooterAngleSys.setVoltagePercent(0);
+		
+		shouldReleaseBrake = false;
 	}
 }
