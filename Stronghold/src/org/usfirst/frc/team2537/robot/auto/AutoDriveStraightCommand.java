@@ -15,7 +15,8 @@ public class AutoDriveStraightCommand extends Command {
 	private double distance;
 	private static final boolean debug = true;
 	private static final double DEFAULT_SPEED = -0.5;
-
+	private boolean slowingDown = false;
+	
 	/**
 	 * drives forward nowhere
 	 */
@@ -82,6 +83,13 @@ public class AutoDriveStraightCommand extends Command {
 			// -Robot.driveSys.lencoder.get() + "\tRight: "
 			// + Robot.driveSys.rencoder.get());
 		}
+
+		if(!slowingDown && Math.abs(distance) - Math.abs(getEncoderAverage()) < 6){
+			if(debug) System.out.println("[AutoDriveStraightCommand] Slowing down...");
+			Robot.driveSys.setDriveMotors(DEFAULT_SPEED/2);
+			slowingDown = true;
+		}
+	
 	}
 
 	@Override
@@ -125,7 +133,7 @@ public class AutoDriveStraightCommand extends Command {
 	 * @return
 	 */
 	private double getEncoderAverage() {
-		return ((-Robot.driveSys.lencoder.get() + Robot.driveSys.rencoder.get()) / 2.0) / 250.0 * 6.0 * Math.PI;
+		return ((-Robot.driveSys.lencoder.get() + Robot.driveSys.rencoder.get()) / 2.0) / 250.0 * 12.0 * Math.PI;
 		// return (-Robot.driveSys.lencoder.get() +
 		// Robot.driveSys.rencoder.get()) / 2.0;
 	}
