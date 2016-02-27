@@ -2,9 +2,10 @@ package org.usfirst.frc.team2537.robot.input;
 
 import org.usfirst.frc.team2537.robot.Robot;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ProximitySensor implements SensorInterface {
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 	
 	public DigitalInput input;
 	private Sensor sensor;
@@ -24,9 +25,9 @@ public class ProximitySensor implements SensorInterface {
 		if (DEBUG) {
 			System.out.print("Ball is ");
 			if (value==1) { 
-				System.out.print("present");
+				SmartDashboard.putString("Ball is", "present");
 			} else {
-				System.out.print("absent");
+				SmartDashboard.putString("Ball is", "absent");
 			}
 			System.out.println(" (val = " + value + ", raw = " + input.get() + ")");
 		}

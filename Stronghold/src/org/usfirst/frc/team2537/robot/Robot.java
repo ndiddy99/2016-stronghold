@@ -125,12 +125,7 @@ public class Robot extends IterativeRobot {
 		sensorSys.handleEvents();
 		feeds.run();
 		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("Arm IMU", armSys.getIMUAngle());
-		Double shooterAngle = shooterAngleSys.getCurrentAngle();
-		SmartDashboard.putString("Shooter IMU", shooterAngle==null?"null":shooterAngle.toString());
-		SmartDashboard.putNumber("Arm Encoder", armSys.getAngle());
-		SmartDashboard.putBoolean("Is Fwd limit switch enabled", Robot.armSys.armMotor.isFwdLimitSwitchClosed());
-		SmartDashboard.putBoolean("Is Rev limit switch enabled", Robot.armSys.armMotor.isRevLimitSwitchClosed());
+		SmartDashboard.putBoolean("shooterSubsystem is Ball present", shooterFlywheelSys.isBallPresent());
 	}
 
 	@Override
