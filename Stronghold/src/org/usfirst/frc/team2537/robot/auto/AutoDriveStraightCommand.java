@@ -27,7 +27,7 @@ public class AutoDriveStraightCommand extends Command {
 	 * Drives [distance] at the default speed
 	 * 
 	 * @param distance
-	 *            in encoder ticks
+	 *            in inches
 	 */
 	public AutoDriveStraightCommand(double distance) {
 		requires(Robot.driveSys);
@@ -42,7 +42,7 @@ public class AutoDriveStraightCommand extends Command {
 	 * Drives [distance] at [speed]
 	 * 
 	 * @param distance
-	 *            distance in encoder ticks
+	 *            distance in inches
 	 * @param speed
 	 *            speed from -1.0 to 1.0
 	 */
@@ -115,13 +115,14 @@ public class AutoDriveStraightCommand extends Command {
 	}
 
 	//ATLAS
+	// 1 tick * (1 rotation / 250.0 ticks) * (6*pi in / 1 rotation)
 	//ATLAS wheel is 6 in Diameter
 	//WaifuBot has 10 in Diameter
 	/**
-	 * average encoder distance in revolutions
+	 * average encoder distance in inches
 	 * @return
 	 */
 	private double getEncoderAverage(){
-		return ((Robot.driveSys.lencoder.get() + Robot.driveSys.rencoder.get())/2.0);
+		return ((Robot.driveSys.lencoder.get() + Robot.driveSys.rencoder.get())/2.0)/250.0*6.0*Math.PI;
 	}
 }
