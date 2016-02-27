@@ -6,6 +6,7 @@ import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
 /**
@@ -18,6 +19,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 public class Robot extends IterativeRobot {
 	AutoChooser autoChooser;
 	Command autoCommand;
+	CommandGroup autoCommandGroup; //Timmy Tommy is lazy
 	final String defaultAuto = "Default";
 	final String customAuto = "My Auto";
 	String autoSelected;
@@ -47,8 +49,15 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousInit() {
 		//autoCommand = autoChooser.getAutoChoice();
-		autoCommand = new CourseCorrect(60);
-		Scheduler.getInstance().add(autoCommand);
+//		autoCommand = new CourseCorrect(-84);
+		autoCommandGroup = new CommandGroup(){
+			{
+				addSequential(new CourseCorrect(-84));
+				addSequential(new CourseCorrect(84));
+			}
+		};
+//		Scheduler.getInstance().add(autoCommand);
+		Scheduler.getInstance().add(autoCommandGroup);
 	}
 
 	/**
@@ -66,6 +75,8 @@ public class Robot extends IterativeRobot {
 		System.out.println("Teleop init");
 		if(autoCommand != null)
 			autoCommand.cancel();
+		if(autoCommandGroup != null)
+			autoCommandGroup.cancel();
 	}
 	/**
 	 * This function is called periodically during operator control

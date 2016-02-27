@@ -7,7 +7,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class CourseCorrect extends Command {
-	private static final double DEFAULT_SPEED = -0.25;
+	private static final double DEFAULT_SPEED = 0.25;
 	private static final double CORRECTION_PROPORTION = 45;
 	private static final double TOLERANCE = 1;
 	private double speed;
@@ -45,7 +45,6 @@ public class CourseCorrect extends Command {
 		startAngle = ahrs.getAngle();
 		if(startAngle > 180)
 			startAngle -= 360;
-		System.out.println("Init: start: " + startAngle + "\t current: " + ahrs.getAngle());
 		Robot.driveSys.lencoder.reset();
 		Robot.driveSys.rencoder.reset();
 	}
@@ -55,8 +54,7 @@ public class CourseCorrect extends Command {
 		double currentAngle = ahrs.getAngle();
 		if(currentAngle > 180)
 			currentAngle -= 360;
-		System.out.println("Start angle: " + startAngle + "\tCurrent angle: " + currentAngle);
-		if(!slowingDown && Math.abs(Math.abs(distance) - Math.abs(getEncoderAverage())) < 6){
+		if(!slowingDown && Math.abs(Math.abs(distance) - Math.abs(getDistanceTravelled())) < 6){
 			speed /= 2;
 			slowingDown = true;
 		}
@@ -75,8 +73,8 @@ public class CourseCorrect extends Command {
 	@Override
 	protected boolean isFinished() {
 		if(distance < 0)
-			return getEncoderAverage() <= distance;
-		return (getEncoderAverage() >= distance);
+			return getDistanceTravelled() <= distance;
+		return (getDistanceTravelled() >= distance);
 	}
 
 	@Override
@@ -89,7 +87,11 @@ public class CourseCorrect extends Command {
 		Robot.driveSys.setDriveMotors(0);
 	}
 
-	private double getEncoderAverage(){
-		return ((-Robot.driveSys.lencoder.get() + Robot.driveSys.rencoder.get()) / 2.0) / 250.0 * 6.0 * Math.PI;
+	/**
+	 * Returns distance traveled (encoder average or navx displacement)
+	 * @return
+	 */
+	private double getDistanceTravelled(){
+		return ((Robot.driveSys.lencoder.get() - Robot.driveSys.rencoder.get()) / 2.0) / 250.0 * 6.0 * Math.PI;
 	}
 }
