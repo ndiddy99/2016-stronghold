@@ -4,7 +4,6 @@ import org.usfirst.frc.team2537.robot.Ports;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 
 import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class DriveSubsystem extends Subsystem {
@@ -149,13 +148,6 @@ public class DriveSubsystem extends Subsystem {
 	public void resetEncoders() {
 		initialLeftEncoders += getLeftEncoders();
 		initialRightEncoders += getRightEncoders();
-	}
-
-	private void setDriveTalonControlMode(TalonControlMode mode) {
-		talonFrontLeft.changeControlMode(mode);
-		talonBackLeft.changeControlMode(mode);
-		talonFrontRight.changeControlMode(mode);
-		talonBackRight.changeControlMode(mode);
 	}
 
 	private void enableForwardSoftLimit(boolean b) {

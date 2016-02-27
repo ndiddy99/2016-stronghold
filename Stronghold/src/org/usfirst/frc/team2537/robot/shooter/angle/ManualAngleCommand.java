@@ -48,7 +48,7 @@ public class ManualAngleCommand extends Command {
 	@Override
 	protected void interrupted() {
 		// I was interrupted, ok.
-		if (Robot.shooterAngleSys.DEBUG)
+		if (AngleSubsystem.DEBUG)
 			System.out.println("ManualAngleCommand was interrupted!");
 		Robot.shooterAngleSys.setVoltagePercent(0);
 	}

@@ -4,9 +4,7 @@ import org.usfirst.frc.team2537.robot.Robot;
 
 import com.kauailabs.navx.frc.AHRS;
 
-
 import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.command.Command;

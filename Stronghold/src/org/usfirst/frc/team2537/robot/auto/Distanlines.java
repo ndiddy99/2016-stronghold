@@ -28,7 +28,8 @@ public class Distanlines {
         JMenuItem load = new JMenuItem("Load Image");
         load.addActionListener(new ActionListener() {
 
-            private BufferedImage frc2016;
+            @SuppressWarnings("unused")
+			private BufferedImage frc2016;
 
             @Override
             public void actionPerformed(ActionEvent pE) {
@@ -50,7 +51,6 @@ public class Distanlines {
                     try {
                         frc2016 = ImageIO.read(aChooser.getSelectedFile());
                     } catch (IOException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
                 }

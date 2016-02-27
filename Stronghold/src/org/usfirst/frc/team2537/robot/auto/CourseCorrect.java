@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -21,6 +20,7 @@ public class CourseCorrect extends Command implements PIDOutput{
 	private RobotDrive myRobot;
 	private Joystick stick;
 	private PIDController turnController;
+	@SuppressWarnings("unused")
 	private double rotateToAngleRate;
 	
 	private double gangle;
@@ -90,7 +90,8 @@ public class CourseCorrect extends Command implements PIDOutput{
 		
 		   myRobot.setSafetyEnabled(true);
 		     
-		          boolean rotateToAngle = false;
+		          @SuppressWarnings("unused")
+				boolean rotateToAngle = false;
 		       
 		boolean zero_yaw_pressed = stick.getTrigger();
 		if (zero_yaw_pressed) {

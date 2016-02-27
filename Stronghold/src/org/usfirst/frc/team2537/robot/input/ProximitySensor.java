@@ -4,12 +4,12 @@ import org.usfirst.frc.team2537.robot.Robot;
 import edu.wpi.first.wpilibj.DigitalInput;
 
 public class ProximitySensor implements SensorInterface {
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 	
 	public DigitalInput input;
 	private Sensor sensor;
 	
-	public ProximitySensor(int port, Sensor shooterProximity){
+	public ProximitySensor(int port, Sensor sensor){
 		input = new DigitalInput(port);
 		this.sensor = sensor;
 	}
