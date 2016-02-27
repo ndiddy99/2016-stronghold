@@ -15,7 +15,7 @@ public class AutoDriveStraightCommand extends Command {
 	private double distance;
 	private static final boolean debug = true;
 	private static final double DEFAULT_SPEED = -0.5;
-	
+
 	/**
 	 * drives forward nowhere
 	 */
@@ -54,15 +54,15 @@ public class AutoDriveStraightCommand extends Command {
 
 	@Override
 	protected void initialize() {
-		
+
 		if (debug) {
-			
+
 			System.out.println("[AutoDriveStraightCommand] Driving " + distance + " at " + speed);
 		}
 		Robot.driveSys.setDriveMotors(speed);
 		// Robot.driveSys.resetEncoders();
 
-		//ATLAS
+		// ATLAS
 		Robot.driveSys.lencoder.reset();
 		Robot.driveSys.rencoder.reset();
 	}
@@ -74,23 +74,24 @@ public class AutoDriveStraightCommand extends Command {
 			// "
 			// + Robot.driveSys.getEncoderAverage() + "\tTarget distance: " +
 			// distance);
-			
-			//ATLAS
-			System.out.println("[AutoDriveStraightCommand] Current distance: "
-					+ getEncoderAverage() + "\tTarget distance: "
-					+ distance);
+
+			// ATLAS
+			System.out.println("[AutoDriveStraightCommand] Current distance: " + getEncoderAverage()
+					+ "\tTarget distance: " + distance);
+			// System.out.println("[AutoDriveStraightCommand] Left: " +
+			// -Robot.driveSys.lencoder.get() + "\tRight: "
+			// + Robot.driveSys.rencoder.get());
 		}
 	}
 
 	@Override
 	protected boolean isFinished() {
-//		if (distance < 0) {
-//			return (Robot.driveSys.getEncoderAverage() <= distance);
-//		}
-//		return (Robot.driveSys.getEncoderAverage() >= distance);
+		// if (distance < 0) {
+		// return (Robot.driveSys.getEncoderAverage() <= distance);
+		// }
+		// return (Robot.driveSys.getEncoderAverage() >= distance);
 
-		
-		//ATLAS
+		// ATLAS
 		if (distance < 0) {
 			return (getEncoderAverage() <= distance);
 		}
@@ -114,15 +115,18 @@ public class AutoDriveStraightCommand extends Command {
 		Robot.driveSys.setDriveMotors(0);
 	}
 
-	//ATLAS
+	// ATLAS
 	// 1 tick * (1 rotation / 250.0 ticks) * (6*pi in / 1 rotation)
-	//ATLAS wheel is 6 in Diameter
-	//WaifuBot has 10 in Diameter
+	// ATLAS wheel is 6 in Diameter
+	// WaifuBot has 10 in Diameter
 	/**
 	 * average encoder distance in inches
+	 * 
 	 * @return
 	 */
-	private double getEncoderAverage(){
-		return ((Robot.driveSys.lencoder.get() + Robot.driveSys.rencoder.get())/2.0)/250.0*6.0*Math.PI;
+	private double getEncoderAverage() {
+		return ((-Robot.driveSys.lencoder.get() + Robot.driveSys.rencoder.get()) / 2.0) / 250.0 * 6.0 * Math.PI;
+		// return (-Robot.driveSys.lencoder.get() +
+		// Robot.driveSys.rencoder.get()) / 2.0;
 	}
 }

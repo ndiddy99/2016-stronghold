@@ -48,7 +48,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		driveSys.getAhrs().zeroYaw();
 		//autoCommand = autoChooser.getAutoChoice();
-		autoCommand = new AutoDriveStraightCommand(1);
+		autoCommand = new AutoDriveStraightCommand(5);
 		Scheduler.getInstance().add(autoCommand);
 		
 	}
