@@ -46,11 +46,9 @@ public class Robot extends IterativeRobot {
 	 * SendableChooser make sure to add them to the chooser code above as well.
 	 */
 	public void autonomousInit() {
-		driveSys.getAhrs().zeroYaw();
 		//autoCommand = autoChooser.getAutoChoice();
-		autoCommand = new CourseCorrect(12);
+		autoCommand = new CourseCorrect(24);
 		Scheduler.getInstance().add(autoCommand);
-		
 	}
 
 	/**

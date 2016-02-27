@@ -17,7 +17,7 @@ public class CourseCorrect extends Command {
 	private boolean slowingDown = false;
 	
 	/**
-	 * Drives distance while correcting for angle
+	 * Drives &lt;distance&gt; while correcting for angle
 	 * @param distance distance in inches
 	 */
 	public CourseCorrect(double distance){
@@ -27,6 +27,17 @@ public class CourseCorrect extends Command {
 			speed = -DEFAULT_SPEED;
 		else
 			speed = DEFAULT_SPEED;
+	}
+	
+	/**
+	 * Drives &lt;distance&gt; at &lt;speed&gt;
+	 * @param distance
+	 * @param speed
+	 */
+	public CourseCorrect(double distance, double speed){
+		requires(Robot.driveSys);
+		this.distance = distance;
+		this.speed = speed;
 	}
 	
 	@Override
@@ -60,6 +71,8 @@ public class CourseCorrect extends Command {
 
 	@Override
 	protected boolean isFinished() {
+		if(distance < 0)
+			return getEncoderAverage() <= distance;
 		return (getEncoderAverage() >= distance);
 	}
 
