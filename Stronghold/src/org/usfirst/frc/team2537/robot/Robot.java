@@ -1,9 +1,7 @@
 package org.usfirst.frc.team2537.robot;
 
 import org.usfirst.frc.team2537.robot.auto.AutoChooser;
-import org.usfirst.frc.team2537.robot.auto.AutoDriveStraightCommand;
-import org.usfirst.frc.team2537.robot.auto.AutoRotateCommand;
-import org.usfirst.frc.team2537.robot.auto.AutoTimedDriveCommand;
+import org.usfirst.frc.team2537.robot.auto.CourseCorrect;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -50,7 +48,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		driveSys.getAhrs().zeroYaw();
 		//autoCommand = autoChooser.getAutoChoice();
-		autoCommand = new AutoRotateCommand(180);
+		autoCommand = new CourseCorrect(12);
 		Scheduler.getInstance().add(autoCommand);
 		
 	}

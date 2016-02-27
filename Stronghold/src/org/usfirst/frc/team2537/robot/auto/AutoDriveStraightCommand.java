@@ -86,7 +86,7 @@ public class AutoDriveStraightCommand extends Command {
 
 		if(!slowingDown && Math.abs(distance) - Math.abs(getEncoderAverage()) < 6){
 			if(debug) System.out.println("[AutoDriveStraightCommand] Slowing down...");
-			Robot.driveSys.setDriveMotors(DEFAULT_SPEED/2);
+			Robot.driveSys.setDriveMotors(speed/2);
 			slowingDown = true;
 		}
 	
