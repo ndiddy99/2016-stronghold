@@ -17,6 +17,8 @@ public class ManualAngleCommand extends Command {
 	private static final double JOYSTICK_FACTOR = .005;
 	private static final double JOYSTICK_FACTOR_DOWN = .0001;
 	private static final double JOYSTICK_DEADZONE = .1;
+	public static boolean shouldReleaseBrake = false;
+	
 	/**
 	 * Create a ManualAngleCommand. There typically should only be one.
 	 */
@@ -26,6 +28,7 @@ public class ManualAngleCommand extends Command {
 
 	@Override
 	protected void initialize() {
+		shouldReleaseBrake = !shouldReleaseBrake;
 	}
 	
 
@@ -35,15 +38,23 @@ public class ManualAngleCommand extends Command {
 		// Get joystick values.
 		speed = Robot.shooterAngleSys.getJoystickAngle();
 		if(Math.abs(speed) > JOYSTICK_DEADZONE){
-			if(speed > 0) {
-				System.out.println("Going Down");
-				new BreakReleaseCommand(true).start();
-				Robot.shooterAngleSys.setVoltagePercent(speed * JOYSTICK_FACTOR_DOWN);
-				Robot.shooterAngleSys.setVoltagePercent(0);
+			if (shouldReleaseBrake) {
+				if(speed > 0) {
+					System.out.println("Going Down");
+					new BreakReleaseCommand(true).start();
+				} else {
+					new BreakReleaseCommand(false).start();
+					System.out.println("Going Up");
+				}
 			} else {
-				new BreakReleaseCommand(false).start();
-				System.out.println("Going Up");
-				Robot.shooterAngleSys.setVoltagePercent(speed*JOYSTICK_FACTOR);
+				if(speed > 0) {
+					System.out.println("Going Down");
+					Robot.shooterAngleSys.setVoltagePercent(speed * JOYSTICK_FACTOR_DOWN);
+					Robot.shooterAngleSys.setVoltagePercent(0);
+				} else {
+					System.out.println("Going Up");
+					Robot.shooterAngleSys.setVoltagePercent(speed*JOYSTICK_FACTOR);
+				}
 			}
 		} 
 		speed = Robot.shooterAngleSys.getJoystickAngle();
@@ -53,7 +64,7 @@ public class ManualAngleCommand extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return (Math.abs(speed) < JOYSTICK_DEADZONE);
 	}
 
 	@Override
