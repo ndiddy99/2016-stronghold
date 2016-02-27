@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2537.robot.auto;
 
 import org.usfirst.frc.team2537.robot.Robot;
+import org.usfirst.frc.team2537.robot.input.*;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -15,7 +16,11 @@ public class AutoDriveStraightCommand extends Command {
 	private double distance;
 	private static final boolean debug = true;
 	private static final double DEFAULT_SPEED = -0.5;
-
+	private double enc1 = Ports.ENCODER_A1;
+	private double enc2 = Ports.ENCODER_B1;
+	private double enc3 = Ports.ENCODER_A2;
+	private double enc4 = Ports.ENCODER_B1;
+	
 	/**
 	 * drives forward nowhere
 	 */
@@ -54,6 +59,7 @@ public class AutoDriveStraightCommand extends Command {
 
 	@Override
 	protected void initialize() {
+		
 		if (debug) {
 			System.out.println("[AutoDriveStraightCommand] Driving " + distance + " at " + speed);
 		}
@@ -113,6 +119,8 @@ public class AutoDriveStraightCommand extends Command {
 	}
 
 	//ATLAS
+	//ATLAS wheel is 6 in Diameter
+	//WaifuBot has 10 in Diameter
 	/**
 	 * average encoder distance in revolutions
 	 * @return
