@@ -128,8 +128,9 @@ public class AutoDriveStraightCommand extends Command {
 	// ATLAS wheel is 6 in Diameter
 	// WaifuBot has 10 in Diameter
 	/**
-	 * average encoder distance in inches
-	 * 
+	 * average encoder distance in inches ┬─┬ ノ( ゜-゜ノ)
+	 * ┬─┬ ︵ /(.□. \）
+	 * ʕノ•ᴥ•ʔノ ︵ ┻━┻
 	 * @return
 	 */
 	private double getEncoderAverage() {

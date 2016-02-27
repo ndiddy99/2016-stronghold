@@ -31,9 +31,8 @@ public class CourseCorrect extends Command {
 	
 	@Override
 	protected void initialize() {
-		ahrs.zeroYaw();
 		startAngle = ahrs.getAngle();
-		Robot.driveSys.setDriveMotors(speed);
+		System.out.println("Init: start: " + startAngle + "\t current: " + ahrs.getAngle());
 		Robot.driveSys.lencoder.reset();
 		Robot.driveSys.rencoder.reset();	
 	}
@@ -41,7 +40,6 @@ public class CourseCorrect extends Command {
 	@Override
 	protected void execute() {
 		System.out.println("Start angle: " + startAngle + "\tCurrent angle: " + (ahrs.getAngle()));
-		System.out.println("Current distance: " + getEncoderAverage() + "\tDestination: " + distance);
 		if(!slowingDown && Math.abs(Math.abs(distance) - Math.abs(getEncoderAverage())) < 6){
 			speed /= 2;
 			slowingDown = true;
@@ -50,8 +48,11 @@ public class CourseCorrect extends Command {
 		double left = speed;
 		double right = speed;
 		double correction = 0;
-		if(Math.abs(ahrs.getAngle() - startAngle) > TOLERANCE)
-			correction = (ahrs.getAngle() - startAngle)/CORRECTION_PROPORTION;
+		if(Math.abs(ahrs.getAngle() - startAngle) > TOLERANCE && Math.abs(ahrs.getAngle() + 360 - startAngle) > TOLERANCE)
+			if(Math.abs(ahrs.getAngle() - startAngle) > TOLERANCE)
+				correction = (ahrs.getAngle() - startAngle)/CORRECTION_PROPORTION;
+			else
+				correction = (ahrs.getAngle() + 360 - startAngle)/CORRECTION_PROPORTION;
 		left -= correction;
 		right += correction;
 		Robot.driveSys.setDriveMotors(left, right);
@@ -73,6 +74,6 @@ public class CourseCorrect extends Command {
 	}
 
 	private double getEncoderAverage(){
-		return ((-Robot.driveSys.lencoder.get() + Robot.driveSys.rencoder.get()) / 2.0) / 250.0 * 12.0 * Math.PI;
+		return ((-Robot.driveSys.lencoder.get() + Robot.driveSys.rencoder.get()) / 2.0) / 250.0 * 6.0 * Math.PI;
 	}
 }
