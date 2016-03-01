@@ -40,19 +40,20 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 		super(P, I, D);
 		angleMotor = new CANTalon(Ports.SHOOTER_ANGLE_PORT);
 		// Change control mode of the angleTalon to percent Vbus.
-//		angleMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		angleMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 		// Add limits.
-//		angleMotor.ConfigFwdLimitSwitchNormallyOpen(true);
-//		angleMotor.ConfigRevLimitSwitchNormallyOpen(true);
-//		angleMotor.enableLimitSwitch(true, true);// Now the limit switches are
+		angleMotor.ConfigFwdLimitSwitchNormallyOpen(true);
+		angleMotor.ConfigRevLimitSwitchNormallyOpen(true);
+		angleMotor.enableLimitSwitch(true, true);// Now the limit switches are
 													// active.
 		// Soft limits for a backup.
-//		angleMotor.enableForwardSoftLimit(false);
-//		angleMotor.enableReverseSoftLimit(false);
+		angleMotor.enableForwardSoftLimit(false);
+		angleMotor.enableReverseSoftLimit(false);
 		
 		//The motor will backdrive if it does not get current.
 		//Set a electric break.
-//		angleMotor.enableBrakeMode(true);
+		angleMotor.enableBrakeMode(true);
+		angleMotor.configMaxOutputVoltage(5);//No reason for full power.
 		
 		//We don't want this going so fast.
 //		angleMotor.configMaxOutputVoltage(MAX_VOLTAGE);
@@ -183,7 +184,7 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 	@Override
 	protected void usePIDOutput(double output) {
 		System.out.println("Output is: "+ output);
-		angleMotor.set(output);
+		angleMotor.set(-output);
 	}
 //	public double averageError() {
 //		return getPIDController().getAvgError();
