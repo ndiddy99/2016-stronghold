@@ -76,6 +76,11 @@ public class CourseCorrect extends Command {
 		left += correction;
 		right -= correction;
 
+		if(debug) System.out.println("z: " + ahrs.getRawAccelZ() + "\tworldZ: " + ahrs.getWorldLinearAccelZ());
+		if(debug && ahrs.getWorldLinearAccelZ() > 0.1)
+			System.out.println("Going over obstacle");
+		
+		
 		double timeDiff = (System.currentTimeMillis() - prevTime)/1000.0;
 		vel += ahrs.getWorldLinearAccelX() * timeDiff; // m/s^2 * s
 		pos += vel * timeDiff * 3.28084; // m/s * s * 3.28ft/m
