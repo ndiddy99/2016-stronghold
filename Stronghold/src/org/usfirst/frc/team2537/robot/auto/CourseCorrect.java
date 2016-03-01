@@ -10,11 +10,14 @@ public class CourseCorrect extends Command {
 	private static final double DEFAULT_SPEED = 0.25;
 	private static final double CORRECTION_PROPORTION = 45;
 	private static final double TOLERANCE = 1;
+	private static final boolean debug = true;
 	private double speed;
 	private double startAngle;
 	private double distance;
 	private AHRS ahrs = Robot.driveSys.getAhrs();
 	private boolean slowingDown = false;
+	private double pos = 0;
+	private long prevTime;
 	
 	/**
 	 * Drives &lt;distance&gt; while correcting for angle
@@ -52,8 +55,6 @@ public class CourseCorrect extends Command {
 	@Override
 	protected void execute() {
 		double currentAngle = ahrs.getAngle();
-		if(currentAngle > 180)
-			currentAngle -= 360;
 		if(!slowingDown && Math.abs(Math.abs(distance) - Math.abs(getDistanceTravelled())) < 6){
 			speed /= 2;
 			slowingDown = true;
@@ -62,11 +63,22 @@ public class CourseCorrect extends Command {
 		double left = speed;
 		double right = speed;
 		double correction = 0;
-		if(Math.abs(currentAngle - startAngle) > TOLERANCE)
-			if(Math.abs(currentAngle - startAngle) > TOLERANCE)
-				correction = (currentAngle - startAngle)/CORRECTION_PROPORTION;
+		
+		double angleDiff = currentAngle - startAngle;
+		if(Math.abs(currentAngle - 360 - startAngle) < Math.abs(angleDiff))
+			angleDiff = currentAngle - 360 - startAngle;
+		
+		if(Math.abs(angleDiff) > TOLERANCE)
+			correction = angleDiff/CORRECTION_PROPORTION;
+
+		System.out.println("current: " + currentAngle + "\tstart: " + startAngle + "\tdiff: " + angleDiff);
 		left += correction;
 		right -= correction;
+	
+//		pos += ahrs.getVelocityX() * .02;
+//		if(debug) System.out.println("ahrs: " + pos);
+
+		
 		Robot.driveSys.setDriveMotors(left, right);
 	}
 
