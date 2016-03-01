@@ -1,7 +1,8 @@
 package org.usfirst.frc.team2537.robot.shooter.angle;
 
-import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team2537.robot.Robot;
+
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Let the angle be adjusted by the xbox joystick.
@@ -16,7 +17,7 @@ public class ManualAngleCommand extends Command {
 	 */
 	private static final double JOYSTICK_FACTOR_UP = .5;
 	private static final double JOYSTICK_FACTOR_DOWN = .4;
-	private static final double JOYSTICK_DEADZONE = .1;
+	private static final double JOYSTICK_DEADZONE = .15;
 	private static double setPoint;
 //	public static boolean shouldReleaseBrake = true;
 	
@@ -33,27 +34,18 @@ public class ManualAngleCommand extends Command {
 	
 
 	double speed = 0.0;
-	private double currentAngle;
 	@Override
 	protected void execute() {
 		// Get joystick values.
 		speed = Robot.shooterAngleSys.getJoystickAngle();
 		if(Math.abs(speed) > JOYSTICK_DEADZONE){
-//			if (shouldReleaseBrake) {
-//				if(speed > 0) {
-//					System.out.println("Going Down");
-//					new BreakReleaseCommand(true).start();
-//				} else {
-//					new BreakReleaseCommand(false).start();
-//					System.out.println("Going Up");
-//				}
-//			} else {
+			System.out.println(speed);
 				if(speed > 0) {
 					System.out.println("Going Up Tele");
-					Robot.shooterAngleSys.setSetPoint(.01);
+					Robot.shooterAngleSys.setSetpoint(.1);
 				} else {
 					System.out.println("Going Down Tele");
-					Robot.shooterAngleSys.setSetPoint(-.01);
+					Robot.shooterAngleSys.setSetpoint(-.1);
 				}
 			}
 		//		} 

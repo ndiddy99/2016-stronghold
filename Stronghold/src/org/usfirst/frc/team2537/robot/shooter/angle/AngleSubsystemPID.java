@@ -24,7 +24,7 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 	private static final double MAX_ANGLE = 28;// degrees (ball park, not right)
 	private static final double MIN_ANGLE =  -4.5;// degrees(ball park, not right)
 	private static final double MAX_VOLTAGE= 12.0;
-	private static final float P = 1, I = 1, D = 1;
+	private static final float P = 1, I = 0, D = 0;
 	private static final float PID_PERIOD = 50;//ms
 	private static final float TOLERANCE  = 15;
 	//Difference between the max and min angle.
@@ -37,28 +37,30 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 	private final CANTalon angleMotor;
 
 	public AngleSubsystemPID() {
-		super(P, I, D, PID_PERIOD);
+		super(P, I, D);
 		angleMotor = new CANTalon(Ports.SHOOTER_ANGLE_PORT);
 		// Change control mode of the angleTalon to percent Vbus.
-		angleMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+//		angleMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 		// Add limits.
-		angleMotor.ConfigFwdLimitSwitchNormallyOpen(true);
-		angleMotor.ConfigRevLimitSwitchNormallyOpen(true);
-		angleMotor.enableLimitSwitch(true, true);// Now the limit switches are
+//		angleMotor.ConfigFwdLimitSwitchNormallyOpen(true);
+//		angleMotor.ConfigRevLimitSwitchNormallyOpen(true);
+//		angleMotor.enableLimitSwitch(true, true);// Now the limit switches are
 													// active.
 		// Soft limits for a backup.
-		angleMotor.enableForwardSoftLimit(false);
-		angleMotor.enableReverseSoftLimit(false);
+//		angleMotor.enableForwardSoftLimit(false);
+//		angleMotor.enableReverseSoftLimit(false);
 		
 		//The motor will backdrive if it does not get current.
 		//Set a electric break.
-		angleMotor.enableBrakeMode(true);
+//		angleMotor.enableBrakeMode(true);
 		
 		//We don't want this going so fast.
-		angleMotor.configMaxOutputVoltage(MAX_VOLTAGE);
+//		angleMotor.configMaxOutputVoltage(MAX_VOLTAGE);
 		setPercentTolerance(TOLERANCE);
-		setInputRange(-90, 90);
-		setOutputRange(-1, 1);
+//		setInputRange(-90, 90);
+//		setOutputRange(-1, 1);
+		
+		enable();
 	}
 
 	@Override
@@ -72,7 +74,7 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 	 * @param percent
 	 *            A speed between [-1, 1] which is the voltage that will be set.
 	 */
-	public void setVoltagePercent(double percent) {
+	public void setAngle(double percent) {
 		setSetpoint(percent);
 	}
 
@@ -83,11 +85,11 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 	 * 
 	 * @return boolean if the forward limit switch is activated.
 	 */
-	public boolean isHighestPosition() {
-		if (currentAngle != null && currentAngle >= MAX_ANGLE)
-			return true;
-		return angleMotor.isFwdLimitSwitchClosed();
-	}
+//	public boolean isHighestPosition() {
+//		if (currentAngle != null && currentAngle >= MAX_ANGLE)
+//			return true;
+//		return angleMotor.isFwdLimitSwitchClosed();
+//	}
 
 	/**
 	 * Checks to see of the lower limit switch is activated, showing the angle
@@ -95,11 +97,11 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 	 * 
 	 * @return boolean if the forward limit switch is activated.
 	 */
-	public boolean isLowestPosition() {
-		if (currentAngle != null && currentAngle <= MIN_ANGLE)
-			return true;
-		return angleMotor.isRevLimitSwitchClosed();
-	}
+//	public boolean isLowestPosition() {
+//		if (currentAngle != null && currentAngle <= MIN_ANGLE)
+//			return true;
+//		return angleMotor.isRevLimitSwitchClosed();
+//	}
 
 	// And get joystick values.
 	/**
@@ -131,7 +133,7 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 			if (value > -90 && value < 0) {
 				currentAngle = -(value)/2;//Set the value.
 			} else if (value < -90) {
-				currentAngle = -(value+180)/2; 
+				currentAngle = -(value + 180) / 2;
 			} else {
 				currentAngle = null;
 			}
@@ -139,10 +141,10 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 		if (DEBUG) System.out.println("Shooter Angle: " + currentAngle);
 		
 		//SOFT LIMITS
-		if (isHighestPosition() || isLowestPosition()){
-			//TOO High or low stop motor.
-//			System.out.println("Position Is at Max or Min.");
-		}
+//		if (isHighestPosition() || isLowestPosition()){
+//			//TOO High or low stop motor.
+////			System.out.println("Position Is at Max or Min.");
+//		}
 	}
 
 	/**
@@ -169,7 +171,8 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 
 	@Override
 	protected void usePIDOutput(double output) {
-		angleMotor.pidWrite(output);
+		System.out.println("Output is: "+ output);
+		angleMotor.set(output);
 	}
 	public double averageError() {
 		return getPIDController().getAvgError();
@@ -189,6 +192,4 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 	public boolean isAtAngle() {
 		return getPIDController().onTarget();
 	}
-	
-	
 }

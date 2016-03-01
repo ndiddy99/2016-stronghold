@@ -2,14 +2,11 @@ package org.usfirst.frc.team2537.robot;
 
 import org.usfirst.frc.team2537.robot.input.Sensors;
 import org.usfirst.frc.team2537.robot.shooter.actuator.ActuatorSubsystem;
-import org.usfirst.frc.team2537.robot.shooter.angle.AlexAnglePIDTest;
-import org.usfirst.frc.team2537.robot.shooter.angle.AngleSubsystem;
 import org.usfirst.frc.team2537.robot.shooter.angle.AngleSubsystemPID;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -41,7 +38,7 @@ public class Robot extends IterativeRobot {
 //	public static FlywheelSubsystem shooterFlywheelSys;
 //	public static AngleSubsystem shooterAngleSys;
 	public static ActuatorSubsystem shooterActuatorSys;
-	public static AlexAnglePIDTest shooterAngleSys;
+	public static AngleSubsystemPID shooterAngleSys;
 //	public static ArmSubsystem armSys;
 
 	@Override
@@ -71,7 +68,7 @@ public class Robot extends IterativeRobot {
 //		autoChooser = new AutoChooser();
 
 //		shooterFlywheelSys = new FlywheelSubsystem();
-		shooterAngleSys = new AlexAnglePIDTest();
+		shooterAngleSys = new AngleSubsystemPID();
 		shooterActuatorSys = new ActuatorSubsystem();
 
 //		shooterFlywheelSys.initDefaultCommand();
