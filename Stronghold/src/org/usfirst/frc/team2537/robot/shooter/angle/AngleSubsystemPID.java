@@ -1,6 +1,5 @@
 package org.usfirst.frc.team2537.robot.shooter.angle;
 
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.CANTalon;
 import java.util.HashMap;
@@ -25,7 +24,7 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 //	private static final double MAX_ANGLE = 28;// degrees (ball park, not right)
 //	private static final double MIN_ANGLE =  -4.5;// degrees(ball park, not right)
 //	private static final double MAX_VOLTAGE= 12.0;
-	private static final float P = 1, I = 0, D = 0;
+	private static final float P = 2, I = 0, D = 0;
 //	private static final float PID_PERIOD = 50;//ms
 	private static final float TOLERANCE  = 15;
 	//Difference between the max and min angle.
@@ -57,7 +56,8 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 		
 		//We don't want this going so fast.
 //		angleMotor.configMaxOutputVoltage(MAX_VOLTAGE);
-		setPercentTolerance(TOLERANCE);
+		//setPercentTolerance(TOLERANCE);
+		setAbsoluteTolerance(.05);
 //		setInputRange(-90, 90);
 //		setOutputRange(-1, 1);
 		this.getPIDController().setContinuous(false);
@@ -128,7 +128,6 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 	 *            sensor.
 	 */
 	public void receivedValue(HashMap<Sensor, Double> sensorMap) {
-		this.getPIDController().
 		
 		Double value = sensorMap.get(Sensor.SHOOTER_ANGLE);
 		if (value == null) {
@@ -173,8 +172,11 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 
 	@Override
 	protected double returnPIDInput() {
-		double angle = Robot.sensorSys.tilt.getCurrentAngle();
+		Double angle = getCurrentAngle();
 		System.out.println("returnPIDInput() called, returned " + angle);
+		if (angle==null){
+			return 0;
+		}
 		return angle;
 	}
 
