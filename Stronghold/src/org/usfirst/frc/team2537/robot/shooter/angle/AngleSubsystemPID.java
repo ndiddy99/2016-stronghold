@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2537.robot.shooter.angle;
 
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.CANTalon;
 import java.util.HashMap;
@@ -59,6 +60,7 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 		setPercentTolerance(TOLERANCE);
 //		setInputRange(-90, 90);
 //		setOutputRange(-1, 1);
+		this.getPIDController().setContinuous(false);
 		
 		enable();
 	}
@@ -75,6 +77,7 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 	 *            A speed between [-1, 1] which is the voltage that will be set.
 	 */
 	public void setAngle(double angle) {
+		System.out.println("Angle set to: " + angle);
 		setSetpoint(angle);
 	}
 
@@ -125,6 +128,8 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 	 *            sensor.
 	 */
 	public void receivedValue(HashMap<Sensor, Double> sensorMap) {
+		this.getPIDController().
+		
 		Double value = sensorMap.get(Sensor.SHOOTER_ANGLE);
 		if (value == null) {
 			currentAngle = 0.0;
@@ -138,7 +143,7 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 				currentAngle = null;
 			}
 		}
-		if (DEBUG) System.out.println("Shooter Angle: " + currentAngle);
+		//if (DEBUG) System.out.println("Shooter Angle: " + currentAngle);
 		
 		//SOFT LIMITS
 //		if (isHighestPosition() || isLowestPosition()){
@@ -157,16 +162,20 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 	 *         not present.
 	 */
 	public Double getCurrentAngle() {
+		System.out.println("Current Angle gotten: " + currentAngle);
 		return currentAngle;
 	}
 
 	public void registerButtons() {
 		// Needed but not used.
+		HumanInput.registerPressedCommand(HumanInput.changeCameraButton, new MoveToAnglePIDTESTCommand(0));
 	}
 
 	@Override
 	protected double returnPIDInput() {
-		return Robot.sensorSys.tilt.getCurrentAngle();
+		double angle = Robot.sensorSys.tilt.getCurrentAngle();
+		System.out.println("returnPIDInput() called, returned " + angle);
+		return angle;
 	}
 
 	@Override
@@ -174,22 +183,22 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 		System.out.println("Output is: "+ output);
 		angleMotor.set(output);
 	}
-	public double averageError() {
-		return getPIDController().getAvgError();
-	}
-	public double PIDValue() {
-		return getPIDController().get();
-	}
-	public double getPIDControllerSetpoint() {
-		return getPIDController().getSetpoint();
-	}
-	public double getSubsystemSetpoint() {
-		return getSetpoint();
-	}
-	public double getError() {
-		return getPIDController().getError();
-	}
-	public boolean isAtAngle() {
-		return getPIDController().onTarget();
-	}
+//	public double averageError() {
+//		return getPIDController().getAvgError();
+//	}
+//	public double PIDValue() {
+//		return getPIDController().get();
+//	}
+//	public double getPIDControllerSetpoint() {
+//		return getPIDController().getSetpoint();
+//	}
+//	public double getSubsystemSetpoint() {
+//		return getSetpoint();
+//	}
+//	public double getError() {
+//		return getPIDController().getError();
+//	}
+//	public boolean isAtAngle() {
+//		return getPIDController().onTarget();
+//	}
 }

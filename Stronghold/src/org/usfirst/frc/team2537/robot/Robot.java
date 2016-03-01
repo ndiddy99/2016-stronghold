@@ -76,7 +76,7 @@ public class Robot extends IterativeRobot {
 
 		// Shooter Angle
 		shooterAngleSys.initDefaultCommand();
-//		shooterAngleSys.registerButtons();
+		shooterAngleSys.registerButtons();
 
 		// Shooter Actuator
 		shooterActuatorSys.initDefaultCommand();
