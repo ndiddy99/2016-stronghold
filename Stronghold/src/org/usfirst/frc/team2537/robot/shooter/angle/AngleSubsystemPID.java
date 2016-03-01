@@ -21,14 +21,14 @@ import org.usfirst.frc.team2537.robot.input.XboxButtons;
 public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 	
 	// The angle limits.
-	private static final double MAX_ANGLE = 28;// degrees (ball park, not right)
-	private static final double MIN_ANGLE =  -4.5;// degrees(ball park, not right)
-	private static final double MAX_VOLTAGE= 12.0;
+//	private static final double MAX_ANGLE = 28;// degrees (ball park, not right)
+//	private static final double MIN_ANGLE =  -4.5;// degrees(ball park, not right)
+//	private static final double MAX_VOLTAGE= 12.0;
 	private static final float P = 1, I = 0, D = 0;
-	private static final float PID_PERIOD = 50;//ms
+//	private static final float PID_PERIOD = 50;//ms
 	private static final float TOLERANCE  = 15;
 	//Difference between the max and min angle.
-	public static final double MAX_ANGLE_DIFFERENCE = MAX_ANGLE - MIN_ANGLE; 
+//	public static final double MAX_ANGLE_DIFFERENCE = MAX_ANGLE - MIN_ANGLE; 
 	//Debugs
 	public static final boolean DEBUG = true;
 
@@ -71,32 +71,32 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 
 	/**
 	 * Set the speed of the motor that will change the angle.
-	 * @param percent
+	 * @param angle
 	 *            A speed between [-1, 1] which is the voltage that will be set.
 	 */
-	public void setAngle(double percent) {
-		setSetpoint(percent);
+	public void setAngle(double angle) {
+		setSetpoint(angle);
 	}
 
-	// Did we hit a limit.
-	/**
-	 * Checks to see of the top limit switch is activated, showing the angle is
-	 * at it max. If the switch is not present, the result will be false.
-	 * 
-	 * @return boolean if the forward limit switch is activated.
-	 */
+//	// Did we hit a limit.
+//	/**
+//	 * Checks to see of the top limit switch is activated, showing the angle is
+//	 * at it max. If the switch is not present, the result will be false.
+//	 * 
+//	 * @return boolean if the forward limit switch is activated.
+//	 */
 //	public boolean isHighestPosition() {
 //		if (currentAngle != null && currentAngle >= MAX_ANGLE)
 //			return true;
 //		return angleMotor.isFwdLimitSwitchClosed();
 //	}
 
-	/**
-	 * Checks to see of the lower limit switch is activated, showing the angle
-	 * is at it minimum. If the switch is not present, the result will be false.
-	 * 
-	 * @return boolean if the forward limit switch is activated.
-	 */
+//	/**
+//	 * Checks to see of the lower limit switch is activated, showing the angle
+//	 * is at it minimum. If the switch is not present, the result will be false.
+//	 * 
+//	 * @return boolean if the forward limit switch is activated.
+//	 */
 //	public boolean isLowestPosition() {
 //		if (currentAngle != null && currentAngle <= MIN_ANGLE)
 //			return true;
