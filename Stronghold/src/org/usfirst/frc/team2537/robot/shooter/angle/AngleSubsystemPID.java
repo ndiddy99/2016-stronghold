@@ -53,7 +53,7 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 		//The motor will backdrive if it does not get current.
 		//Set a electric break.
 		angleMotor.enableBrakeMode(true);
-		angleMotor.configMaxOutputVoltage(5);//No reason for full power.
+		angleMotor.configMaxOutputVoltage(1);//No reason for full power.
 		
 		//We don't want this going so fast.
 //		angleMotor.configMaxOutputVoltage(MAX_VOLTAGE);
