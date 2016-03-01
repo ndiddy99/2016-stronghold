@@ -17,6 +17,7 @@ public class CourseCorrect extends Command {
 	private AHRS ahrs = Robot.driveSys.getAhrs();
 	private boolean slowingDown = false;
 	private double pos = 0;
+	private double vel = 0;
 	private long prevTime;
 	
 	/**
@@ -50,6 +51,7 @@ public class CourseCorrect extends Command {
 			startAngle -= 360;
 		Robot.driveSys.lencoder.reset();
 		Robot.driveSys.rencoder.reset();
+		prevTime = System.currentTimeMillis();
 	}
 
 	@Override
@@ -71,12 +73,14 @@ public class CourseCorrect extends Command {
 		if(Math.abs(angleDiff) > TOLERANCE)
 			correction = angleDiff/CORRECTION_PROPORTION;
 
-		System.out.println("current: " + currentAngle + "\tstart: " + startAngle + "\tdiff: " + angleDiff);
 		left += correction;
 		right -= correction;
-	
-//		pos += ahrs.getVelocityX() * .02;
-//		if(debug) System.out.println("ahrs: " + pos);
+
+		double timeDiff = (System.currentTimeMillis() - prevTime)/1000.0;
+		vel += ahrs.getWorldLinearAccelX() * timeDiff; // m/s^2 * s
+		pos += vel * timeDiff * 3.28084; // m/s * s * 3.28ft/m
+		if(debug) System.out.println("accel: " + ahrs.getWorldLinearAccelX() + "\tvel: " + vel + "\tpos: " + pos + "\ttime: " + timeDiff);
+		prevTime = System.currentTimeMillis();
 
 		
 		Robot.driveSys.setDriveMotors(left, right);

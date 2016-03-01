@@ -52,8 +52,8 @@ public class Robot extends IterativeRobot {
 //		autoCommand = new CourseCorrect(-84);
 		autoCommandGroup = new CommandGroup(){
 			{
-				addSequential(new CourseCorrect(-84));
-				addSequential(new CourseCorrect(84));
+				addSequential(new CourseCorrect(-18));
+				addSequential(new CourseCorrect(18));
 			}
 		};
 //		Scheduler.getInstance().add(autoCommand);
