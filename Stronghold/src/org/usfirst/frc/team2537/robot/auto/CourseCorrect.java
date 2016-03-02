@@ -7,7 +7,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class CourseCorrect extends Command {
-	private static final double DEFAULT_SPEED = 0.25;
+	private static final double DEFAULT_SPEED = 0.2;
 	private static final double CORRECTION_PROPORTION = 45;
 	private static final double TOLERANCE = 1;
 	private static final boolean debug = true;
@@ -76,15 +76,13 @@ public class CourseCorrect extends Command {
 		left += correction;
 		right -= correction;
 
-		if(debug) System.out.println("z: " + ahrs.getRawAccelZ() + "\tworldZ: " + ahrs.getWorldLinearAccelZ());
-		if(debug && ahrs.getWorldLinearAccelZ() > 0.1)
-			System.out.println("Going over obstacle");
-		
+		if(debug && Math.abs(ahrs.getWorldLinearAccelZ()) > 0.1)
+			System.out.println("Going over obstacle");		
 		
 		double timeDiff = (System.currentTimeMillis() - prevTime)/1000.0;
 		vel += ahrs.getWorldLinearAccelX() * timeDiff; // m/s^2 * s
 		pos += vel * timeDiff * 3.28084; // m/s * s * 3.28ft/m
-		if(debug) System.out.println("accel: " + ahrs.getWorldLinearAccelX() + "\tvel: " + vel + "\tpos: " + pos + "\ttime: " + timeDiff);
+//		if(debug) System.out.println("accel: " + ahrs.getWorldLinearAccelX() + "\tvel: " + vel + "\tpos: " + pos + "\ttime: " + timeDiff);
 		prevTime = System.currentTimeMillis();
 
 		
