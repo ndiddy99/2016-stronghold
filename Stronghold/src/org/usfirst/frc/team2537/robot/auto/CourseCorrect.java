@@ -7,7 +7,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class CourseCorrect extends Command {
-	private static final double DEFAULT_SPEED = 0.2;
+	private static final double DEFAULT_SPEED = 0.5;
 	private static final double CORRECTION_PROPORTION = 45;
 	private static final double TOLERANCE = 1;
 	private static final boolean debug = false;
@@ -19,6 +19,8 @@ public class CourseCorrect extends Command {
 	private double pos = 0;
 	private double vel = 0;
 	private long prevTime;
+	private double Xval;
+	private double Yval;
 	
 
 	/**
@@ -43,6 +45,12 @@ public class CourseCorrect extends Command {
 		requires(Robot.driveSys);
 		this.distance = distance;
 		this.speed = speed;
+//		double angle = ahrs.getAngle();
+//		while(angle > 180) angle -= 180;
+//		while(angle < -180) angle += 180;
+//		addSequential(new AutoRotateCommand(angle));
+//		addSequential(new AutoDriveStraightCommand(Math.sqrt(Math.pow(x - currentX, 2) + Math.pow(y - currentY, 2))));
+	
 	}
 	
 	@Override
@@ -58,7 +66,7 @@ public class CourseCorrect extends Command {
 	@Override
 	protected void execute() {
 		double currentAngle = ahrs.getAngle();
-		if(!slowingDown && Math.abs(Math.abs(distance) - Math.abs(getDistanceTravelled())) < 6){
+	if(!slowingDown && Math.abs(Math.abs(distance) - Math.abs(getDistanceTravelled())) < 6){
 			speed /= 2;
 			slowingDown = true;
 		}
