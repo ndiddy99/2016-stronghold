@@ -27,6 +27,7 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 	double currentDist;
 	double armIMUAngle;
 	final int encoderTicksPerRev = 250;
+	double oldPos;
 
 	public static final double P = 100.0, I = 0.0, D = 0.0;
 
@@ -59,15 +60,18 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 	}
 
 	public void registerButtons() {
-		HumanInput.registerPressedCommand(HumanInput.lowBarModeEnableButton, new LowBarCommandGroup(true));
-		HumanInput.registerReleasedCommand(HumanInput.lowBarModeEnableButton, new LowBarCommandGroup(false));
+		HumanInput.registerPressedCommand(HumanInput.lowBarModeEnableButton, new GoDown());
+		HumanInput.registerReleasedCommand(HumanInput.lowBarModeEnableButton, new PresetArmCommand(oldPos));
 	}
 
 	public void positionMode() {
 		armMotor.changeControlMode(TalonControlMode.Position);
 		armMotor.setPID(P, I, D);
 	}
-
+	
+	public void setOldPos(double oldPos) {
+		this.oldPos = oldPos;
+	}
 	/**
 	 * Used to get the angle that the manipulator arm is currently in
 	 * 

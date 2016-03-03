@@ -5,13 +5,10 @@ import org.usfirst.frc.team2537.robot.Robot;
 import edu.wpi.first.wpilibj.Counter;
 
 public class IMU implements SensorInterface {
-	// Const
 	private int maxPeriod;
 	private int maxAngle;
 	private int minAngle;
 	private Sensor sensor;
-
-	// Vars
 	private final Counter input;
 
 	public IMU(int inputPort, int minAngle, int maxAngle, int maxPeriod, Sensor sensor) {
