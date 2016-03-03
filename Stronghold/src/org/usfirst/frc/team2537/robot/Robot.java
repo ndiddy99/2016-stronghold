@@ -2,6 +2,8 @@ package org.usfirst.frc.team2537.robot;
 
 import org.usfirst.frc.team2537.robot.input.Sensors;
 import org.usfirst.frc.team2537.robot.shooter.actuator.ActuatorSubsystem;
+import org.usfirst.frc.team2537.robot.shooter.angle.AnglePIDControllerSubsystem;
+import org.usfirst.frc.team2537.robot.shooter.angle.AngleSubsystem;
 import org.usfirst.frc.team2537.robot.shooter.angle.AngleSubsystemPID;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -70,13 +72,12 @@ public class Robot extends IterativeRobot {
 //		shooterFlywheelSys = new FlywheelSubsystem();
 		shooterAngleSys = new AngleSubsystemPID();
 		shooterActuatorSys = new ActuatorSubsystem();
-
 //		shooterFlywheelSys.initDefaultCommand();
 //		shooterFlywheelSys.registerButtons();
 
 		// Shooter Angle
 		shooterAngleSys.initDefaultCommand();
-		shooterAngleSys.registerButtons();
+//		shooterAngleSys.registerButtons();
 
 		// Shooter Actuator
 		shooterActuatorSys.initDefaultCommand();

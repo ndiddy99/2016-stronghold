@@ -15,8 +15,7 @@ public class ManualAngleCommand extends Command {
 	 * Adjust the sensitivity of the joystickAngle. Values less than 1 decrease
 	 * the maximum speed. Values more than 1 increase the maximum speed.
 	 */
-	private static final double JOYSTICK_FACTOR_UP = .5;
-	private static final double JOYSTICK_FACTOR_DOWN = .4;
+	private static final double JOYSTICK_FACTOR = .5;
 	private static final double JOYSTICK_DEADZONE = .15;
 	private static double setPoint;
 //	public static boolean shouldReleaseBrake = true;
@@ -39,13 +38,13 @@ public class ManualAngleCommand extends Command {
 		// Get joystick values.
 		speed = Robot.shooterAngleSys.getJoystickAngle();
 		if(Math.abs(speed) > JOYSTICK_DEADZONE){
-			System.out.println(speed);
-				if(speed > 0) {
-					System.out.println("Going Up Tele");
-					Robot.shooterAngleSys.setSetpoint(.1);
-				} else {
+//			Robot.shooterAngleSys.setVoltagePercent(-speed * JOYSTICK_FACTOR);
+			System.out.println(speed*JOYSTICK_FACTOR);
+			Robot.shooterAngleSys.setSetpoint(Robot.shooterAngleSys.getSetpoint() + speed * JOYSTICK_FACTOR);
+				if(speed < 0) {
 					System.out.println("Going Down Tele");
-					Robot.shooterAngleSys.setSetpoint(-.1);
+				} else {
+					System.out.println("Going Up Tele");
 				}
 			}
 		//		} 
@@ -56,7 +55,7 @@ public class ManualAngleCommand extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		return (Math.abs(speed) < JOYSTICK_DEADZONE);
+		return false;
 	}
 
 	@Override
