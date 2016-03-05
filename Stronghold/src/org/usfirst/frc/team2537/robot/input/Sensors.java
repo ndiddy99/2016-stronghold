@@ -25,6 +25,10 @@ public class Sensors {
 	public LidarSensor lidar = new LidarSensor(Ports.SHOOTER_SIDE_LIDAR_SENSOR_TRIGGER_PORT, Ports.SHOOTER_SIDE_LIDAR_SENSOR_INPUT_PORT, Sensor.SHOOTER_LIDAR);
 	public UltrasonicSensor ultrasonic = new UltrasonicSensor(Ports.DRIVE_ULTRASONIC_ECHO, Ports.DRIVE_ULTRASONIC_INPUT, Sensor.ULTRASONIC_DISTANCE);
 	
+	public Sensors(){
+		//Add averaging for tilt IMU
+		tilt.setSamplesToAverage(1);
+	}
 	public void registerListener(SensorListener listener) {
 		listeners.add(listener);
 	}

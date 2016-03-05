@@ -4,7 +4,6 @@ import org.usfirst.frc.team2537.robot.input.Sensors;
 import org.usfirst.frc.team2537.robot.shooter.actuator.ActuatorSubsystem;
 import org.usfirst.frc.team2537.robot.shooter.angle.AngleSubsystemPID;
 
-import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -76,7 +75,7 @@ public class Robot extends IterativeRobot {
 //		shooterFlywheelSys.registerButtons();
 		// Shooter Angle
 		shooterAngleSys.initDefaultCommand();
-//		shooterAngleSys.registerButtons();
+		shooterAngleSys.registerButtons();
 
 		// Shooter Actuator
 		shooterActuatorSys.initDefaultCommand();

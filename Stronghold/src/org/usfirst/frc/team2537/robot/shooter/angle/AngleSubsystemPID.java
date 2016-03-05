@@ -22,10 +22,11 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 	// The angle limits.
 	public static final double MAX_ANGLE = 33.0;// degrees
 	public static final double MIN_ANGLE = -15.0;// degrees
-	private static final double P = .04, I = 0.0001, D = 0.4;
+	private static final double P = .04, I = 0.0001, D = 0.5;
 	private static final double PID_PERIOD = .005;//seconds
 	private static final double TOLERANCE = 2.0;
 	public static final boolean DEBUG = true;
+	
 
 	// Variables
 	private Double currentAngle = null;
@@ -136,6 +137,9 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 	}
 
 	public void registerButtons() {
+		HumanInput.registerPressedCommand(HumanInput.changeCameraButton,	new MoveToAngleCommand(30));
+		HumanInput.registerPressedCommand(HumanInput.portcullisButton,		new MoveToAngleCommand(0));
+		HumanInput.registerPressedCommand(HumanInput.chevalButton,			new MoveToAngleCommand(-15));
 	}
 
 	@Override
