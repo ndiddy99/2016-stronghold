@@ -3,10 +3,18 @@ package org.usfirst.frc.team2537.robot.drive;
 import org.usfirst.frc.team2537.robot.Ports;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj.CANTalon;
+
+import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class DriveSubsystem extends Subsystem {
+
+
 	private CANTalon talonFrontLeft;
 	private CANTalon talonFrontRight;
 	private CANTalon talonBackRight;
@@ -15,7 +23,6 @@ public class DriveSubsystem extends Subsystem {
 	private boolean drivingStraight;
 	private boolean driveLowerSpeed;
 	private boolean reversed;
-
 	public static final double WHEEL_DIAMETER = 9; // Inches TODO: Magic numbers
 													// are fun
 	public static final double PulsesPerRevolution = 20; // for encoders
@@ -24,16 +31,29 @@ public class DriveSubsystem extends Subsystem {
 	private double initialRightEncoders = 0; // Inches to subtract (for
 												// resetEncoders)
 
+
+	//Atlas encoder code
+	public Encoder lencoder = new Encoder(2, 3);
+	public Encoder rencoder = new Encoder(0, 1);
+
+	private AHRS ahrs;
+
 	public DriveSubsystem() {
 		talonFrontLeft = new CANTalon(Ports.FRONT_LEFT_MOTOR_PORT);
 		talonFrontRight = new CANTalon(Ports.FRONT_RIGHT_MOTOR_PORT);
 		talonBackLeft = new CANTalon(Ports.BACK_LEFT_MOTOR_PORT);
 		talonBackRight = new CANTalon(Ports.BACK_RIGHT_MOTOR_PORT);
 
-		// SPEED MODE CODE
-		// setDriveControlMode(TalonControlMode.Speed);
-
-		driveType = DriveType.doubleJoystick;
+		try{
+			ahrs = new AHRS(Port.kMXP);
+		}
+		catch(Exception ex){
+			System.out.println(ex);
+		}
+//		SPEED MODE CODE
+	//	setDriveControlMode(TalonControlMode.Speed);
+		
+		driveType = DriveType.doubleJoystickXbox;
 		drivingStraight = false;
 		driveLowerSpeed = false;
 		reversed = false;
@@ -43,7 +63,6 @@ public class DriveSubsystem extends Subsystem {
 
 	/**
 	 * Sets the output of a CANTalon
-	 * 
 	 * 
 	 * @param outputValue
 	 *            consult talon javadocs
@@ -60,7 +79,6 @@ public class DriveSubsystem extends Subsystem {
 		// System.out.println(talonFrontRight.getEncPosition());
 		// talon.set(outputValue);
 		// }
-
 		talon.set(outputValue);
 	}
 
@@ -107,7 +125,6 @@ public class DriveSubsystem extends Subsystem {
 	/**
 	 * returns the average between all the encoders
 	 */
-
 	public double getEncoderAverage() {
 		return (getLeftEncoders() + getRightEncoders()) / 2;
 	}
@@ -118,7 +135,6 @@ public class DriveSubsystem extends Subsystem {
 	 * 
 	 * @return the average of the front left and back left encoders in inches
 	 */
-
 	public double getLeftEncoders() {
 		// gets average encoder value, converts to revolutions,
 		// converts to distance in inches using circumfrense of the wheel,
@@ -133,7 +149,6 @@ public class DriveSubsystem extends Subsystem {
 	 * 
 	 * @return the average of the front right and back right encoders in inches
 	 */
-
 	public double getRightEncoders() {
 		// gets average encoder value, converts to revolutions,
 		// converts to distance in inches using circumfrense of the wheel,
@@ -148,6 +163,14 @@ public class DriveSubsystem extends Subsystem {
 	public void resetEncoders() {
 		initialLeftEncoders += getLeftEncoders();
 		initialRightEncoders += getRightEncoders();
+	}
+
+
+	private void setDriveTalonControlMode(TalonControlMode mode) {
+		talonFrontLeft.changeControlMode(mode);
+		talonBackLeft.changeControlMode(mode);
+		talonFrontRight.changeControlMode(mode);
+		talonBackRight.changeControlMode(mode);
 	}
 
 	private void enableForwardSoftLimit(boolean b) {
@@ -195,6 +218,10 @@ public class DriveSubsystem extends Subsystem {
 
 	protected boolean getReversed() {
 		return reversed;
+	}
+
+	public AHRS getAhrs() {
+		return ahrs;
 	}
 
 	protected void setReversed(boolean reversed) {

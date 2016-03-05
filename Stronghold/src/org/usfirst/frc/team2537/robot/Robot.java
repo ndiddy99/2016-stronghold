@@ -2,16 +2,17 @@ package org.usfirst.frc.team2537.robot;
 
 import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
 import org.usfirst.frc.team2537.robot.auto.AutoChooser;
+import org.usfirst.frc.team2537.robot.auto.CourseCorrect;
 import org.usfirst.frc.team2537.robot.camera.CameraFeeds;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team2537.robot.input.Sensors;
 import org.usfirst.frc.team2537.robot.shooter.actuator.ActuatorSubsystem;
-import org.usfirst.frc.team2537.robot.shooter.angle.AngleSubsystem;
 import org.usfirst.frc.team2537.robot.shooter.angle.AngleSubsystemPID;
 import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
@@ -23,14 +24,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	private Command autoCommand;
-	private final String defaultAuto = "Default";
-	private final String customAuto = "My Auto";
-	private String autoSelected;
 	AutoChooser autoChooser;
+	Command autoCommand;
+	CommandGroup autoCommandGroup; //Timmy Tommy is lazy
+	final String defaultAuto = "Default";
+	final String customAuto = "My Auto";
+	String autoSelected;
 	public static DriveSubsystem driveSys;
 	public static CameraFeeds feeds;
-	private CameraFeeds cameraFeeds = new CameraFeeds();
 	public static ArmSubsystem armSys;
 
 	SendableChooser chooser;
@@ -89,7 +90,30 @@ public class Robot extends IterativeRobot {
 		feeds = new CameraFeeds();
 	}
 
-	@Override
+	/**
+	 * This autonomous (along with the chooser code above) shows how to select
+	 * between different autonomous modes using the dashboard. The sendable
+	 * chooser code works with the Java SmartDashboard. If you prefer the
+	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
+	 * getString line to get the auto name from the text box below the Gyro
+	 *
+	 * You can add additional auto modes by adding additional comparisons to the
+	 * switch structure below with additional strings. If using the
+	 * SendableChooser make sure to add them to the chooser code above as well.
+	 */
+	public void autonomousInit() {
+		//autoCommand = autoChooser.getAutoChoice();
+//		autoCommand = new CourseCorrect(-84);
+		autoCommandGroup = new CommandGroup(){
+			{
+				addSequential(new CourseCorrect(-18));
+				addSequential(new CourseCorrect(18));
+			}
+		};
+//		Scheduler.getInstance().add(autoCommand);
+		Scheduler.getInstance().add(autoCommandGroup);
+	}
+
 	/**
 	 * This function is called periodically during autonomous
 	 */
@@ -97,14 +121,18 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 	}
 
-	public void autonomousInit() {
-		Robot.armSys.init();
-	}
 
-	public void teleopInit() {
+	/**
+	 * 
+	 */
+	public void teleopInit(){
+		System.out.println("Teleop init");
+		if(autoCommand != null)
+			autoCommand.cancel();
+		if(autoCommandGroup != null)
+			autoCommandGroup.cancel();
 		feeds.init();
 		sensorSys.handleEvents();
-
 	}
 
 	/**
