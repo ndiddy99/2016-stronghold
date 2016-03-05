@@ -131,7 +131,6 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		sensorSys.handleEvents();
-		sensorSys.updateSmartDashboardValues();
 		feeds.run();
 		Scheduler.getInstance().run();		
 //		SmartDashboard.putNumber("Arm IMU", armSys.getIMUAngle());

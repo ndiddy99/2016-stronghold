@@ -54,7 +54,7 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 		// setPercentTolerance(TOLERANCE);
 		setAbsoluteTolerance(TOLERANCE);
 		setInputRange(MIN_ANGLE, MAX_ANGLE);
-		setOutputRange(-.5, .85);
+		setOutputRange(-.5, 1.0);
 		getPIDController().setContinuous(false);
 
 		enable();

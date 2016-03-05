@@ -30,7 +30,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	// 5 volts per second ramp rate for the flywheels
 	private static final double VOLTAGE_RAMP_RATE = 12;
 	// yet
-	private static final double P = 3.1, I = 0.01, D = 0.31;
+	private static final double P = 3.1, I = 0.001, D = 0.31;
 	// Vars
 	private boolean proximityValue = false;
 	//The orientation assumes that you are facing the bot

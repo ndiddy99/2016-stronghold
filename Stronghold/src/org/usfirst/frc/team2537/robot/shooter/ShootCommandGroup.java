@@ -19,7 +19,7 @@ import org.usfirst.frc.team2537.robot.Robot;
 public class ShootCommandGroup extends CommandGroup {
 	private static final boolean DEBUG = false;
 	//The default velocity.
-    public static final double SHOOT_VELOCITY = -1000;
+    public static final double SHOOT_VELOCITY = -4000;
     
     //Using default velocity.
     public ShootCommandGroup() {
