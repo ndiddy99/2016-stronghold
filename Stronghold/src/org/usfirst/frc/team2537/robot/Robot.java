@@ -7,13 +7,13 @@ import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team2537.robot.input.Sensors;
 import org.usfirst.frc.team2537.robot.shooter.actuator.ActuatorSubsystem;
 import org.usfirst.frc.team2537.robot.shooter.angle.AngleSubsystem;
+import org.usfirst.frc.team2537.robot.shooter.angle.AngleSubsystemPID;
 import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -23,29 +23,22 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	// private AutoChooser autoChooser;
-	// private Command autoCommand;
-	// private final String defaultAuto = "Default";
-	// private final String customAuto = "My Auto";
-	// private String autoSelected;
+	private Command autoCommand;
+	private final String defaultAuto = "Default";
+	private final String customAuto = "My Auto";
+	private String autoSelected;
 	AutoChooser autoChooser;
-	Command autoCommand;
-	final String defaultAuto = "Default";
-	final String customAuto = "My Auto";
-	String autoSelected;
 	public static DriveSubsystem driveSys;
 	public static CameraFeeds feeds;
-	// private Controller contr = new Controller(Config.Controller.chn,
-	// Config.Controller.maxButtons, Config.Controller.linearity);
-	// private CameraFeeds cameraFeeds = new CameraFeeds(contr);
+	private CameraFeeds cameraFeeds = new CameraFeeds();
+	public static ArmSubsystem armSys;
 
 	SendableChooser chooser;
 	// My stuff
 	public static Sensors sensorSys;
 	public static FlywheelSubsystem shooterFlywheelSys;
-	public static AngleSubsystem shooterAngleSys;
 	public static ActuatorSubsystem shooterActuatorSys;
-	public static ArmSubsystem armSys;
+	public static AngleSubsystemPID shooterAngleSys;
 
 	@Override
 	/**
@@ -70,16 +63,14 @@ public class Robot extends IterativeRobot {
 		armSys = new ArmSubsystem();
 		armSys.initDefaultCommand();
 		armSys.registerButtons();
-
+		//
 		autoChooser = new AutoChooser();
 
 		shooterFlywheelSys = new FlywheelSubsystem();
-		shooterAngleSys = new AngleSubsystem();
+		shooterAngleSys = new AngleSubsystemPID();
 		shooterActuatorSys = new ActuatorSubsystem();
-
 		shooterFlywheelSys.initDefaultCommand();
 		shooterFlywheelSys.registerButtons();
-
 		// Shooter Angle
 		shooterAngleSys.initDefaultCommand();
 		shooterAngleSys.registerButtons();
@@ -105,17 +96,15 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 	}
-	
+
 	public void autonomousInit() {
 		Robot.armSys.init();
 	}
 
 	public void teleopInit() {
 		feeds.init();
-		System.out.println("Teleop init");
-		if (autoCommand != null) {
-			autoCommand.cancel();
-		}
+		sensorSys.handleEvents();
+
 	}
 
 	/**
@@ -123,9 +112,9 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		sensorSys.handleEvents();
+		sensorSys.updateSmartDashboardValues();
 		feeds.run();
 		Scheduler.getInstance().run();
-		SmartDashboard.putBoolean("shooterSubsystem is Ball present", shooterFlywheelSys.isBallPresent());
 	}
 
 	@Override
@@ -135,11 +124,11 @@ public class Robot extends IterativeRobot {
 	public void testPeriodic() {
 		sensorSys.handleEvents();
 		Scheduler.getInstance().run();
+
 	}
 
 	@Override
 	public void disabledInit() {
-		// System.out.println(System.currentTimeMillis()-START_TIME);
 	}
 
 }

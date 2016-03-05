@@ -47,7 +47,7 @@ public class MoveToAngleCommand extends Command {
 	protected void execute() {
 		try {
 			currentPosition = Robot.shooterAngleSys.getCurrentAngle();
-			Robot.shooterAngleSys.setVoltagePercent(-(currentPosition - posToMoveTo) / AngleSubsystem.MAX_ANGLE_DIFFERENCE);
+//			Robot.shooterAngleSys.setVoltagePercent(-(currentPosition - posToMoveTo) / AngleSubsystem.MAX_ANGLE_DIFFERENCE);
 		} catch (NullPointerException e) {
 			//Nothing. To do, can't move without sensor.
 			if (DEBUG) System.out.println("MoveToAngleCommand stopped because sensor is not present.");
@@ -64,7 +64,7 @@ public class MoveToAngleCommand extends Command {
 	@Override
 	protected void end() {
 		// Stop the motor.
-		Robot.shooterAngleSys.setVoltagePercent(0);
+//		Robot.shooterAngleSys.setVoltagePercent(0);
 	}
 
 	@Override
@@ -72,6 +72,6 @@ public class MoveToAngleCommand extends Command {
 		if (DEBUG)
 			System.out.println("Shooter Interrupted");
 		// Stop the motor.
-		Robot.shooterAngleSys.setVoltagePercent(0);
+//		Robot.shooterAngleSys.setVoltagePercent(0);
 	}
 }

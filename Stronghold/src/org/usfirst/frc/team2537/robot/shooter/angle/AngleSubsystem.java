@@ -37,20 +37,20 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 		// Change control mode of the angleTalon to percent Vbus.
 		angleMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 		// Add limits.
-		angleMotor.ConfigFwdLimitSwitchNormallyOpen(true);
-		angleMotor.ConfigRevLimitSwitchNormallyOpen(true);
-		angleMotor.enableLimitSwitch(true, true);// Now the limit switches are
-													// active.
+//		angleMotor.ConfigFwdLimitSwitchNormallyOpen(true);
+//		angleMotor.ConfigRevLimitSwitchNormallyOpen(true);
+//		angleMotor.enableLimitSwitch(true, true);// Now the limit switches are
+//													// active.
 		// Soft limits for a backup.
-		angleMotor.enableForwardSoftLimit(false);
-		angleMotor.enableReverseSoftLimit(false);
-		
+//		angleMotor.enableForwardSoftLimit(false);
+//		angleMotor.enableReverseSoftLimit(false);
+//		
 		//The motor will backdrive if it does not get current.
 		//Set a electric break.
-		angleMotor.enableBrakeMode(true);
+//		angleMotor.enableBrakeMode(true);
 		
 		//We don't want this going so fast.
-		angleMotor.configMaxOutputVoltage(MAX_VOLTAGE);
+//		angleMotor.configMaxOutputVoltage(MAX_VOLTAGE);
 	}
 
 	@Override
@@ -78,11 +78,11 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	 * 
 	 * @return boolean if the forward limit switch is activated.
 	 */
-	public boolean isHighestPosition() {
-		if (currentAngle != null && currentAngle >= MAX_ANGLE)
-			return true;
-		return angleMotor.isFwdLimitSwitchClosed();
-	}
+//	public boolean isHighestPosition() {
+//		if (currentAngle != null && currentAngle >= MAX_ANGLE)
+//			return true;
+//		return angleMotor.isFwdLimitSwitchClosed();
+//	}
 
 	/**
 	 * Checks to see of the lower limit switch is activated, showing the angle
@@ -90,11 +90,11 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	 * 
 	 * @return boolean if the forward limit switch is activated.
 	 */
-	public boolean isLowestPosition() {
-		if (currentAngle != null && currentAngle <= MIN_ANGLE)
-			return true;
-		return angleMotor.isRevLimitSwitchClosed();
-	}
+//	public boolean isLowestPosition() {
+//		if (currentAngle != null && currentAngle <= MIN_ANGLE)
+//			return true;
+//		return angleMotor.isRevLimitSwitchClosed();
+//	}
 
 	// And get joystick values.
 	/**
@@ -124,10 +124,10 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 		if (DEBUG) System.out.println("Shooter Angle: " + value);
 		
 		//SOFT LIMITS
-		if (isHighestPosition() || isLowestPosition()){
-			//TOO High or low stop motor.
-//			System.out.println("Position Is at Max or Min.");
-		}
+//		if (isHighestPosition() || isLowestPosition()){
+//			//TOO High or low stop motor.
+////			System.out.println("Position Is at Max or Min.");
+//		}
 	}
 
 	/**
