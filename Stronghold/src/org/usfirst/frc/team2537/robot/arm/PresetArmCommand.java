@@ -15,6 +15,7 @@ public class PresetArmCommand extends Command {
 	double angleToMoveTo;
 	double currentAngle;
 	final double tolerance = 5;
+	private final static double DEFAULT_TIMEOUT = 5;
 	Double speed;
 	/**
 	 * Constructor that sets what angle to move to
@@ -43,7 +44,7 @@ public class PresetArmCommand extends Command {
 	}
 
 	protected boolean isFinished() {
-		if ((currentAngle >= angleToMoveTo - tolerance && angleToMoveTo + tolerance >= currentAngle)) {
+		if ((currentAngle >= angleToMoveTo - tolerance && angleToMoveTo + tolerance >= currentAngle) || isTimedOut()) {
 			return true;
 		}
 		return false;

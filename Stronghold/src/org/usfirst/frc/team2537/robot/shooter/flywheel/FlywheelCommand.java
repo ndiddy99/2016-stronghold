@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class FlywheelCommand extends Command {
 	// constants
 	private static final boolean DEBUG = false;
-	private static final double DEFAULT_TIMEOUT = 10;// seconds
+	private static final double DEFAULT_TIMEOUT = 2;// seconds
 	// vars
 	private final double targetSpeed;
 

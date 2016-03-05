@@ -24,7 +24,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	public static final boolean DEBUG = false;
 	private static final int ENCODER_TICKS_PER_REV = 20;
 	private static final double UNITS_PER_100MS_TO_RPM = 100.0 / 4096 * 1000 * 60;
-	private static final double SPEED_TOLERANCE = 50;
+	private static final double SPEED_TOLERANCE = -ShootCommandGroup.SHOOT_VELOCITY * .05;
 	// Max voltage that can be output from the flyweel talons.
 	private static final float MAX_VOLTAGE = 12.0f;
 	// 5 volts per second ramp rate for the flywheels
@@ -83,8 +83,8 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 		leftFlywheelMotor.setF(F_GAIN_LEFT);
 		rightFlywheelMotor.setPID(P, I, D);
 		rightFlywheelMotor.setF(F_GAIN_RIGHT);
-		rightFlywheelMotor.setVoltageRampRate(VOLTAGE_RAMP_RATE);
-		leftFlywheelMotor.setVoltageRampRate(VOLTAGE_RAMP_RATE);
+//		rightFlywheelMotor.setVoltageRampRate(VOLTAGE_RAMP_RATE);
+//		leftFlywheelMotor.setVoltageRampRate(VOLTAGE_RAMP_RATE);
 
 		// Make the talons go into the speed control mode.
 		leftFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
@@ -203,7 +203,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 		} else {
 			counter = 0;
 		}
-		if (counter == 10) {
+		if (counter == 1) {
 			counter = 0; 
 			return true;
 		}

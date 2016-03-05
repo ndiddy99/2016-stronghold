@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveReverseToggleCommand extends Command {
 	@Override
 	protected void initialize() {
-		Robot.driveSys.setReversed(Robot.driveSys.getReversed());
+		Robot.driveSys.setReversed(!Robot.driveSys.getReversed());
 	}
 
 	@Override
