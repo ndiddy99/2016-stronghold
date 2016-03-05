@@ -2,13 +2,13 @@ package org.usfirst.frc.team2537.robot;
 
 import org.usfirst.frc.team2537.robot.input.Sensors;
 import org.usfirst.frc.team2537.robot.shooter.actuator.ActuatorSubsystem;
-import org.usfirst.frc.team2537.robot.shooter.angle.AnglePIDControllerSubsystem;
-import org.usfirst.frc.team2537.robot.shooter.angle.AngleSubsystem;
 import org.usfirst.frc.team2537.robot.shooter.angle.AngleSubsystemPID;
 
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -74,7 +74,6 @@ public class Robot extends IterativeRobot {
 		shooterActuatorSys = new ActuatorSubsystem();
 //		shooterFlywheelSys.initDefaultCommand();
 //		shooterFlywheelSys.registerButtons();
-
 		// Shooter Angle
 		shooterAngleSys.initDefaultCommand();
 //		shooterAngleSys.registerButtons();
@@ -120,6 +119,10 @@ public class Robot extends IterativeRobot {
 //		sensorSys.updateSmartDashboardValues();
 //		feeds.run();
 		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("Current Read Angle ", shooterAngleSys.getCurrentAngle());
+		SmartDashboard.putNumber("Setpoint ", shooterAngleSys.getSetpoint());
+		SmartDashboard.putNumber("Error ", shooterAngleSys.getPIDController().getError());
+		SmartDashboard.putNumber("Motor Voltage Percentage " , shooterAngleSys.getPIDController().get());
 //		SmartDashboard.putNumber("Arm IMU", armSys.getIMUAngle());
 //		Double shooterAngle = shooterAngleSys.getCurrentAngle();
 //		SmartDashboard.putString("Shooter IMU", shooterAngle==null?"null":shooterAngle.toString());
@@ -135,6 +138,7 @@ public class Robot extends IterativeRobot {
 	public void testPeriodic() {
 		sensorSys.handleEvents();
 		Scheduler.getInstance().run();
+		
 	}
 
 	@Override
