@@ -61,11 +61,7 @@ public class AutoDriveStraightCommand extends Command {
 			System.out.println("[AutoDriveStraightCommand] Driving " + distance + " at " + speed);
 		}
 		Robot.driveSys.setDriveMotors(speed);
-		// Robot.driveSys.resetEncoders();
-
-		// ATLAS
-		Robot.driveSys.lencoder.reset();
-		Robot.driveSys.rencoder.reset();
+		Robot.driveSys.resetEncoders();
 	}
 
 	@Override
@@ -77,14 +73,14 @@ public class AutoDriveStraightCommand extends Command {
 			// distance);
 
 			// ATLAS
-			System.out.println("[AutoDriveStraightCommand] Current distance: " + getEncoderAverage()
+			System.out.println("[AutoDriveStraightCommand] Current distance: " + Robot.driveSys.getEncoderAverage()
 					+ "\tTarget distance: " + distance);
 			// System.out.println("[AutoDriveStraightCommand] Left: " +
 			// -Robot.driveSys.lencoder.get() + "\tRight: "
 			// + Robot.driveSys.rencoder.get());
 		}
 
-		if(!slowingDown && Math.abs(distance) - Math.abs(getEncoderAverage()) < 6){
+		if(!slowingDown && Math.abs(distance) - Math.abs(Robot.driveSys.getEncoderAverage()) < 6){
 			if(debug) System.out.println("[AutoDriveStraightCommand] Slowing down...");
 			Robot.driveSys.setDriveMotors(speed/2);
 			slowingDown = true;
@@ -101,9 +97,9 @@ public class AutoDriveStraightCommand extends Command {
 
 		// ATLAS
 		if (distance < 0) {
-			return (getEncoderAverage() <= distance);
+			return (Robot.driveSys.getEncoderAverage() <= distance);
 		}
-		return (getEncoderAverage() >= distance);
+		return (Robot.driveSys.getEncoderAverage() >= distance);
 
 	}
 
@@ -123,19 +119,4 @@ public class AutoDriveStraightCommand extends Command {
 		Robot.driveSys.setDriveMotors(0);
 	}
 
-	// ATLAS
-	// 1 tick * (1 rotation / 250.0 ticks) * (6*pi in / 1 rotation)
-	// ATLAS wheel is 6 in Diameter
-	// WaifuBot has 10 in Diameter
-	/**
-	 * average encoder distance in inches ┬─┬ ノ( ゜-゜ノ)
-	 * ┬─┬ ︵ /(.□. \）
-	 * ʕノ•ᴥ•ʔノ ︵ ┻━┻
-	 * @return
-	 */
-	private double getEncoderAverage() {
-		return ((-Robot.driveSys.lencoder.get() + Robot.driveSys.rencoder.get()) / 2.0) / 250.0 * 12.0 * Math.PI;
-		// return (-Robot.driveSys.lencoder.get() +
-		// Robot.driveSys.rencoder.get()) / 2.0;
-	}
 }
