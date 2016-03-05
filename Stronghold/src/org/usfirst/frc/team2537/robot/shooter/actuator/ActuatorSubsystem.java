@@ -16,7 +16,7 @@ public class ActuatorSubsystem extends Subsystem {
 	private Servo actuator;
 	
 	public ActuatorSubsystem() {
-		actuator = new Servo(Ports.SERVO_PORT);
+		actuator = new Servo(Ports.SHOOTER_SERVO);
 	}
 	
 	/**

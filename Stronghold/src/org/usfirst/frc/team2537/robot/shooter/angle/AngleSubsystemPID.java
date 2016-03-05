@@ -1,12 +1,10 @@
 package org.usfirst.frc.team2537.robot.shooter.angle;
 
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.CANTalon;
 import java.util.HashMap;
 
 import org.usfirst.frc.team2537.robot.Ports;
-import org.usfirst.frc.team2537.robot.Robot;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 import org.usfirst.frc.team2537.robot.input.Sensor;
 import org.usfirst.frc.team2537.robot.input.SensorListener;
@@ -22,12 +20,11 @@ import org.usfirst.frc.team2537.robot.input.XboxButtons;
 public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 
 	// The angle limits.
-	public static final double MAX_ANGLE = 33.0;// degrees (ball park, not
-												// right)
-	public static final double MIN_ANGLE = -15.0;// degrees(ball park, not
-													// right)
-	private static final double P = .03, I = 0.00, D = 0.0;
-	private static final float TOLERANCE = .05f;
+	public static final double MAX_ANGLE = 33.0;// degrees
+	public static final double MIN_ANGLE = -15.0;// degrees
+	private static final double P = .04, I = 0.0001, D = 0.4;
+	private static final double PID_PERIOD = .005;//seconds
+	private static final double TOLERANCE = 2.0;
 	public static final boolean DEBUG = true;
 
 	// Variables
@@ -35,7 +32,7 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 	private final CANTalon angleMotor;
 
 	public AngleSubsystemPID() {
-		super(P, I, D);
+		super(P, I, D, PID_PERIOD);
 		angleMotor = new CANTalon(Ports.SHOOTER_ANGLE_PORT);
 		// Change control mode of the angleTalon to percent Vbus.
 		angleMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
@@ -85,6 +82,10 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 		if (MIN_ANGLE <= setpoint && setpoint <= MAX_ANGLE) {
 			super.setSetpoint(setpoint);
 		}
+	}
+	
+	public void setVoltage(double voltage){
+		angleMotor.set(voltage);
 	}
 
 	// And get joystick values.

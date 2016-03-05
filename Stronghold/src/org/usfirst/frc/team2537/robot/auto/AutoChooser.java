@@ -12,7 +12,9 @@ public class AutoChooser {
 	 */
 	public AutoChooser(){
 		autoChoice= new SendableChooser();
-        autoChoice.addDefault("Course Correct 84 in", new CourseCorrect(84));
+		autoChoice.addDefault("Do nothing", null);
+        autoChoice.addObject("Low Bar Auto", new LowBarAuto());
+        autoChoice.addObject("B and D auto", new BorDAuto());
         autoChoice.addObject("AutoShootCommand prints", new AutoShootCommand());
         SmartDashboard.putData("AutoChooser", autoChoice);
 	}

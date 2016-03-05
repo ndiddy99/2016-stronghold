@@ -20,13 +20,11 @@ public class AutoShootCommand extends Command implements SensorListener{
 
 	@Override
 	protected void initialize() {
-		if(debug) System.out.println("[AutoShootCommand] キタ━━━(゜∀゜)━━━!!!!! ");
 	}
 
 	@Override
 	protected void execute() {
-		if(debug) System.out.println("[AutoShootCommand] ヽ(^o^)丿");
-		System.out.println("[AutoShootCommand] PWM: " + offset);
+		if (debug) System.out.println("[AutoShootCommand] PWM: " + offset);
 	}
 
 	@Override
@@ -36,12 +34,10 @@ public class AutoShootCommand extends Command implements SensorListener{
 
 	@Override
 	protected void end() {
-		if(debug) System.out.println("[AutoShootCommand] <コ:彡");
 	}
 
 	@Override
 	protected void interrupted() {
-		if(debug) System.out.println("[AutoShootCommand] (╯°□°）╯︵ ┻━┻");
 	}
 
 	@Override
