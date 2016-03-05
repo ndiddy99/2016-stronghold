@@ -6,15 +6,21 @@ import edu.wpi.first.wpilibj.Counter;
 
 public class PiComms implements SensorInterface {
 	
-	Counter input;
+	Counter highCounter;
+	Counter lowCounter;
 	
 	public PiComms(int inputPort) {
-		Counter input = new Counter(inputPort);
-		input.setSemiPeriodMode(true);
+		highCounter = new Counter(inputPort);
+		highCounter.setSemiPeriodMode(true);
+		lowCounter = new Counter(inputPort);
+		lowCounter.setSemiPeriodMode(false);
 	}	
 	
 	@Override
 	public void getValue() {
-		Robot.sensorSys.addValue(Sensor.RPI, input.getPeriod());
+		double val;
+		val = (highCounter.getPeriod() + lowCounter.getPeriod());
+		val = highCounter.getPeriod()/val;
+		Robot.sensorSys.addValue(Sensor.RPI, val);
 	}
 }
