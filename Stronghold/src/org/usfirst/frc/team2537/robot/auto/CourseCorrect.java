@@ -59,15 +59,14 @@ public class CourseCorrect extends Command {
 		startAngle = ahrs.getAngle();
 		if(startAngle > 180)
 			startAngle -= 360;
-		Robot.driveSys.lencoder.reset();
-		Robot.driveSys.rencoder.reset();
+		Robot.driveSys.resetEncoders();
 		prevTime = System.currentTimeMillis();
 	}
 
 	@Override
 	protected void execute() {
 		double currentAngle = ahrs.getAngle();
-	if(!slowingDown && Math.abs(Math.abs(distance) - Math.abs(getDistanceTravelled())) < 6){
+	if(!slowingDown && Math.abs(Math.abs(distance) - Math.abs(Robot.driveSys.getEncoderAverage())) < 6){
 			speed /= 2;
 			slowingDown = true;
 		}
@@ -103,8 +102,8 @@ public class CourseCorrect extends Command {
 	@Override
 	protected boolean isFinished() {
 	 	if(distance < 0)
-			return getDistanceTravelled() <= distance;
-		return (getDistanceTravelled() >= distance);
+			return Robot.driveSys.getEncoderAverage() <= distance;
+		return (Robot.driveSys.getEncoderAverage() >= distance);
 	}
 
 	@Override
@@ -115,13 +114,5 @@ public class CourseCorrect extends Command {
 	@Override
 	protected void interrupted() {
 		Robot.driveSys.setDriveMotors(0);
-	}
-
-	/**
-	 * Returns distance traveled (encoder average or navx displacement)
-	 * @return
-	 */
-	private double getDistanceTravelled(){
-		return ((Robot.driveSys.lencoder.get() - Robot.driveSys.rencoder.get()) / 2.0) / 250.0 * 6.0 * Math.PI;
 	}
 }

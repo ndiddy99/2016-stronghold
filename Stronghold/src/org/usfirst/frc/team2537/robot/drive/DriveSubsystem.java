@@ -6,9 +6,7 @@ import org.usfirst.frc.team2537.robot.input.HumanInput;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.CANTalon;
-
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -25,7 +23,7 @@ public class DriveSubsystem extends Subsystem {
 	private boolean reversed;
 	public static final double WHEEL_DIAMETER = 9; // Inches TODO: Magic numbers
 													// are fun
-	public static final double PulsesPerRevolution = 20; // for encoders
+	public static final double PulsesPerRevolution = 80; // for encoders
 	private double initialLeftEncoders = 0; // Inches to subtract (for
 											// resetEncoders)
 	private double initialRightEncoders = 0; // Inches to subtract (for
@@ -33,8 +31,8 @@ public class DriveSubsystem extends Subsystem {
 
 
 	//Atlas encoder code
-	public Encoder lencoder = new Encoder(2, 3);
-	public Encoder rencoder = new Encoder(0, 1);
+//	public Encoder lencoder = new Encoder(2, 3);
+//	public Encoder rencoder = new Encoder(0, 1);
 
 	private AHRS ahrs;
 
@@ -126,6 +124,15 @@ public class DriveSubsystem extends Subsystem {
 	 * returns the average between all the encoders
 	 */
 	public double getEncoderAverage() {
+		/*ATLAS 
+		drive straight:
+		return ((-Robot.driveSys.lencoder.get() + Robot.driveSys.rencoder.get()) / 2.0) / 250.0 * 12.0 * Math.PI;
+		
+		coursecorrect:
+		return ((Robot.driveSys.lencoder.get() - Robot.driveSys.rencoder.get()) / 2.0) / 250.0 * 6.0 * Math.PI;
+		*/
+		
+		//Knightfall
 		return (getLeftEncoders() + getRightEncoders()) / 2;
 	}
 
@@ -163,6 +170,10 @@ public class DriveSubsystem extends Subsystem {
 	public void resetEncoders() {
 		initialLeftEncoders += getLeftEncoders();
 		initialRightEncoders += getRightEncoders();
+		
+		//ATLAS
+		//lencoder.reset()
+		//rencoder.reset()
 	}
 
 
