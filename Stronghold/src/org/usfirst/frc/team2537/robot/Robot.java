@@ -119,10 +119,16 @@ public class Robot extends IterativeRobot {
 //		sensorSys.updateSmartDashboardValues();
 //		feeds.run();
 		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("Current Read Angle ", shooterAngleSys.getCurrentAngle());
+		try {
+		SmartDashboard.putString("Current Read Angle ", shooterAngleSys.getCurrentAngle().toString());
 		SmartDashboard.putNumber("Setpoint ", shooterAngleSys.getSetpoint());
 		SmartDashboard.putNumber("Error ", shooterAngleSys.getPIDController().getError());
 		SmartDashboard.putNumber("Motor Voltage Percentage " , shooterAngleSys.getPIDController().get());
+		} catch (NullPointerException e) {
+		}
+		
+		SmartDashboard.putData(shooterAngleSys);
+		
 //		SmartDashboard.putNumber("Arm IMU", armSys.getIMUAngle());
 //		Double shooterAngle = shooterAngleSys.getCurrentAngle();
 //		SmartDashboard.putString("Shooter IMU", shooterAngle==null?"null":shooterAngle.toString());
@@ -131,13 +137,30 @@ public class Robot extends IterativeRobot {
 //		SmartDashboard.putBoolean("Is Rev limit switch enabled", Robot.armSys.armMotor.isRevLimitSwitchClosed());
 	}
 
+	public void testInit() {
+		sensorSys.handleEvents();
+	}
+	
+	
 	@Override
 	/**
 	 * This function is called periodically during test mode
 	 */
 	public void testPeriodic() {
 		sensorSys.handleEvents();
+//		sensorSys.updateSmartDashboardValues();
+//		feeds.run();
 		Scheduler.getInstance().run();
+		try {
+		SmartDashboard.putString("Current Read Angle ", shooterAngleSys.getCurrentAngle().toString());
+		SmartDashboard.putNumber("Setpoint ", shooterAngleSys.getSetpoint());
+		SmartDashboard.putNumber("Error ", shooterAngleSys.getPIDController().getError());
+		SmartDashboard.putNumber("Motor Voltage Percentage " , shooterAngleSys.getPIDController().get());
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+		
+		SmartDashboard.putData(shooterAngleSys);
 		
 	}
 
