@@ -15,6 +15,6 @@ public class PiComms implements SensorInterface {
 	
 	@Override
 	public void getValue() {
-		Robot.sensorSys.addValue(Sensor.PI, input.getPeriod());
+		Robot.sensorSys.addValue(Sensor.RPI, input.getPeriod());
 	}
 }

@@ -2,7 +2,7 @@ package org.usfirst.frc.team2537.robot;
 
 import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
 import org.usfirst.frc.team2537.robot.auto.AutoChooser;
-import org.usfirst.frc.team2537.robot.auto.CourseCorrect;
+import org.usfirst.frc.team2537.robot.auto.AutoShootCommand;
 import org.usfirst.frc.team2537.robot.camera.CameraFeeds;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team2537.robot.input.Sensors;
@@ -103,15 +103,8 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousInit() {
 		//autoCommand = autoChooser.getAutoChoice();
-//		autoCommand = new CourseCorrect(-84);
-		autoCommandGroup = new CommandGroup(){
-			{
-				addSequential(new CourseCorrect(-18));
-				addSequential(new CourseCorrect(18));
-			}
-		};
-//		Scheduler.getInstance().add(autoCommand);
-		Scheduler.getInstance().add(autoCommandGroup);
+		autoCommand = new AutoShootCommand();
+		Scheduler.getInstance().add(autoCommand);
 	}
 
 	/**
@@ -129,8 +122,6 @@ public class Robot extends IterativeRobot {
 		System.out.println("Teleop init");
 		if(autoCommand != null)
 			autoCommand.cancel();
-		if(autoCommandGroup != null)
-			autoCommandGroup.cancel();
 		feeds.init();
 		sensorSys.handleEvents();
 	}
