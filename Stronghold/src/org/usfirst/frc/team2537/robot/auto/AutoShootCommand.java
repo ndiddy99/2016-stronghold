@@ -26,7 +26,7 @@ public class AutoShootCommand extends Command implements SensorListener{
 	@Override
 	protected void execute() {
 		if(debug) System.out.println("[AutoShootCommand] ヽ(^o^)丿");
-		System.out.println(offset);
+		System.out.println("[AutoShootCommand] PWM: " + offset);
 	}
 
 	@Override
