@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class BorDAuto extends CommandGroup {
 	
 	public BorDAuto() {
-		addSequential(new PresetArmCommand(45));
 		addSequential(new CourseCorrect(Double.POSITIVE_INFINITY));
 	}
 }

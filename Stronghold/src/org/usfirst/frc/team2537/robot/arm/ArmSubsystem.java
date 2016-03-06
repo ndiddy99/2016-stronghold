@@ -50,8 +50,9 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 	 * 
 	 */
 	public void init() {
-//		int anglesToEncTicks = (int) ((90 - currentAngle) * encoderTicksPerRev);
-//		armMotor.setEncPosition(anglesToEncTicks);
+		// int anglesToEncTicks = (int) ((90 - currentAngle) *
+		// encoderTicksPerRev);
+		// armMotor.setEncPosition(anglesToEncTicks);
 		while (armMotor.isFwdLimitSwitchClosed() != true) {
 			armMotor.set(.2);
 		}
@@ -68,10 +69,11 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 		armMotor.changeControlMode(TalonControlMode.Position);
 		armMotor.setPID(P, I, D);
 	}
-	
+
 	public void setOldPos(double oldPos) {
 		this.oldPos = oldPos;
 	}
+
 	/**
 	 * Used to get the angle that the manipulator arm is currently in
 	 * 
@@ -133,7 +135,6 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 
 	public void enable() {
 		armMotor.enableControl();
-
 	}
 
 	public double getIMUAngle() {
