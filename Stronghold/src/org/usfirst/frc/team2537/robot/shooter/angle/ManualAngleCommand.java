@@ -16,7 +16,7 @@ public class ManualAngleCommand extends Command {
 	 * the maximum speed. Values more than 1 increase the maximum speed.
 	 */
 //	private static final double JOYSTICK_FACTOR = -.005;
-	private static final double JOYSTICK_FACTOR = .5;
+	private static final double JOYSTICK_FACTOR = .3;
 	private static final double JOYSTICK_DEADZONE = .15;
 //	private static       double setpoint = 0.0;
 

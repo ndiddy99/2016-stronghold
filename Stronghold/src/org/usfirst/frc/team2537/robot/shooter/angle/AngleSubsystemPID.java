@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.CANTalon;
 import java.util.HashMap;
 
 import org.usfirst.frc.team2537.robot.Ports;
+import org.usfirst.frc.team2537.robot.Robot;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 import org.usfirst.frc.team2537.robot.input.Sensor;
 import org.usfirst.frc.team2537.robot.input.SensorListener;
@@ -20,9 +21,10 @@ import org.usfirst.frc.team2537.robot.input.XboxButtons;
 public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 
 	// The angle limits.
-	public static final double MAX_ANGLE = 33.0;// degrees
+	public static final double MAX_ANGLE = 17.0;// degrees
 	public static final double MIN_ANGLE = -15.0;// degrees
-	private static final double P = .04, I = 0.0001, D = 0.5;
+	//private static final double P = .04, I = 0.001, D = 0.7;
+	private static final double P = 0.5, I = 0.0, D = 0.0;
 	private static final double PID_PERIOD = .005;//seconds
 	private static final double TOLERANCE = 2.0;
 	public static final boolean DEBUG = true;
@@ -48,14 +50,14 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 
 		// The motor will backdrive if it does not get current.
 		// Set a electric break.
-		angleMotor.enableBrakeMode(true);
+		angleMotor.enableBrakeMode(false);
 
 		// We don't want this going so fast.
 		// angleMotor.configMaxOutputVoltage(MAX_VOLTAGE);
 		// setPercentTolerance(TOLERANCE);
 		setAbsoluteTolerance(TOLERANCE);
 		setInputRange(MIN_ANGLE, MAX_ANGLE);
-		setOutputRange(-.5, .85);
+		setOutputRange(-.3, .3);
 		getPIDController().setContinuous(false);
 
 		enable();
@@ -86,7 +88,7 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 	}
 	
 	public void setVoltage(double voltage){
-		angleMotor.set(voltage);
+		angleMotor.set(-voltage);
 	}
 
 	// And get joystick values.
@@ -133,6 +135,12 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 	 */
 	public Double getCurrentAngle() {
 		// System.out.println("Current Angle gotten: " + currentAngle);
+//		try {
+//			return Robot.sensorSys.tilt.getCurrentAngle();
+//		} catch (NullPointerException e){
+//			//First time it runs it will run into the getCurrentAngle
+//			return null;
+//		}
 		return currentAngle;
 	}
 
@@ -149,12 +157,16 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 		if (angle == null) {
 			return 0;
 		}
-		return angle;
+		return angle;		
 	}
 
 	@Override
 	protected void usePIDOutput(double output) {
 		// System.out.println("Output is: "+ output);
-		angleMotor.set(output);
+		if (!this.onTarget()) {
+			angleMotor.set(-output);
+		} else {
+			angleMotor.set(0);
+		}
 	}
 }
