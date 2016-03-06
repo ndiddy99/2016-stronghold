@@ -105,6 +105,7 @@ public class Robot extends IterativeRobot {
 		autoCommand = autoChooser.getAutoChoice();
 //		autoCommand = new AutoShootCommand();
 		Scheduler.getInstance().add(autoCommand);
+		Robot.armSys.init();
 	}
 
 	/**
