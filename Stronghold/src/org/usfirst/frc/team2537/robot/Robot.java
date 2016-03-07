@@ -22,13 +22,13 @@ public class Robot extends IterativeRobot {
 	// private final String defaultAuto = "Default";
 	// private final String customAuto = "My Auto";
 	// private String autoSelected;
-//	AutoChooser autoChooser;
-//	Command autoCommand;
+	// AutoChooser autoChooser;
+	// Command autoCommand;
 	final String defaultAuto = "Default";
 	final String customAuto = "My Auto";
 	String autoSelected;
-//	public static DriveSubsystem driveSys;
-//	public static CameraFeeds feeds;
+	// public static DriveSubsystem driveSys;
+	// public static CameraFeeds feeds;
 	// private Controller contr = new Controller(Config.Controller.chn,
 	// Config.Controller.maxButtons, Config.Controller.linearity);
 	// private CameraFeeds cameraFeeds = new CameraFeeds(contr);
@@ -36,11 +36,11 @@ public class Robot extends IterativeRobot {
 	SendableChooser chooser;
 	// My stuff
 	public static Sensors sensorSys;
-//	public static FlywheelSubsystem shooterFlywheelSys;
-//	public static AngleSubsystem shooterAngleSys;
+	// public static FlywheelSubsystem shooterFlywheelSys;
+	// public static AngleSubsystem shooterAngleSys;
 	public static ActuatorSubsystem shooterActuatorSys;
 	public static AngleSubsystemPID shooterAngleSys;
-//	public static ArmSubsystem armSys;
+	// public static ArmSubsystem armSys;
 
 	@Override
 	/**
@@ -58,21 +58,28 @@ public class Robot extends IterativeRobot {
 
 		// Initalize Everything
 
-//		driveSys = new DriveSubsystem();
-//		driveSys.registerButtons();
-//		driveSys.initDefaultCommand();
+		// driveSys = new DriveSubsystem();
+		// driveSys.registerButtons();
+		// driveSys.initDefaultCommand();
 
-//		armSys = new ArmSubsystem();
-//		armSys.initDefaultCommand();
-//		armSys.registerButtons();
-//
-//		autoChooser = new AutoChooser();
+		// armSys = new ArmSubsystem();
+		// armSys.initDefaultCommand();
+		// armSys.registerButtons();
+		//
+		// autoChooser = new AutoChooser();
 
-//		shooterFlywheelSys = new FlywheelSubsystem();
+		// shooterFlywheelSys = new FlywheelSubsystem();
+		sensorSys = new Sensors();
+		sensorSys.init();
+
+		// sensorSys.registerListener(armSys);
 		shooterAngleSys = new AngleSubsystemPID();
+
+		sensorSys.registerListener(shooterAngleSys);
+
 		shooterActuatorSys = new ActuatorSubsystem();
-//		shooterFlywheelSys.initDefaultCommand();
-//		shooterFlywheelSys.registerButtons();
+		// shooterFlywheelSys.initDefaultCommand();
+		// shooterFlywheelSys.registerButtons();
 		// Shooter Angle
 		shooterAngleSys.initDefaultCommand();
 		shooterAngleSys.registerButtons();
@@ -81,15 +88,11 @@ public class Robot extends IterativeRobot {
 		shooterActuatorSys.initDefaultCommand();
 		shooterActuatorSys.registerButtons();
 
-		sensorSys = new Sensors();
-		sensorSys.init();
+		// sensorSys.registerListener(shooterFlywheelSys);
+		// sensorSys.registerListener(shooterA);
 
-//		sensorSys.registerListener(armSys);
-		sensorSys.registerListener(shooterAngleSys);
-//		sensorSys.registerListener(shooterFlywheelSys);
-//		sensorSys.registerListener(shooterA);
+		// feeds = new CameraFeeds();
 
-//		feeds = new CameraFeeds();
 	}
 
 	@Override
@@ -99,68 +102,71 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 	}
-	
+
 	public void autonomousInit() {
-//		Robot.armSys.init();
+		// Robot.armSys.init();
 	}
 
 	public void teleopInit() {
-//		feeds.init();
+		// feeds.init();
 		sensorSys.handleEvents();
-		
+		shooterAngleSys.setSetpoint(shooterAngleSys.getCurrentAngle());
 	}
 
 	/**
-	 * This function is called periodically during operator control
+	 * This 
+	 * function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
 		sensorSys.handleEvents();
-//		sensorSys.updateSmartDashboardValues();
-//		feeds.run();
+		// sensorSys.updateSmartDashboardValues();
+		// feeds.run();
 		Scheduler.getInstance().run();
 		try {
-		SmartDashboard.putString("Current Read Angle ", shooterAngleSys.getCurrentAngle().toString());
-		SmartDashboard.putNumber("Setpoint ", shooterAngleSys.getSetpoint());
-		SmartDashboard.putNumber("Error ", shooterAngleSys.getPIDController().getError());
-		SmartDashboard.putNumber("Motor Voltage Percentage " , shooterAngleSys.getPIDController().get());
+			SmartDashboard.putString("Current Read Angle ", shooterAngleSys.getCurrentAngle().toString());
+			SmartDashboard.putNumber("Setpoint ", shooterAngleSys.getSetpoint());
+			SmartDashboard.putNumber("Error ", shooterAngleSys.getPIDController().getError());
+			SmartDashboard.putNumber("Motor Voltage Percentage ", shooterAngleSys.getPIDController().get());
 		} catch (NullPointerException e) {
 		}
-		
+
 		SmartDashboard.putData(shooterAngleSys);
-		
-//		SmartDashboard.putNumber("Arm IMU", armSys.getIMUAngle());
-//		Double shooterAngle = shooterAngleSys.getCurrentAngle();
-//		SmartDashboard.putString("Shooter IMU", shooterAngle==null?"null":shooterAngle.toString());
-//		SmartDashboard.putNumber("Arm Encoder", armSys.getAngle());
-//		SmartDashboard.putBoolean("Is Fwd limit switch enabled", Robot.armSys.armMotor.isFwdLimitSwitchClosed());
-//		SmartDashboard.putBoolean("Is Rev limit switch enabled", Robot.armSys.armMotor.isRevLimitSwitchClosed());
+
+		// SmartDashboard.putNumber("Arm IMU", armSys.getIMUAngle());
+		// Double shooterAngle = shooterAngleSys.getCurrentAngle();
+		// SmartDashboard.putString("Shooter IMU",
+		// shooterAngle==null?"null":shooterAngle.toString());
+		// SmartDashboard.putNumber("Arm Encoder", armSys.getAngle());
+		// SmartDashboard.putBoolean("Is Fwd limit switch enabled",
+		// Robot.armSys.armMotor.isFwdLimitSwitchClosed());
+		// SmartDashboard.putBoolean("Is Rev limit switch enabled",
+		// Robot.armSys.armMotor.isRevLimitSwitchClosed());
 	}
 
 	public void testInit() {
 		sensorSys.handleEvents();
 	}
-	
-	
+
 	@Override
 	/**
 	 * This function is called periodically during test mode
 	 */
 	public void testPeriodic() {
 		sensorSys.handleEvents();
-//		sensorSys.updateSmartDashboardValues();
-//		feeds.run();
+		// sensorSys.updateSmartDashboardValues();
+		// feeds.run();
 		Scheduler.getInstance().run();
 		try {
-		SmartDashboard.putString("Current Read Angle ", shooterAngleSys.getCurrentAngle().toString());
-		SmartDashboard.putNumber("Setpoint ", shooterAngleSys.getSetpoint());
-		SmartDashboard.putNumber("Error ", shooterAngleSys.getPIDController().getError());
-		SmartDashboard.putNumber("Motor Voltage Percentage " , shooterAngleSys.getPIDController().get());
+			SmartDashboard.putString("Current Read Angle ", shooterAngleSys.getCurrentAngle().toString());
+			SmartDashboard.putNumber("Setpoint ", shooterAngleSys.getSetpoint());
+			SmartDashboard.putNumber("Error ", shooterAngleSys.getPIDController().getError());
+			SmartDashboard.putNumber("Motor Voltage Percentage ", shooterAngleSys.getPIDController().get());
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}
-		
+
 		SmartDashboard.putData(shooterAngleSys);
-		
+
 	}
 
 	@Override
