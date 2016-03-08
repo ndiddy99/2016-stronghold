@@ -17,7 +17,7 @@ public class ManualAngleCommand extends Command {
 	 */
 	// private static final double JOYSTICK_FACTOR = -.005;
 	private static final double JOYSTICK_FACTOR = .3;
-	private static final double JOYSTICK_DEADZONE = .15;
+	private static final double JOYSTICK_DEADZONE = .105;
 	private static final double VOLTAGE_MULTIPLIER = .05;
 	// private static double setpoint = 0.0;
 	private boolean initialized = false;
@@ -45,6 +45,7 @@ public class ManualAngleCommand extends Command {
 			// setpoint += joystickValue * JOYSTICK_FACTOR;
 			// Robot.shooterAngleSys.setVoltage(setpoint);
 		}
+		if(!Robot.shooterAngleSys.PID_MODE) {
 		if (Math.abs(
 				Robot.shooterAngleSys.getCurrentAngle() - Robot.shooterAngleSys.getSetpoint()) <= Robot.shooterAngleSys
 						.getTolerance()) {
@@ -52,6 +53,7 @@ public class ManualAngleCommand extends Command {
 		} else {
 			Robot.shooterAngleSys.setVoltage(-VOLTAGE_MULTIPLIER
 					* (Robot.shooterAngleSys.getCurrentAngle() - Robot.shooterAngleSys.getSetpoint()));
+		}
 		}
 
 	}

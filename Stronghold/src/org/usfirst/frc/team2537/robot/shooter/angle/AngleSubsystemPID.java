@@ -24,14 +24,13 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 	public static final double MAX_ANGLE = 45.0;// degrees
 	public static final double MIN_ANGLE = -30.0;// degrees
 	// private static final double P = .04, I = 0.001, D = 0.7;
-	private static final double P = 0.5, I = 0.0, D = 0.0;
+	private static final double P = .05, I = 0.0, D = 0.0;
 	private static final double PID_PERIOD = .005;// seconds
-	
+
 	private static final double TOLERANCE = 2.0;
 
-	
 	public static final boolean DEBUG = true;
-	public static final boolean PID_MODE = false;
+	public static boolean PID_MODE = false;
 
 	// Variables
 	private Double currentAngle = null;
@@ -60,7 +59,7 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 		// setPercentTolerance(TOLERANCE);
 		setAbsoluteTolerance(TOLERANCE);
 		setInputRange(MIN_ANGLE, MAX_ANGLE);
-		setOutputRange(-.3, .3);
+		setOutputRange(-1.0, 1.0);
 		getPIDController().setContinuous(false);
 		if (PID_MODE) {
 			enable();
@@ -128,7 +127,7 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 
 		System.out.println("Angle " + getCurrentAngle() + "\tSetpoint " + getSetpoint() + "\tError "
 				+ getPIDController().getError() + "\tMotor Voltage Percentage " + getPIDController().get()
-				+ "\tVoltage: " + angleMotor.getOutputVoltage());
+				+ "\tVoltage: " + angleMotor.getOutputVoltage() + "\tIs this on Target? " + onTarget());
 	}
 
 	/**
@@ -155,6 +154,7 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 		HumanInput.registerPressedCommand(HumanInput.changeCameraButton, new MoveToAngleCommand(30));
 		HumanInput.registerPressedCommand(HumanInput.portcullisButton, new MoveToAngleCommand(0));
 		HumanInput.registerPressedCommand(HumanInput.chevalButton, new MoveToAngleCommand(-15));
+		HumanInput.registerPressedCommand(HumanInput.lowBarModeEnableButton, new AnglePIDToggleCommand());
 	}
 
 	@Override
@@ -168,9 +168,14 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 	}
 
 	@Override
+	public boolean onTarget() {
+		return Math.abs(getPIDController().getError()) <= TOLERANCE;
+	}
+
+	@Override
 	protected void usePIDOutput(double output) {
 		// System.out.println("Output is: "+ output);
-		if (!this.onTarget()) {
+		if (!onTarget()) {
 			angleMotor.set(-output);
 		} else {
 			angleMotor.set(0);
