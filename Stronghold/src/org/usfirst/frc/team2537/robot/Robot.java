@@ -110,12 +110,14 @@ public class Robot extends IterativeRobot {
 	public void teleopInit() {
 		// feeds.init();
 		sensorSys.handleEvents();
-		shooterAngleSys.setSetpoint(shooterAngleSys.getCurrentAngle());
+		if (shooterAngleSys != null && shooterAngleSys.getCurrentAngle() != null) {
+			shooterAngleSys.setSetpoint(shooterAngleSys.getCurrentAngle());
+		}
+
 	}
 
 	/**
-	 * This 
-	 * function is called periodically during operator control
+	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
 		sensorSys.handleEvents();

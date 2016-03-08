@@ -10,6 +10,7 @@ public class IMU implements SensorInterface {
 	private int maxAngle;
 	private int minAngle;
 	private Sensor sensor;
+	private static final int MIN_PERIOD = 8;		
 	private final static boolean DEBUG = false;
 
 	// Vars
@@ -33,23 +34,31 @@ public class IMU implements SensorInterface {
 	}
 	
 	public Double getCurrentAngle(){
-		if (getAngle(input.getPeriod(), 16, maxPeriod, minAngle, maxAngle) == Double.POSITIVE_INFINITY || getAngle(input.getPeriod(), 16, maxPeriod, minAngle, maxAngle) == Double.NEGATIVE_INFINITY) {
+		if (getAngle(input.getPeriod(), MIN_PERIOD, maxPeriod, minAngle, maxAngle) == Double.POSITIVE_INFINITY || getAngle(input.getPeriod(), MIN_PERIOD, maxPeriod, minAngle, maxAngle) == Double.NEGATIVE_INFINITY) {
 			return null;
 		} else {
-			return getAngle(input.getPeriod(), 16, maxPeriod, minAngle, maxAngle);
+			return getAngle(input.getPeriod(), MIN_PERIOD, maxPeriod, minAngle, maxAngle);
 		}
 	}
-
+	public static long lastTimeValue = System.currentTimeMillis();
 	public void getValue() {
-		if (getAngle(input.getPeriod(), 16, maxPeriod, minAngle, maxAngle) == Double.POSITIVE_INFINITY || getAngle(input.getPeriod(), 16, maxPeriod, minAngle, maxAngle) == Double.NEGATIVE_INFINITY) {
+		if (getAngle(input.getPeriod(), MIN_PERIOD, maxPeriod, minAngle, maxAngle) == Double.POSITIVE_INFINITY || getAngle(input.getPeriod(), MIN_PERIOD, maxPeriod, minAngle, maxAngle) == Double.NEGATIVE_INFINITY) {
 			Robot.sensorSys.addValue(sensor, null);
 		} else {
-			Robot.sensorSys.addValue(sensor, getAngle(input.getPeriod(), 16, maxPeriod, minAngle, maxAngle));
+			Robot.sensorSys.addValue(sensor, getAngle(input.getPeriod(), MIN_PERIOD, maxPeriod, minAngle, maxAngle));
+		}
+		if(DEBUG) {
+			if(System.currentTimeMillis() - lastTimeValue >= 100) {
+				System.out.println("IMU Period: "+(input.getPeriod()* 1000000) +" us");
+				System.out.println("IMU Angle: " +getCurrentAngle());
+				lastTimeValue = System.currentTimeMillis();
+			}
+		
 		}
 	}
 
 	private double getAngle(double x, int in_min, int in_max, int out_min, int out_max) {
-		if (DEBUG) System.out.println(x);
+//		if (DEBUG) System.out.println(x);
 		return (x * 1000000 - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 	}
 }
