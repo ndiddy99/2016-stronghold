@@ -9,56 +9,59 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class ActuatorSubsystem extends Subsystem {
-	//Const
+	// Const
 	private static float extendedAngle = 45;
 	private static float retractedAngle = 0;
-	//Vars
+	// Vars
 	private Servo actuator;
-	
+
 	public ActuatorSubsystem() {
 		actuator = new Servo(Ports.SHOOTER_SERVO);
 	}
-	
+
 	/**
 	 * Find out if the arm is extended.
+	 * 
 	 * @return If the arm is in the extended position.
 	 */
-	public boolean isExtended(){
+	public boolean isExtended() {
 		return actuator.getAngle() == extendedAngle;
 	}
-	
+
 	/**
-	 * Find out if  the kicker is retracted.
-	 * Note: If isExtended and isRetracted return false, the actuator is moving.
-	 * @return
+	 * Find out if the kicker is retracted. Note: If isExtended and isRetracted
+	 * return false, the actuator is moving.
+	 * 
+	 * @return true or false, depending on the state of the actuator
 	 */
-	public boolean isRetracted(){
+	public boolean isRetracted() {
 		return actuator.getAngle() == retractedAngle;
 	}
-	
-	public void setPosition(boolean extended){
-		//Set the position
+
+	public void setPosition(boolean extended) {
+		// Set the position
 		actuator.setAngle((extended) ? extendedAngle : retractedAngle);
 	}
-	
+
 	public double getAngle() {
-		//Get angle.
+		// Get angle.
 		return actuator.getAngle();
 	}
-	
+
 	@Override
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-    	//No defualt command.
-    }
-	
+	public void initDefaultCommand() {
+		// Set the default command for a subsystem here.
+		// setDefaultCommand(new MySpecialCommand());
+		// No defualt command.
+	}
+
 	public void registerButtons() {
-		//Needed but not used.
-		//For testing, remove for competition.
-		//HumanInput.registerPressedCommand(HumanInput.raiseArm, new ActuatorCommand(true));
-		//HumanInput.registerPressedCommand(HumanInput.neutralArm, new ActuatorCommand(false));
-		
+		// Needed but not used.
+		// For testing, remove for competition.
+		// HumanInput.registerPressedCommand(HumanInput.raiseArm, new
+		// ActuatorCommand(true));
+		// HumanInput.registerPressedCommand(HumanInput.neutralArm, new
+		// ActuatorCommand(false));
+
 	}
 }
-

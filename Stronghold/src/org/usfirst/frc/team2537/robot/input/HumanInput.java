@@ -30,16 +30,16 @@ public class HumanInput {
 
 	public static final Button lowBarModeEnableButton = new JoystickButton(xboxController, XboxButtons.XBOX_LB);
 
+	public static final Button shootCancelButton = new JoystickButton(xboxController, XboxButtons.XBOX_RB);
 
-	public static final Button shootCancelButton= new JoystickButton(xboxController, XboxButtons.XBOX_RB);
-
-	
 	public static final JoystickButton harvestBallTrigger = new XboxTrigger(xboxController,
 			XboxButtons.XBOX_LEFT_TRIGGERS);
 	public static final Button changeCameraButton = new JoystickButton(xboxController, XboxButtons.XBOX_Y);
 
-	//public static Button portcullisButton	= new JoystickButton(xboxController, XboxButtons.XBOX_A);
-	//public static Button chevalButton		= new JoystickButton(xboxController, XboxButtons.XBOX_B);
+	// public static Button portcullisButton = new
+	// JoystickButton(xboxController, XboxButtons.XBOX_A);
+	// public static Button chevalButton = new JoystickButton(xboxController,
+	// XboxButtons.XBOX_B);
 	/**
 	 * Method to register a pressed button command. When you use this method it
 	 * will set the button to trigger a command when pressed down
@@ -62,28 +62,37 @@ public class HumanInput {
 	 * @param command
 	 *            Command to register to button
 	 */
-	public static void registerReleasedCommand(Button b, Command c) {
-		b.whenReleased(c);
-	}	
+	public static void registerReleasedCommand(Button button, Command command) {
+		button.whenReleased(command);
+	}
+
 	/**
 	 * Get the value of the Xbox axis in question.
-	 * @param j The joystick to get axis measures from.
-	 * @param i The axis you want to get values for [0-6]
-	 * @return A double in the range [-1,1] in the amount the lever is depressed.
+	 * 
+	 * @param j
+	 *            The joystick to get axis measures from.
+	 * @param i
+	 *            The axis you want to get values for [0-6]
+	 * @return A double in the range [-1,1] in the amount the lever is
+	 *         depressed.
 	 */
 	public static double getXboxAxis(Joystick j, int i) {
 		return j.getRawAxis(i);
 	}
-	/** 
+
+	/**
 	 * Get a boolean value as to if one of the xbox triggers has been triggered.
 	 * 
-	 * @param j The joystick to get values on.
-	 * @param i The axis number to get values for. If i is not a trigger, but a joystick, 
-	 * 			any activation on the joystick will make this return true.
+	 * @param j
+	 *            The joystick to get values on.
+	 * @param i
+	 *            The axis number to get values for. If i is not a trigger, but
+	 *            a joystick, any activation on the joystick will make this
+	 *            return true.
 	 * 
-	 * @return  If the trigger has been activated.
+	 * @return If the trigger has been activated.
 	 */
-	public static boolean getXboxTrigger(Joystick j, int i){
+	public static boolean getXboxTrigger(Joystick j, int i) {
 		return j.getRawAxis(i) != 0;
 	}
 
@@ -91,13 +100,16 @@ public class HumanInput {
 	 * Method to get the value of a non-XBox joystick
 	 * 
 	 * @param joystick
+	 *            Joystick to get the value of
 	 * @param ax
-	 * @return
+	 *            Axis to get the value of
+	 * @return A value between -1 and 1 representing the position of the
+	 *         joystick
 	 */
 	public static double getJoystickAxis(Joystick joystick, AxisType ax) {
 		return joystick.getAxis(ax);
 	}
-	
+
 	/**
 	 * register a command for when the button is released
 	 * 
@@ -111,7 +123,6 @@ public class HumanInput {
 		b.whenReleased(cmd);
 	}
 
-
 	/**
 	 * register a command to be run as long as the button is held
 	 * 
@@ -124,33 +135,28 @@ public class HumanInput {
 	public static void registerWhileHeldCommand(Button b, Command cmd) {
 		b.whileHeld(cmd);
 	}
-	
+
 	/**
 	 * Toggles the command whenever the button is pressed (on then off then on)
 	 *
-	 * @param b 	The button to register to.
-	 * @param cmd 	The command to be linked.
+	 * @param b
+	 *            The button to register to.
+	 * @param cmd
+	 *            The command to be linked.
 	 */
 	public static void toggleWhenPressed(Button b, Command cmd) {
 		b.toggleWhenPressed(cmd);
 	}
-	
+
 	/**
 	 * Cancels the command whenever the button is pressed.
+	 * 
 	 * @param b
+	 *            The button to register to
 	 * @param cmd
+	 *            The command to be linked
 	 */
 	public static void cancelWhenPressed(Button b, Command cmd) {
 		b.cancelWhenPressed(cmd);
 	}
-
-	/**
-	 * Method to get the value of a non-Xbox joystick
-	 * 
-	 * @param joystick
-	 * @param ax
-	 * @return
-	 */
-
-
 }

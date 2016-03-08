@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class DriveSubsystem extends Subsystem {
 
-
 	private CANTalon talonFrontLeft;
 	private CANTalon talonFrontRight;
 	private CANTalon talonBackRight;
@@ -29,10 +28,9 @@ public class DriveSubsystem extends Subsystem {
 	private double initialRightEncoders = 0; // Inches to subtract (for
 												// resetEncoders)
 
-
-	//Atlas encoder code
-//	public Encoder lencoder = new Encoder(2, 3);
-//	public Encoder rencoder = new Encoder(0, 1);
+	// Atlas encoder code
+	// public Encoder lencoder = new Encoder(2, 3);
+	// public Encoder rencoder = new Encoder(0, 1);
 
 	private AHRS ahrs;
 
@@ -42,15 +40,14 @@ public class DriveSubsystem extends Subsystem {
 		talonBackLeft = new CANTalon(Ports.BACK_LEFT_MOTOR_PORT);
 		talonBackRight = new CANTalon(Ports.BACK_RIGHT_MOTOR_PORT);
 
-		try{
+		try {
 			ahrs = new AHRS(Port.kMXP);
-		}
-		catch(Exception ex){
+		} catch (Exception ex) {
 			System.out.println(ex);
 		}
-//		SPEED MODE CODE
-	//	setDriveControlMode(TalonControlMode.Speed);
-		
+		// SPEED MODE CODE
+		// setDriveControlMode(TalonControlMode.Speed);
+
 		driveType = DriveType.doubleJoystick;
 		drivingStraight = false;
 		driveLowerSpeed = false;
@@ -83,7 +80,7 @@ public class DriveSubsystem extends Subsystem {
 	/**
 	 * sets the left drive motors to a value corrects for inverted motor speeds.
 	 * 
-	 * @param value
+	 * @param value Voltage to set left motors
 	 */
 	public void setLeftDriveMotors(double value) {
 		set(-value, talonFrontLeft);
@@ -93,7 +90,7 @@ public class DriveSubsystem extends Subsystem {
 	/**
 	 * sets the right motors to a certain value
 	 * 
-	 * @param value
+	 * @param value Voltage to set right motors
 	 */
 	public void setRightDriveMotors(double value) {
 		set(value, talonFrontRight);
@@ -104,6 +101,7 @@ public class DriveSubsystem extends Subsystem {
 	 * sets all drive motors to the same value corrects for inverted left motor
 	 * 
 	 * @param value
+	 *            Voltage to set all motors
 	 */
 	public void setDriveMotors(double value) {
 		setDriveMotors(value, value);
@@ -113,7 +111,9 @@ public class DriveSubsystem extends Subsystem {
 	 * sets the drive motors. Corrects for inverted left motor
 	 * 
 	 * @param left
+	 *            Voltage to set the left motor
 	 * @param right
+	 *            Voltage to set the right motor
 	 */
 	public void setDriveMotors(double left, double right) {
 		setLeftDriveMotors(left);
@@ -122,17 +122,19 @@ public class DriveSubsystem extends Subsystem {
 
 	/**
 	 * returns the average between all the encoders
+	 * 
+	 * @return double showing the average of all the encoders
 	 */
 	public double getEncoderAverage() {
-		/*ATLAS 
-		drive straight:
-		return ((-Robot.driveSys.lencoder.get() + Robot.driveSys.rencoder.get()) / 2.0) / 250.0 * 12.0 * Math.PI;
-		
-		coursecorrect:
-		return ((Robot.driveSys.lencoder.get() - Robot.driveSys.rencoder.get()) / 2.0) / 250.0 * 6.0 * Math.PI;
-		*/
-		
-		//Knightfall
+		/*
+		 * ATLAS drive straight: return ((-Robot.driveSys.lencoder.get() +
+		 * Robot.driveSys.rencoder.get()) / 2.0) / 250.0 * 12.0 * Math.PI;
+		 * 
+		 * coursecorrect: return ((Robot.driveSys.lencoder.get() -
+		 * Robot.driveSys.rencoder.get()) / 2.0) / 250.0 * 6.0 * Math.PI;
+		 */
+
+		// Knightfall
 		return (getLeftEncoders() + getRightEncoders()) / 2;
 	}
 
@@ -170,12 +172,11 @@ public class DriveSubsystem extends Subsystem {
 	public void resetEncoders() {
 		initialLeftEncoders += getLeftEncoders();
 		initialRightEncoders += getRightEncoders();
-		
-		//ATLAS
-		//lencoder.reset()
-		//rencoder.reset()
-	}
 
+		// ATLAS
+		// lencoder.reset()
+		// rencoder.reset()
+	}
 
 	private void setDriveTalonControlMode(TalonControlMode mode) {
 		talonFrontLeft.changeControlMode(mode);

@@ -19,7 +19,7 @@ public class PresetArmCommand extends Command {
 	Double speed;
 
 	/**
-	 * Constructor that sets what angle to move to & command timeout
+	 * Constructor that sets what angle to move to and command timeout
 	 * 
 	 * @param angle
 	 *            A double to set what angle to move the arm to in encoder ticks

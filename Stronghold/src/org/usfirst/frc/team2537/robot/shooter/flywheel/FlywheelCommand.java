@@ -26,7 +26,8 @@ public class FlywheelCommand extends Command {
 	 * @param speed
 	 *            The speed in RPM that will reached.
 	 * @param timeout
-	 *            The max time for this to run. (t<=0 means no timeout).
+	 *            The max time for this to run. (t less than or equal to 0 means
+	 *            no timeout).
 	 */
 	public FlywheelCommand(double speed, double timeout) {
 		super(timeout);
@@ -46,10 +47,11 @@ public class FlywheelCommand extends Command {
 
 	@Override
 	protected void initialize() {
-		if (DEBUG) System.out.println("Flywheel Command Started");
+		if (DEBUG)
+			System.out.println("Flywheel Command Started");
 		Robot.shooterFlywheelSys.setSpeed(targetSpeed);
 		// Get the motor values to start with.
-		
+
 	}
 
 	@Override
@@ -73,7 +75,8 @@ public class FlywheelCommand extends Command {
 	@Override
 	protected void interrupted() {
 		// Interruped, stop the wheels
-		if (DEBUG) System.out.println("Flywheel Command was Interrupted");
+		if (DEBUG)
+			System.out.println("Flywheel Command was Interrupted");
 		Robot.shooterFlywheelSys.setSpeed(0.0);
 	}
 }

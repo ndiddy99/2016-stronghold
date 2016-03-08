@@ -23,8 +23,8 @@ public class BallDetectionCommand extends Command {
 	 * @param waitUntilEnters
 	 *            Whether or not the command waits until the proximity sensor
 	 *            detects when the ball enters or leaves the shooter.
-	 *            True -> Wait until the ball is present.
-	 *            False-> Wait until the ball is not present.
+	 *            True - Wait until the ball is present.
+	 *            False - Wait until the ball is not present.
 	 */
 	public BallDetectionCommand(boolean waitUntilEnters) {
 		// Use requires() here to declare subsystem dependencies
