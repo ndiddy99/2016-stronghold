@@ -30,7 +30,6 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 	private static final double TOLERANCE = 0.0;
 
 	public static final boolean DEBUG = true;
-	private static boolean PID_MODE = false;
 
 	// Variables
 	private Double currentAngle = null;
@@ -61,11 +60,7 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 		setInputRange(MIN_ANGLE, MAX_ANGLE);
 		setOutputRange(-1.0, 1.0);
 		getPIDController().setContinuous(false);
-		if (PID_MODE) {
-			enable();
-		} else {
-			disable();
-		}
+		enable();
 	}
 
 	@Override
@@ -131,7 +126,7 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 		System.out.println("Angle " + getCurrentAngle() + "\tSetpoint " + getSetpoint() + "\tError "
 				+ getPIDController().getError() + "\tMotor Voltage Percentage " + getPIDController().get()
 				+ "\tVoltage: " + angleMotor.getOutputVoltage() + "\tIs this on Target? " + onTarget()
-				+ (isPID_MODE() ? "\tWPI PID Mode" : "\tManual PID Mode"));
+				);
 	}
 
 	/**
@@ -189,11 +184,4 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 		return TOLERANCE;
 	}
 
-	public static boolean isPID_MODE() {
-		return PID_MODE;
-	}
-
-	public static void setPID_MODE(boolean pidMode) {
-		PID_MODE = pidMode;
-	}
 }
