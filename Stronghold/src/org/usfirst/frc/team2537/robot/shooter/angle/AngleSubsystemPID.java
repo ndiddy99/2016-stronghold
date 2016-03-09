@@ -158,7 +158,6 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 		HumanInput.registerPressedCommand(HumanInput.changeCameraButton, new MoveToAngleCommand(30));
 		HumanInput.registerPressedCommand(HumanInput.xboxXButton, new MoveToAngleCommand(0));
 		HumanInput.registerPressedCommand(HumanInput.portcullisButton, new MoveToAngleCommand(-15));
-		HumanInput.registerPressedCommand(HumanInput.lowBarModeEnableButton, new AnglePIDToggleCommand());
 	}
 
 	@Override
