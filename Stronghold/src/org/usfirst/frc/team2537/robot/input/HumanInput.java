@@ -40,6 +40,7 @@ public class HumanInput {
 	
 	public static Button portcullisButton	= new JoystickButton(xboxController, XboxButtons.XBOX_A);
 	public static Button chevalButton		= new JoystickButton(xboxController, XboxButtons.XBOX_B);
+	public static Button xboxXButton		= new JoystickButton(xboxController, XboxButtons.XBOX_X);
 	/**
 	 * Method to register a pressed button command. When you use this method it
 	 * will set the button to trigger a command when pressed down

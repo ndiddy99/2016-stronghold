@@ -27,10 +27,10 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 	private static final double P = .05, I = 0.0, D = 0.0;
 	private static final double PID_PERIOD = .005;// seconds
 
-	private static final double TOLERANCE = 2.0;
+	private static final double TOLERANCE = 0.0;
 
 	public static final boolean DEBUG = true;
-	public static boolean PID_MODE = false;
+	private static boolean PID_MODE = false;
 
 	// Variables
 	private Double currentAngle = null;
@@ -52,7 +52,7 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 
 		// The motor will backdrive if it does not get current.
 		// Set a electric break.
-		angleMotor.enableBrakeMode(false);
+		angleMotor.enableBrakeMode(true);
 
 		// We don't want this going so fast.
 		// angleMotor.configMaxOutputVoltage(MAX_VOLTAGE);
@@ -118,16 +118,20 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 	 *            by look up by the two character key associated with each
 	 *            sensor.
 	 */
+
 	public void receivedValue(HashMap<Sensor, Double> sensorMap) {
 
 		Double value = sensorMap.get(Sensor.SHOOTER_ANGLE);
 		if (value != null) {
 			currentAngle = value;
+		} else {
+			currentAngle = 0.0;
 		}
-//TODO Uncomment for testing
+		// TODO Uncomment for testing
 		System.out.println("Angle " + getCurrentAngle() + "\tSetpoint " + getSetpoint() + "\tError "
 				+ getPIDController().getError() + "\tMotor Voltage Percentage " + getPIDController().get()
-				+ "\tVoltage: " + angleMotor.getOutputVoltage() + "\tIs this on Target? " + onTarget());
+				+ "\tVoltage: " + angleMotor.getOutputVoltage() + "\tIs this on Target? " + onTarget()
+				+ (isPID_MODE() ? "\tWPI PID Mode" : "\tManual PID Mode"));
 	}
 
 	/**
@@ -152,8 +156,8 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 
 	public void registerButtons() {
 		HumanInput.registerPressedCommand(HumanInput.changeCameraButton, new MoveToAngleCommand(30));
-		HumanInput.registerPressedCommand(HumanInput.portcullisButton, new MoveToAngleCommand(0));
-		HumanInput.registerPressedCommand(HumanInput.chevalButton, new MoveToAngleCommand(-15));
+		HumanInput.registerPressedCommand(HumanInput.xboxXButton, new MoveToAngleCommand(0));
+		HumanInput.registerPressedCommand(HumanInput.portcullisButton, new MoveToAngleCommand(-15));
 		HumanInput.registerPressedCommand(HumanInput.lowBarModeEnableButton, new AnglePIDToggleCommand());
 	}
 
@@ -184,5 +188,13 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 
 	public static double getTolerance() {
 		return TOLERANCE;
+	}
+
+	public static boolean isPID_MODE() {
+		return PID_MODE;
+	}
+
+	public static void setPID_MODE(boolean pidMode) {
+		PID_MODE = pidMode;
 	}
 }

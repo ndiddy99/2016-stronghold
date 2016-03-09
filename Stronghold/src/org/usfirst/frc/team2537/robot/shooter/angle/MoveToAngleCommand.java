@@ -59,7 +59,7 @@ public class MoveToAngleCommand extends Command {
 	@Override
 	protected boolean isFinished() {
 		// If we are close enough to the angle to call it.
-		return Math.abs(currentPosition - posToMoveTo) <= TOLERANCE;
+		return true;
 	}
 
 	@Override

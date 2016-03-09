@@ -112,6 +112,8 @@ public class Robot extends IterativeRobot {
 		sensorSys.handleEvents();
 		if (shooterAngleSys != null && shooterAngleSys.getCurrentAngle() != null) {
 			shooterAngleSys.setSetpoint(shooterAngleSys.getCurrentAngle());
+		} else {
+			shooterAngleSys.setSetpoint(0.0);
 		}
 
 	}
