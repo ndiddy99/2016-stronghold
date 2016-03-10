@@ -69,6 +69,9 @@ public class Robot extends IterativeRobot {
 
 		shooterFlywheelSys = new FlywheelSubsystem();
 		shooterAngleSys = new AngleSubsystemPID();
+
+		sensorSys.registerListener(shooterAngleSys);
+
 		shooterActuatorSys = new ActuatorSubsystem();
 		shooterFlywheelSys.initDefaultCommand();
 		shooterFlywheelSys.registerButtons();
@@ -80,8 +83,8 @@ public class Robot extends IterativeRobot {
 		shooterActuatorSys.initDefaultCommand();
 		shooterActuatorSys.registerButtons();
 
-		sensorSys = new Sensors();
-		sensorSys.init();
+		// sensorSys.registerListener(shooterFlywheelSys);
+		// sensorSys.registerListener(shooterA);
 
 		sensorSys.registerListener(armSys);
 		sensorSys.registerListener(shooterAngleSys);
@@ -125,6 +128,7 @@ public class Robot extends IterativeRobot {
 			autoCommand.cancel();
 		feeds.init();
 		sensorSys.handleEvents();
+
 	}
 
 	/**
@@ -145,18 +149,16 @@ public class Robot extends IterativeRobot {
 	public void testInit() {
 		sensorSys.handleEvents();
 	}
-	
-	
+
 	@Override
 	/**
 	 * This function is called periodically during test mode
 	 */
 	public void testPeriodic() {
 		sensorSys.handleEvents();
-//		sensorSys.updateSmartDashboardValues();
-//		feeds.run();
+		// sensorSys.updateSmartDashboardValues();
+		// feeds.run();
 		Scheduler.getInstance().run();
-		
 	}
 
 	@Override

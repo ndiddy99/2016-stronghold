@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.CANTalon;
 import java.util.HashMap;
 
 import org.usfirst.frc.team2537.robot.Ports;
+import org.usfirst.frc.team2537.robot.Robot;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 import org.usfirst.frc.team2537.robot.input.Sensor;
 import org.usfirst.frc.team2537.robot.input.SensorListener;
@@ -20,11 +21,14 @@ import org.usfirst.frc.team2537.robot.input.XboxButtons;
 public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 
 	// The angle limits.
-	public static final double MAX_ANGLE = 33.0;// degrees
+	public static final double MAX_ANGLE = 45.0;// degrees
 	public static final double MIN_ANGLE = -15.0;// degrees
-	private static final double P = .04, I = 0.0001, D = 0.4;
-	private static final double PID_PERIOD = .005;//seconds
-	private static final double TOLERANCE = 2.0;
+	// private static final double P = .04, I = 0.001, D = 0.7;
+	private static final double P = .05, I = 0.0, D = 0.0;
+	private static final double PID_PERIOD = .005;// seconds
+
+	private static final double TOLERANCE = 0.0;
+
 	public static final boolean DEBUG = true;
 
 	// Variables
@@ -54,9 +58,8 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 		// setPercentTolerance(TOLERANCE);
 		setAbsoluteTolerance(TOLERANCE);
 		setInputRange(MIN_ANGLE, MAX_ANGLE);
-		setOutputRange(-.5, 1.0);
+		setOutputRange(-1.0, 1.0);
 		getPIDController().setContinuous(false);
-
 		enable();
 	}
 
@@ -72,6 +75,7 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 	 * @param angle
 	 *            A speed between [-1, 1] which is the voltage that will be set.
 	 */
+	@Deprecated
 	public void setAngle(double angle) {
 		// System.out.println("Angle set to: " + angle);
 		setSetpoint(angle);
@@ -83,9 +87,9 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 			super.setSetpoint(setpoint);
 		}
 	}
-	
-	public void setVoltage(double voltage){
-		angleMotor.set(voltage);
+
+	public void setVoltage(double voltage) {
+		angleMotor.set(-voltage);
 	}
 
 	// And get joystick values.
@@ -109,16 +113,20 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 	 *            by look up by the two character key associated with each
 	 *            sensor.
 	 */
+
 	public void receivedValue(HashMap<Sensor, Double> sensorMap) {
 
 		Double value = sensorMap.get(Sensor.SHOOTER_ANGLE);
 		if (value != null) {
 			currentAngle = value;
+		} else {
+			currentAngle = 0.0;
 		}
-
+		// TODO Uncomment for testing
 		System.out.println("Angle " + getCurrentAngle() + "\tSetpoint " + getSetpoint() + "\tError "
 				+ getPIDController().getError() + "\tMotor Voltage Percentage " + getPIDController().get()
-				+ "\tVoltage: " + angleMotor.getOutputVoltage());
+				+ "\tVoltage: " + angleMotor.getOutputVoltage() + "\tIs this on Target? " + onTarget()
+				);
 	}
 
 	/**
@@ -132,10 +140,17 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 	 */
 	public Double getCurrentAngle() {
 		// System.out.println("Current Angle gotten: " + currentAngle);
+		// try {
+		// return Robot.sensorSys.tilt.getCurrentAngle();
+		// } catch (NullPointerException e){
+		// //First time it runs it will run into the getCurrentAngle
+		// return null;
+		// }
 		return currentAngle;
 	}
 
 	public void registerButtons() {
+//		HumanInput.registerPressedCommand(HumanInput.xboxXButton, new MoveToAngleCommand(0));
 	}
 
 	@Override
@@ -149,8 +164,22 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 	}
 
 	@Override
+	public boolean onTarget() {
+		return Math.abs(getPIDController().getError()) <= TOLERANCE;
+	}
+
+	@Override
 	protected void usePIDOutput(double output) {
 		// System.out.println("Output is: "+ output);
-		angleMotor.set(output);
+		if (!onTarget()) {
+			angleMotor.set(-output);
+		} else {
+			angleMotor.set(0);
+		}
 	}
+
+	public static double getTolerance() {
+		return TOLERANCE;
+	}
+
 }
