@@ -36,8 +36,7 @@ public class Robot extends IterativeRobot {
 	SendableChooser chooser;
 	// My stuff
 	public static Sensors sensorSys;
-	// public static FlywheelSubsystem shooterFlywheelSys;
-	// public static AngleSubsystem shooterAngleSys;
+//	public static FlywheelSubsystem shooterFlywheelSys;
 	public static ActuatorSubsystem shooterActuatorSys;
 	public static AngleSubsystemPID shooterAngleSys;
 	// public static ArmSubsystem armSys;
