@@ -30,7 +30,7 @@ public class Sensors {
 
 	public Sensors() {
 		// Add averaging for tilt IMU
-		tilt.setSamplesToAverage(1);
+		tilt.setSamplesToAverage(5);
 	}
 
 	public void registerListener(SensorListener listener) {

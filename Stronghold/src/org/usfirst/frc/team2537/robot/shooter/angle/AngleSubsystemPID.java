@@ -22,7 +22,7 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 
 	// The angle limits.
 	public static final double MAX_ANGLE = 45.0;// degrees
-	public static final double MIN_ANGLE = -30.0;// degrees
+	public static final double MIN_ANGLE = -15.0;// degrees
 	// private static final double P = .04, I = 0.001, D = 0.7;
 	private static final double P = .05, I = 0.0, D = 0.0;
 	private static final double PID_PERIOD = .005;// seconds
