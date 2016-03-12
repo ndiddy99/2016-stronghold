@@ -20,21 +20,22 @@ public class HumanInput {
 	public static final Joystick xboxController = new Joystick(Ports.XBOX);
 	public static final Joystick leftJoystick = new Joystick(Ports.JOYSTICK_LEFT_PORT);
 	public static final Joystick rightJoystick = new Joystick(Ports.JOYSTICK_RIGHT_PORT);
-
+	//X-Box buttons
+	public static final JoystickButton driveAroundPos = new JoystickButton(xboxController, XboxButtons.XBOX_B);
+	public static final Button changeCameraButton = new JoystickButton(xboxController, XboxButtons.XBOX_X);
+	public static final JoystickButton shootPos = new JoystickButton(xboxController, XboxButtons.XBOX_Y);
+	public static final Button lowBarModeEnableButton = new JoystickButton(xboxController, XboxButtons.XBOX_LB);
+	public static final Button shootCancelButton = new JoystickButton(xboxController, XboxButtons.XBOX_RB);
+	public static final JoystickButton harvestBallTrigger = new XboxTrigger(xboxController,
+			XboxButtons.XBOX_LEFT_TRIGGERS);
 	public static final JoystickButton ballShootTrigger = new XboxTrigger(xboxController,
 			XboxButtons.XBOX_RIGHT_TRIGGERS);
+	//Left Joystick Buttons
 	public static final Button driveStraight = new JoystickButton(leftJoystick, 1);
 	public static final Button driveSensetivityToggle = new JoystickButton(leftJoystick, 2);
 	public static final Button reverseDrive = new JoystickButton(leftJoystick, 3);
 	public static final Button driveTypeToggle = new JoystickButton(leftJoystick, 4);
-
-	public static final Button lowBarModeEnableButton = new JoystickButton(xboxController, XboxButtons.XBOX_LB);
-
-	public static final Button shootCancelButton = new JoystickButton(xboxController, XboxButtons.XBOX_RB);
-
-	public static final JoystickButton harvestBallTrigger = new XboxTrigger(xboxController,
-			XboxButtons.XBOX_LEFT_TRIGGERS);
-	public static final Button changeCameraButton = new JoystickButton(xboxController, XboxButtons.XBOX_Y);
+	//Right Joystick buttons
 	public static final Button changeCameraButton2 = new JoystickButton(rightJoystick, 3);
 
 	/**
