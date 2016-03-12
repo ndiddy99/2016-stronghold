@@ -11,6 +11,7 @@ import com.ni.vision.NIVision.Image;
 import com.ni.vision.NIVision.Point;
 
 import edu.wpi.first.wpilibj.CameraServer;
+import javafx.scene.transform.Rotate;
 
 public class CameraFeeds
 {
@@ -46,6 +47,7 @@ public class CameraFeeds
 	public void init()
 	{
 		HumanInput.registerPressedCommand(HumanInput.changeCameraButton, new RotateCamerasRightCommand());
+		HumanInput.registerPressedCommand(HumanInput.changeCameraButton2, new RotateCamerasRightCommand());
 		System.out.println("init");
 		changeCam(curCam);
 	}

@@ -19,6 +19,7 @@ public class CourseCorrect extends Command {
 	private double pos = 0;
 	private double vel = 0;
 	private long prevTime;
+	public static final double TIMEOUT = 7;
 
 	/**
 	 * Drives &lt;distance&gt; while correcting for angle
@@ -27,6 +28,7 @@ public class CourseCorrect extends Command {
 	 *            distance in inches
 	 */
 	public CourseCorrect(double distance) {
+		super(TIMEOUT);
 		requires(Robot.driveSys);
 		this.distance = distance;
 		if (distance < 0)
@@ -104,6 +106,7 @@ public class CourseCorrect extends Command {
 
 	@Override
 	protected boolean isFinished() {
+		if (isTimedOut()) return true;
 		if (distance < 0)
 			return Robot.driveSys.getEncoderAverage() <= distance;
 		return (Robot.driveSys.getEncoderAverage() >= distance);

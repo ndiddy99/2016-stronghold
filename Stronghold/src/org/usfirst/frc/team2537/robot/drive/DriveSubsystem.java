@@ -19,9 +19,9 @@ public class DriveSubsystem extends Subsystem {
 	private boolean drivingStraight;
 	private boolean driveLowerSpeed;
 	private boolean reversed;
-	public static final double WHEEL_DIAMETER = 9; // Inches TODO: Magic numbers
+	public static final double WHEEL_DIAMETER = 10; // Inches TODO: Magic numbers
 													// are fun
-	public static final double PulsesPerRevolution = 80; // for encoders
+	public static final double PulsesPerRevolution = 20; // for encoders
 	private double initialLeftEncoders = 0; // Inches to subtract (for
 											// resetEncoders)
 	private double initialRightEncoders = 0; // Inches to subtract (for
