@@ -35,6 +35,7 @@ public class HumanInput {
 	public static final JoystickButton harvestBallTrigger = new XboxTrigger(xboxController,
 			XboxButtons.XBOX_LEFT_TRIGGERS);
 	public static final Button changeCameraButton = new JoystickButton(xboxController, XboxButtons.XBOX_Y);
+	public static final Button changeCameraButton2 = new JoystickButton(rightJoystick, 3);
 
 	/**
 	 * Method to register a pressed button command. When you use this method it
