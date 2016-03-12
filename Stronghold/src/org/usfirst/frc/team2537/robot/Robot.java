@@ -55,6 +55,9 @@ public class Robot extends IterativeRobot {
 		 */
 
 		// Initalize Everything
+		
+		sensorSys = new Sensors();
+		sensorSys.init();
 
 		driveSys = new DriveSubsystem();
 		driveSys.registerButtons();
@@ -104,6 +107,7 @@ public class Robot extends IterativeRobot {
 	 * SendableChooser make sure to add them to the chooser code above as well.
 	 */
 	public void autonomousInit() {
+		feeds.init();
 		autoCommand = autoChooser.getAutoChoice();
 //		autoCommand = new AutoShootCommand();
 		Scheduler.getInstance().add(autoCommand);
@@ -115,6 +119,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		feeds.run();
 	}
 
 
@@ -162,6 +167,12 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void disabledInit() {
+		feeds.init();
+	}
+	
+	@Override
+	public void disabledPeriodic() {
+		feeds.run();
 	}
 
 }

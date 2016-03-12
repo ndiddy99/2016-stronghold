@@ -88,8 +88,8 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 //		leftFlywheelMotor.setVoltageRampRate(VOLTAGE_RAMP_RATE);
 
 		// Make the talons go into the speed control mode.
-		leftFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
-		rightFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
+		leftFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Voltage);
+		rightFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Voltage);
 	}
 
 	@Override

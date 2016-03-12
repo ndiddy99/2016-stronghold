@@ -50,7 +50,7 @@ public class DriveSubsystem extends Subsystem {
 		driveType = DriveType.doubleJoystick;
 		drivingStraight = false;
 		driveLowerSpeed = false;
-		reversed = false;
+		reversed = true;
 		enableForwardSoftLimit(false);
 		enableReverseSoftLimit(false);
 	}
