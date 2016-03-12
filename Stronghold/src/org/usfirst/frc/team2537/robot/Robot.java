@@ -93,6 +93,7 @@ public class Robot extends IterativeRobot {
 		sensorSys.registerListener(shooterFlywheelSys);
 
 		feeds = new CameraFeeds();
+		feeds.init();
 	}
 
 	/**

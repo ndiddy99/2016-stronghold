@@ -19,7 +19,7 @@ public class CourseCorrect extends Command {
 	private double pos = 0;
 	private double vel = 0;
 	private long prevTime;
-	public static final double TIMEOUT = 7;
+	public static final double TIMEOUT = 5;
 
 	/**
 	 * Drives &lt;distance&gt; while correcting for angle
@@ -46,6 +46,7 @@ public class CourseCorrect extends Command {
 	 *            Speed in voltage percent
 	 */
 	public CourseCorrect(double distance, double speed) {
+		super(TIMEOUT);
 		requires(Robot.driveSys);
 		this.distance = distance;
 		this.speed = speed;
