@@ -14,7 +14,7 @@ public class PresetArmCommand extends Command {
 
 	double angleToMoveTo;
 	double currentAngle;
-	final double tolerance = 5;
+	final double tolerance = 10;
 	private final static double DEFAULT_TIMEOUT = 5;
 	Double speed;
 

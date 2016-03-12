@@ -18,8 +18,10 @@ public class ManualAngleCommand extends Command {
 	// private static final double JOYSTICK_FACTOR = -.005;
 	private static final double JOYSTICK_FACTOR = .5;
 	private static final double JOYSTICK_DEADZONE = .105;
+	@SuppressWarnings("unused")
 	private static final double VOLTAGE_MULTIPLIER = .05;
 	// private static double setpoint = 0.0;
+	@SuppressWarnings("unused")
 	private boolean initialized = false;
 
 	/**

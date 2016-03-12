@@ -21,7 +21,8 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	
 	// The angle limits.
 	private static final double MAX_ANGLE = 28;// degrees (ball park, not right)
-	private static final double MIN_ANGLE =  -4.5;// degrees(ball park, not right)
+	private static final double MIN_ANGLE =  -4.5;// degrees(ball park, not right)'
+	@SuppressWarnings("unused")
 	private static final double MAX_VOLTAGE= 12.0;
 	//Difference between the max and min angle.
 	public static final double MAX_ANGLE_DIFFERENCE = MAX_ANGLE - MIN_ANGLE; 

@@ -28,6 +28,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	// Max voltage that can be output from the flyweel talons.
 	private static final float MAX_VOLTAGE = 12.0f;
 	// 5 volts per second ramp rate for the flywheels
+	@SuppressWarnings("unused")
 	private static final double VOLTAGE_RAMP_RATE = 12;
 	// yet
 	private static final double P = 3.1, I = 0.001, D = 0.31;

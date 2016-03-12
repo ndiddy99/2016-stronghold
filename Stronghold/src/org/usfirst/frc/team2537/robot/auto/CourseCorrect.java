@@ -19,8 +19,6 @@ public class CourseCorrect extends Command {
 	private double pos = 0;
 	private double vel = 0;
 	private long prevTime;
-	private double Xval;
-	private double Yval;
 
 	/**
 	 * Drives &lt;distance&gt; while correcting for angle

@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class ArmSubsystem extends Subsystem implements SensorListener {
 
 	public CANTalon armMotor;
-	static final boolean debug = true;
+	static final boolean debug = false;
 	double currentAngle;
 	double currentDist;
 	double armIMUAngle;

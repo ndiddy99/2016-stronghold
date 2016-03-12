@@ -14,6 +14,7 @@ public class MoveToAnglePIDTESTCommand extends Command {
 		
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void initialize() {
 		// TODO Auto-generated method stub

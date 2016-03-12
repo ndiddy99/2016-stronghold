@@ -15,6 +15,7 @@ import org.usfirst.frc.team2537.robot.Robot;
 public class MoveToAngleCommand extends Command {
 	private static final boolean DEBUG = true;
 	// Constants
+	@SuppressWarnings("unused")
 	private static final double TOLERANCE = 1; // How far the shooter can be
 												// from the desired angle in
 												// degrees.
@@ -22,6 +23,7 @@ public class MoveToAngleCommand extends Command {
 
 	// Variables
 	public final double posToMoveTo;
+	@SuppressWarnings("unused")
 	private double currentPosition;
 
 	/**
