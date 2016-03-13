@@ -25,23 +25,29 @@ public class CameraFeeds
 	
 	public CameraFeeds()
 	{
-		try{
+        cameras = new LinkedList<Integer>();
+
+		try {
         // Get camera ids by supplying camera name ex 'cam0', found on roborio web interface
         camCenter = NIVision.IMAQdxOpenCamera(Ports.DOWNWARD_BREACHING_CAMERA, NIVision.IMAQdxCameraControlMode.CameraControlModeController);
-        camRight = NIVision.IMAQdxOpenCamera(Ports.UPWARD_BREACHING_CAMERA, NIVision.IMAQdxCameraControlMode.CameraControlModeController);
-        camLeft = NIVision.IMAQdxOpenCamera(Ports.SHOOTING_CAMERA, NIVision.IMAQdxCameraControlMode.CameraControlModeController);
         curCam = camCenter;
-        cameras = new LinkedList<Integer>();
+		} catch (Exception e) {}
+		
+		try {
+        camRight = NIVision.IMAQdxOpenCamera(Ports.UPWARD_BREACHING_CAMERA, NIVision.IMAQdxCameraControlMode.CameraControlModeController);
         cameras.add(camRight);
+		} catch (Exception e) {}
+		
+		try {
+        camLeft = NIVision.IMAQdxOpenCamera(Ports.SHOOTING_CAMERA, NIVision.IMAQdxCameraControlMode.CameraControlModeController);
         cameras.add(camLeft);
+		} catch (Exception e) {}
+        
         // Img that will contain camera img
         frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
         // Server that we'll give the img to
         server = CameraServer.getInstance();
-        server.setQuality(Config.CameraFeeds.imgQuality);
-		}
-		catch(Exception e){}
-		
+        server.setQuality(Config.CameraFeeds.imgQuality);		
 	}
 	
 	public void init()

@@ -15,6 +15,7 @@ public class AutoChooser {
 		autoChoice.addDefault("Do nothing", null);
         autoChoice.addObject("Low Bar Auto", new LowBarAuto());
         autoChoice.addObject("B and D auto", new BorDAuto());
+        autoChoice.addObject("Rock Wall auto", new RockWallAuto());
         autoChoice.addObject("AutoShootCommand prints", new AutoShootCommand());
         SmartDashboard.putData("AutoChooser", autoChoice);
 	}
