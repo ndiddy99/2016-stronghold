@@ -19,7 +19,7 @@ public class CourseCorrect extends Command {
 	private double pos = 0;
 	private double vel = 0;
 	private long prevTime;
-	public static final double DEFAULT_TIMEOUT = 4;
+	public static final double DEFAULT_TIMEOUT = 3;
 
 	/**
 	 * Drives &lt;distance&gt; while correcting for angle
