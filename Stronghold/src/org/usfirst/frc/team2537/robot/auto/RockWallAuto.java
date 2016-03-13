@@ -4,6 +4,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class RockWallAuto extends CommandGroup {
 	public RockWallAuto() {
-		addSequential(new CourseCorrect(15*12, .750));
+		addSequential(new CourseCorrect(15*12, .750, 4));
 	}
 }
