@@ -20,7 +20,7 @@ public final class Ports {
 		
 		LEFT_FLYWHEEL_PORT = 5, RIGHT_FLYWHEEL_PORT = 6,
 		
-		SHOOTER_ANGLE_PORT = 7,			
+		SHOOTER_ANGLE_PORT = 2,			
 
 		ARM_TALON = 8,
 		

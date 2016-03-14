@@ -66,12 +66,10 @@ public class Robot extends IterativeRobot {
 //			armSys.registerButtons();
 		
 //		autoChooser = new AutoChooser();
-
+		sensorSys = new Sensors();
 		shooterFlywheelSys = new FlywheelSubsystem();
 		shooterAngleSys = new AngleSubsystemPID();
-
 		sensorSys.registerListener(shooterAngleSys);
-
 		shooterActuatorSys = new ActuatorSubsystem();
 		shooterFlywheelSys.initDefaultCommand();
 		shooterFlywheelSys.registerButtons();
