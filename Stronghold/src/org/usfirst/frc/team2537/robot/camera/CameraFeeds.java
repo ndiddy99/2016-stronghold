@@ -54,6 +54,7 @@ public class CameraFeeds
 	{
 		HumanInput.registerPressedCommand(HumanInput.changeCameraButton, new RotateCamerasRightCommand());
 		HumanInput.registerPressedCommand(HumanInput.changeCameraButton2, new RotateCamerasRightCommand());
+
 		System.out.println("init");
 		changeCam(curCam);
 	}
