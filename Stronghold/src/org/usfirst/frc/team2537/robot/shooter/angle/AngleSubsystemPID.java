@@ -128,12 +128,13 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 		} else {
 			currentAngle = 0.0;
 		}
+
 		// TODO Uncomment for testing
 		System.out.println("Angle " + getCurrentAngle() + "\tSetpoint " + getSetpoint() + "\tError "
 				+ getPIDController().getError() + "\tMotor Voltage Percentage " + getPIDController().get()
 				+ "\tVoltage: " + angleMotor.getOutputVoltage() + "\tIs this on Target? " + onTarget()
 				+ "\t NavX Pitch: " + shooterNAVX.getPitch() + "\t NavX Roll: " + shooterNAVX.getRoll()
-				+ "\t Relative Angle: " + getRelativeAngle());
+				+ "\t Relative Angle: " + getRelativeAngle() +"\t NAVX Angle: "  +shooterNAVX.getAngle() +"\t NAVX X" +shooterNAVX.getRawMagX());
 	}
 
 	
