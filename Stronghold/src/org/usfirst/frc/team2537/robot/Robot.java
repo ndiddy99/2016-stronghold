@@ -57,13 +57,13 @@ public class Robot extends IterativeRobot {
 
 		// Initalize Everything
 
-		driveSys = new DriveSubsystem();
-		driveSys.registerButtons();
-		driveSys.initDefaultCommand();
+//		driveSys = new DriveSubsystem();
+//		driveSys.registerButtons();
+//		driveSys.initDefaultCommand();
 
-			armSys = new ArmSubsystem();
-			armSys.initDefaultCommand();
-			armSys.registerButtons();
+//			armSys = new ArmSubsystem();
+//			armSys.initDefaultCommand();
+//			armSys.registerButtons();
 		
 //		autoChooser = new AutoChooser();
 
@@ -90,7 +90,7 @@ public class Robot extends IterativeRobot {
 		sensorSys.registerListener(shooterAngleSys);
 		sensorSys.registerListener(shooterFlywheelSys);
 
-		feeds = new CameraFeeds();
+//		feeds = new CameraFeeds();
 	}
 
 	/**
@@ -126,7 +126,7 @@ public class Robot extends IterativeRobot {
 		System.out.println("Teleop init");
 		if(autoCommand != null)
 			autoCommand.cancel();
-		feeds.init();
+//		feeds.init();
 		sensorSys.handleEvents();
 
 	}
@@ -136,7 +136,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		sensorSys.handleEvents();
-		feeds.run();
+//		feeds.run();
 		Scheduler.getInstance().run();		
 //		SmartDashboard.putNumber("Arm IMU", armSys.getIMUAngle());
 //		Double shooterAngle = shooterAngleSys.getCurrentAngle();

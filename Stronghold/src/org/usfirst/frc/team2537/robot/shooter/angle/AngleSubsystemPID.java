@@ -36,12 +36,14 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 	// Variables
 	private Double currentAngle = null;
 	private final CANTalon angleMotor;
+	private final AHRS shooterNAVX;
 
 	public AngleSubsystemPID() {
 		super(P, I, D, PID_PERIOD);
 		angleMotor = new CANTalon(Ports.SHOOTER_ANGLE_PORT);
 		// Change control mode of the angleTalon to percent Vbus.
 		angleMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		shooterNAVX = Robot.driveSys.getAhrs();
 		// Add limits.
 		angleMotor.ConfigFwdLimitSwitchNormallyOpen(true);
 		angleMotor.ConfigRevLimitSwitchNormallyOpen(true);
@@ -128,8 +130,11 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 		System.out.println("Angle " + getCurrentAngle() + "\tSetpoint " + getSetpoint() + "\tError "
 				+ getPIDController().getError() + "\tMotor Voltage Percentage " + getPIDController().get()
 				+ "\tVoltage: " + angleMotor.getOutputVoltage() + "\tIs this on Target? " + onTarget()
-				);
+				+ "\t NavX Pitch: " + shooterNAVX.getPitch() + "\t NavX Roll: " + shooterNAVX.getRoll()
+				+ "\t Relative Angle: " + getRelativeAngle());
 	}
+
+	
 
 	/**
 	 * This gets the current cached angle value.
@@ -182,6 +187,10 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 
 	public static double getTolerance() {
 		return TOLERANCE;
+	}
+	private double getRelativeAngle() {
+		// TODO Auto-generated method stub
+		return (getCurrentAngle() - shooterNAVX.getPitch());
 	}
 
 }
