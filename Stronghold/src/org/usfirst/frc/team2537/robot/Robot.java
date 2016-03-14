@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	AutoChooser autoChooser;
+//	AutoChooser autoChooser;
 	Command autoCommand;
 	CommandGroup autoCommandGroup; //Timmy Tommy is lazy
 	final String defaultAuto = "Default";
@@ -61,11 +61,11 @@ public class Robot extends IterativeRobot {
 		driveSys.registerButtons();
 		driveSys.initDefaultCommand();
 
-		armSys = new ArmSubsystem();
-		armSys.initDefaultCommand();
-		armSys.registerButtons();
-		//
-		autoChooser = new AutoChooser();
+			armSys = new ArmSubsystem();
+			armSys.initDefaultCommand();
+			armSys.registerButtons();
+		
+//		autoChooser = new AutoChooser();
 
 		shooterFlywheelSys = new FlywheelSubsystem();
 		shooterAngleSys = new AngleSubsystemPID();
@@ -86,7 +86,7 @@ public class Robot extends IterativeRobot {
 		// sensorSys.registerListener(shooterFlywheelSys);
 		// sensorSys.registerListener(shooterA);
 
-		sensorSys.registerListener(armSys);
+//		sensorSys.registerListener(armSys);
 		sensorSys.registerListener(shooterAngleSys);
 		sensorSys.registerListener(shooterFlywheelSys);
 
@@ -105,10 +105,10 @@ public class Robot extends IterativeRobot {
 	 * SendableChooser make sure to add them to the chooser code above as well.
 	 */
 	public void autonomousInit() {
-		autoCommand = autoChooser.getAutoChoice();
+//		autoCommand = autoChooser.getAutoChoice();
 //		autoCommand = new AutoShootCommand();
 		Scheduler.getInstance().add(autoCommand);
-		Robot.armSys.init();
+//		Robot.armSys.init();
 	}
 
 	/**
