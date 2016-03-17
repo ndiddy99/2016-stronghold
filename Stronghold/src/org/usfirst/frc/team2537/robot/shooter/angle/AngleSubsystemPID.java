@@ -28,7 +28,7 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 	public static final double MAX_ANGLE = 45.0;// degrees
 	public static final double MIN_ANGLE = -15.0;// degrees
 	// private static final double P = .04, I = 0.001, D = 0.7;
-	private static final double P = .05, I = 0.0, D = 0.0;
+	private static final double P = .05, I = 0.0, D = 0.001;
 	private static final double PID_PERIOD = .005;// seconds
 
 	private static final double TOLERANCE = 0.0;
@@ -50,7 +50,6 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 		angleMotor.ConfigFwdLimitSwitchNormallyOpen(true);
 		angleMotor.ConfigRevLimitSwitchNormallyOpen(true);
 		angleMotor.enableLimitSwitch(true, true);// Now the limit switches are
-													// active.
 		// Soft limits for a backup.
 		angleMotor.enableForwardSoftLimit(false);
 		angleMotor.enableReverseSoftLimit(false);
@@ -128,13 +127,15 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 		} else {
 			currentAngle = 0.0;
 		}
-
+		adjustBounds();
 		// TODO Uncomment for testing
-		System.out.println("Angle " + getCurrentAngle() + "\tSetpoint " + getSetpoint() + "\tError "
-				+ getPIDController().getError() + "\tMotor Voltage Percentage " + getPIDController().get()
-				+ "\tVoltage: " + angleMotor.getOutputVoltage() + "\tIs this on Target? " + onTarget()
-				+ "\t NavX Pitch: " + shooterNAVX.getPitch() + "\t NavX Roll: " + shooterNAVX.getRoll()
-				+ "\t Relative Angle: " + getRelativeAngle() +"\t NAVX Angle: "  +shooterNAVX.getAngle() +"\t NAVX X" +shooterNAVX.getRawMagX());
+//		System.out.println(shooterNAVX.getRoll());
+		System.out.println("\t Shooter Angle: " +getCurrentAngle() +"\t NavX Pitch: " + shooterNAVX.getPitch() + "\t NavX Roll: " + shooterNAVX.getRoll()
+		+ "\t Relative Angle: " + getRelativeAngle() +"\t NAVX Angle: "  +shooterNAVX.getAngle() +"\t NAVX X" +shooterNAVX.getRawMagX() +"\t NAVX Yaw: " +shooterNAVX.getYaw());
+//		System.out.println("Angle " + getCurrentAngle() + "\tSetpoint " + getSetpoint() + "\tError "
+//				+ getPIDController().getError() + "\tMotor Voltage Percentage " + getPIDController().get()
+//				+ "\tVoltage: " + angleMotor.getOutputVoltage() + "\tIs this on Target? " + onTarget());
+//				
 	}
 
 	
@@ -170,7 +171,7 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 		if (angle == null) {
 			return 0;
 		}
-		return angle;
+		return getCurrentAngle();
 	}
 
 	@Override
@@ -193,7 +194,24 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 	}
 	private double getRelativeAngle() {
 		// TODO Auto-generated method stub
-		return (getCurrentAngle() - shooterNAVX.getPitch());
+		if(shooterNAVX.isConnected()) {
+		return (getCurrentAngle() + (shooterNAVX.getRoll())); //roll increased in negative magnitude when the test platform tilted upwards so we have to add to the current angle. The roll is also about 2 degrees off.
+		} else {
+			return getCurrentAngle();
+		}
+	}
+	private void adjustBounds() {
+		if(MIN_ANGLE + shooterNAVX.getRoll() < MAX_ANGLE - shooterNAVX.getRoll() && shooterNAVX.isConnected()) {
+			if(shooterNAVX.getRoll() > 0) {
+				setInputRange(MIN_ANGLE + shooterNAVX.getRoll(), MAX_ANGLE);
+			} else {
+				setInputRange(MIN_ANGLE, MAX_ANGLE + shooterNAVX.getRoll());
+			}
+			
+		} else if(!shooterNAVX.isConnected()) {
+			setInputRange(MIN_ANGLE, MAX_ANGLE);
+		}
+		
 	}
 
 }

@@ -87,7 +87,7 @@ public class Robot extends IterativeRobot {
 //		sensorSys.registerListener(armSys);
 		sensorSys.registerListener(shooterAngleSys);
 		sensorSys.registerListener(shooterFlywheelSys);
-
+		sensorSys.init();
 //		feeds = new CameraFeeds();
 	}
 
@@ -122,8 +122,8 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopInit(){
 		System.out.println("Teleop init");
-		if(autoCommand != null)
-			autoCommand.cancel();
+//		if(autoCommand != null)
+//			autoCommand.cancel();
 //		feeds.init();
 		sensorSys.handleEvents();
 
