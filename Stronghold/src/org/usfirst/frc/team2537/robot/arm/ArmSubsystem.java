@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class ArmSubsystem extends Subsystem implements SensorListener {
 
 	public CANTalon armMotor;
-	static final boolean debug = true;
+	static final boolean debug = false;
 	double currentAngle;
 	double currentDist;
 	double armIMUAngle;
@@ -49,20 +49,11 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 	 * Works
 	 * 
 	 */
-	public void init() {
-		// int anglesToEncTicks = (int) ((90 - currentAngle) *
-		// encoderTicksPerRev);
-		// armMotor.setEncPosition(anglesToEncTicks);
-		while (armMotor.isFwdLimitSwitchClosed() != true) {
-			armMotor.set(.2);
-		}
-		System.out.println("Calibrated!");
-		armMotor.setEncPosition(0);
-	}
 
 	public void registerButtons() {
 		HumanInput.registerPressedCommand(HumanInput.lowBarModeEnableButton, new GoDown());
 		HumanInput.registerReleasedCommand(HumanInput.lowBarModeEnableButton, new PresetArmCommand(oldPos));
+		HumanInput.registerPressedCommand(HumanInput.driveAroundButton, new PresetArmCommand(0));
 	}
 
 	public void positionMode() {
@@ -95,11 +86,17 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 	/**
 	 * Used to set the speed of the arm talon
 	 * 
-	 * @param outputval
+	 * @param position
 	 *            Voltage to set the talon to
 	 */
-	public void setArmTalon(double outputval) {
-		armMotor.set(outputval);
+	public void setArmPosition(double position) {
+		armMotor.setPID(P, I, D);
+		armMotor.set(position);
+	}
+	
+	public void setArmPosition(double position, double newP, double newI, double newD) {
+		armMotor.setPID(newP, newI, newD);
+		armMotor.set(position);
 	}
 
 	/**

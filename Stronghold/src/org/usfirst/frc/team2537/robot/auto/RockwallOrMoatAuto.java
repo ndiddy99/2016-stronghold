@@ -1,14 +1,12 @@
 package org.usfirst.frc.team2537.robot.auto;
 
 import org.usfirst.frc.team2537.robot.arm.CalibrationCommand;
-import org.usfirst.frc.team2537.robot.arm.GoDown;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class LowBarAuto extends CommandGroup {
-	public LowBarAuto() {
+public class RockwallOrMoatAuto extends CommandGroup {
+	public RockwallOrMoatAuto() {
 		addSequential(new CalibrationCommand());
-		addSequential(new GoDown());
-		addSequential(new CourseCorrect(25*12)); //25 FEET
+		addSequential(new CourseCorrect(15*12, .750, 3));
 	}
 }

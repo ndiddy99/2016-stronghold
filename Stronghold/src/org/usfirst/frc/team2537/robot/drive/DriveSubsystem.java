@@ -6,7 +6,6 @@ import org.usfirst.frc.team2537.robot.input.HumanInput;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -20,9 +19,9 @@ public class DriveSubsystem extends Subsystem {
 	private boolean drivingStraight;
 	private boolean driveLowerSpeed;
 	private boolean reversed;
-	public static final double WHEEL_DIAMETER = 9; // Inches TODO: Magic numbers
+	public static final double WHEEL_DIAMETER = 10; // Inches TODO: Magic numbers
 													// are fun
-	public static final double PulsesPerRevolution = 80; // for encoders
+	public static final double PulsesPerRevolution = 20; // for encoders
 	private double initialLeftEncoders = 0; // Inches to subtract (for
 											// resetEncoders)
 	private double initialRightEncoders = 0; // Inches to subtract (for
@@ -51,7 +50,7 @@ public class DriveSubsystem extends Subsystem {
 		driveType = DriveType.doubleJoystick;
 		drivingStraight = false;
 		driveLowerSpeed = false;
-		reversed = false;
+		reversed = true;
 		enableForwardSoftLimit(false);
 		enableReverseSoftLimit(false);
 	}
@@ -176,13 +175,6 @@ public class DriveSubsystem extends Subsystem {
 		// ATLAS
 		// lencoder.reset()
 		// rencoder.reset()
-	}
-
-	private void setDriveTalonControlMode(TalonControlMode mode) {
-		talonFrontLeft.changeControlMode(mode);
-		talonBackLeft.changeControlMode(mode);
-		talonFrontRight.changeControlMode(mode);
-		talonBackRight.changeControlMode(mode);
 	}
 
 	private void enableForwardSoftLimit(boolean b) {

@@ -12,5 +12,6 @@ public class ArmPositions {
 		portcullisUpPos = 0.00,
 		lowbarPos = -256.00,
 		chevalUpPos = 0.00,
-		chevalDownPos = 0.00;
+		chevalDownPos = 0.00,
+		autoBorDPosition = -125;
 }

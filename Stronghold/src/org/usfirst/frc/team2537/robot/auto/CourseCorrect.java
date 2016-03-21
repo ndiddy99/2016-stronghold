@@ -19,8 +19,7 @@ public class CourseCorrect extends Command {
 	private double pos = 0;
 	private double vel = 0;
 	private long prevTime;
-	private double Xval;
-	private double Yval;
+	public static final double DEFAULT_TIMEOUT = 3;
 
 	/**
 	 * Drives &lt;distance&gt; while correcting for angle
@@ -29,6 +28,7 @@ public class CourseCorrect extends Command {
 	 *            distance in inches
 	 */
 	public CourseCorrect(double distance) {
+		super(DEFAULT_TIMEOUT);
 		requires(Robot.driveSys);
 		this.distance = distance;
 		if (distance < 0)
@@ -46,6 +46,7 @@ public class CourseCorrect extends Command {
 	 *            Speed in voltage percent
 	 */
 	public CourseCorrect(double distance, double speed) {
+		super(DEFAULT_TIMEOUT);
 		requires(Robot.driveSys);
 		this.distance = distance;
 		this.speed = speed;
@@ -56,6 +57,13 @@ public class CourseCorrect extends Command {
 		// addSequential(new AutoDriveStraightCommand(Math.sqrt(Math.pow(x -
 		// currentX, 2) + Math.pow(y - currentY, 2))));
 
+	}
+	
+	public CourseCorrect(double distance, double speed, double timeout) {
+		super (timeout);
+		requires(Robot.driveSys);
+		this.distance = distance;
+		this.speed = speed;
 	}
 
 	@Override
@@ -106,6 +114,7 @@ public class CourseCorrect extends Command {
 
 	@Override
 	protected boolean isFinished() {
+		if (isTimedOut()) return true;
 		if (distance < 0)
 			return Robot.driveSys.getEncoderAverage() <= distance;
 		return (Robot.driveSys.getEncoderAverage() >= distance);

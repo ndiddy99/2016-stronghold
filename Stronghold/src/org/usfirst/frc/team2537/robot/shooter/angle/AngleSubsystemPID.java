@@ -1,19 +1,19 @@
 package org.usfirst.frc.team2537.robot.shooter.angle;
 
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
-
-import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.SPI.Port;
-
 import java.util.HashMap;
 
 import org.usfirst.frc.team2537.robot.Ports;
-import org.usfirst.frc.team2537.robot.Robot;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 import org.usfirst.frc.team2537.robot.input.Sensor;
 import org.usfirst.frc.team2537.robot.input.SensorListener;
 import org.usfirst.frc.team2537.robot.input.XboxButtons;
+
 import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.SPI.Port;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
+
 
 /**
  * @author Matthew Schweiss

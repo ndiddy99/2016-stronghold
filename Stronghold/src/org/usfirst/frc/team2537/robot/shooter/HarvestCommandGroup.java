@@ -14,10 +14,10 @@ import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelCommand;
 public class HarvestCommandGroup extends CommandGroup {
 	private static final boolean DEBUG = true;
 	private static final double HARVEST_ANGLE = -10;
-	private static final double HARVEST_SPEED = 3500;
+	private static final double HARVEST_SPEED = 6;
 
 	public HarvestCommandGroup() {
-		addParallel(new MoveToAngleCommand(HARVEST_ANGLE));
+//		addParallel(new MoveToAngleCommand(HARVEST_ANGLE));
 		addSequential(new FlywheelCommand(HARVEST_SPEED));
 		// Wait until we get a ball.
 		addSequential(new BallDetectionCommand(true));

@@ -2,7 +2,6 @@ package org.usfirst.frc.team2537.robot;
 
 import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
 import org.usfirst.frc.team2537.robot.auto.AutoChooser;
-import org.usfirst.frc.team2537.robot.auto.AutoShootCommand;
 import org.usfirst.frc.team2537.robot.camera.CameraFeeds;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team2537.robot.input.Sensors;
@@ -30,6 +29,7 @@ public class Robot extends IterativeRobot {
 	final String defaultAuto = "Default";
 	final String customAuto = "My Auto";
 	String autoSelected;
+	private AutoChooser autoChooser;
 	public static DriveSubsystem driveSys;
 	public static CameraFeeds feeds;
 	public static ArmSubsystem armSys;
@@ -47,7 +47,6 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-		// SaberMessage.printMessage();
 		// Dashboard
 		/*
 		 * chooser = new SendableChooser(); chooser.addDefault("Default Auto",
@@ -55,7 +54,8 @@ public class Robot extends IterativeRobot {
 		 * SmartDashboard.putData("Auto choices", chooser);
 		 */
 
-		// Initalize Everything
+		sensorSys = new Sensors();
+		sensorSys.init();
 
 //		driveSys = new DriveSubsystem();
 //		driveSys.registerButtons();
@@ -89,6 +89,9 @@ public class Robot extends IterativeRobot {
 		sensorSys.registerListener(shooterFlywheelSys);
 		sensorSys.init();
 //		feeds = new CameraFeeds();
+
+		feeds = new CameraFeeds();
+		feeds.init();
 	}
 
 	/**
@@ -103,10 +106,10 @@ public class Robot extends IterativeRobot {
 	 * SendableChooser make sure to add them to the chooser code above as well.
 	 */
 	public void autonomousInit() {
-//		autoCommand = autoChooser.getAutoChoice();
-//		autoCommand = new AutoShootCommand();
+		feeds.init();
+		autoCommand = autoChooser.getAutoChoice();
 		Scheduler.getInstance().add(autoCommand);
-//		Robot.armSys.init();
+		System.out.println("Autonomous start");
 	}
 
 	/**
@@ -114,6 +117,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		feeds.run();
 	}
 
 
@@ -161,6 +165,12 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void disabledInit() {
+		feeds.init();
+	}
+	
+	@Override
+	public void disabledPeriodic() {
+		feeds.run();
 	}
 
 }
