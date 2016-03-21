@@ -49,16 +49,6 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 	 * Works
 	 * 
 	 */
-	public void init() {
-		// int anglesToEncTicks = (int) ((90 - currentAngle) *
-		// encoderTicksPerRev);
-		// armMotor.setEncPosition(anglesToEncTicks);
-		while (armMotor.isFwdLimitSwitchClosed() != true) {
-			armMotor.set(.2);
-		}
-		System.out.println("Calibrated!");
-		armMotor.setEncPosition(0);
-	}
 
 	public void registerButtons() {
 		HumanInput.registerPressedCommand(HumanInput.lowBarModeEnableButton, new GoDown());
@@ -96,11 +86,17 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 	/**
 	 * Used to set the speed of the arm talon
 	 * 
-	 * @param outputval
+	 * @param position
 	 *            Voltage to set the talon to
 	 */
-	public void setArmTalon(double outputval) {
-		armMotor.set(outputval);
+	public void setArmPosition(double position) {
+		armMotor.setPID(P, I, D);
+		armMotor.set(position);
+	}
+	
+	public void setArmPosition(double position, double newP, double newI, double newD) {
+		armMotor.setPID(newP, newI, newD);
+		armMotor.set(position);
 	}
 
 	/**

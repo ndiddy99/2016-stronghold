@@ -23,12 +23,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	AutoChooser autoChooser;
-	Command autoCommand;
-	CommandGroup autoCommandGroup; //Timmy Tommy is lazy
-	final String defaultAuto = "Default";
-	final String customAuto = "My Auto";
-	String autoSelected;
+	private AutoChooser autoChooser;
+	private Command autoCommand;
 	public static DriveSubsystem driveSys;
 	public static CameraFeeds feeds;
 	public static ArmSubsystem armSys;
@@ -46,7 +42,6 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-		// SaberMessage.printMessage();
 		// Dashboard
 		/*
 		 * chooser = new SendableChooser(); chooser.addDefault("Default Auto",
@@ -54,8 +49,6 @@ public class Robot extends IterativeRobot {
 		 * SmartDashboard.putData("Auto choices", chooser);
 		 */
 
-		// Initalize Everything
-		
 		sensorSys = new Sensors();
 		sensorSys.init();
 
@@ -110,9 +103,8 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		feeds.init();
 		autoCommand = autoChooser.getAutoChoice();
-//		autoCommand = new AutoShootCommand();
 		Scheduler.getInstance().add(autoCommand);
-		Robot.armSys.init();
+		System.out.println("Autonomous start");
 	}
 
 	/**

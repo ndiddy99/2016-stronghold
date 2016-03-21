@@ -11,12 +11,14 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class PresetArmCommand extends Command {
-
-	double angleToMoveTo;
-	double currentAngle;
-	final double tolerance = 10;
+	private static final double P = 200d;
+	private static final double I = 0d;
+	private static final double D = 0d;
+	
+	private double angleToMoveTo;
+	private double currentAngle;
+	private final double tolerance = 10;
 	private final static double DEFAULT_TIMEOUT = 5;
-	Double speed;
 
 	/**
 	 * Constructor that sets what angle to move to and command timeout
@@ -59,7 +61,7 @@ public class PresetArmCommand extends Command {
 			System.out.println("Ticks to move: " + (angleToMoveTo - currentAngle));
 		if (ArmSubsystem.debug)
 			System.out.println("Rotations to move: " + (angleToMoveTo) / 1000);
-		Robot.armSys.setArmTalon(angleToMoveTo / 1000);
+		Robot.armSys.setArmPosition(angleToMoveTo / 1000, P, I, D);
 	}
 
 	protected void execute() {

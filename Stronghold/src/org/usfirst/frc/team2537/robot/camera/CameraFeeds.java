@@ -31,21 +31,25 @@ public class CameraFeeds
         // Get camera ids by supplying camera name ex 'cam0', found on roborio web interface
         camCenter = NIVision.IMAQdxOpenCamera(Ports.DOWNWARD_BREACHING_CAMERA, NIVision.IMAQdxCameraControlMode.CameraControlModeController);
         curCam = camCenter;
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			System.out.println("cam0 failed (downward breaching)");
+		}
 		
 		try {
         camRight = NIVision.IMAQdxOpenCamera(Ports.UPWARD_BREACHING_CAMERA, NIVision.IMAQdxCameraControlMode.CameraControlModeController);
         cameras.add(camRight);
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			System.out.println("cam1 failed (upward breaching");
+		}
 		
 		try {
         camLeft = NIVision.IMAQdxOpenCamera(Ports.SHOOTING_CAMERA, NIVision.IMAQdxCameraControlMode.CameraControlModeController);
         cameras.add(camLeft);
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			System.out.println("cam2 failed (upward breaching");
+		}
         
-        // Img that will contain camera img
         frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
-        // Server that we'll give the img to
         server = CameraServer.getInstance();
         server.setQuality(Config.CameraFeeds.imgQuality);		
 	}
@@ -73,7 +77,7 @@ public class CameraFeeds
 		NIVision.IMAQdxStopAcquisition(curCam);
 		}
 		catch(Exception e){
-			
+			System.out.println("Camera end(): Stop failed");
 		}
 	}
 	
@@ -90,24 +94,32 @@ public class CameraFeeds
     	NIVision.IMAQdxStartAcquisition(newId);
     	curCam = newId;}
 		catch(Exception e){
-			
+			System.out.println("changeCam() exception:"+e.getMessage());
 		}
     }
     
 	/**
 	 * Get the img from current camera and give it to the server
 	 */
-    public void updateCam()
-    {
+    private void updateCam() {
     	try{
     	System.out.println();
-    	NIVision.IMAQdxGrab(curCam, frame, 1);
-    	if(curCam == camCenter){
-    		NIVision.imaqDrawLineOnImage(frame, frame, NIVision.DrawMode.DRAW_VALUE, new Point(320, 0), new Point(320, 480), 120);
+    	NIVision.IMAQdxGrab(curCam, frame, 0);
+    	
+    	// center line
+    	NIVision.imaqDrawLineOnImage(frame, frame, NIVision.DrawMode.DRAW_VALUE, 
+    			new Point(320, 0), new Point(320, 480), 120);
+    	
+    	// skewed line
+    	NIVision.imaqDrawLineOnImage(frame, frame, NIVision.DrawMode.DRAW_VALUE, 
+    			new Point(280, 0), new Point(280, 480), 120);
+    	
+    	server.setImage(frame);}
+    	catch(Exception e){
+			System.out.println("updateCam() exception: "+e.getMessage());
     	}
-        server.setImage(frame);}
-    	catch(Exception e){}
     }
+    
 	public int getCurCam() {
 		return curCam;
 	}
