@@ -194,8 +194,9 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 	}
 	private double getRelativeAngle() {
 		// TODO Auto-generated method stub
+		//roll increased in negative magnitude when the test platform tilted upwards so we have to add to the current angle. The roll is also about 2 degrees off.
 		if(shooterNAVX.isConnected()) {
-		return (getCurrentAngle() + (shooterNAVX.getRoll())); //roll increased in negative magnitude when the test platform tilted upwards so we have to add to the current angle. The roll is also about 2 degrees off.
+		return (getCurrentAngle() + (shooterNAVX.getRoll())); 
 		} else {
 			return getCurrentAngle();
 		}
@@ -212,6 +213,10 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 			setInputRange(MIN_ANGLE, MAX_ANGLE);
 		}
 		
+	}
+	public void disableAngleMotor() {
+		disable();
+		angleMotor.disable();
 	}
 
 }
