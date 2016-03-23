@@ -117,7 +117,10 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		//Only update the cameras if we are not currently doing so.
+		if(!feeds.getCameraUpdateThread().isAlive()) {
 		feeds.run();
+		}
 	}
 
 
@@ -128,7 +131,7 @@ public class Robot extends IterativeRobot {
 		System.out.println("Teleop init");
 //		if(autoCommand != null)
 //			autoCommand.cancel();
-//		feeds.init();
+		feeds.init();
 		sensorSys.handleEvents();
 
 	}
@@ -138,6 +141,10 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		sensorSys.handleEvents();
+		//Only update the cameras if we are not currently doing so.
+		if(!feeds.getCameraUpdateThread().isAlive()) {
+			feeds.run();
+		}
 //		feeds.run();
 		Scheduler.getInstance().run();		
 //		SmartDashboard.putNumber("Arm IMU", armSys.getIMUAngle());

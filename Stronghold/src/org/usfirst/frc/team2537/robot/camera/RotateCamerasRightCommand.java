@@ -8,20 +8,20 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class RotateCamerasRightCommand extends Command {
 
+	private Thread CameraRotateThread;
 	@Override
 	protected void initialize() {
 		// TODO Auto-generated method stub
-
+		//Makes sure that there isn't any partial camera rotations.
+		if(!Robot.feeds.getCameraRotateThread().isAlive()) {
+			Robot.feeds.getCameraRotateThread().start();
+		}
 	}
 
 	@Override
 	protected void execute() {
 		// TODO Auto-generated method stub
-		Queue<Integer> cameras = Robot.feeds.getCameras();
-				
-		cameras.add(Robot.feeds.getCurCam());	
 		
-		Robot.feeds.changeCam(cameras.poll());
 
 	}
 
@@ -42,5 +42,6 @@ public class RotateCamerasRightCommand extends Command {
 		// TODO Auto-generated method stub
 
 	}
+	
 
 }
