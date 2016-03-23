@@ -78,7 +78,7 @@ public class CameraFeeds {
 		// in the way of other robot functions, so it is a relatively low
 		// priority.
 		// Condensed if else just in case we want the max priority to be lower
-		// than 4.
+		// than 5.
 		updateCameras
 				.setPriority((cameraThreads.getMaxPriority() > 4) ? cameraThreads
 						.getMaxPriority() - 4 : cameraThreads.getMaxPriority());
