@@ -13,9 +13,9 @@ public class RotateCamerasRightCommand extends Command {
 	protected void initialize() {
 		// TODO Auto-generated method stub
 		//Makes sure that there isn't any partial camera rotations.
-		if(!Robot.feeds.getCameraRotateThread().isAlive()) {
-			Robot.feeds.getCameraRotateThread().start();
-		}
+		Queue<Integer> cameras = Robot.feeds.getCameras();
+		cameras.add(Robot.feeds.getCurCam());
+		Robot.feeds.changeCam(cameras.poll());
 	}
 
 	@Override
