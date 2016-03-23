@@ -49,18 +49,16 @@ public class PresetArmCommand extends Command {
 	protected void initialize() {
 		Robot.armSys.positionMode();
 		Robot.armSys.enable();
-		if (ArmSubsystem.debug)
+		
+		if (ArmSubsystem.debug) {
 			System.out.println("Moving arm!");
-		if (ArmSubsystem.debug)
 			System.out.println("Control mode: " + Robot.armSys.armMotor.getControlMode());
-		if (ArmSubsystem.debug)
 			System.out.println("Angle to move to: " + angleToMoveTo);
-		if (ArmSubsystem.debug)
 			System.out.println("Current angle: " + currentAngle);
-		if (ArmSubsystem.debug)
 			System.out.println("Ticks to move: " + (angleToMoveTo - currentAngle));
-		if (ArmSubsystem.debug)
 			System.out.println("Rotations to move: " + (angleToMoveTo) / 1000);
+		}
+		
 		Robot.armSys.setArmPosition(angleToMoveTo / 1000, P, I, D);
 	}
 
@@ -69,10 +67,7 @@ public class PresetArmCommand extends Command {
 	}
 
 	protected boolean isFinished() {
-		if ((currentAngle >= angleToMoveTo - tolerance && angleToMoveTo + tolerance >= currentAngle) || isTimedOut()) {
-			return true;
-		}
-		return false;
+		return (currentAngle >= angleToMoveTo - tolerance && angleToMoveTo + tolerance >= currentAngle) || isTimedOut();
 	}
 
 	protected void end() {
