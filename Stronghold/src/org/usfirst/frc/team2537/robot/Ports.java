@@ -1,33 +1,38 @@
 package org.usfirst.frc.team2537.robot;
 
 /**
- * List of ports that we will use on the robot. Change as necessary
+ * List of port numbers that we will use on the robot. Change as necessary in
+ * accordance with the IO sheet.
  * 
  * @author Alex Taber
- *
  */
 public final class Ports {
 	public static final int
-	// Joystick
-	JOYSTICK_LEFT_PORT = 0, JOYSTICK_RIGHT_PORT = 1,
+	
+	    /////// Joysticks ///////
+	    JOYSTICK_LEFT_PORT = 0, JOYSTICK_RIGHT_PORT = 1,
 
-			// XBOX Controller
-			XBOX = 2,
+		/////// XBOX Controller ///////
+		XBOX = 2,
 
-		// Motor Talons
+		/////// CAN Talons ///////
+		// Drive
 		FRONT_LEFT_MOTOR_PORT = 1, FRONT_RIGHT_MOTOR_PORT = 2,
 		BACK_LEFT_MOTOR_PORT = 3, BACK_RIGHT_MOTOR_PORT = 4,
 		
+		// Shooter
 		LEFT_FLYWHEEL_PORT = 5, RIGHT_FLYWHEEL_PORT = 6,
 		
+		// Shooter Pivot
 		SHOOTER_ANGLE_PORT = 7,			
 
+        // Breaching Arm
 		ARM_TALON = 8,
 		
-		//PWM Serv
+		/////// PWM Output ///////
 		SHOOTER_SERVO = 1,
 
-		// Sensors
+		/////// DIO Input (Sensors) ///////
 		TILT_SENSOR_PORT = 0,
 		ARM_IMU = 1,
 		SHOOTER_PROXIMITY_PORT = 2,
@@ -39,6 +44,8 @@ public final class Ports {
 		RASP_PI_VERTICAL = 9;
 	
 	public static final String
+	
+	    /////// Cameras ///////
 		SHOOTING_CAMERA = "cam0",
 		UPWARD_BREACHING_CAMERA = "cam1",
 		DOWNWARD_BREACHING_CAMERA = "cam2";
