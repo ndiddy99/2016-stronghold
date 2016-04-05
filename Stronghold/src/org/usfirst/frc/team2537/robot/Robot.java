@@ -23,8 +23,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
  * directory.
  */
 public class Robot extends IterativeRobot {
+//	AutoChooser autoChooser;
+	Command autoCommand;
+	CommandGroup autoCommandGroup; //Timmy Tommy is lazy
+	final String defaultAuto = "Default";
+	final String customAuto = "My Auto";
+	String autoSelected;
 	private AutoChooser autoChooser;
-	private Command autoCommand;
 	public static DriveSubsystem driveSys;
 	public static CameraFeeds feeds;
 	public static ArmSubsystem armSys;
@@ -49,44 +54,42 @@ public class Robot extends IterativeRobot {
 		 * SmartDashboard.putData("Auto choices", chooser);
 		 */
 
-		sensorSys = new Sensors();
-		sensorSys.init();
+//		sensorSys = new Sensors();
+//		sensorSys.init();
 
-		driveSys = new DriveSubsystem();
-		driveSys.registerButtons();
-		driveSys.initDefaultCommand();
+//		driveSys = new DriveSubsystem();
+//		driveSys.registerButtons();
+//		driveSys.initDefaultCommand();
 
-		armSys = new ArmSubsystem();
-		armSys.initDefaultCommand();
-		armSys.registerButtons();
-		//
-		autoChooser = new AutoChooser();
-
-		shooterFlywheelSys = new FlywheelSubsystem();
-		shooterAngleSys = new AngleSubsystemPID();
-
-		sensorSys.registerListener(shooterAngleSys);
-
-		shooterActuatorSys = new ActuatorSubsystem();
-		shooterFlywheelSys.initDefaultCommand();
-		shooterFlywheelSys.registerButtons();
-		// Shooter Angle
-		shooterAngleSys.initDefaultCommand();
-		shooterAngleSys.registerButtons();
-
-		// Shooter Actuator
-		shooterActuatorSys.initDefaultCommand();
-		shooterActuatorSys.registerButtons();
+//			armSys = new ArmSubsystem();
+//			armSys.initDefaultCommand();
+//			armSys.registerButtons();
+		
+//		autoChooser = new AutoChooser();
+//		sensorSys = new Sensors();
+//		shooterFlywheelSys = new FlywheelSubsystem();
+//		shooterAngleSys = new AngleSubsystemPID();
+//		sensorSys.registerListener(shooterAngleSys);
+//		shooterActuatorSys = new ActuatorSubsystem();
+//		shooterFlywheelSys.initDefaultCommand();
+//		shooterFlywheelSys.registerButtons();
+//		// Shooter Angle
+//		shooterAngleSys.initDefaultCommand();
+//		shooterAngleSys.registerButtons();
+//
+//		// Shooter Actuator
+//		shooterActuatorSys.initDefaultCommand();
+//		shooterActuatorSys.registerButtons();
 
 		// sensorSys.registerListener(shooterFlywheelSys);
 		// sensorSys.registerListener(shooterA);
 
-		sensorSys.registerListener(armSys);
-		sensorSys.registerListener(shooterAngleSys);
-		sensorSys.registerListener(shooterFlywheelSys);
-
+//		sensorSys.registerListener(armSys);
+//		sensorSys.registerListener(shooterAngleSys);
+//		sensorSys.registerListener(shooterFlywheelSys);
+//		sensorSys.init();
+		//TODO Uncomment stuff for full component pushes.
 		feeds = new CameraFeeds();
-		feeds.init();
 	}
 
 	/**
@@ -102,9 +105,9 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousInit() {
 		feeds.init();
-		autoCommand = autoChooser.getAutoChoice();
-		Scheduler.getInstance().add(autoCommand);
-		System.out.println("Autonomous start");
+//		autoCommand = autoChooser.getAutoChoice();
+//		Scheduler.getInstance().add(autoCommand);
+//		System.out.println("Autonomous start");
 	}
 
 	/**
@@ -112,7 +115,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		feeds.run();
+		//Only update the cameras if we are not currently doing so.
 	}
 
 
@@ -121,10 +124,8 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopInit(){
 		System.out.println("Teleop init");
-		if(autoCommand != null)
-			autoCommand.cancel();
 		feeds.init();
-		sensorSys.handleEvents();
+//		sensorSys.handleEvents();
 
 	}
 
@@ -132,18 +133,13 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-		sensorSys.handleEvents();
-		feeds.run();
+//		sensorSys.handleEvents();
+		//Only update the cameras if we are not currently doing so.
 		Scheduler.getInstance().run();		
-//		SmartDashboard.putNumber("Arm IMU", armSys.getIMUAngle());
-//		Double shooterAngle = shooterAngleSys.getCurrentAngle();
-//		SmartDashboard.putString("Shooter IMU", shooterAngle==null?"null":shooterAngle.toString());
-//		SmartDashboard.putNumber("Arm Encoder", armSys.getAngle());
-//		SmartDashboard.putBoolean("Is Fwd limit switch enabled", Robot.armSys.armMotor.isFwdLimitSwitchClosed());
-//		SmartDashboard.putBoolean("Is Rev limit switch enabled", Robot.armSys.armMotor.isRevLimitSwitchClosed());
 	}
 
 	public void testInit() {
+		feeds.init();
 		sensorSys.handleEvents();
 	}
 
@@ -153,8 +149,6 @@ public class Robot extends IterativeRobot {
 	 */
 	public void testPeriodic() {
 		sensorSys.handleEvents();
-		// sensorSys.updateSmartDashboardValues();
-		// feeds.run();
 		Scheduler.getInstance().run();
 	}
 
@@ -165,7 +159,6 @@ public class Robot extends IterativeRobot {
 	
 	@Override
 	public void disabledPeriodic() {
-		feeds.run();
 	}
 
 }

@@ -48,13 +48,12 @@ public class Sensors {
 	}
 
 	public void handleEvents() {
-
 		sensorVals.clear();// Make sure we don't copy old values.
-
 		for (SensorInterface s : sensors) {
 			s.getValue();
 		}
 
+		
 		for (SensorListener l : listeners) {
 			l.receivedValue(sensorVals);
 		}

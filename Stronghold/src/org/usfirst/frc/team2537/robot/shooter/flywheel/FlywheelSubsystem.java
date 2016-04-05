@@ -229,4 +229,8 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 			System.out.println("R Error: " + getRightError());
 		}
 	}
+	public void disableFlywheels() {
+		leftFlywheelMotor.disable();
+		rightFlywheelMotor.disable();
+	}
 }
