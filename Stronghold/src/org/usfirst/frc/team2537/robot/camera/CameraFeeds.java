@@ -11,12 +11,11 @@ import com.ni.vision.NIVision.Image;
 import com.ni.vision.NIVision.Point;
 
 import edu.wpi.first.wpilibj.CameraServer;
-import javafx.scene.transform.Rotate;
 
 public class CameraFeeds {
-	private final int camCenter;
-	private final int camRight;
-	private final int camLeft;
+	private int camCenter;
+	private int camRight;
+	private int camLeft;
 	private final Image frame;
 	private final CameraServer server;
 	private final Queue<Integer> cameras;
