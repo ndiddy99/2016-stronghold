@@ -73,10 +73,10 @@ public class CameraFeeds {
 
 		changeCam(curCam);
 		// Only start the thread when it is not running already.
-		if(!cameraUpdateThread.isAlive()) {
+		if (!cameraUpdateThread.isAlive()) {
 			cameraUpdateThread.start();
 		}
-		
+
 	}
 
 	/**
