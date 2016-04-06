@@ -9,7 +9,9 @@ import edu.wpi.first.wpilibj.command.Command;
  * 
  * @author Matthew Schweiss
  *
+ * @deprecated This should not be used any more.
  */
+@Deprecated
 public class ManualAngleCommand extends Command {
 	/*
 	 * Adjust the sensitivity of the joystickAngle. Values less than 1 decrease

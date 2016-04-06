@@ -11,6 +11,8 @@ import org.usfirst.frc.team2537.robot.Robot;
  *
  *         The point of this command is to put the shooter to a particular
  *         angle. This goes to the angle but slows as it approaches the angle.
+ *         
+ * @deprecated This should not be used anymore.
  */
 public class MoveToAngleCommand extends Command {
 	private static final boolean DEBUG = true;

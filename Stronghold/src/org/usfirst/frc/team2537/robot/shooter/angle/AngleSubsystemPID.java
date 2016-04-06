@@ -21,8 +21,9 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
  * 
  *         This is the base class for anything adjusting the angle of the
  *         shooter.
- *
+ * @deprecated This should not be used any more.
  */
+@Deprecated
 public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 
 	// The angle limits.

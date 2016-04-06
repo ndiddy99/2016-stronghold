@@ -16,7 +16,9 @@ import org.usfirst.frc.team2537.robot.input.XboxButtons;
  *         This is the base class for anything adjusting the angle of the
  *         shooter.
  *
+ * @deprecated This shouldn't be used as this is a discontinued function.
  */
+@Deprecated
 public class AngleSubsystem extends Subsystem implements SensorListener {
 	
 	// The angle limits.
@@ -32,7 +34,7 @@ public class AngleSubsystem extends Subsystem implements SensorListener {
 	// Varibles
 	private Double currentAngle = null;
 	private final CANTalon angleMotor;
-
+	
 	public AngleSubsystem() {
 		angleMotor = new CANTalon(Ports.SHOOTER_ANGLE_PORT);
 		// Change control mode of the angleTalon to percent Vbus.

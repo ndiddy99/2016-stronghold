@@ -5,6 +5,13 @@ import org.usfirst.frc.team2537.robot.Ports;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
+/**
+ * 
+ * @author Matthew Schweiss
+ *
+ * @deprecated This should not be used. Angle is not a used function.
+ */
+@Deprecated
 public class AnglePIDControllerSubsystem extends Subsystem {
 	
 	private static final double MAX_ANGLE = 28;// degrees (ball park, not right)

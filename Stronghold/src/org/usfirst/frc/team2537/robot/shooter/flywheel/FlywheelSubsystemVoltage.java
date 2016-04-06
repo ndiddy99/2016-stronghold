@@ -15,14 +15,16 @@ import org.usfirst.frc.team2537.robot.shooter.ShootCommandGroup;
 import org.usfirst.frc.team2537.robot.shooter.HarvestCommandGroup;
 import static edu.wpi.first.wpilibj.CANTalon.FeedbackDevice.QuadEncoder;
 
-/*
- * Important notice! If we use getSoftLimit() it will be in native units.
+/**
+ * @author Matthew Schweiss
+ * 
+ * THIS IS UNTESTED
+ * NOT TESTED
  */
-public class FlywheelSubsystem extends Subsystem implements SensorListener {
+public class FlywheelSubsystemVoltage extends Subsystem implements SensorListener {
 
 	// Constants
 	public static final boolean DEBUG = false;
-	private static final int ENCODER_TICKS_PER_REV = 20;
 	private static final double UNITS_PER_100MS_TO_RPM = 100.0 / 4096 * 1000 * 60;
 	private static final double SPEED_TOLERANCE = -ShootCommandGroup.SHOOT_VELOCITY * .05;
 	// Max voltage that can be output from the flyweel talons.
@@ -30,27 +32,16 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	// 5 volts per second ramp rate for the flywheels
 	@SuppressWarnings("unused")
 	private static final double VOLTAGE_RAMP_RATE = 12;
-	// yet
-	private static final double P = 3.1, I = 0.001, D = 0.31;
 	// Vars
 	private boolean proximityValue = false;
 	//The orientation assumes that you are facing the bot
 	private CANTalon leftFlywheelMotor;
 	private CANTalon rightFlywheelMotor;
-	public static final boolean ENABLE_VOLTAGE_OVERRIDE = false;
-	private static final double F_GAIN_RIGHT = 0.18235294117;
-	private static final double F_GAIN_LEFT = 0.19597701149;
 
-	public FlywheelSubsystem() {
+	public FlywheelSubsystemVoltage() {
 		// Make sure the the mode to velocity so we can modify it.
 		leftFlywheelMotor = new CANTalon(Ports.LEFT_FLYWHEEL_PORT);
 		rightFlywheelMotor = new CANTalon(Ports.RIGHT_FLYWHEEL_PORT);
-
-		// Set encoder.
-		leftFlywheelMotor.setFeedbackDevice(QuadEncoder);
-		leftFlywheelMotor.configEncoderCodesPerRev(ENCODER_TICKS_PER_REV);
-		rightFlywheelMotor.setFeedbackDevice(QuadEncoder);
-		rightFlywheelMotor.configEncoderCodesPerRev(ENCODER_TICKS_PER_REV);
 
 		// Make sure the soft limits are disabled.
 		leftFlywheelMotor.enableForwardSoftLimit(false);
@@ -72,20 +63,6 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 		rightFlywheelMotor.configNominalOutputVoltage(0.0f, 0.0f);
 		rightFlywheelMotor.configPeakOutputVoltage(12.0f, -12.0f);
 		rightFlywheelMotor.configMaxOutputVoltage(MAX_VOLTAGE);
-
-		// Set rightFlywheelMotor to be reversed of everything else.
-		rightFlywheelMotor.reverseOutput(false);
-		rightFlywheelMotor.reverseSensor(false);
-		leftFlywheelMotor.reverseOutput(false);
-		leftFlywheelMotor.reverseSensor(false);
-
-		// Set PID's
-		leftFlywheelMotor.setPID(P, I, D);
-		leftFlywheelMotor.setF(F_GAIN_LEFT);
-		rightFlywheelMotor.setPID(P, I, D);
-		rightFlywheelMotor.setF(F_GAIN_RIGHT);
-//		rightFlywheelMotor.setVoltageRampRate(VOLTAGE_RAMP_RATE);
-//		leftFlywheelMotor.setVoltageRampRate(VOLTAGE_RAMP_RATE);
 
 		// Make the talons go into the speed control mode.
 		leftFlywheelMotor.changeControlMode(CANTalon.TalonControlMode.Voltage);
@@ -113,19 +90,11 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	public void setSpeed(double speed) {
 		SmartDashboard.putString("Left Talon Mode", leftFlywheelMotor.getControlMode().toString());
 		SmartDashboard.putString("Right Talon Mode", rightFlywheelMotor.getControlMode().toString());
-		if(!ENABLE_VOLTAGE_OVERRIDE) {
-			leftFlywheelMotor.set(-speed);
-			rightFlywheelMotor.set(speed);
-		} else {
-			leftFlywheelMotor.changeControlMode(TalonControlMode.PercentVbus);
-			rightFlywheelMotor.changeControlMode(TalonControlMode.PercentVbus);
-			leftFlywheelMotor.set(speed / 5670.666);
-			rightFlywheelMotor.set(speed/ 5670.666);
-		}
+		leftFlywheelMotor.set(-speed);
+		rightFlywheelMotor.set(speed);
 	}
 	
 	public void stop(){
-//		System.out.println("MOTORS STOP!!!!!");
 		rightFlywheelMotor.set(0);
 		leftFlywheelMotor.set(0);
 	}
@@ -188,7 +157,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 		return rightFlywheelMotor.getError() * UNITS_PER_100MS_TO_RPM;
 	}
 	
-	@Deprecated //We no longer watch the encoders.
+	@Deprecated //To my understanding, was never set up.
 	/**
 	 * Check if a ball is in the shooter.
 	 * 
@@ -198,11 +167,10 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 		return proximityValue;
 	}
 	
-	@Deprecated //We no longer watch the encoders.
 	// Counter is only used for is at speed to determine how many consecutive
 	// measurments are at the speed that we want to be at.
 	int counter = 0;
-	@Deprecated //We no longer watch the encoders.
+	@Deprecated //This shouldn't be used any more because we can't rely on encoders.
 	public boolean isAtSpeed(double speed) {
 		if (DEBUG) System.out.println("Good speeds sampled: " + counter);
 		if (Math.abs(Math.abs(getRightSpeed()) - Math.abs(speed)) <= SPEED_TOLERANCE
