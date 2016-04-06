@@ -3,6 +3,7 @@ package org.usfirst.frc.team2537.robot.shooter.angle;
 import java.util.HashMap;
 
 import org.usfirst.frc.team2537.robot.Ports;
+import org.usfirst.frc.team2537.robot.Robot;
 import org.usfirst.frc.team2537.robot.input.HumanInput;
 import org.usfirst.frc.team2537.robot.input.Sensor;
 import org.usfirst.frc.team2537.robot.input.SensorListener;
@@ -45,7 +46,7 @@ public class AngleSubsystemPID extends PIDSubsystem implements SensorListener {
 		angleMotor = new CANTalon(Ports.SHOOTER_ANGLE_PORT);
 		// Change control mode of the angleTalon to percent Vbus.
 		angleMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
-		shooterNAVX = new AHRS(Port.kMXP);
+		shooterNAVX = Robot.driveSys.getAhrs();
 		// Add limits.
 		angleMotor.ConfigFwdLimitSwitchNormallyOpen(true);
 		angleMotor.ConfigRevLimitSwitchNormallyOpen(true);
