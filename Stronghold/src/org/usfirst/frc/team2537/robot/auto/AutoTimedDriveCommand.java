@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class AutoTimedDriveCommand extends Command {
 	private long startTime;
 	private long duration;
-	private static final double DEFAULT_SPEED = -0.5;
+	private static final double DEFAULT_SPEED = 0.75;
 	private static final boolean debug = true;
 
 	/**
