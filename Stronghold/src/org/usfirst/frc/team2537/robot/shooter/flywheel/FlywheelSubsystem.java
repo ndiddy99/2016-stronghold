@@ -133,7 +133,6 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	
 
 	// LEFT
-	@Deprecated //We no longer watch the encoders.
 	/**
 	 * Get the current speed of the left flywheel.
 	 * 
@@ -146,8 +145,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 		}
 		return leftFlywheelMotor.getSpeed();
 	}
-	
-	@Deprecated //We no longer watch the encoders.
+
 	/**
 	 * Get the error of the left flywheel. This is the distance from the wanted
 	 * speed and the current speed.
@@ -166,7 +164,6 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	}
 
 	// RIGHT
-	@Deprecated //We no longer watch the encoders.
 	/**
 	 * Get the current speed of the left flywheel.
 	 * 
@@ -176,8 +173,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 		if (DEBUG) System.out.println("Right Flywheel Speed: " + rightFlywheelMotor.getSpeed());
 		return rightFlywheelMotor.getSpeed();
 	}
-	
-	@Deprecated //We no longer watch the encoders.
+
 	/**
 	 * Get the error of the left flywheel. This is the distance from the wanted
 	 * speed and the current speed.
@@ -187,8 +183,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	public double getRightError() {
 		return rightFlywheelMotor.getError() * UNITS_PER_100MS_TO_RPM;
 	}
-	
-	@Deprecated //We no longer watch the encoders.
+
 	/**
 	 * Check if a ball is in the shooter.
 	 * 
@@ -197,12 +192,10 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	public boolean isBallPresent() {
 		return proximityValue;
 	}
-	
-	@Deprecated //We no longer watch the encoders.
+
 	// Counter is only used for is at speed to determine how many consecutive
 	// measurments are at the speed that we want to be at.
 	int counter = 0;
-	@Deprecated //We no longer watch the encoders.
 	public boolean isAtSpeed(double speed) {
 		if (DEBUG) System.out.println("Good speeds sampled: " + counter);
 		if (Math.abs(Math.abs(getRightSpeed()) - Math.abs(speed)) <= SPEED_TOLERANCE
@@ -235,9 +228,5 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 			System.out.print("R Speed: " + getRightSpeed());
 			System.out.println("R Error: " + getRightError());
 		}
-	}
-	public void disableFlywheels() {
-		leftFlywheelMotor.disable();
-		rightFlywheelMotor.disable();
 	}
 }

@@ -1,19 +1,15 @@
 package org.usfirst.frc.team2537.robot;
 
 import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
-import org.usfirst.frc.team2537.robot.auto.AutoChooser;
+import org.usfirst.frc.team2537.robot.auto.AutoTimedDriveCommand;
 import org.usfirst.frc.team2537.robot.camera.CameraFeeds;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team2537.robot.input.Sensors;
 import org.usfirst.frc.team2537.robot.shooter.actuator.ActuatorSubsystem;
-import org.usfirst.frc.team2537.robot.shooter.angle.AngleSubsystemPID;
 import org.usfirst.frc.team2537.robot.shooter.flywheel.FlywheelSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -23,18 +19,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	private AutoChooser autoChooser;
-	private Command autoCommand;
+//	private AutoChooser autoChooser;
+//	private Command autoCommand;
 	public static DriveSubsystem driveSys;
 	public static CameraFeeds feeds;
 	public static ArmSubsystem armSys;
 
-	SendableChooser chooser;
 	// My stuff
 	public static Sensors sensorSys;
 	public static FlywheelSubsystem shooterFlywheelSys;
 	public static ActuatorSubsystem shooterActuatorSys;
-	public static AngleSubsystemPID shooterAngleSys;
+//	public static AngleSubsystemPID shooterAngleSys;
 
 	@Override
 	/**
@@ -60,19 +55,19 @@ public class Robot extends IterativeRobot {
 		armSys.initDefaultCommand();
 		armSys.registerButtons();
 		//
-		autoChooser = new AutoChooser();
+//		autoChooser = new AutoChooser();
 
 		shooterFlywheelSys = new FlywheelSubsystem();
-		shooterAngleSys = new AngleSubsystemPID();
+//		shooterAngleSys = new AngleSubsystemPID();
 
-		sensorSys.registerListener(shooterAngleSys);
+//		sensorSys.registerListener(shooterAngleSys);
 
 		shooterActuatorSys = new ActuatorSubsystem();
 		shooterFlywheelSys.initDefaultCommand();
 		shooterFlywheelSys.registerButtons();
 		// Shooter Angle
-		shooterAngleSys.initDefaultCommand();
-		shooterAngleSys.registerButtons();
+//		shooterAngleSys.initDefaultCommand();
+//		shooterAngleSys.registerButtons();
 
 		// Shooter Actuator
 		shooterActuatorSys.initDefaultCommand();
@@ -82,7 +77,7 @@ public class Robot extends IterativeRobot {
 		// sensorSys.registerListener(shooterA);
 
 		sensorSys.registerListener(armSys);
-		sensorSys.registerListener(shooterAngleSys);
+//		sensorSys.registerListener(shooterAngleSys);
 		sensorSys.registerListener(shooterFlywheelSys);
 
 		feeds = new CameraFeeds();
@@ -102,8 +97,8 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousInit() {
 		feeds.init();
-		autoCommand = autoChooser.getAutoChoice();
-		Scheduler.getInstance().add(autoCommand);
+//		autoCommand = autoChooser.getAutoChoice();
+		Scheduler.getInstance().add(new AutoTimedDriveCommand(2500));
 		System.out.println("Autonomous start");
 	}
 
@@ -112,7 +107,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		feeds.init();
+		feeds.run();
 	}
 
 
@@ -121,8 +116,8 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopInit(){
 		System.out.println("Teleop init");
-		if(autoCommand != null)
-			autoCommand.cancel();
+//		if(autoCommand != null)
+//			autoCommand.cancel();
 		feeds.init();
 		sensorSys.handleEvents();
 
@@ -133,7 +128,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		sensorSys.handleEvents();
-		feeds.init();
+		feeds.run();
 		Scheduler.getInstance().run();		
 //		SmartDashboard.putNumber("Arm IMU", armSys.getIMUAngle());
 //		Double shooterAngle = shooterAngleSys.getCurrentAngle();
@@ -165,7 +160,7 @@ public class Robot extends IterativeRobot {
 	
 	@Override
 	public void disabledPeriodic() {
-		feeds.init();
+		feeds.run();
 	}
 
 }

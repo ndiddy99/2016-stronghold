@@ -30,7 +30,8 @@ public final class Ports {
 		ARM_TALON = 8,
 		
 		/////// PWM Output ///////
-		SHOOTER_SERVO =1,
+		SHOOTER_SERVO = 1,
+
 		/////// DIO Input (Sensors) ///////
 		TILT_SENSOR_PORT = 0,
 		ARM_IMU = 1,

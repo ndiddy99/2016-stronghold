@@ -64,7 +64,4 @@ public class ActuatorSubsystem extends Subsystem {
 		// ActuatorCommand(false));
 
 	}
-	public void disableActuator() {
-		actuator.free();
-	}
 }

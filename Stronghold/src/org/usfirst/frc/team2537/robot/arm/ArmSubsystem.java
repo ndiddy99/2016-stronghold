@@ -70,8 +70,8 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 	 * 
 	 * @return double of the arm angle
 	 */
-	public Double getAngle() {
-		return Double.valueOf(armMotor.getEncPosition());
+	public double getAngle() {
+		return armMotor.getEncPosition();
 	}
 
 	/**
