@@ -194,7 +194,7 @@ public class FlywheelSubsystem extends Subsystem implements SensorListener {
 	}
 
 	// Counter is only used for is at speed to determine how many consecutive
-	// measurments are at the speed that we want to be at.
+	// measurements are at the speed that we want to be at.
 	int counter = 0;
 	public boolean isAtSpeed(double speed) {
 		if (DEBUG) System.out.println("Good speeds sampled: " + counter);
