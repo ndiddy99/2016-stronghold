@@ -47,7 +47,7 @@ public class DriveSubsystem extends Subsystem {
 		// SPEED MODE CODE
 		// setDriveControlMode(TalonControlMode.Speed);
 
-		driveType = DriveType.doubleJoystick;
+		driveType = DriveType.doubleJoystickXbox;
 		drivingStraight = false;
 		driveLowerSpeed = false;
 		reversed = true;
