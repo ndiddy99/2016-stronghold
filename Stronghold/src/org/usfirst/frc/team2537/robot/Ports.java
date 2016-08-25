@@ -29,6 +29,10 @@ public final class Ports {
         // Breaching Arm
 		ARM_TALON = 8,
 		
+		// Climber motors
+		CLIMBER_MOTOR_1 = 9,
+		CLIMBER_MOTOR_2 = 10,
+		
 		/////// PWM Output ///////
 		SHOOTER_SERVO = 1,
 

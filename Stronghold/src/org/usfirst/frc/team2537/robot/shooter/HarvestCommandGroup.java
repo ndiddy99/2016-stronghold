@@ -13,8 +13,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class HarvestCommandGroup extends CommandGroup {
 	private static final boolean DEBUG = true;
-	private static final double HARVEST_ANGLE = -10;
-	private static final double HARVEST_SPEED = 6;
+	private static final double HARVEST_SPEED = 8;
 
 	public HarvestCommandGroup() {
 //		addParallel(new MoveToAngleCommand(HARVEST_ANGLE));

@@ -47,10 +47,10 @@ public class DriveCommand extends Command {
 					AxisType.kY);
 
 			// uses xbox x axis for rotation
-			left -= HumanInput.getXboxAxis(HumanInput.xboxController,
-					XboxButtons.XBOX_LEFT_X_AXIS) / ROTATE_SCALE;
-			right += HumanInput.getXboxAxis(HumanInput.xboxController,
-					XboxButtons.XBOX_LEFT_X_AXIS) / ROTATE_SCALE;
+//			left -= HumanInput.getXboxAxis(HumanInput.xboxController,
+//					XboxButtons.XBOX_LEFT_X_AXIS) / ROTATE_SCALE;
+//			right += HumanInput.getXboxAxis(HumanInput.xboxController,
+//					XboxButtons.XBOX_LEFT_X_AXIS) / ROTATE_SCALE;
 			break;
 		case singleJoystick:
 			left = HumanInput.getJoystickAxis(HumanInput.leftJoystick,
