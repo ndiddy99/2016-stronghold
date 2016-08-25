@@ -1,7 +1,10 @@
 package org.usfirst.frc.team2537.robot;
 
+import org.usfirst.frc.team2537.robot.arm.ArmPositions;
 import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
+import org.usfirst.frc.team2537.robot.arm.PresetArmCommand;
 import org.usfirst.frc.team2537.robot.auto.AutoTimedDriveCommand;
+import org.usfirst.frc.team2537.robot.auto.ArmAndDriveAuto;
 import org.usfirst.frc.team2537.robot.camera.CameraFeeds;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team2537.robot.input.Sensors;
@@ -98,7 +101,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		feeds.init();
 //		autoCommand = autoChooser.getAutoChoice();
-		Scheduler.getInstance().add(new AutoTimedDriveCommand(2500));
+		Scheduler.getInstance().add(new ArmAndDriveAuto());
 		System.out.println("Autonomous start");
 	}
 

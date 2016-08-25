@@ -105,7 +105,7 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 	 * @return double of the right joystick
 	 */
 	public double getRightJoystick() {
-		return HumanInput.getXboxAxis(HumanInput.xboxController, XboxButtons.XBOX_RIGHT_Y_AXIS);
+		return HumanInput.getXboxAxis(HumanInput.xboxController, XboxButtons.XBOX_RIGHT_Y_AXIS, 0.2);
 	}
 
 	/**
