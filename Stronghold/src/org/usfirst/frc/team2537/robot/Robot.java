@@ -20,8 +20,6 @@ import edu.wpi.first.wpilibj.command.Scheduler;
  * directory.
  */
 public class Robot extends IterativeRobot {
-//	private AutoChooser autoChooser;
-//	private Command autoCommand;
 	public static DriveSubsystem driveSys;
 	public static CameraFeeds feeds;
 	public static ArmSubsystem armSys;
@@ -31,7 +29,6 @@ public class Robot extends IterativeRobot {
 	public static Sensors sensorSys;
 	public static FlywheelSubsystem shooterFlywheelSys;
 	public static ActuatorSubsystem shooterActuatorSys;
-//	public static AngleSubsystemPID shooterAngleSys;
 
 	@Override
 	/**
@@ -59,30 +56,18 @@ public class Robot extends IterativeRobot {
 		armSys = new ArmSubsystem();
 		armSys.initDefaultCommand();
 		armSys.registerButtons();
-		//
-//		autoChooser = new AutoChooser();
 
 		shooterFlywheelSys = new FlywheelSubsystem();
-//		shooterAngleSys = new AngleSubsystemPID();
-
-//		sensorSys.registerListener(shooterAngleSys);
 
 		shooterActuatorSys = new ActuatorSubsystem();
 		shooterFlywheelSys.initDefaultCommand();
 		shooterFlywheelSys.registerButtons();
-		// Shooter Angle
-//		shooterAngleSys.initDefaultCommand();
-//		shooterAngleSys.registerButtons();
 
 		// Shooter Actuator
 		shooterActuatorSys.initDefaultCommand();
 		shooterActuatorSys.registerButtons();
 
-		// sensorSys.registerListener(shooterFlywheelSys);
-		// sensorSys.registerListener(shooterA);
-
 		sensorSys.registerListener(armSys);
-//		sensorSys.registerListener(shooterAngleSys);
 		sensorSys.registerListener(shooterFlywheelSys);
 
 		feeds = new CameraFeeds();
@@ -102,7 +87,6 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousInit() {
 		feeds.init();
-//		autoCommand = autoChooser.getAutoChoice();
 		Scheduler.getInstance().add(new ArmAndDriveAuto());
 		System.out.println("Autonomous start");
 	}
@@ -121,8 +105,6 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopInit(){
 		System.out.println("Teleop init");
-//		if(autoCommand != null)
-//			autoCommand.cancel();
 		feeds.init();
 		sensorSys.handleEvents();
 
@@ -135,12 +117,6 @@ public class Robot extends IterativeRobot {
 		sensorSys.handleEvents();
 		feeds.run();
 		Scheduler.getInstance().run();		
-//		SmartDashboard.putNumber("Arm IMU", armSys.getIMUAngle());
-//		Double shooterAngle = shooterAngleSys.getCurrentAngle();
-//		SmartDashboard.putString("Shooter IMU", shooterAngle==null?"null":shooterAngle.toString());
-//		SmartDashboard.putNumber("Arm Encoder", armSys.getAngle());
-//		SmartDashboard.putBoolean("Is Fwd limit switch enabled", Robot.armSys.armMotor.isFwdLimitSwitchClosed());
-//		SmartDashboard.putBoolean("Is Rev limit switch enabled", Robot.armSys.armMotor.isRevLimitSwitchClosed());
 	}
 
 	public void testInit() {
@@ -153,8 +129,6 @@ public class Robot extends IterativeRobot {
 	 */
 	public void testPeriodic() {
 		sensorSys.handleEvents();
-		// sensorSys.updateSmartDashboardValues();
-		// feeds.run();
 		Scheduler.getInstance().run();
 	}
 
