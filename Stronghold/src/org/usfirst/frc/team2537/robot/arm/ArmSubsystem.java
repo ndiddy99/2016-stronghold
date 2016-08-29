@@ -43,24 +43,29 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 	}
 
 	/**
-	 * Calling this will calibrate the arm (theoretically, assuming we're on
-	 * flat ground).
-	 * 
-	 * Works
-	 * 
+	 * Register human input buttons
 	 */
-
 	public void registerButtons() {
 		HumanInput.registerPressedCommand(HumanInput.lowBarModeEnableButton, new GoDown());
 		HumanInput.registerReleasedCommand(HumanInput.lowBarModeEnableButton, new PresetArmCommand(oldPos));
 		HumanInput.registerPressedCommand(HumanInput.driveAroundButton, new PresetArmCommand(0));
 	}
 
+	/**
+	 * Set the arm motor into position mode rather than voltage mode; also sets
+	 * PID values
+	 */
 	public void positionMode() {
 		armMotor.changeControlMode(TalonControlMode.Position);
 		armMotor.setPID(P, I, D);
 	}
 
+	/**
+	 * Set the old position for the arm for use in low bar mode
+	 * 
+	 * @deprecated
+	 * @param oldPos
+	 */
 	public void setOldPos(double oldPos) {
 		this.oldPos = oldPos;
 	}
@@ -93,7 +98,16 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 		armMotor.setPID(P, I, D);
 		armMotor.set(position);
 	}
-	
+
+	/**
+	 * Sets the arm's position, given a PID value and a position
+	 * 
+	 * @param position
+	 *            in encoder ticks
+	 * @param newP
+	 * @param newI
+	 * @param newD
+	 */
 	public void setArmPosition(double position, double newP, double newI, double newD) {
 		armMotor.setPID(newP, newI, newD);
 		armMotor.set(position);
@@ -126,14 +140,25 @@ public class ArmSubsystem extends Subsystem implements SensorListener {
 		}
 	}
 
+	/**
+	 * Get number of encoder ticks on arm motor
+	 */
 	public void getEncoder() {
 		System.out.println(armMotor.getEncPosition());
 	}
 
+	/**
+	 * Enable control mode
+	 */
 	public void enable() {
 		armMotor.enableControl();
 	}
 
+	/**
+	 * Get position of IMU on arm
+	 * 
+	 * @return angle of arm
+	 */
 	public double getIMUAngle() {
 		return armIMUAngle;
 	}

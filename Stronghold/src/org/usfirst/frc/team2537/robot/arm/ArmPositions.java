@@ -2,6 +2,8 @@ package org.usfirst.frc.team2537.robot.arm;
 /**
  * List of variables of arm positions, in encoder ticks / 1000
  * 
+ * Mostly deprecated - do not use except for very specific circumstances!
+ * 
  * @author Alex Taber
  * 
  */
