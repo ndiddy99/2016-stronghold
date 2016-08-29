@@ -1,2 +1,5 @@
-build/*
-build.properties
+/Stronghold/build/*
+/Stronghold/build.properties
+/Stronghold/dist/*
+/Stronghold/build.xml
+/Stronghold/bin/*
