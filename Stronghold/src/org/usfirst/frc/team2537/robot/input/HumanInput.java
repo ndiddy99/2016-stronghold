@@ -21,11 +21,11 @@ public class HumanInput {
 	public static final Joystick leftJoystick = new Joystick(Ports.JOYSTICK_LEFT_PORT);
 	public static final Joystick rightJoystick = new Joystick(Ports.JOYSTICK_RIGHT_PORT);
 	// X-Box buttons
-	public static final JoystickButton driveAroundPos = new JoystickButton(xboxController, XboxButtons.XBOX_B);
 	public static final Button changeCameraButton = new JoystickButton(xboxController, XboxButtons.XBOX_X);
 	public static final JoystickButton shootPos = new JoystickButton(xboxController, XboxButtons.XBOX_Y);
 	public static final Button lowBarModeEnableButton = new JoystickButton(xboxController, XboxButtons.XBOX_LB);
 	public static final Button shootCancelButton = new JoystickButton(xboxController, XboxButtons.XBOX_RB);
+	public static final Button climbButton = new JoystickButton(xboxController, XboxButtons.XBOX_B);
 	public static final JoystickButton harvestBallTrigger = new XboxTrigger(xboxController,
 			XboxButtons.XBOX_LEFT_TRIGGERS);
 	public static final JoystickButton ballShootTrigger = new XboxTrigger(xboxController,

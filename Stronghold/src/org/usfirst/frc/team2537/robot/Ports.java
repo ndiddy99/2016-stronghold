@@ -35,6 +35,7 @@ public final class Ports {
 		
 		/////// PWM Output ///////
 		SHOOTER_SERVO = 1,
+		CLIMBER_SERVO = 0,
 
 		/////// DIO Input (Sensors) ///////
 		TILT_SENSOR_PORT = 0,
