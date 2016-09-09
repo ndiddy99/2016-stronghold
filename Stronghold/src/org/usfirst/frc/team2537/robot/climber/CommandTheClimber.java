@@ -21,12 +21,12 @@ public class CommandTheClimber extends CommandGroup {
 		addSequential(new ExtendTheTapeCommand(Climber.DISTANCE_TO_EXTEND));
 		if (Climber.debug) System.out.println("extending");
 		addSequential(new TurnTheTapeCommand(0, Climber.RAMP_RATE_RAMP_RATE_SERVO));
-		addSequential(new Stallin(.5));
+		addSequential(new Sleep(.5));
 
 		addSequential(new RetractTheTapeCommand(-20, 3));
 
 		addSequential(new ResetServo());
-		addSequential(new Stallin(.5));
+		addSequential(new Sleep(.5));
 
 		System.out.println("turning");
 		addSequential(new RetractTheTapeCommand((int)Climber.DISTANCE_TO_MOVE_BACK,12));

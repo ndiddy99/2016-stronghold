@@ -3,11 +3,11 @@ package org.usfirst.frc.team2537.robot.climber;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.Timer;
 
-public class Stallin extends Command {
+public class Sleep extends Command {
 	Timer timer=new Timer();
 	private double secs;
 	private long startTime;
-	public Stallin(double sec){
+	public Sleep(double sec){
 		secs= sec;
 	}
 
