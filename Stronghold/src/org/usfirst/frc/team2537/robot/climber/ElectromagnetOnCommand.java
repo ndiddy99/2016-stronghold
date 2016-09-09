@@ -7,36 +7,25 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ServoTurnCommand extends Command {
-	
-	private double angle;
-	private double curAngle;
-	private int iterations;
-    double acceleration = .001;
+public class ElectromagnetOnCommand extends Command {
 
-    public ServoTurnCommand(double angle) {
-        requires(Robot.climberSys);
-        this.angle = angle;
+    public ElectromagnetOnCommand() {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.climberSys.setServoPosition(ServoAngles.startAngle);
-    	iterations = 0;
+    	Robot.climberSys.electromagnetOn();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-		curAngle = Robot.climberSys.getServoPosition();
-    	if (curAngle > angle) {
-    		curAngle -= 0.5 * acceleration * Math.pow(iterations++, 2);
-    		Robot.climberSys.setServoPosition(Math.max(curAngle, angle));
-    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return (iterations > 360) || (Robot.climberSys.getServoPosition() <= angle + 1);
+        return true;
     }
 
     // Called once after isFinished returns true

@@ -7,24 +7,20 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ManualClimberCommand extends Command {
+public class ElectromagnetOffCommand extends Command {
 
-    public ManualClimberCommand() {
-        requires(Robot.climberSys);
+    public ElectromagnetOffCommand() {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.climberSys.electromagnetOff();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if (Robot.climberSys.getLeftJoystick() < 0)
-        	Robot.climberSys.setMotors(-0.5);
-        else if (Robot.climberSys.getLeftJoystick() > 0)
-        	Robot.climberSys.setMotors(0.5);
-        else
-        	Robot.climberSys.setMotors(0);
     }
 
     // Make this return true when this Command no longer needs to run execute()

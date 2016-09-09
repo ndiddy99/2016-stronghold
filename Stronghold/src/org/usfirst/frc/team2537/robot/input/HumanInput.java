@@ -25,7 +25,7 @@ public class HumanInput {
 	public static final JoystickButton shootPos = new JoystickButton(xboxController, XboxButtons.XBOX_Y);
 	public static final Button lowBarModeEnableButton = new JoystickButton(xboxController, XboxButtons.XBOX_LB);
 	public static final Button shootCancelButton = new JoystickButton(xboxController, XboxButtons.XBOX_RB);
-	public static final Button climbButton = new JoystickButton(xboxController, XboxButtons.XBOX_B);
+	public static final Button climberButton = new JoystickButton(xboxController, XboxButtons.XBOX_B);
 	public static final JoystickButton harvestBallTrigger = new XboxTrigger(xboxController,
 			XboxButtons.XBOX_LEFT_TRIGGERS);
 	public static final JoystickButton ballShootTrigger = new XboxTrigger(xboxController,

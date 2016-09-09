@@ -3,7 +3,7 @@ package org.usfirst.frc.team2537.robot;
 import org.usfirst.frc.team2537.robot.arm.ArmSubsystem;
 import org.usfirst.frc.team2537.robot.auto.ArmAndDriveAuto;
 import org.usfirst.frc.team2537.robot.camera.CameraFeeds;
-import org.usfirst.frc.team2537.robot.climber.ClimberSubsystem;
+import org.usfirst.frc.team2537.robot.climber.Climber;
 import org.usfirst.frc.team2537.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team2537.robot.input.Sensors;
 import org.usfirst.frc.team2537.robot.shooter.actuator.ActuatorSubsystem;
@@ -23,7 +23,7 @@ public class Robot extends IterativeRobot {
 	public static DriveSubsystem driveSys;
 	public static CameraFeeds feeds;
 	public static ArmSubsystem armSys;
-	public static ClimberSubsystem climberSys;
+	public static Climber climberSys;
 
 	// My stuff
 	public static Sensors sensorSys;
@@ -50,7 +50,7 @@ public class Robot extends IterativeRobot {
 		driveSys.registerButtons();
 		driveSys.initDefaultCommand();
 		
-		climberSys = new ClimberSubsystem();
+		climberSys = new Climber();
 		climberSys.initDefaultCommand();
 
 		armSys = new ArmSubsystem();
