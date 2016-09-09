@@ -24,8 +24,6 @@ public class Robot extends IterativeRobot {
 	public static CameraFeeds feeds;
 	public static ArmSubsystem armSys;
 	public static Climber climberSys;
-
-	// My stuff
 	public static Sensors sensorSys;
 	public static FlywheelSubsystem shooterFlywheelSys;
 	public static ActuatorSubsystem shooterActuatorSys;
@@ -52,6 +50,9 @@ public class Robot extends IterativeRobot {
 		
 		climberSys = new Climber();
 		climberSys.initDefaultCommand();
+		climberSys.registerButtons();
+		climberSys.enable();
+		climberSys.positionMode();
 
 		armSys = new ArmSubsystem();
 		armSys.initDefaultCommand();
