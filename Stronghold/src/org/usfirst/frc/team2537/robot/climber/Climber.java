@@ -19,7 +19,7 @@ public class Climber extends Subsystem {
 	private CANTalon climberForward;
 	private CANTalon climberBackward;
 	private Servo servo;
-	private Relay electromagnet;
+//	private Relay electromagnet;
 	private DigitalInput retractButton;
 	public static final double DISTANCE_TO_EXTEND = 360;// old value was 360
 														// amounts of counts to
@@ -42,8 +42,6 @@ public class Climber extends Subsystem {
 			System.out.println("enabling climber (remove before competition)");
 
 		// TODO - Organize (haha like that's going to happen)
-		lineReader = new DigitalInput(Ports.PORT_FOR_LINE_READER);
-		retractButton=new DigitalInput(Ports.PORT_FOR_BUTTON);
 		climberForward = new CANTalon(Ports.CLIMBER_MOTOR_1);
 		climberBackward = new CANTalon(Ports.CLIMBER_MOTOR_2);
 		climberForward.enableForwardSoftLimit(false);
@@ -68,8 +66,8 @@ public class Climber extends Subsystem {
 		// climberB.configEncoderCodesPerRev(20);
 		climberForward.reverseSensor(false);
 		climberBackward.reverseSensor(false);
-		electromagnet = new Relay(Ports.ELECTROMAGNET_RELAY_PORT);
-		electromagnet.set(Relay.Value.kOff);
+//		electromagnet = new Relay(Ports.ELECTROMAGNET_RELAY_PORT);
+//		electromagnet.set(Relay.Value.kOff);
 		climberForward.configMaxOutputVoltage(9);
 		climberBackward.configMaxOutputVoltage(9);
 	}
@@ -219,13 +217,13 @@ public class Climber extends Subsystem {
 		HumanInput.registerPressedCommand(HumanInput.climberButton, new CommandTheClimber());
 	}
 
-	public void electromagnetOff() {
-		electromagnet.set(Relay.Value.kForward);
-	}
-
-	public void electromagnetOn() {
-		electromagnet.set(Relay.Value.kReverse);
-	}
+//	public void electromagnetOff() {
+//		electromagnet.set(Relay.Value.kForward);
+//	}
+//
+//	public void electromagnetOn() {
+//		electromagnet.set(Relay.Value.kReverse);
+//	}
 	public void PercentageMode() {
 		climberForward.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 		climberBackward.changeControlMode(CANTalon.TalonControlMode.PercentVbus);

@@ -14,6 +14,7 @@ public class ExtendTheTapeCommand extends Command {
 	// CANTalonyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
 	double tolerance = 20;
 	int distance;
+	boolean debug = true;
 
 	public ExtendTheTapeCommand(double distanceToExtend) {
 		this.distance = (int) distanceToExtend;
@@ -40,7 +41,7 @@ public class ExtendTheTapeCommand extends Command {
 	/** setting an angle to the servo befroe the climber extends */
 	@Override
 	protected void initialize() {
-		// TODO Auto-generated method stubEX
+		if (debug) System.out.println("ExtendTheTape Command init");
 		Robot.climberSys.enable();
 		Robot.climberSys.setTalonVoltage(11);
 		Robot.climberSys.resetEncPos();
