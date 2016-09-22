@@ -108,6 +108,7 @@ public class Robot extends IterativeRobot {
 		System.out.println("Teleop init");
 		feeds.init();
 		sensorSys.handleEvents();
+		climberSys.electromagnetOn();
 
 	}
 
