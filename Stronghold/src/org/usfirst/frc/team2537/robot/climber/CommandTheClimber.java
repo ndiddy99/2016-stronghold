@@ -20,6 +20,7 @@ public class CommandTheClimber extends CommandGroup {
 		//addSequential(new TurnTheTapeCommand(100, Climber.RAMP_RATE_RAMP_RATE_SERVO));
 		addSequential(new ExtendTheTapeCommand(Climber.DISTANCE_TO_EXTEND));
 		if (Climber.debug) System.out.println("extending");
+		addSequential(new ElectromagnetOffCommand());
 		addSequential(new TurnTheTapeCommand(0, Climber.RAMP_RATE_RAMP_RATE_SERVO));
 		addSequential(new Sleep(.5));
 
