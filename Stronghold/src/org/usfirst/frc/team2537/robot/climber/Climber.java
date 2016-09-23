@@ -56,7 +56,7 @@ public class Climber extends Subsystem {
 		// climberForward.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 		// climberBackward.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 		climberBackward.changeControlMode(CANTalon.TalonControlMode.Follower);
-		climberBackward.set(1);
+		climberBackward.set(Ports.CLIMBER_MOTOR_1);
 		//climberBackward.reverseOutput(true);
 		servo = new Servo(Ports.CLIMBER_SERVO);
 
