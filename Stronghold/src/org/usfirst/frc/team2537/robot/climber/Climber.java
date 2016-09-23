@@ -124,45 +124,6 @@ public class Climber extends Subsystem {
 		// climberB.set(-(num));
 	}
 
-	public void moveFFast() {
-		climberForward.set(.8);
-		climberBackward.set(-.8);
-	}
-
-	public void moveBFast() {
-		climberForward.set(-.8);
-		climberBackward.set(.8);
-	}
-
-	public void moveF() {
-		climberForward.set(.4);
-		climberBackward.set(-.4);
-		// climberB.set(-(num));
-	}
-
-	public void moveFS() {
-		climberForward.set(.2);
-		climberBackward.set(-.2);
-		// climberB.set(-(num));
-	}
-
-	public void moveB() {
-		climberForward.set(-.4);
-		climberBackward.set(.4);
-		// climberForward.set(position);
-		// climberB.set(-(num));
-	}
-
-	public void moveBS() {
-		climberForward.set(-.2);
-		climberBackward.set(.2);
-		// climberB.set(-(num));
-	}
-
-	public void positionStop() {
-		climberForward.set(0);
-		climberBackward.set(0);
-	}
 	public void stop() {
 		climberForward.disableControl();
 	}

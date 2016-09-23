@@ -35,7 +35,7 @@ public class HumanInput {
 	public static final Button driveSensetivityToggle = new JoystickButton(leftJoystick, 2);
 	public static final Button reverseDrive = new JoystickButton(leftJoystick, 3);
 	public static final Button driveTypeToggle = new JoystickButton(leftJoystick, 4);
-	public static final Button driveAroundButton = new JoystickButton(xboxController, XboxButtons.XBOX_B);
+	//public static final Button driveAroundButton = new JoystickButton(xboxController, XboxButtons.XBOX_B);
 	// Right Joystick buttons
 	public static final Button changeCameraButton2 = new JoystickButton(rightJoystick, 3);
 
