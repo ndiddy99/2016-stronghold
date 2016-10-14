@@ -25,7 +25,7 @@ public class Climber extends Subsystem {
 														// amounts of counts to
 														// extend
 	public static final double ANGLE_FOR_SERVO = 50;
-	public static final double RAMP_RATE_RAMP_RATE_SERVO=.001;
+	public static final double RAMP_RATE_RAMP_RATE_SERVO=.005;	//old value was .001
 	public static final double DISTANCE_TO_MOVE_BACK = -200;	//old value was -200
 	public static final double CHANGE_SPEED_POINT = 30;
 	public static final int PORT_FOR_LINE_READER = 6;
