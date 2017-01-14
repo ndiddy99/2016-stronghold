@@ -12,3 +12,5 @@ Time to start the [Wollack method](http://71.121.167.52:9001/alex/2016-stronghol
 
 This project is licensed under the MIT X License. See the file LICENSE.md
 for more information.
+
+shoutout to alex for not backing up the repo and making me put it up
